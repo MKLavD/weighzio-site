@@ -294,11 +294,15 @@ img{max-width:100%}
 .wz-dialog{position:relative;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:660px;width:100%;max-height:90vh;margin:auto;display:flex;flex-direction:column;overflow:hidden}
 .wz-modal__close{position:absolute;top:var(--space-5);right:var(--space-5);z-index:2}
 /* Header block: eyebrow above, icon + title in a row, summary below, all one
-   visually grouped unit — the hairline sits under the whole block, never
-   between the title and summary. flex:none, same mechanism the footer
-   already used to stay pinned to the bottom, so this stays pinned to the
-   top: only .wz-modal__scroll below (bullets/alongside text) scrolls. */
-.wz-modal__header{flex:none;padding:var(--space-8) var(--space-10) var(--space-6) var(--space-8);border-bottom:var(--border-width) solid var(--border-hairline)}
+   visually grouped unit. flex:none, same mechanism the footer already used
+   to stay pinned to the bottom, so this stays pinned to the top: only
+   .wz-modal__scroll below (bullets/alongside text) scrolls. The hairline is
+   a pseudo-element rather than a border directly on this padded box, so it
+   can be inset to the space-8 (32px) content column instead of spanning the
+   header's own full width — its own right padding is wider (space-10) only
+   to clear the close button, which the hairline doesn't need to do. */
+.wz-modal__header{position:relative;flex:none;padding:var(--space-8) var(--space-10) var(--space-6) var(--space-8)}
+.wz-modal__header::after{content:"";position:absolute;left:var(--space-8);right:var(--space-8);bottom:0;border-bottom:var(--border-width) solid var(--border-hairline)}
 .wz-modal__eyebrow{display:block;margin-bottom:var(--space-3)}
 .wz-modal__title-row{display:flex;align-items:center;gap:var(--space-3)}
 .wz-modal__icon{width:32px;height:32px;color:var(--orange-press);flex:none}
@@ -328,9 +332,25 @@ img{max-width:100%}
    the two buttons resting at their own intrinsic height with no shared
    reference; stretching them across the same fixed-height band settles it
    regardless of the underlying cause). Flex-none so the scroll region above
-   absorbs any extra space instead of the footer growing. */
-.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:flex-end;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--navy-025);flex-wrap:wrap}
+   absorbs any extra space instead of the footer growing. space-between (not
+   flex-end) splits the two buttons to the outer edges of this band, which
+   shares the same space-8 (32px) horizontal padding as the hairline above
+   and .wz-modal__scroll below, so both buttons' outer edges land on that
+   same content column rather than clustering off-centre. */
+.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--navy-025);flex-wrap:wrap}
 .wz-modal__foot .wz-btn{flex:none;display:inline-flex;align-items:center;justify-content:center}
+/* Mobile: no internal scroll region. The footer is purely navigational, not
+   something that needs to stay reachable without scrolling, so the whole
+   popup (header, bullets, footer) becomes one unconstrained block that runs
+   past the viewport with the page — the header/footer flex:none rules above
+   already make them size to content regardless of this, so removing the
+   height cap here is the only change needed; sticky-within-popup behaviour
+   is untouched above this breakpoint. */
+@media (max-width:700px){
+  .wz-scrim{align-items:flex-start}
+  .wz-dialog{max-height:none;margin:0 auto;overflow:visible}
+  .wz-modal__scroll{flex:none;overflow:visible}
+}
 
 /* ==========================================================================
    Data
