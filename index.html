@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>weighzIO | Modular Waste Management Software for Skip Hire &amp; Waste</title>
+<meta name="description" content="Modular waste management software for skip hire, waste and aggregates operators. Sixteen modules, no mandatory core, digital waste tracking built into Skip Hire. Pay only for what you run.">
+<link rel="canonical" href="/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="weighzIO">
+<meta property="og:title" content="weighzIO | Modular Waste Management Software for Skip Hire &amp; Waste">
+<meta property="og:description" content="Modular waste management software for skip hire, waste and aggregates operators. Sixteen modules, no mandatory core, digital waste tracking built into Skip Hire. Pay only for what you run.">
+<meta property="og:url" content="/">
+<meta property="og:image" content="/images/hero-yard-1920.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="images/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="images/weighzio-apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Outfit:wght@500;600&display=swap">
+
+<link rel="preload" as="image" href="images/hero-yard-1920.webp" imagesrcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+
+<style>
+/* ==========================================================================
+   weighzIO design system — tokens
+   Navy #122D4B and orange #F47D2D. Every neutral is a desaturated navy step.
+   ========================================================================== */
+:root{
+  /* Navy scale (all derived from --navy) */
+  --navy-900: #08192B;
+  --navy-700: #122D4B;
+  --navy-600: #1E436A;
+  --navy-500: #325C87;
+  --navy-400: #5A7B9E;
+  --navy-300: #8FA5BC;
+  --navy-200: #C2CFDC;
+  --navy-100: #DFE6EE;
+  --navy-050: #EFF3F7;
+  --navy-025: #F7F9FB;
+
+  /* Orange scale — rationed. Only CTA fills, CTA press state, and the burst. */
+  --orange-400: #F47D2D;
+  --orange-300: #F79C5E;
+  --orange-press: #EA782B;  /* CTA press — navy label 4.80:1 */
+  --orange-border: #F9B183; /* CTA border, lighter than the fill */
+
+  --white: #FFFFFF;
+
+  /* Semantic aliases: text */
+  --text-heading: var(--navy-700);
+  --text-body: var(--navy-600);
+  --text-muted: var(--navy-400);
+  --text-eyebrow: var(--navy-500);
+  --text-on-orange: var(--navy-700); /* navy on orange = 5.20:1. Never white. */
+  --text-link: var(--navy-700);
+  --text-link-hover: var(--navy-700);
+
+  /* Semantic aliases: surfaces */
+  --surface-page: var(--white);
+  --surface-canvas: var(--navy-025);
+  --surface-card: var(--white);
+  --surface-card-tint: var(--navy-050);
+  --surface-ink: var(--navy-700);      /* navy punctuation blocks */
+  --surface-cta: var(--orange-400);
+  --surface-cta-hover: var(--orange-300);   /* #F79C5E — navy label 6.57:1 */
+  --surface-cta-press: var(--orange-press); /* #EA782B — navy label 4.80:1 */
+
+  /* Semantic aliases: lines */
+  --border-hairline: var(--navy-100);
+  --border-strong: var(--navy-200);
+  --border-on-ink: rgba(255,255,255,.18);
+  --focus-ring: var(--navy-700);
+  --focus-ring-on-ink: var(--white);
+
+  /* Type */
+  --font-display: "Outfit", "Museo Sans", system-ui, sans-serif;   /* geometric — headings, wordmark */
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif; /* grotesque — body, UI, data */
+
+  --text-display-1: 4rem;    /* 64 */
+  --text-h1: 2.75rem;        /* 44 */
+  --text-h2: 2rem;           /* 32 */
+  --text-h3: 1.5rem;         /* 24 */
+  --text-h4: 1.25rem;        /* 20 */
+  --text-lead: 1.1875rem;    /* 19 */
+  --text-body-md: 1.0625rem; /* 17 */
+  --text-body-sm: 0.9375rem; /* 15 */
+  --text-micro: 0.8125rem;   /* 13 — eyebrows, table meta */
+
+  --leading-tight: 1.04;
+  --leading-heading: 1.14;
+  --leading-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.01em;
+  --tracking-eyebrow: 0.12em;
+
+  /* Numerals: every weight, tonnage and percentage uses tabular figures */
+  --numeric-tabular: "tnum" 1, "lnum" 1;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  --gutter: var(--space-6);
+  --container-max: 1200px;
+  --container-narrow: 720px;
+
+  /* Shape */
+  --radius-xs: 2px;   /* tags, table cell accents */
+  --radius-sm: 4px;   /* inputs, small chips */
+  --radius-md: 6px;   /* buttons */
+  --radius-lg: 12px;  /* cards, module tiles */
+  --radius-xl: 20px;  /* feature panels, dialogs */
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* Elevation — navy-tinted, never neutral black */
+  --shadow-sm: 0 1px 2px rgba(18,45,75,.07), 0 3px 8px rgba(18,45,75,.05);
+  --shadow-md: 0 2px 4px rgba(18,45,75,.06), 0 8px 20px rgba(18,45,75,.07);
+  --shadow-lg: 0 4px 8px rgba(18,45,75,.07), 0 20px 44px rgba(18,45,75,.10);
+  /* CTA glow: blur only, no offset, no spread. Never an offset drop shadow. */
+  --shadow-cta: 0 0 18px 0 rgba(244,125,45,.45);
+  --shadow-cta-wide: 0 0 32px 0 rgba(244,125,45,.30);
+  --shadow-cta-press: inset 0 2px 6px rgba(18,45,75,.28);
+  --shadow-on-ink: 0 2px 6px rgba(5,15,28,.30), 0 12px 32px rgba(5,15,28,.24);
+  --overlay-scrim: rgba(8,25,43,.55);
+
+  /* Motion — short and functional. No bounce, no overshoot. */
+  --ease-out: cubic-bezier(.2,.6,.2,1);
+  --ease-in-out: cubic-bezier(.4,0,.2,1);
+  --duration-fast: 120ms; /* hover, focus */
+  --duration-base: 180ms; /* colour + border changes */
+  --transition-hover: color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+
+  --header-h: 72px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + var(--space-6))}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-body);font-size:var(--text-body-md);line-height:var(--leading-body);font-feature-settings:var(--numeric-tabular);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
+h1{font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
+h2{font-size:var(--text-h2)}
+h3{font-size:var(--text-h3)}
+h4{font-size:var(--text-h4)}
+p{margin:0 0 var(--space-4);text-wrap:pretty}
+strong{font-weight:var(--weight-semibold);color:var(--text-heading)}
+a{color:var(--text-link);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;transition:var(--transition-hover)}
+a:hover{color:var(--text-link-hover);text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:var(--border-width-strong) solid var(--focus-ring);outline-offset:2px;border-radius:var(--radius-xs)}
+table{border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font-family:var(--font-body);font-weight:var(--weight-semibold);color:var(--text-heading);text-align:left}
+td,th{font-feature-settings:var(--numeric-tabular)}
+img{max-width:100%}
+::selection{background:var(--navy-700);color:var(--white)}
+[hidden]{display:none!important}
+
+.wz-eyebrow{font-family:var(--font-body);font-size:var(--text-micro);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--text-eyebrow)}
+.wz-num{font-variant-numeric:tabular-nums;font-feature-settings:var(--numeric-tabular)}
+.wz-container{max-width:var(--container-max);margin:0 auto;padding:0 var(--gutter)}
+.wz-visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:0s!important;transition-duration:0s!important}
+}
+
+/* ==========================================================================
+   Icon (Lucide, masked so it inherits currentColor)
+   ========================================================================== */
+.wz-icon{display:inline-block;flex:none;width:20px;height:20px;background-color:currentColor;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.wz-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-body-sm);line-height:1;letter-spacing:0;border-radius:var(--radius-md);border:var(--border-width) solid transparent;padding:13px var(--space-5);cursor:pointer;text-decoration:none;transition:var(--transition-hover),transform var(--duration-fast) var(--ease-out);white-space:nowrap}
+.wz-btn:hover{text-decoration:none}
+.wz-btn--sm{padding:9px var(--space-4);font-size:var(--text-micro)}
+.wz-btn--lg{padding:16px var(--space-6);font-size:var(--text-body-md)}
+.wz-btn--block{width:100%}
+.wz-btn--primary{background:var(--surface-cta);color:var(--text-on-orange);border-color:var(--orange-border);box-shadow:var(--shadow-cta);animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite;transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out)}
+.wz-btn--primary:hover{background:var(--surface-cta-hover);color:var(--text-on-orange);border-color:#FBC9A6;transform:scale(1.025)}
+.wz-btn--primary:active{background:var(--surface-cta-press);transform:scale(.985);animation:none;box-shadow:var(--shadow-cta-press);transition-duration:70ms}
+@keyframes wz-cta-pulse{0%,100%{box-shadow:var(--shadow-cta)}50%{box-shadow:var(--shadow-cta-wide)}}
+@media (prefers-reduced-motion:reduce){.wz-btn--primary{animation:none}.wz-btn--primary:active{transform:scale(.985);box-shadow:var(--shadow-cta-press)}}
+.wz-btn--secondary{background:var(--white);color:var(--navy-700);border-color:var(--navy-700)}
+.wz-btn--secondary:hover{background:var(--navy-050);color:var(--navy-700)}
+.wz-btn--secondary:active{background:var(--navy-100);transform:translateY(1px)}
+.wz-btn--inverse{background:transparent;color:var(--white);border-color:var(--border-on-ink)}
+.wz-btn--inverse:hover{background:rgba(255,255,255,.10);color:var(--white)}
+.wz-btn--inverse:focus-visible{outline-color:var(--focus-ring-on-ink)}
+.wz-btn[disabled],.wz-btn[aria-disabled="true"]{opacity:.42;cursor:not-allowed;transform:none;box-shadow:none;animation:none}
+
+.wz-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-md);border:var(--border-width) solid var(--border-hairline);background:var(--white);color:var(--navy-700);cursor:pointer;transition:var(--transition-hover)}
+.wz-iconbtn:hover{background:var(--navy-050);border-color:var(--border-strong)}
+.wz-iconbtn:active{background:var(--navy-100)}
+.wz-iconbtn--bare{border-color:transparent;background:transparent}
+.wz-iconbtn--sm{width:32px;height:32px}
+.wz-iconbtn--sm .wz-icon{width:16px;height:16px}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+.wz-card{background:var(--surface-card);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+.wz-card--tint{background:var(--surface-card-tint);border-color:transparent}
+.wz-card--pad-lg{padding:var(--space-8)}
+.wz-card--raised{box-shadow:var(--shadow-md)}
+
+/* ==========================================================================
+   Section heading / eyebrow
+   ========================================================================== */
+.wz-section-head{display:flex;flex-direction:column;gap:var(--space-3);max-width:var(--container-narrow)}
+.wz-section-head p{margin:0;font-size:var(--text-lead);color:var(--text-body)}
+.wz-section-head--center{margin:0 auto;text-align:center;align-items:center}
+.wz-band--ink .wz-section-head h2,.wz-band--ink .wz-section-head h3{color:var(--white)}
+.wz-band--ink .wz-section-head p{color:rgba(255,255,255,.82)}
+.wz-band--ink .wz-eyebrow{color:rgba(255,255,255,.66)}
+
+/* ==========================================================================
+   Module tile (sixteen-module grid)
+   ========================================================================== */
+.wz-module{display:flex;flex-direction:column;gap:var(--space-3);background:var(--surface-card);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);padding:var(--space-5);text-align:left;text-decoration:none;box-shadow:var(--shadow-sm);transition:border-color var(--duration-fast) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform var(--duration-base) var(--ease-out);font:inherit;color:inherit;cursor:pointer;width:100%}
+.wz-module:hover{border-color:var(--border-strong);box-shadow:var(--shadow-md);transform:scale(1.01);color:inherit;text-decoration:none}
+.wz-module__title{font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-semibold);color:var(--text-heading);line-height:var(--leading-heading)}
+.wz-module__body{font-size:var(--text-body-sm);color:var(--text-body);margin:0}
+/* Sixteenth tile: custom modules. Orange edge, white fill — never a solid orange block.
+   Deck 6, outstanding fix: orange-500 title measured 3.43:1 on white and failed AA.
+   Title stays navy and the orange border does the distinguishing. */
+.wz-module--custom{background:var(--surface-card);border-color:var(--orange-400)}
+.wz-module--custom .wz-module__title{color:var(--navy-700)}
+.wz-module--custom:hover{border-color:var(--orange-400)}
+.wz-module--custom .wz-module__icon{color:var(--orange-press)}
+.wz-module__icon{color:var(--navy-700)}
+
+.wz-grid-modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:var(--space-6)}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+.wz-field{display:flex;flex-direction:column;gap:6px}
+.wz-label{font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading)}
+.wz-label span{font-weight:var(--weight-regular);color:var(--text-muted)}
+.wz-hint{font-size:var(--text-micro);color:var(--text-muted)}
+.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:var(--white);border:var(--border-width) solid var(--border-strong);border-radius:var(--radius-sm);padding:11px var(--space-3);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
+.wz-input::placeholder,.wz-textarea::placeholder{color:var(--navy-300)}
+.wz-input:hover,.wz-textarea:hover,.wz-select:hover{border-color:var(--navy-400)}
+.wz-input:focus,.wz-textarea:focus,.wz-select:focus{border-color:var(--navy-700);outline:none;box-shadow:inset 0 0 0 1px var(--navy-700)}
+.wz-input[aria-invalid="true"],.wz-textarea[aria-invalid="true"],.wz-select[aria-invalid="true"]{border-color:var(--navy-700);box-shadow:inset 0 0 0 1px var(--navy-700)}
+.wz-textarea{min-height:120px;resize:vertical;line-height:var(--leading-body)}
+.wz-select{appearance:none;padding-right:var(--space-8);background-image:linear-gradient(45deg,transparent 50%,var(--navy-500) 50%),linear-gradient(135deg,var(--navy-500) 50%,transparent 50%);background-position:calc(100% - 20px) 19px,calc(100% - 14px) 19px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.wz-choice{display:flex;gap:var(--space-3);align-items:flex-start;cursor:pointer;font-size:var(--text-body-md);color:var(--text-body)}
+.wz-choice input{appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:var(--border-width-strong) solid var(--navy-300);background:var(--white);cursor:pointer;transition:var(--transition-hover)}
+.wz-choice input[type="checkbox"]{border-radius:var(--radius-xs)}
+.wz-choice input[type="radio"]{border-radius:var(--radius-pill)}
+.wz-choice:hover input{border-color:var(--navy-500)}
+.wz-choice input:checked{background:var(--navy-700);border-color:var(--navy-700)}
+.wz-choice input[type="checkbox"]:checked{background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:14px;background-position:center;background-repeat:no-repeat}
+.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 4px var(--white)}
+
+/* ==========================================================================
+   Dialog (module detail popups)
+   ========================================================================== */
+.wz-scrim{position:fixed;inset:0;background:var(--overlay-scrim);display:flex;align-items:center;justify-content:center;padding:var(--space-6);z-index:50;overflow-y:auto}
+.wz-dialog{background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:560px;width:100%;padding:var(--space-8);margin:auto}
+.wz-dialog__head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-3)}
+.wz-dialog__foot{display:flex;gap:var(--space-3);justify-content:flex-end;margin-top:var(--space-6);flex-wrap:wrap}
+
+/* ==========================================================================
+   Data
+   ========================================================================== */
+.wz-table{width:100%;font-size:var(--text-body-sm)}
+.wz-table th{font-size:var(--text-micro);letter-spacing:.06em;text-transform:uppercase;color:var(--text-eyebrow);padding:var(--space-3) var(--space-4);border-bottom:var(--border-width) solid var(--border-strong);white-space:nowrap}
+.wz-table td{padding:var(--space-3) var(--space-4);border-bottom:var(--border-width) solid var(--border-hairline);color:var(--text-body)}
+.wz-table td.wz-num,.wz-table th.wz-num{text-align:right;font-variant-numeric:tabular-nums}
+.wz-table tbody tr:hover{background:var(--navy-025)}
+.wz-table-wrap{overflow-x:auto}
+
+/* ==========================================================================
+   Brand
+   ========================================================================== */
+.wz-logo{display:inline-flex;align-items:center}
+.wz-logo img{display:block;height:100%;width:auto}
+.wz-burst{display:block;flex:none}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out)}
+/* Transparent only while sitting over the navy hero photo, before any scroll. */
+.wz-header[data-transparent="true"]{background:transparent;border-bottom-color:transparent}
+.wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6)}
+.wz-header a{color:var(--white);text-decoration:none}
+.wz-header a:hover{color:var(--white);text-decoration:underline}
+.wz-header .wz-btn--primary{text-decoration:none}
+.wz-header a:focus-visible,.wz-header button:focus-visible{outline-color:var(--focus-ring-on-ink)}
+.wz-nav{display:flex;align-items:center;gap:var(--space-8)}
+.wz-nav__link{font-size:var(--text-body-md);font-weight:var(--weight-medium);color:var(--white)}
+.wz-nav__link[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+.wz-menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid var(--border-on-ink);border-radius:var(--radius-md);color:var(--white);cursor:pointer}
+.wz-nav-mobile{background:var(--navy-700);border-top:1px solid var(--border-on-ink);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
+.wz-nav-mobile a:not(.wz-btn){padding:var(--space-3) 0;font-size:var(--text-lead);font-weight:var(--weight-medium);color:var(--white)}
+.wz-nav-mobile .wz-btn{margin-top:var(--space-3)}
+
+@media (max-width:900px){
+  .wz-nav{display:none}
+  .wz-menu-toggle{display:inline-flex}
+}
+
+/* ==========================================================================
+   Bands and routes
+   ========================================================================== */
+.wz-route{display:block}
+.wz-band{padding:var(--space-24) 0;background:var(--surface-page)}
+.wz-band--tight{padding:var(--space-16) 0}
+.wz-band--canvas{background:var(--surface-canvas)}
+.wz-band--ink{background:var(--surface-ink);color:rgba(255,255,255,.82)}
+.wz-band--ink h2,.wz-band--ink h3,.wz-band--ink strong{color:var(--white)}
+.wz-band--ink a:not(.wz-btn){color:var(--white)}
+.wz-band--ink a:not(.wz-btn):focus-visible{outline-color:var(--focus-ring-on-ink)}
+/* First band on a route with no hero clears the fixed header. */
+.wz-route--inner > .wz-band:first-child{padding-top:calc(var(--header-h) + var(--space-16))}
+.wz-stack{display:flex;flex-direction:column;gap:var(--space-12)}
+
+@media (max-width:700px){
+  .wz-band{padding:var(--space-16) 0}
+  .wz-band--tight{padding:var(--space-12) 0}
+  :root{--text-h1:2.125rem;--text-h2:1.625rem;--text-h3:1.3125rem}
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.wz-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:120px var(--gutter) var(--space-20)}
+.wz-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.wz-hero__scrim{position:absolute;inset:0;background:#122D4B;opacity:.6}
+.wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
+.wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.wz-hero__mark .wz-eyebrow{color:var(--white)}
+.wz-hero h1{margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
+.wz-hero__lead{margin:28px auto 0;max-width:60ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--white)}
+.wz-hero__actions{margin-top:var(--space-10);display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-4)}
+
+/* ==========================================================================
+   Tick list (burst device as the tick marker)
+   ========================================================================== */
+.wz-ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-5)}
+.wz-ticks li{display:flex;gap:var(--space-4);align-items:flex-start}
+.wz-ticks p{margin:var(--space-1) 0 0;font-size:var(--text-body-md)}
+
+/* ==========================================================================
+   Steps
+   ========================================================================== */
+.wz-steps{list-style:none;counter-reset:step;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-6)}
+.wz-steps li{counter-increment:step;display:flex;flex-direction:column;gap:var(--space-2)}
+.wz-steps li::before{content:counter(step,decimal-leading-zero);font-family:var(--font-display);font-size:var(--text-h3);font-weight:var(--weight-semibold);color:var(--navy-300);font-variant-numeric:tabular-nums}
+.wz-steps h3{font-size:var(--text-h4)}
+.wz-steps p{margin:0;font-size:var(--text-body-sm)}
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.wz-faq{display:flex;flex-direction:column;gap:0;border-top:var(--border-width) solid var(--border-hairline)}
+.wz-faq details{border-bottom:var(--border-width) solid var(--border-hairline)}
+.wz-faq summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;cursor:pointer;font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-semibold);color:var(--text-heading);list-style:none}
+.wz-faq summary::-webkit-details-marker{display:none}
+.wz-faq summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background-color:currentColor;-webkit-mask:url("images/icon_arrow-right.svg") no-repeat center/contain;mask:url("images/icon_arrow-right.svg") no-repeat center/contain;transform:rotate(90deg);transition:transform var(--duration-base) var(--ease-out)}
+.wz-faq details[open] summary::after{transform:rotate(-90deg)}
+.wz-faq p{margin:0 0 var(--space-5);max-width:68ch}
+
+/* ==========================================================================
+   Two-column feature split
+   ========================================================================== */
+.wz-split2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-16);align-items:start}
+@media (max-width:900px){.wz-split2{grid-template-columns:1fr;gap:var(--space-10)}}
+
+/* ==========================================================================
+   Modules page
+   ========================================================================== */
+.wz-module-section{padding:var(--space-10) 0;border-bottom:var(--border-width) solid var(--border-hairline)}
+.wz-module-section:last-child{border-bottom:0}
+.wz-module-section__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
+.wz-module-section__summary{font-size:var(--text-lead);color:var(--text-body);max-width:68ch;margin:0 0 var(--space-5)}
+.wz-module-section ul{margin:0 0 var(--space-5);padding-left:var(--space-5);max-width:68ch;display:flex;flex-direction:column;gap:var(--space-2)}
+.wz-module-section__alongside{font-size:var(--text-body-sm);color:var(--text-muted);max-width:68ch;margin:0 0 var(--space-5)}
+.wz-pending{font-size:var(--text-body-sm);color:var(--text-muted);border-left:var(--border-width-strong) solid var(--border-strong);padding-left:var(--space-4);margin:0 0 var(--space-5);max-width:68ch}
+
+/* ==========================================================================
+   Guide
+   ========================================================================== */
+.wz-guide{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--space-16);align-items:start}
+.wz-guide__toc{position:sticky;top:calc(var(--header-h) + var(--space-6));display:flex;flex-direction:column;gap:var(--space-1)}
+.wz-guide__toc a{font-size:var(--text-body-sm);color:var(--text-body);text-decoration:none;padding:var(--space-2) var(--space-3);border-left:var(--border-width-strong) solid var(--border-hairline);line-height:1.35}
+.wz-guide__toc a:hover{color:var(--navy-700);background:var(--navy-025);border-left-color:var(--border-strong)}
+.wz-guide__prose{max-width:68ch}
+.wz-guide__prose h2{margin:var(--space-12) 0 var(--space-4)}
+.wz-guide__prose h2:first-child{margin-top:0}
+.wz-guide__prose ul,.wz-guide__prose ol{margin:0 0 var(--space-4);padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
+@media (max-width:900px){
+  .wz-guide{grid-template-columns:1fr;gap:var(--space-8)}
+  .wz-guide__toc{position:static;border-left:0}
+}
+
+/* ==========================================================================
+   Enquiry form
+   ========================================================================== */
+.wz-form{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5)}
+.wz-form__full{grid-column:1/-1}
+@media (max-width:700px){.wz-form{grid-template-columns:1fr}}
+.wz-checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-3);margin-top:var(--space-3)}
+.wz-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.wz-formmsg{padding:var(--space-4);border-radius:var(--radius-md);font-size:var(--text-body-sm);margin:0 0 var(--space-4);border:var(--border-width) solid var(--border-strong);background:var(--navy-025);color:var(--text-heading)}
+.wz-contact{display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-8)}
+.wz-contact__row{display:flex;gap:var(--space-3);align-items:flex-start}
+.wz-contact__row .wz-icon{margin-top:3px;color:var(--navy-700)}
+.wz-contact__row p{margin:0;font-size:var(--text-body-sm);color:var(--text-muted)}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.wz-footer{background:var(--navy-900);color:rgba(255,255,255,.72);padding:var(--space-16) 0 var(--space-8)}
+.wz-footer a{color:var(--white);text-decoration:none}
+.wz-footer a:hover{text-decoration:underline}
+.wz-footer a:focus-visible{outline-color:var(--focus-ring-on-ink)}
+.wz-footer__top{display:flex;justify-content:space-between;gap:var(--space-12);flex-wrap:wrap;margin-bottom:var(--space-12)}
+.wz-footer__nav{display:flex;gap:var(--space-8);flex-wrap:wrap}
+.wz-footer__nav h2{font-size:var(--text-micro);font-family:var(--font-body);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 var(--space-3)}
+.wz-footer__nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-body-sm)}
+.wz-footer__base{border-top:1px solid var(--border-on-ink);padding-top:var(--space-6);font-size:var(--text-micro);display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
+.wz-footer__blurb{max-width:44ch;font-size:var(--text-body-sm);margin:var(--space-4) 0 0}
+
+/* ==========================================================================
+   Cookie banner — declines non-essential by default
+   ========================================================================== */
+.wz-cookie{position:fixed;bottom:var(--space-4);right:var(--space-4);left:var(--space-4);max-width:420px;margin-left:auto;z-index:40;background:var(--surface-ink);color:rgba(255,255,255,.86);border:var(--border-width) solid var(--border-on-ink);border-radius:var(--radius-md);padding:var(--space-4);box-shadow:var(--shadow-on-ink);font-size:var(--text-body-sm)}
+.wz-cookie strong{color:var(--white);display:block;font-family:var(--font-display);font-size:var(--text-body-md)}
+.wz-cookie p{margin:var(--space-2) 0 var(--space-4)}
+.wz-cookie a{color:var(--white)}
+.wz-cookie a:focus-visible{outline-color:var(--focus-ring-on-ink)}
+.wz-cookie__actions{display:flex;gap:var(--space-2);flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<a class="wz-visually-hidden" href="#main">Skip to content</a>
+
+<!-- ======================================================================
+     Header
+     ====================================================================== -->
+<header class="wz-header" id="header" data-transparent="false">
+  <div class="wz-header__inner">
+    <a href="/" aria-label="weighzIO home" class="wz-logo" style="height:30px">
+      <img src="images/logoReverse.png" alt="weighzIO" width="128" height="30" style="height:30px">
+    </a>
+
+    <nav class="wz-nav" aria-label="Main">
+      <a class="wz-nav__link" href="/modules">Modules</a>
+      <a class="wz-nav__link" href="/digital-waste-tracking">Digital Waste Tracking</a>
+      <a class="wz-nav__link" href="/enquire">Enquire</a>
+      <a class="wz-btn wz-btn--primary wz-btn--sm" href="/enquire">Find out more</a>
+    </nav>
+
+    <button type="button" class="wz-menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-mobile">
+      <span class="wz-icon" aria-hidden="true" id="menu-icon" style="-webkit-mask-image:url('images/icon_menu.svg');mask-image:url('images/icon_menu.svg')"></span>
+    </button>
+  </div>
+
+  <nav class="wz-nav-mobile" id="nav-mobile" aria-label="Main" hidden>
+    <a href="/modules">Modules</a>
+    <a href="/digital-waste-tracking">Digital Waste Tracking</a>
+    <a href="/enquire">Enquire</a>
+    <a class="wz-btn wz-btn--primary wz-btn--block" href="/enquire">Find out more</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ======================================================================
+     ROUTE: /
+     ====================================================================== -->
+<div class="wz-route" data-route="/" id="route-home">
+
+  <!-- 2.1 Hero -->
+  <section class="wz-hero">
+    <img class="wz-hero__img" src="images/hero-yard-1920.jpg" srcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" sizes="100vw" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+    <div class="wz-hero__scrim" aria-hidden="true"></div>
+
+    <div class="wz-hero__inner">
+      <div class="wz-hero__mark">
+        <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="24" height="24" style="width:24px;height:auto">
+        <span class="wz-eyebrow">Modular waste management software</span>
+      </div>
+      <h1>Take the modules you need.<br>Not the ones you don't.</h1>
+      <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates businesses, sold module by module. There is no mandatory core. Take one module or take all of them, and the price per module comes down the more you run.</p>
+      <div class="wz-hero__actions">
+        <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
+        <a class="wz-btn wz-btn--inverse wz-btn--lg" href="#modules">See the modules</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.2 The module grid -->
+  <section class="wz-band wz-band--canvas" id="modules">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
+        <h2>Sixteen modules. Pick yours.</h2>
+        <p>Every module works on its own. Nothing is bundled, nothing is compulsory, and nothing has to be bought to unlock something else.</p>
+      </div>
+
+      <div class="wz-grid-modules" id="module-grid">
+        <a class="wz-module" href="/modules#weighbridge" data-module="weighbridge">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
+          <span class="wz-module__title">Weighbridge</span>
+          <p class="wz-module__body">Live weight capture straight off your indicator, onto the ticket.</p>
+        </a>
+        <a class="wz-module" href="/modules#skip-hire" data-module="skip-hire">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
+          <span class="wz-module__title">Skip Hire &amp; RoRo</span>
+          <p class="wz-module__body">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
+        </a>
+        <a class="wz-module" href="/modules#materials" data-module="materials">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
+          <span class="wz-module__title">Materials &amp; Aggregates</span>
+          <p class="wz-module__body">Material orders, haulage, disposal routes and automatic load splitting.</p>
+        </a>
+        <a class="wz-module" href="/modules#scheduling" data-module="scheduling">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span>
+          <span class="wz-module__title">Scheduling &amp; Dispatch</span>
+          <p class="wz-module__body">Drag-and-drop planning boards that hold thousands of live tickets.</p>
+        </a>
+        <a class="wz-module" href="/modules#driver-app" data-module="driver-app">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span>
+          <span class="wz-module__title">Driver App</span>
+          <p class="wz-module__body">Job cards, weights, load breakdowns and signatures from the cab.</p>
+        </a>
+        <a class="wz-module" href="/modules#fleet" data-module="fleet">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span>
+          <span class="wz-module__title">Fleet &amp; Telematics</span>
+          <p class="wz-module__body">Live vehicle tracking and weight limits enforced before dispatch.</p>
+        </a>
+        <a class="wz-module" href="/modules#customers" data-module="customers">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
+          <span class="wz-module__title">Customers &amp; Pricing</span>
+          <p class="wz-module__body">Accounts, sites, bespoke rates and credit control.</p>
+        </a>
+        <a class="wz-module" href="/modules#finance" data-module="finance">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
+          <span class="wz-module__title">Finance &amp; Sage</span>
+          <p class="wz-module__body">Invoicing, VAT, recurring billing and background posting to Sage.</p>
+        </a>
+        <a class="wz-module" href="/modules#reporting" data-module="reporting">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span>
+          <span class="wz-module__title">Reporting &amp; Dashboards</span>
+          <p class="wz-module__body">Operational, financial and compliance reporting.</p>
+        </a>
+        <a class="wz-module" href="/modules#customer-portal" data-module="customer-portal">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span>
+          <span class="wz-module__title">Customer Portal</span>
+          <p class="wz-module__body">Self-serve ordering, ticket history and site reports for your customers.</p>
+        </a>
+        <a class="wz-module" href="/modules#multi-company" data-module="multi-company">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
+          <span class="wz-module__title">Multi-Company</span>
+          <p class="wz-module__body">Separate entities with their own VAT, ledgers and branding under one login.</p>
+        </a>
+        <a class="wz-module" href="/modules#marketing-data-feed" data-module="marketing-data-feed">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
+          <span class="wz-module__title">Marketing Data Feed</span>
+          <p class="wz-module__body">Job and enquiry data fed back into your Google and Meta campaigns.</p>
+        </a>
+        <a class="wz-module" href="/modules#ready-mix" data-module="ready-mix">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
+          <span class="wz-module__title">Ready-Mix Concrete</span>
+          <p class="wz-module__body">Concrete orders, batching schedules and delivery.</p>
+        </a>
+        <a class="wz-module" href="/modules#trade-waste" data-module="trade-waste">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
+          <span class="wz-module__title">Trade Waste</span>
+          <p class="wz-module__body">Route-based commercial collections.</p>
+        </a>
+        <a class="wz-module" href="/modules#hazardous-waste" data-module="hazardous-waste">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
+          <span class="wz-module__title">Hazardous Waste</span>
+          <p class="wz-module__body">Consignment tracking and Environment Agency reporting.</p>
+        </a>
+        <a class="wz-module wz-module--custom" href="/modules#custom-modules" data-module="custom-modules">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>
+          <span class="wz-module__title">Custom Modules</span>
+          <p class="wz-module__body">Something your operation needs that nobody has built yet.</p>
+        </a>
+      </div>
+
+      <p style="margin:0"><a href="/modules" style="display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-body-md);font-weight:var(--weight-semibold);text-decoration:none">Find out more about any module<span class="wz-icon" aria-hidden="true" style="width:18px;height:18px;-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span></a></p>
+    </div>
+  </section>
+
+  <!-- 2.3 How the pricing works -->
+  <section class="wz-band">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
+        <span class="wz-eyebrow">Pricing</span>
+        <h2>You pay for what you run</h2>
+        <p>Each module is priced on its own. Take one and that's all you pay for. Take several and the rate per module drops. There is no minimum bundle and no core licence sitting underneath.</p>
+      </div>
+
+      <div class="wz-split2">
+        <div class="wz-table-wrap">
+          <table class="wz-table">
+            <caption class="wz-visually-hidden">Discount by number of modules taken</caption>
+            <thead>
+              <tr><th scope="col">Modules taken</th><th scope="col" class="wz-num">Discount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 to 3</td><td class="wz-num">[PLACEHOLDER]</td></tr>
+              <tr><td>4 to 8</td><td class="wz-num">[PLACEHOLDER]</td></tr>
+              <tr><td>9 or more</td><td class="wz-num">[PLACEHOLDER]</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <p>Every operation prices differently depending on sites, vehicles and users, so we quote rather than publish a list. Tell us which modules you're interested in and we'll put a figure in front of you.</p>
+          <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire">Get a quote for my modules</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.4 Digital waste tracking -->
+  <section class="wz-band wz-band--ink">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
+        <span class="wz-eyebrow">Compliance</span>
+        <h2>Digital waste tracking, built into Skip Hire</h2>
+        <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
+        <p>Take the Skip Hire module and that is handled.</p>
+      </div>
+
+      <ul class="wz-ticks">
+        <li>
+          <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+          <div><strong>What's in the load, recorded on the bridge.</strong><p>Waste types as a percentage split, bulky items separately, contamination photos attached to the ticket.</p></div>
+        </li>
+        <li>
+          <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+          <div><strong>EWC codes from the system, not from memory.</strong><p>A full European Waste Catalogue register behind the product list, so records stay consistent whoever is on the weighbridge.</p></div>
+        </li>
+        <li>
+          <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+          <div><strong>Filed to Defra automatically.</strong><p>Each load is submitted to the Receipt of Waste API and the digital waste record number comes back onto the ticket.</p></div>
+        </li>
+        <li>
+          <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+          <div><strong>Outlets checked before the tip.</strong><p>Tip outlet licences and material-to-outlet rules, so a driver can't be sent somewhere that isn't licensed to take it.</p></div>
+        </li>
+        <li>
+          <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+          <div><strong>Customer permits watched.</strong><p>Carrier registration numbers and site licence expiry dates tracked against the account, with a warning before the job is booked.</p></div>
+        </li>
+      </ul>
+
+      <div>
+        <p style="max-width:68ch">Duty of care notes are produced digitally with the customer signing on the driver's phone. Hazardous waste consignment reports export in Environment Agency formats.</p>
+        <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/digital-waste-tracking">What the regulations require</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.5 Custom modules -->
+  <section class="wz-band">
+    <div class="wz-container">
+      <div class="wz-split2">
+        <div class="wz-section-head">
+          <span class="wz-eyebrow">Custom modules</span>
+          <h2>If you need something that doesn't exist yet, we'll build it</h2>
+        </div>
+        <div>
+          <p>The sixteen modules cover how most waste and skip businesses run. They won't cover all of yours, because no two operations are the same.</p>
+          <ul>
+            <li>The fifteen standard modules cover how most waste and skip businesses run. They will not cover all of yours, because no two operations are the same.</li>
+            <li>If you have a process that matters and no software handles it properly, we scope it, price it and build it as a module of your own.</li>
+            <li>It sits alongside the standard modules, uses the same data, and it is yours.</li>
+            <li>Custom modules are part of the offering, not a favour.</li>
+          </ul>
+          <p style="margin:0"><a class="wz-btn wz-btn--secondary" href="/enquire?module=Custom%20Modules">Talk to us about a custom module</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.6 Marketing data feed -->
+  <section class="wz-band wz-band--canvas">
+    <div class="wz-container">
+      <div class="wz-split2">
+        <div class="wz-section-head">
+          <span class="wz-eyebrow">Marketing data feed</span>
+          <h2>Know which adverts actually brought the work in</h2>
+        </div>
+        <div>
+          <p>Most waste operators spend money on Google and Meta and have no idea which of it worked. The reporting stops at the enquiry and the enquiry is where the useful part starts.</p>
+          <p>weighzIO can feed completed job and enquiry data back into your campaigns, so your advertising is measured against jobs that were booked and paid for, not clicks and form fills. Budget follows the adverts that produce real work.</p>
+          <p style="margin:0"><a class="wz-btn wz-btn--secondary" href="/enquire?module=Marketing%20Data%20Feed">See how the data feed works</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.7 Getting started -->
+  <section class="wz-band">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
+        <span class="wz-eyebrow">Getting started</span>
+        <h2>Four steps</h2>
+      </div>
+      <ol class="wz-steps">
+        <li><h3>Tell us how you run.</h3><p>Sites, vehicles, weighbridges, companies, what's working and what isn't.</p></li>
+        <li><h3>Pick your modules.</h3><p>We'll say plainly if a module won't earn its place.</p></li>
+        <li><h3>Get a quote.</h3><p>Priced on your modules, your sites and your users.</p></li>
+        <li><h3>Move over.</h3><p>Customers, live jobs, historical invoices and every lookup table migrated and checked against the originals before cutover, with custom customer prices validated line by line.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 2.9 FAQ -->
+  <section class="wz-band wz-band--canvas">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
+        <span class="wz-eyebrow">Questions</span>
+        <h2>Common questions</h2>
+      </div>
+      <div class="wz-faq">
+        <details><summary>Can I really take just one module?</summary><p>Yes. There is no core licence and no minimum bundle. If the weighbridge is all you need, that's all you pay for.</p></details>
+        <details><summary>Can I add modules later?</summary><p>Yes, and the discount recalculates when you do.</p></details>
+        <details><summary>Will it work with the weighbridge I already have?</summary><p>weighzIO reads standard RS232 weighbridge indicators over a local connection on site. Tell us what indicator you're running and we'll confirm before you commit to anything.</p></details>
+        <details><summary>We run several companies. Does that work?</summary><p>Take the Multi-Company module and each entity keeps its own VAT settings, ledger, registration numbers and invoice branding, under one login.</p></details>
+        <details><summary>Do I need the Skip Hire module for digital waste tracking?</summary><p>Yes. The tracking functionality lives inside Skip Hire.</p></details>
+        <details><summary>How long does moving over take?</summary><p>It depends on how many modules and how much history. We'll give you a realistic answer once we've seen your data, not before.</p></details>
+        <details><summary>What if the regulations change?</summary><p>Carriers, brokers and dealers come into scope in October 2027, with exemptions and green list waste in later phases. Keeping up with the API is our job, not yours.</p></details>
+        <details><summary>Can you build something specific to us?</summary><p>Yes. Custom modules are part of the offering, not a favour.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.10 Final CTA -->
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <div class="wz-section-head wz-section-head--center">
+        <h2>Start with what you need</h2>
+        <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
+        <div style="margin-top:var(--space-6)">
+          <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
+        </div>
+        <p style="font-size:var(--text-body-sm);margin-top:var(--space-4)">No cost, no commitment, and we'll tell you if you're better off where you are.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================================
+     ROUTE: /modules
+     ====================================================================== -->
+<div class="wz-route wz-route--inner" data-route="/modules" id="route-modules" hidden>
+  <section class="wz-band">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
+        <span class="wz-eyebrow">Modules</span>
+        <h1>Every module, in detail</h1>
+        <p>Each one is priced and sold on its own. Take the ones that fit.</p>
+      </div>
+
+      <div id="module-sections">
+
+        <section class="wz-module-section" id="weighbridge" data-module-detail="weighbridge">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
+            <h2>Weighbridge</h2>
+          </div>
+          <p class="wz-module-section__summary">Live weight capture straight off your indicator, onto the ticket.</p>
+          <ul>
+            <li>Reads standard RS232 weighbridge indicators through a locally hosted connection on site, so weights arrive on the ticket as they are taken.</li>
+            <li>Captures gross, tare and net together, with the container tare handled separately where a skip is involved.</li>
+            <li>Records where each weight came from, and flags the variance between what the customer requested and what was actually recorded.</li>
+            <li>Manual override is available and logged, for the days the hardware misbehaves.</li>
+            <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Skip Hire &amp; RoRo, Materials &amp; Aggregates, Finance &amp; Sage.</p>
+          <p style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="skip-hire" data-module-detail="skip-hire">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
+            <h2>Skip Hire &amp; RoRo</h2>
+          </div>
+          <p class="wz-module-section__summary">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
+          <ul>
+            <li>Handles the full order range: delivery, exchange, collection, weigh and load, and reposition, each priced on its own terms.</li>
+            <li>Hire periods with allowance days, expiry dates, rental day allowances and automatic over-tonnage charges.</li>
+            <li>Every skip and RoRo tracked as a physical unit by serial number, across yards and customer sites, so you know where each container actually is.</li>
+            <li>Load composition recorded on the bridge as a percentage split by waste type, with bulky items listed separately and contamination photos attached to the ticket.</li>
+            <li>European Waste Catalogue codes assigned from a register behind the product list, so records stay consistent whoever is on the weighbridge.</li>
+            <li>Tip outlet licences and material-to-outlet rules checked before the tip, so a driver cannot be sent somewhere unlicensed to take the material.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Digital waste tracking functionality lives in this module.</p>
+          <p style="margin:0"><a href="/enquire?module=Skip%20Hire%20%26%20RoRo">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="materials" data-module-detail="materials">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
+            <h2>Materials &amp; Aggregates</h2>
+          </div>
+          <p class="wz-module-section__summary">Material orders, haulage, disposal routes and automatic load splitting.</p>
+          <ul>
+            <li>Large orders split into legal delivery tickets automatically, so a 200 tonne order becomes ten tickets rather than ten phone calls.</li>
+            <li>Haulage handled as a buy and sell line, with disposal routes, waiting time charges and site permits held against the order.</li>
+            <li>Product records carry activity, product group, VAT code, tax code and nominal codes, so material margins survive contact with the accounts system.</li>
+            <li>Levies configured as a third tax tier alongside VAT and customer tax, calculated per material and disposal route.</li>
+            <li>Quantities spread across multiple delivery dates, with recurring orders supported.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Weighbridge, Scheduling &amp; Dispatch, Fleet &amp; Telematics.</p>
+          <p style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="scheduling" data-module-detail="scheduling">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span>
+            <h2>Scheduling &amp; Dispatch</h2>
+          </div>
+          <p class="wz-module-section__summary">Drag-and-drop planning boards that hold thousands of live tickets.</p>
+          <ul>
+            <li>Five distinct planning views covering skips, tippers, concrete, artics and bulk, each filtered to how that side of the operation actually runs.</li>
+            <li>An unscheduled jobs dock, so dispatchers drag work onto a vehicle-by-day grid rather than rebuilding the day in their head.</li>
+            <li>Job cards load lazily, so the board does not freeze when the ticket volume is heavy.</li>
+            <li>Vehicles can be reassigned across group companies where one entity has capacity another needs.</li>
+            <li>Scheduling for hire-based products, with jobs and products linked in both directions.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Driver App, Fleet &amp; Telematics, Skip Hire &amp; RoRo.</p>
+          <p style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="driver-app" data-module-detail="driver-app">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span>
+            <h2>Driver App</h2>
+          </div>
+          <p class="wz-module-section__summary">Job cards, weights, load breakdowns and signatures from the cab.</p>
+          <ul>
+            <li>Skip and material tickets completed on the phone: weights, load breakdown and variances, without a paper docket.</li>
+            <li>Delivery sites geofenced, so arrival, waiting time and departure are recorded rather than estimated.</li>
+            <li>Digital duty of care notes produced on site with the customer signing on glass.</li>
+            <li>Over-quantity variances calculated in the cab, with the surcharge worked out before the driver leaves.</li>
+            <li>Payment links generated on site by SMS or WhatsApp for balances owing before discharge.</li>
+            <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Scheduling &amp; Dispatch, Skip Hire &amp; RoRo, Weighbridge.</p>
+          <p style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="fleet" data-module-detail="fleet">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span>
+            <h2>Fleet &amp; Telematics</h2>
+          </div>
+          <p class="wz-module-section__summary">Live vehicle tracking and weight limits enforced before dispatch.</p>
+          <ul>
+            <li>Live GPS positions from Teletrac shown on the dispatch map, so you can see where drivers actually are.</li>
+            <li>Vehicle records hold type, default load size, and maximum and tare weight limits.</li>
+            <li>Product types validated against vehicle axle ratings before a ticket leaves dispatch, which is what keeps you out of DVSA overloading trouble.</li>
+            <li>Part load tolerances, demurrage and waiting time thresholds, skip type suitability and driver sign-off all held per vehicle.</li>
+            <li>Real-time capacity checked at the point the ticket is created rather than after the fact.</li>
+            <li>Mobile device management across the fleet's handsets.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Scheduling &amp; Dispatch, Driver App.</p>
+          <p style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="customers" data-module-detail="customers">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
+            <h2>Customers &amp; Pricing</h2>
+          </div>
+          <p class="wz-module-section__summary">Accounts, sites, bespoke rates and credit control.</p>
+          <ul>
+            <li>One customer account with many sites, each with its own contacts and geo-addressed location.</li>
+            <li>Bespoke pricing per customer, applied automatically on every order and ticket, so nobody looks a rate up by hand and nobody issues a credit note to fix it.</li>
+            <li>Live credit position checked during order entry, with the warning arriving while the customer is still on the phone.</li>
+            <li>Waste carrier registration numbers and waste site licence expiry dates tracked against the account, with a warning before the job is booked.</li>
+            <li>Customer lookups for SIC code, zone, business type, postal area, priority and site access times.</li>
+            <li>Cash and invoice payment terms held separately, with a workflow to convert a cash customer to an account customer.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Finance &amp; Sage, Skip Hire &amp; RoRo.</p>
+          <p style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="finance" data-module-detail="finance">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
+            <h2>Finance &amp; Sage</h2>
+          </div>
+          <p class="wz-module-section__summary">Invoicing, VAT, recurring billing and background posting to Sage.</p>
+          <ul>
+            <li>Invoices and tickets post to Sage in the background, across every company you run, without anyone triggering a sync out of hours.</li>
+            <li>Nominal codes mapped per product, per tip outlet and per company, so the general ledger posting is right first time.</li>
+            <li>T21 domestic reverse charge VAT calculated automatically rather than corrected by hand.</li>
+            <li>Recurring monthly billing generated and emailed as PDFs on a schedule.</li>
+            <li>Credit notes run through a multi-tier approval workflow before they go anywhere.</li>
+            <li>Annual contract price uplifts scheduled and applied across active accounts.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Customers &amp; Pricing, Multi-Company, Reporting &amp; Dashboards.</p>
+          <p style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="reporting" data-module-detail="reporting">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span>
+            <h2>Reporting &amp; Dashboards</h2>
+          </div>
+          <p class="wz-module-section__summary">Operational, financial and compliance reporting.</p>
+          <ul>
+            <li>Consolidated monthly and annual reporting across orders, waste streams and invoices.</li>
+            <li>Reports generated as PDFs and dispatched by email on a schedule, so the recurring ones stop being a job.</li>
+            <li>A management dashboard showing daily vehicle revenue, ticket margins and tonnage.</li>
+            <li>Hazardous waste consignment reports exportable in Environment Agency formats.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Multi-Company, Finance &amp; Sage, Customer Portal.</p>
+          <p style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="customer-portal" data-module-detail="customer-portal">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span>
+            <h2>Customer Portal</h2>
+          </div>
+          <p class="wz-module-section__summary">Self-serve ordering, ticket history and site reports for your customers.</p>
+          <ul>
+            <li>Scheduled weekly and monthly reports emailed to customers automatically, which takes the recurring report requests off your phone lines.</li>
+            <li>Site recycling reports delivered to key accounts without office involvement.</li>
+            <li>Self-billing invoice workflows for contracted commercial partners.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Reporting &amp; Dashboards, Finance &amp; Sage.</p>
+          <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
+          <p style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="multi-company" data-module-detail="multi-company">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
+            <h2>Multi-Company</h2>
+          </div>
+          <p class="wz-module-section__summary">Separate entities with their own VAT, ledgers and branding under one login.</p>
+          <ul>
+            <li>One login across every company in the group, with instant switching rather than logging in and out.</li>
+            <li>A default organisation per user, so people land where they work.</li>
+            <li>Company-specific VAT settings, legal registration numbers and financial rules held independently.</li>
+            <li>Invoice templates, logos, remittance addresses and custom headers per company, so each entity invoices as itself.</li>
+            <li>One master customer record shared across all entities, which removes the duplicate data entry and the inter-company notes.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Finance &amp; Sage, Scheduling &amp; Dispatch.</p>
+          <p style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="marketing-data-feed" data-module-detail="marketing-data-feed">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
+            <h2>Marketing Data Feed</h2>
+          </div>
+          <p class="wz-module-section__summary">Job and enquiry data fed back into your Google and Meta campaigns.</p>
+          <ul>
+            <li>Completed job and enquiry data fed back into Google and Meta, so advertising is measured against work that was booked and paid for rather than clicks and form fills.</li>
+            <li>Budget follows the campaigns producing real jobs.</li>
+          </ul>
+          <p class="wz-pending">Goes beyond the functional spec and needs sign-off. Before this goes live it needs a lawful basis, a data processing agreement between you and the operator, and disclosure in both privacy policies, because it involves processing the operator's customer data for advertising.</p>
+          <p style="margin:0"><a href="/enquire?module=Marketing%20Data%20Feed">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="ready-mix" data-module-detail="ready-mix">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
+            <h2>Ready-Mix Concrete</h2>
+          </div>
+          <p class="wz-module-section__summary">Concrete orders, batching schedules and delivery.</p>
+          <ul>
+            <li>Daily delivery tickets generated automatically for multi-load concrete orders.</li>
+            <li>Concrete runs as one of the five dispatch planning views, filtered to how that side of the operation works.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Scheduling &amp; Dispatch, Weighbridge.</p>
+          <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
+          <p style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="trade-waste" data-module-detail="trade-waste">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
+            <h2>Trade Waste</h2>
+          </div>
+          <p class="wz-module-section__summary">Route-based commercial collections.</p>
+          <p class="wz-pending">No source material. Trade Waste does not appear anywhere in the twelve-section functional spec. The product manager either supplies the detail or the module comes off the grid. Writing a popup from nothing would be inventing product capability.</p>
+          <p style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="hazardous-waste" data-module-detail="hazardous-waste">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
+            <h2>Hazardous Waste</h2>
+          </div>
+          <p class="wz-module-section__summary">Consignment tracking and Environment Agency reporting.</p>
+          <ul>
+            <li>Hazardous waste consignment reports exportable in Environment Agency standard formats.</li>
+            <li>Consignments tracked per physical unit through the European Waste Catalogue register.</li>
+            <li>Restricted outlets and material-to-outlet validation, so hazardous material cannot be routed somewhere unlicensed.</li>
+            <li>Duty of care records produced digitally as part of the same movement.</li>
+          </ul>
+          <p class="wz-module-section__alongside">Works alongside: Skip Hire &amp; RoRo, Reporting &amp; Dashboards.</p>
+          <p style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
+        </section>
+
+        <section class="wz-module-section" id="custom-modules" data-module-detail="custom-modules">
+          <div class="wz-module-section__head">
+            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;color:var(--orange-press);-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>
+            <h2>Custom Modules</h2>
+          </div>
+          <p class="wz-module-section__summary">Something your operation needs that nobody has built yet.</p>
+          <p>If you have a process that matters to your business and no software handles it properly, we'll scope it, price it and build it as a module of your own. It sits alongside the standard modules, uses the same data, and it's yours.</p>
+          <p style="margin:0"><a href="/enquire?module=Custom%20Modules">Enquire about this module</a></p>
+        </section>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================================
+     ROUTE: /digital-waste-tracking
+     ====================================================================== -->
+<div class="wz-route wz-route--inner" data-route="/digital-waste-tracking" id="route-guide" hidden>
+  <section class="wz-band">
+    <div class="wz-container">
+      <div class="wz-section-head" style="margin-bottom:var(--space-12)">
+        <span class="wz-eyebrow">Guide</span>
+        <h1>Digital Waste Tracking Explained: What UK Waste Operators Must Do</h1>
+        <p>Updated September 2026.</p>
+      </div>
+
+      <div class="wz-guide">
+        <nav class="wz-guide__toc" aria-label="On this page">
+          <a href="#dwt-short">The short version</a>
+          <a href="#dwt-applies">Does this apply to me?</a>
+          <a href="#dwt-dates">The dates in full</a>
+          <a href="#dwt-record">What has to be recorded for every load</a>
+          <a href="#dwt-notes">Digital waste transfer notes: what changes</a>
+          <a href="#dwt-duty">Waste duty of care under the new regime</a>
+          <a href="#dwt-hazardous">Hazardous waste consignment notes</a>
+          <a href="#dwt-two-days">The two working day rule</a>
+          <a href="#dwt-routes">The two submission routes</a>
+          <a href="#dwt-cost">What it costs</a>
+          <a href="#dwt-before">What to do before your deadline</a>
+          <a href="#dwt-sources">Official sources</a>
+        </nav>
+
+        <div class="wz-guide__prose">
+          <h2 id="dwt-short">The short version</h2>
+          <ul>
+            <li>England and Wales started on 1 October 2026. Scotland and Northern Ireland follow in January 2027. Carriers, brokers and dealers come in from October 2027.</li>
+            <li>In scope first are sites that hold a permit or licence to receive waste.</li>
+            <li>Every load needs a structured record: EWC code, SIC code, movement reference, origin, destination, quantity, treatment outcome and a persistent organic pollutants flag.</li>
+            <li>It replaces the paper waste transfer note with a digital record filed to the national service.</li>
+          </ul>
+
+          <h2 id="dwt-applies">Does this apply to me?</h2>
+          <p>Do you hold a permit or licence to receive waste? Then you have been in scope since 1 October 2026.</p>
+          <p>Do you carry waste but not receive it at your own permitted site? Your date is October 2027, though receiving sites will be asking you for better data well before that.</p>
+          <p>Your permit is the document that settles it. Neither a software company nor a web page is the right place to decide your legal position, so read the permit and take advice on it if there is any doubt.</p>
+
+          <h2 id="dwt-dates">The dates in full</h2>
+          <ul>
+            <li>England and Wales: 1 October 2026.</li>
+            <li>Scotland and Northern Ireland: January 2027.</li>
+            <li>Carriers, brokers and dealers: October 2027.</li>
+            <li>Exemptions and green list waste: later phases.</li>
+          </ul>
+
+          <h2 id="dwt-record">What has to be recorded for every load</h2>
+          <p>Every movement needs the same set of fields, whoever is on the weighbridge.</p>
+          <ul>
+            <li>EWC code for the material.</li>
+            <li>SIC code for the producer.</li>
+            <li>Movement reference.</li>
+            <li>Origin of the waste.</li>
+            <li>Destination it is going to.</li>
+            <li>Quantity, as recorded at the bridge.</li>
+            <li>Treatment outcome.</li>
+            <li>Persistent organic pollutants flag, on every load.</li>
+          </ul>
+
+          <h2 id="dwt-notes">Digital waste transfer notes: what changes</h2>
+          <p>The paper transfer note is replaced by a digital record of the same movement. The duty does not change. The record does.</p>
+          <p>Day to day, the data that used to be written on a ticket in the cab has to be captured once, in fields rather than free text, and filed. Where the weighbridge and the driver's phone feed the same record, there is nothing extra for anyone to fill in and nothing to reconcile at month end.</p>
+
+          <h2 id="dwt-duty">Waste duty of care under the new regime</h2>
+          <p>The duty of care is unchanged: you must know what the waste is, who produced it, who is moving it and where it is going, and you must be able to evidence it.</p>
+          <p>What evidences it is now the digital record rather than the carbon copy. Operators are still required to keep their own records, and the producer still confirms the description, the carrier confirms the movement and the receiving site confirms the weight and the treatment.</p>
+
+          <h2 id="dwt-hazardous">Hazardous waste consignment notes</h2>
+          <p>Hazardous movements are consigned and reported separately from ordinary transfers, and the consignment detail sits alongside the movement record.</p>
+          <p>Consignment reports still export in Environment Agency formats, so the returns you send do not change shape even though the underlying record is now digital.</p>
+
+          <h2 id="dwt-two-days">The two working day rule</h2>
+          <p>Each load has to be recorded within two working days of arriving.</p>
+          <p>The load is not recorded until the system issues a digital waste record number. Until that number comes back, the movement is outstanding, whatever is sitting in your own system.</p>
+
+          <h2 id="dwt-routes">The two submission routes</h2>
+          <p>There are two ways to file. The first is an API submission through your own software, which files each load as it is weighed and brings the record number back automatically.</p>
+          <p>The second is Defra's spreadsheet upload. It is a genuine route and it works, particularly for a yard doing low volumes or one that is not ready to change systems. It is also temporary, and it is manual, so every load is somebody's job twice.</p>
+
+          <h2 id="dwt-cost">What it costs</h2>
+          <p>The service charges £26 a year per legal entity that creates or edits records.</p>
+
+          <h2 id="dwt-before">What to do before your deadline</h2>
+          <ol>
+            <li>Map an EWC code to every material you accept.</li>
+            <li>Put permit and licence numbers for each site in one list, with expiry dates.</li>
+            <li>Hold carrier registration for every vehicle, including subcontractors.</li>
+            <li>Check your weighbridge calibration dates are current and recorded.</li>
+            <li>Name one person as responsible for filing and for the monthly check that nothing is outstanding.</li>
+          </ol>
+
+          <h2 id="dwt-sources">Official sources</h2>
+          <ul>
+            <li><a href="https://www.gov.uk/government/publications/digital-waste-tracking" rel="noopener">GOV.UK: digital waste tracking policy paper</a></li>
+            <li><a href="https://www.legislation.gov.uk/" rel="noopener">legislation.gov.uk</a></li>
+          </ul>
+
+          <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)">
+            <p style="margin:0 0 var(--space-4)">weighzIO files these records automatically as part of the Skip Hire module.</p>
+            <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================================
+     ROUTE: /enquire
+     ====================================================================== -->
+<div class="wz-route wz-route--inner" data-route="/enquire" id="route-enquire" hidden>
+  <section class="wz-band">
+    <div class="wz-container">
+      <div class="wz-split2">
+
+        <div>
+          <div class="wz-section-head">
+            <span class="wz-eyebrow">Enquiry</span>
+            <h1>Tell us which modules you need</h1>
+            <p>Seven questions. We'll come back within two working days with a quote and a straight answer on fit.</p>
+          </div>
+
+          <div class="wz-contact">
+            <div class="wz-contact__row">
+              <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_mail.svg');mask-image:url('images/icon_mail.svg')"></span>
+              <div><strong>Email</strong><p>Replies within two working days.</p></div>
+            </div>
+            <div class="wz-contact__row">
+              <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span>
+              <div><strong>Phone</strong><p>Monday to Friday, office hours.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wz-card wz-card--pad-lg wz-card--raised">
+          <p class="wz-formmsg" id="form-msg" role="status" hidden></p>
+
+          <form class="wz-form" id="enquiry-form" method="post" action="/api/enquire" novalidate>
+            <div class="wz-honeypot" aria-hidden="true">
+              <label for="wz-website">Website</label>
+              <input type="text" id="wz-website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="wz-field">
+              <label class="wz-label" for="name">Name</label>
+              <input class="wz-input" type="text" id="name" name="name" autocomplete="name" required>
+            </div>
+
+            <div class="wz-field">
+              <label class="wz-label" for="company">Company</label>
+              <input class="wz-input" type="text" id="company" name="company" autocomplete="organization" required>
+            </div>
+
+            <div class="wz-field">
+              <label class="wz-label" for="email">Email</label>
+              <input class="wz-input" type="email" id="email" name="email" autocomplete="email" required>
+            </div>
+
+            <div class="wz-field">
+              <label class="wz-label" for="phone">Phone</label>
+              <input class="wz-input" type="tel" id="phone" name="phone" autocomplete="tel" required>
+            </div>
+
+            <fieldset class="wz-form__full" style="border:0;padding:0;margin:0">
+              <legend class="wz-label" style="padding:0">Which modules are you interested in?</legend>
+              <div class="wz-checkgrid">
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Weighbridge"><span>Weighbridge</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Skip Hire &amp; RoRo"><span>Skip Hire &amp; RoRo</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Materials &amp; Aggregates"><span>Materials &amp; Aggregates</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Scheduling &amp; Dispatch"><span>Scheduling &amp; Dispatch</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Driver App"><span>Driver App</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Fleet &amp; Telematics"><span>Fleet &amp; Telematics</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Customers &amp; Pricing"><span>Customers &amp; Pricing</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Finance &amp; Sage"><span>Finance &amp; Sage</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Reporting &amp; Dashboards"><span>Reporting &amp; Dashboards</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Customer Portal"><span>Customer Portal</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Multi-Company"><span>Multi-Company</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Marketing Data Feed"><span>Marketing Data Feed</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Ready-Mix Concrete"><span>Ready-Mix Concrete</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Trade Waste"><span>Trade Waste</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Hazardous Waste"><span>Hazardous Waste</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Custom Modules"><span>Custom Modules</span></label>
+                <label class="wz-choice"><input type="checkbox" name="modules" value="Not sure yet, advise me"><span>Not sure yet, advise me</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="wz-form__full" style="border:0;padding:0;margin:0">
+              <legend class="wz-label" style="padding:0">Do you receive waste at your own permitted site?</legend>
+              <div class="wz-checkgrid">
+                <label class="wz-choice"><input type="radio" name="permitted_site" value="Yes"><span>Yes</span></label>
+                <label class="wz-choice"><input type="radio" name="permitted_site" value="No"><span>No</span></label>
+                <label class="wz-choice"><input type="radio" name="permitted_site" value="Not sure"><span>Not sure</span></label>
+              </div>
+            </fieldset>
+
+            <div class="wz-field wz-form__full">
+              <label class="wz-label" for="vehicles">How many vehicles?</label>
+              <select class="wz-select" id="vehicles" name="vehicles">
+                <option value="" disabled selected>Choose a range</option>
+                <option value="1 to 5">1 to 5</option>
+                <option value="6 to 15">6 to 15</option>
+                <option value="16 to 40">16 to 40</option>
+                <option value="40 plus">40 plus</option>
+              </select>
+            </div>
+
+            <div class="wz-field wz-form__full">
+              <label class="wz-label" for="anything-else">Anything else we should know? <span>(optional)</span></label>
+              <textarea class="wz-textarea" id="anything-else" name="anything_else" rows="4"></textarea>
+            </div>
+
+            <div class="wz-form__full" style="display:flex;flex-direction:column;gap:var(--space-4)">
+              <label class="wz-choice"><input type="checkbox" name="consent" value="yes" required><span>I agree to weighzIO using these details to answer my enquiry. <a href="/privacy">Privacy and cookies</a>.</span></label>
+              <button class="wz-btn wz-btn--primary wz-btn--lg wz-btn--block" type="submit" id="enquiry-submit">Send enquiry</button>
+              <p class="wz-hint" style="margin:0">We use your details to answer the enquiry. Nothing else.</p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================================
+     ROUTE: /privacy
+     ====================================================================== -->
+<div class="wz-route wz-route--inner" data-route="/privacy" id="route-privacy" hidden>
+  <section class="wz-band">
+    <div class="wz-container">
+      <div class="wz-guide__prose">
+        <div class="wz-section-head" style="margin-bottom:var(--space-10)">
+          <span class="wz-eyebrow">Legal</span>
+          <h1>Privacy and cookies</h1>
+        </div>
+
+        <p class="wz-pending">Draft for review. This notice was written to match what the enquiry form actually does and has not been through legal sign-off.</p>
+
+        <h2>Who we are</h2>
+        <p>weighzIO&reg; is operations software for skip hire, waste and aggregates businesses. This notice covers the weighzIO website and the enquiry form on it.</p>
+
+        <h2>What we collect</h2>
+        <p>Only what you type into the enquiry form: your name, company, email address, phone number, which modules you are interested in, whether you receive waste at your own permitted site, how many vehicles you run, and anything you add in the free text box.</p>
+
+        <h2>Why we collect it</h2>
+        <p>To answer your enquiry and to price the modules you asked about. Nothing else. We do not sell your details, we do not pass them to anyone outside the business, and we do not add you to a marketing list off the back of an enquiry.</p>
+
+        <h2>How long we keep it</h2>
+        <p>For as long as the enquiry is live, and afterwards only where we need it to honour a quote or a contract. Ask us to delete it and we will.</p>
+
+        <h2>Cookies</h2>
+        <p>This site sets no analytics or advertising cookies unless you accept them. Non-essential cookies are declined by default, and declining changes nothing about how the site works. One small record of your choice is kept in your browser so you are not asked again.</p>
+
+        <h2>Your rights</h2>
+        <p>You can ask what we hold, ask for a copy, ask us to correct it or ask us to delete it. You can also complain to the Information Commissioner's Office.</p>
+
+        <h2>Contact</h2>
+        <p>Use the <a href="/enquire">enquiry form</a> and say it is about data protection, and it will reach the right person.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<!-- ======================================================================
+     Footer
+     ====================================================================== -->
+<footer class="wz-footer">
+  <div class="wz-container">
+    <div class="wz-footer__top">
+      <div>
+        <span class="wz-logo" style="height:30px"><img src="images/logoReverse.png" alt="weighzIO" width="128" height="30" style="height:30px"></span>
+        <p class="wz-footer__blurb">weighzIO&reg; is modular operations software for skip hire, waste and aggregates businesses. Take the modules you need.</p>
+      </div>
+      <nav class="wz-footer__nav" aria-label="Footer">
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/modules">Modules</a></li>
+            <li><a href="/modules#weighbridge">Weighbridge</a></li>
+            <li><a href="/modules#skip-hire">Skip Hire &amp; RoRo</a></li>
+            <li><a href="/modules#custom-modules">Custom modules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Guides</h2>
+          <ul>
+            <li><a href="/digital-waste-tracking">Digital waste tracking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Company</h2>
+          <ul>
+            <li><a href="/enquire">Enquire</a></li>
+            <li><a href="/privacy">Privacy and cookies</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="wz-footer__base">
+      <span>&copy; <span class="wz-num" id="year">2026</span> weighzIO</span>
+      <span>Modular waste management software</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================================================================
+     Module detail dialog
+     ====================================================================== -->
+<div class="wz-scrim" id="module-scrim" hidden>
+  <div class="wz-dialog" role="dialog" aria-modal="true" aria-labelledby="module-dialog-title" id="module-dialog">
+    <div class="wz-dialog__head">
+      <h3 id="module-dialog-title"></h3>
+      <button type="button" class="wz-iconbtn wz-iconbtn--bare wz-iconbtn--sm" id="module-dialog-close" aria-label="Close">
+        <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_x.svg');mask-image:url('images/icon_x.svg')"></span>
+      </button>
+    </div>
+    <div id="module-dialog-body"></div>
+    <div class="wz-dialog__foot">
+      <button type="button" class="wz-btn wz-btn--secondary" id="module-dialog-more">Read the full detail</button>
+      <a class="wz-btn wz-btn--primary" id="module-dialog-enquire" href="/enquire">Enquire about this module</a>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================================
+     Cookie banner — declines non-essential by default
+     ====================================================================== -->
+<div class="wz-cookie" id="cookie-banner" role="region" aria-label="Cookies" hidden>
+  <strong>Cookies</strong>
+  <p>Non-essential cookies are off unless you turn them on. Declining changes nothing about how the site works. See <a href="/privacy">privacy and cookies</a>.</p>
+  <div class="wz-cookie__actions">
+    <button type="button" class="wz-btn wz-btn--inverse wz-btn--sm" data-cookie="declined">Decline</button>
+    <button type="button" class="wz-btn wz-btn--primary wz-btn--sm" data-cookie="accepted">Accept</button>
+  </div>
+</div>
+
+<script type="application/ld+json" id="schema-site">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "@id": "#organisation", "name": "weighzIO", "logo": "/images/weighzio-icon-512.png", "url": "/" },
+    { "@type": "WebSite", "@id": "#website", "name": "weighzIO", "url": "/", "publisher": { "@id": "#organisation" } },
+    { "@type": "SoftwareApplication", "name": "weighzIO", "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Modular waste management software for skip hire, waste and aggregates operators. Sixteen modules, no mandatory core, digital waste tracking built into Skip Hire.",
+      "publisher": { "@id": "#organisation" } },
+    { "@type": "FAQPage", "mainEntity": [
+      { "@type": "Question", "name": "Can I really take just one module?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. There is no core licence and no minimum bundle. If the weighbridge is all you need, that's all you pay for." } },
+      { "@type": "Question", "name": "Can I add modules later?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, and the discount recalculates when you do." } },
+      { "@type": "Question", "name": "Will it work with the weighbridge I already have?", "acceptedAnswer": { "@type": "Answer", "text": "weighzIO reads standard RS232 weighbridge indicators over a local connection on site. Tell us what indicator you're running and we'll confirm before you commit to anything." } },
+      { "@type": "Question", "name": "We run several companies. Does that work?", "acceptedAnswer": { "@type": "Answer", "text": "Take the Multi-Company module and each entity keeps its own VAT settings, ledger, registration numbers and invoice branding, under one login." } },
+      { "@type": "Question", "name": "Do I need the Skip Hire module for digital waste tracking?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tracking functionality lives inside Skip Hire." } },
+      { "@type": "Question", "name": "How long does moving over take?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on how many modules and how much history. We'll give you a realistic answer once we've seen your data, not before." } },
+      { "@type": "Question", "name": "What if the regulations change?", "acceptedAnswer": { "@type": "Answer", "text": "Carriers, brokers and dealers come into scope in October 2027, with exemptions and green list waste in later phases. Keeping up with the API is our job, not yours." } },
+      { "@type": "Question", "name": "Can you build something specific to us?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Custom modules are part of the offering, not a favour." } }
+    ] }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var ORIGIN = window.location.origin;
+
+  /* ---------------------------------------------------------------------
+     Routes. Meta copy is from copy deck section 7.
+     --------------------------------------------------------------------- */
+  var ROUTES = {
+    "/": {
+      title: "weighzIO | Modular Waste Management Software for Skip Hire & Waste",
+      description: "Modular waste management software for skip hire, waste and aggregates operators. Sixteen modules, no mandatory core, digital waste tracking built into Skip Hire. Pay only for what you run."
+    },
+    "/modules": {
+      title: "Modules | weighzIO Waste Management Software",
+      description: "Weighbridge, skip hire, materials, dispatch, driver app, finance and more. Every weighzIO module is sold on its own, with the price per module falling as you add more."
+    },
+    "/digital-waste-tracking": {
+      title: "Digital Waste Tracking Explained: What UK Waste Operators Must Do",
+      description: "What the Digital Waste Tracking Regulations require, who is in scope and when, what you must record for every load, and how digital waste transfer notes work. Updated September 2026."
+    },
+    "/enquire": {
+      title: "Enquire | weighzIO",
+      description: "Tell us which modules you need and we'll come back with a quote within two working days.",
+      noindex: true
+    },
+    "/privacy": {
+      title: "Privacy and cookies | weighzIO",
+      description: "What weighzIO collects through the enquiry form, why, how long it is kept, and how non-essential cookies are handled."
+    }
+  };
+
+  var DEFAULT_ROUTE = "/";
+
+  var head = document.head;
+  var metaDescription = head.querySelector('meta[name="description"]');
+  var linkCanonical = head.querySelector('link[rel="canonical"]');
+  var ogTitle = head.querySelector('meta[property="og:title"]');
+  var ogDescription = head.querySelector('meta[property="og:description"]');
+  var ogUrl = head.querySelector('meta[property="og:url"]');
+  var ogImage = head.querySelector('meta[property="og:image"]');
+  var metaRobots = null;
+
+  var routeEls = {};
+  Array.prototype.forEach.call(document.querySelectorAll("[data-route]"), function (el) {
+    routeEls[el.getAttribute("data-route")] = el;
+  });
+
+  /* Absolute URLs are built from window.location.origin so nothing needs
+     editing when the real domain is pointed at the deployment. */
+  function absolute(path) {
+    return ORIGIN + path;
+  }
+
+  function normalise(pathname) {
+    var p = pathname.replace(/\/+$/, "");
+    if (p === "") p = "/";
+    return ROUTES[p] ? p : null;
+  }
+
+  function setRobots(noindex) {
+    if (noindex) {
+      if (!metaRobots) {
+        metaRobots = document.createElement("meta");
+        metaRobots.setAttribute("name", "robots");
+        head.appendChild(metaRobots);
+      }
+      metaRobots.setAttribute("content", "noindex, follow");
+    } else if (metaRobots) {
+      head.removeChild(metaRobots);
+      metaRobots = null;
+    }
+  }
+
+  function applyMeta(path) {
+    var meta = ROUTES[path];
+    var url = absolute(path);
+
+    document.title = meta.title;
+    metaDescription.setAttribute("content", meta.description);
+    linkCanonical.setAttribute("href", url);
+    ogTitle.setAttribute("content", meta.title);
+    ogDescription.setAttribute("content", meta.description);
+    ogUrl.setAttribute("content", url);
+    ogImage.setAttribute("content", absolute("/images/hero-yard-1920.jpg"));
+    setRobots(meta.noindex);
+  }
+
+  /* Schema URLs are relative in the markup; rewrite them from the origin once. */
+  function absolutiseSchema() {
+    var node = document.getElementById("schema-site");
+    if (!node) return;
+    try {
+      var data = JSON.parse(node.textContent);
+      data["@graph"].forEach(function (entry) {
+        if (entry.url) entry.url = absolute(entry.url);
+        if (entry.logo) entry.logo = absolute(entry.logo);
+      });
+      node.textContent = JSON.stringify(data);
+    } catch (e) {
+      /* Leave the markup as authored if it cannot be parsed. */
+    }
+  }
+
+  function markCurrent(path) {
+    Array.prototype.forEach.call(document.querySelectorAll(".wz-nav__link"), function (a) {
+      if (a.getAttribute("href") === path) {
+        a.setAttribute("aria-current", "page");
+      } else {
+        a.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  var currentPath = null;
+
+  function render(path, hash, restoreScroll) {
+    Object.keys(routeEls).forEach(function (key) {
+      routeEls[key].hidden = key !== path;
+    });
+
+    applyMeta(path);
+    markCurrent(path);
+    syncHeader();
+    currentPath = path;
+
+    if (restoreScroll) return;
+
+    if (hash) {
+      var target = document.getElementById(hash.slice(1));
+      if (target) {
+        target.scrollIntoView();
+        settleAnchor(target);
+        /* A shared module link opens its panel. The section stays in the page
+           underneath, so the content is still there without JavaScript. */
+        if (target.hasAttribute("data-module-detail") && !suppressPanel) {
+          openModuleDialog(target.getAttribute("data-module-detail"));
+        }
+        suppressPanel = false;
+        return;
+      }
+    }
+    suppressPanel = false;
+    window.scrollTo(0, 0);
+  }
+
+  /* Set when we are navigating out of an open panel, so landing on the
+     section it came from does not immediately reopen it. */
+  var suppressPanel = false;
+
+  /* Webfonts swap in after the first paint and reflow the page under the
+     anchor we just jumped to. Re-align once they have settled, but only while
+     the reader has not taken over the scroll themselves. */
+  var userScrolled = false;
+  ["wheel", "touchstart", "keydown"].forEach(function (type) {
+    window.addEventListener(type, function () { userScrolled = true; }, { passive: true, once: true });
+  });
+
+  function settleAnchor(target) {
+    if (!document.fonts || !document.fonts.ready) return;
+    document.fonts.ready.then(function () {
+      if (userScrolled) return;
+      target.scrollIntoView();
+    });
+  }
+
+  function navigate(path, search, hash) {
+    history.pushState({ path: path }, "", path + (search || "") + (hash || ""));
+    closeMenu();
+    render(path, hash, false);
+    /* Module enquiry links carry ?module=, which pre-ticks the checkbox. */
+    if (path === "/enquire") preselectModules(search);
+  }
+
+  /* ---------------------------------------------------------------------
+     Link interception
+     --------------------------------------------------------------------- */
+  document.addEventListener("click", function (event) {
+    if (event.defaultPrevented) return;
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    var anchor = event.target.closest ? event.target.closest("a") : null;
+    if (!anchor) return;
+    if (anchor.target === "_blank" || anchor.hasAttribute("download")) return;
+
+    var href = anchor.getAttribute("href");
+    if (!href || href.charAt(0) === "#") {
+      /* Same-page anchor: let the browser handle it, but keep the URL tidy. */
+      return;
+    }
+
+    var url;
+    try {
+      url = new URL(anchor.href);
+    } catch (e) {
+      return;
+    }
+    if (url.origin !== ORIGIN) return;
+
+    var path = normalise(url.pathname);
+    if (!path) return;
+
+    /* A module tile opens the detail dialog rather than leaving the page.
+       The tile stays a real link so it is crawlable and cmd-clickable. */
+    var tile = anchor.classList.contains("wz-module") ? anchor : null;
+    if (tile && currentPath === "/") {
+      event.preventDefault();
+      openModuleDialog(tile.getAttribute("data-module"), tile);
+      return;
+    }
+
+    event.preventDefault();
+    navigate(path, url.search, url.hash);
+  });
+
+  window.addEventListener("popstate", function () {
+    var path = normalise(window.location.pathname) || DEFAULT_ROUTE;
+    render(path, window.location.hash, false);
+    if (path === "/enquire") preselectModules(window.location.search);
+  });
+
+  /* ---------------------------------------------------------------------
+     Header: transparent only over the hero photo, before any scroll
+     --------------------------------------------------------------------- */
+  var header = document.getElementById("header");
+  var menuToggle = document.getElementById("menu-toggle");
+  var menuIcon = document.getElementById("menu-icon");
+  var navMobile = document.getElementById("nav-mobile");
+  var menuOpen = false;
+
+  function syncHeader() {
+    var scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 24;
+    var overHero = currentPath === "/" || (currentPath === null && normalise(window.location.pathname) === "/");
+    header.setAttribute("data-transparent", String(overHero && !scrolled && !menuOpen));
+  }
+
+  window.addEventListener("scroll", syncHeader, { passive: true });
+
+  function setMenuIcon(name) {
+    var url = "url('images/icon_" + name + ".svg')";
+    menuIcon.style.webkitMaskImage = url;
+    menuIcon.style.maskImage = url;
+  }
+
+  function closeMenu() {
+    if (!menuOpen) return;
+    menuOpen = false;
+    navMobile.hidden = true;
+    menuToggle.setAttribute("aria-expanded", "false");
+    setMenuIcon("menu");
+    syncHeader();
+  }
+
+  menuToggle.addEventListener("click", function () {
+    menuOpen = !menuOpen;
+    navMobile.hidden = !menuOpen;
+    menuToggle.setAttribute("aria-expanded", String(menuOpen));
+    setMenuIcon(menuOpen ? "x" : "menu");
+    syncHeader();
+  });
+
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 900) closeMenu();
+  });
+
+  /* ---------------------------------------------------------------------
+     Module detail dialog. Content is cloned from the Modules route so the
+     copy lives once, in the initial HTML.
+     --------------------------------------------------------------------- */
+  var scrim = document.getElementById("module-scrim");
+  var dialogTitle = document.getElementById("module-dialog-title");
+  var dialogBody = document.getElementById("module-dialog-body");
+  var dialogMore = document.getElementById("module-dialog-more");
+  var dialogEnquire = document.getElementById("module-dialog-enquire");
+  var dialogClose = document.getElementById("module-dialog-close");
+  var lastFocused = null;
+  var openSlug = null;
+
+  function openModuleDialog(slug, trigger) {
+    var source = document.querySelector('[data-module-detail="' + slug + '"]');
+    if (!source) return;
+
+    var heading = source.querySelector("h2");
+    dialogTitle.textContent = heading ? heading.textContent : "";
+
+    /* Everything from the source section except its heading row and its own
+       enquire link, which the dialog footer provides instead. */
+    dialogBody.textContent = "";
+    Array.prototype.forEach.call(source.children, function (child) {
+      if (child.classList.contains("wz-module-section__head")) return;
+      if (child.querySelector && child.querySelector('a[href^="/enquire"]')) return;
+      dialogBody.appendChild(child.cloneNode(true));
+    });
+
+    var enquireLink = source.querySelector('a[href^="/enquire"]');
+    dialogEnquire.setAttribute("href", enquireLink ? enquireLink.getAttribute("href") : "/enquire");
+
+    openSlug = slug;
+    lastFocused = trigger || document.activeElement;
+    scrim.hidden = false;
+    document.body.style.overflow = "hidden";
+    dialogClose.focus();
+  }
+
+  function closeModuleDialog() {
+    if (scrim.hidden) return;
+    scrim.hidden = true;
+    openSlug = null;
+    document.body.style.overflow = "";
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  dialogClose.addEventListener("click", closeModuleDialog);
+  scrim.addEventListener("click", function (event) {
+    if (event.target === scrim) closeModuleDialog();
+  });
+  dialogMore.addEventListener("click", function () {
+    var slug = openSlug;
+    closeModuleDialog();
+    suppressPanel = true;
+    navigate("/modules", "", "#" + slug);
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    if (!scrim.hidden) {
+      closeModuleDialog();
+    } else {
+      closeMenu();
+    }
+  });
+
+  /* Keep focus inside the dialog while it is open. */
+  document.addEventListener("focusin", function (event) {
+    if (scrim.hidden) return;
+    if (!scrim.contains(event.target)) dialogClose.focus();
+  });
+
+  /* ---------------------------------------------------------------------
+     Enquiry form
+     --------------------------------------------------------------------- */
+  var form = document.getElementById("enquiry-form");
+  var formMsg = document.getElementById("form-msg");
+  var submitBtn = document.getElementById("enquiry-submit");
+
+  /* Module enquiry links pass the module name as a query parameter and the
+     matching checkbox is pre-ticked on arrival. */
+  function preselectModules(search) {
+    if (!search) return;
+    var params = new URLSearchParams(search);
+    var wanted = params.getAll("module");
+    if (!wanted.length) return;
+    Array.prototype.forEach.call(form.querySelectorAll('input[name="modules"]'), function (box) {
+      if (wanted.indexOf(box.value) !== -1) box.checked = true;
+    });
+  }
+
+  function showMessage(text) {
+    formMsg.textContent = text;
+    formMsg.hidden = false;
+  }
+
+  function firstInvalid() {
+    var required = [
+      ["name", "Enter your name."],
+      ["company", "Enter a company name."],
+      ["email", "Enter a work email address."],
+      ["phone", "Enter a phone number."]
+    ];
+    for (var i = 0; i < required.length; i++) {
+      var field = document.getElementById(required[i][0]);
+      if (!field.value.trim()) return { field: field, message: required[i][1] };
+    }
+    var email = document.getElementById("email");
+    if (email.value.indexOf("@") === -1) return { field: email, message: "Enter a valid email address." };
+
+    var consent = form.querySelector('input[name="consent"]');
+    if (!consent.checked) return { field: consent, message: "Tick the box so we can reply to your enquiry." };
+
+    return null;
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    Array.prototype.forEach.call(form.querySelectorAll("[aria-invalid]"), function (el) {
+      el.removeAttribute("aria-invalid");
+    });
+
+    var problem = firstInvalid();
+    if (problem) {
+      problem.field.setAttribute("aria-invalid", "true");
+      showMessage(problem.message);
+      problem.field.focus();
+      return;
+    }
+
+    formMsg.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending";
+
+    var data = new FormData(form);
+    fetch(form.getAttribute("action"), {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: data
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Request failed");
+        return response.json().catch(function () { return {}; });
+      })
+      .then(function () {
+        form.hidden = true;
+        showMessage("Enquiry sent. We reply within two working days. In the meantime the digital waste tracking guide is at /digital-waste-tracking.");
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send enquiry";
+        showMessage("That did not send. Try again, or ring the office and we will take the details over the phone.");
+      });
+  });
+
+  /* ---------------------------------------------------------------------
+     Cookie banner — non-essential declined by default
+     --------------------------------------------------------------------- */
+  var banner = document.getElementById("cookie-banner");
+  var COOKIE_KEY = "wz-cookie-choice";
+
+  function readChoice() {
+    try {
+      return window.localStorage.getItem(COOKIE_KEY);
+    } catch (e) {
+      return "declined";
+    }
+  }
+
+  if (!readChoice()) banner.hidden = false;
+
+  Array.prototype.forEach.call(banner.querySelectorAll("[data-cookie]"), function (button) {
+    button.addEventListener("click", function () {
+      try {
+        window.localStorage.setItem(COOKIE_KEY, button.getAttribute("data-cookie"));
+      } catch (e) {
+        /* Choice cannot be remembered; the banner simply returns next visit. */
+      }
+      banner.hidden = true;
+    });
+  });
+
+  /* ---------------------------------------------------------------------
+     Boot
+     --------------------------------------------------------------------- */
+  document.getElementById("year").textContent = String(new Date().getFullYear());
+  absolutiseSchema();
+
+  var bootPath = normalise(window.location.pathname);
+  if (!bootPath) {
+    bootPath = DEFAULT_ROUTE;
+    history.replaceState({ path: bootPath }, "", bootPath);
+  } else {
+    history.replaceState({ path: bootPath }, "", window.location.pathname + window.location.search + window.location.hash);
+  }
+  render(bootPath, window.location.hash, false);
+  if (bootPath === "/enquire") preselectModules(window.location.search);
+})();
+</script>
+
+</body>
+</html>
