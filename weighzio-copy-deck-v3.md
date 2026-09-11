@@ -474,7 +474,7 @@ Work down it in order. Nothing here takes more than ten minutes.
 
 **Pointing the domain**
 
-- [ ] All four domains added in Vercel, `weighzio.co.uk` set as primary, the other three set to 301 redirect
+- [ ] All four domains added in Vercel, `weighz.io` set as primary, the other three set to 301 redirect
 - [ ] DNS records updated at the registrar
 - [ ] HTTPS certificate issued and confirmed working on the canonical
 - [ ] One canonical version only: pick `www` or non-`www` and redirect the other
@@ -502,8 +502,8 @@ Work down it in order. Nothing here takes more than ten minutes.
 
 ## 9. Needed before launch
 
-1. **Canonical domain: `weighzio.co.uk`.** Decided. `weighz.io`, `weighzio.com` and `weighzio.net` all 301 redirect to it. Still to pick `www` or non-`www` and redirect the other. Revisit later if the brand preference shifts to `weighz.io`, at the cost of redoing SPF, DKIM and the sending address.
-2. **The notification inbox address**, on `weighzio.co.uk`, plus a second recipient.
+1. **Canonical domain: `weighz.io`.** Decided, per brand preference. `weighzio.co.uk`, `weighzio.com` and `weighzio.net` all 301 redirect to it. Still to pick `www` or non-`www` and redirect the other. Nothing has SPF, DKIM or a sending address attached yet, so this switch costs nothing to make now.
+2. **The notification inbox address**, on `weighz.io`, plus a second recipient.
 3. **Module names confirmed or corrected**, and confirmation that Trade Waste belongs in the range.
 4. **Placeholder discount tiers** to drop into section 2.3.
 5. **Trade mark class** confirmed as covering software, before ® goes live.
