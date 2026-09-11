@@ -327,8 +327,9 @@ img{max-width:100%}
    sets to navy-700 semibold, so they read slightly heavier/darker than the
    navy-600 label around them with no bespoke CSS needed for the emphasis. */
 .wz-modal__alongside-text{margin:0;font-size:var(--text-body-sm);color:var(--text-body)}
-/* Footer band: hairline above, a pale tint distinct from the white body,
-   buttons equal height via align-items:stretch (the previous mismatch was
+/* Footer band: white, matching the body — same treatment as the hairline
+   below the header, a hairline is the only separation, not a tinted panel.
+   Buttons equal height via align-items:stretch (the previous mismatch was
    the two buttons resting at their own intrinsic height with no shared
    reference; stretching them across the same fixed-height band settles it
    regardless of the underlying cause). Flex-none so the scroll region above
@@ -337,7 +338,7 @@ img{max-width:100%}
    shares the same space-8 (32px) horizontal padding as the hairline above
    and .wz-modal__scroll below, so both buttons' outer edges land on that
    same content column rather than clustering off-centre. */
-.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--navy-025);flex-wrap:wrap}
+.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--white);flex-wrap:wrap}
 .wz-modal__foot .wz-btn{flex:none;display:inline-flex;align-items:center;justify-content:center}
 /* Mobile: no internal scroll region. The footer is purely navigational, not
    something that needs to stay reachable without scrolling, so the whole
@@ -345,10 +346,20 @@ img{max-width:100%}
    past the viewport with the page — the header/footer flex:none rules above
    already make them size to content regardless of this, so removing the
    height cap here is the only change needed; sticky-within-popup behaviour
-   is untouched above this breakpoint. */
+   is untouched above this breakpoint. .wz-dialog keeps its base
+   overflow:hidden rather than switching to visible: with no max-height to
+   force clipping, hidden never actually clips anything here (there is
+   nothing to overflow once the box is free to size to its content), but it
+   still does the OTHER job overflow:hidden was doing — clipping child
+   backgrounds (the footer's, before it went transparent above; anything
+   with its own fill in future) to .wz-dialog's own border-radius. Switching
+   to visible had silently broken exactly that: the footer's rectangular
+   background was painting straight over where the bottom corners should
+   have curved, on every module regardless of length, not just the ones
+   that scroll past the viewport. */
 @media (max-width:700px){
   .wz-scrim{align-items:flex-start}
-  .wz-dialog{max-height:none;margin:0 auto;overflow:visible}
+  .wz-dialog{max-height:none;margin:0 auto}
   .wz-modal__scroll{flex:none;overflow:visible}
 }
 
