@@ -339,7 +339,11 @@ img{max-width:100%}
    and .wz-modal__scroll below, so both buttons' outer edges land on that
    same content column rather than clustering off-centre. */
 .wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--white);flex-wrap:wrap}
-.wz-modal__foot .wz-btn{flex:none;display:inline-flex;align-items:center;justify-content:center}
+/* Both buttons the same width as the longer label ("Enquire about this
+   module", 225.2px natural width at this padding/font-size, rounded up).
+   The shorter-label button (min-width, not width) grows to match; the
+   longer one is already exactly this size so it doesn't shrink. */
+.wz-modal__foot .wz-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:226px}
 /* Mobile: no internal scroll region. The footer is purely navigational, not
    something that needs to stay reachable without scrolling, so the whole
    popup (header, bullets, footer) becomes one unconstrained block that runs
@@ -361,6 +365,11 @@ img{max-width:100%}
   .wz-scrim{align-items:flex-start}
   .wz-dialog{max-height:none;margin:0 auto}
   .wz-modal__scroll{flex:none;overflow:visible}
+  /* Stacked, both full width of the same content column the footer's own
+     padding already sets up — the desktop min-width no longer applies once
+     each button spans the full row anyway. */
+  .wz-modal__foot{flex-direction:column}
+  .wz-modal__foot .wz-btn{width:100%;min-width:0}
 }
 
 /* ==========================================================================
