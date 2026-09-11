@@ -308,13 +308,17 @@ img{max-width:100%}
 /* ==========================================================================
    Header
    ========================================================================== */
-.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out)}
+.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),transform 200ms var(--ease-out)}
 /* Transparent only while sitting over the navy hero photo, before any scroll. */
 .wz-header[data-transparent="true"]{background:transparent;border-bottom-color:transparent}
+/* Hides on scroll down, reveals on scroll up — independent of the
+   transparent/solid state above, which is driven by scroll position alone. */
+.wz-header[data-hidden="true"]{transform:translateY(-100%)}
 .wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6)}
 .wz-header a{color:var(--white);text-decoration:none}
-.wz-header a:hover{color:var(--white);text-decoration:underline}
-.wz-header .wz-btn--primary{text-decoration:none}
+/* No underline in the header on hover, nav links or the CTA — this isn't body
+   prose. This overrides the general a:hover rule, which does underline. */
+.wz-header a:hover{color:var(--white);text-decoration:none}
 .wz-header a:focus-visible,.wz-header button:focus-visible{outline-color:var(--focus-ring-on-ink)}
 .wz-nav{display:flex;align-items:center;gap:var(--space-8)}
 .wz-nav__link{font-size:var(--text-body-md);font-weight:var(--weight-medium);color:var(--white)}
@@ -469,7 +473,7 @@ img{max-width:100%}
 <!-- ======================================================================
      Header
      ====================================================================== -->
-<header class="wz-header" id="header" data-transparent="false">
+<header class="wz-header" id="header" data-transparent="false" data-hidden="false">
   <div class="wz-header__inner">
     <a href="/" aria-label="weighzIO home" class="wz-logo" style="height:30px">
       <img src="images/logoReverse.png" alt="weighzIO" width="128" height="30" style="height:30px">
@@ -1549,6 +1553,7 @@ img{max-width:100%}
     if (hash) {
       var target = document.getElementById(hash.slice(1));
       if (target) {
+        armSuppressHide();
         target.scrollIntoView();
         settleAnchor(target);
         /* A shared module link opens its panel. The section stays in the page
@@ -1580,6 +1585,7 @@ img{max-width:100%}
     if (!document.fonts || !document.fonts.ready) return;
     document.fonts.ready.then(function () {
       if (userScrolled) return;
+      armSuppressHide();
       target.scrollIntoView();
     });
   }
@@ -1605,7 +1611,10 @@ img{max-width:100%}
 
     var href = anchor.getAttribute("href");
     if (!href || href.charAt(0) === "#") {
-      /* Same-page anchor: let the browser handle it, but keep the URL tidy. */
+      /* Same-page anchor: let the browser handle it, but keep the URL tidy.
+         It still moves the page under the header, so treat it the same as a
+         scroll we triggered ourselves rather than the reader scrolling down. */
+      if (href && href.length > 1) armSuppressHide();
       return;
     }
 
@@ -1640,7 +1649,9 @@ img{max-width:100%}
   });
 
   /* ---------------------------------------------------------------------
-     Header: transparent only over the hero photo, before any scroll
+     Header: transparent only over the hero photo, before any scroll.
+     Separately, hides on scroll down and reveals on scroll up, once past a
+     small threshold so it doesn't twitch right at the top of the page.
      --------------------------------------------------------------------- */
   var header = document.getElementById("header");
   var menuToggle = document.getElementById("menu-toggle");
@@ -1648,13 +1659,66 @@ img{max-width:100%}
   var navMobile = document.getElementById("nav-mobile");
   var menuOpen = false;
 
+  var HEADER_HIDE_THRESHOLD = 100; // px scrolled before hide-on-scroll engages
+  var headerLastY = window.scrollY || document.documentElement.scrollTop || 0;
+  var headerHidden = false;
+  var suppressHide = false; // true while a scroll jump we triggered is still moving
+  var suppressHideTimer = null;
+  var SUPPRESS_HIDE_QUIET_MS = 250; // clears once scrolling has been quiet this long
+
+  /* An anchor navigation or focus auto-scroll moves the page the same way a
+     reader scrolling down would, but it isn't the reader choosing to scroll
+     away from the header, so it shouldn't be read as "hide". html has
+     scroll-behavior:smooth, so a long jump (e.g. from the top to a module
+     section near the foot of the page) can take a while to finish — this
+     re-arms on every scroll event still arriving, rather than clearing on a
+     flat timer that could lapse mid-animation, so it covers any distance. */
+  function armSuppressHide() {
+    suppressHide = true;
+    clearTimeout(suppressHideTimer);
+    suppressHideTimer = setTimeout(function () { suppressHide = false; }, SUPPRESS_HIDE_QUIET_MS);
+  }
+
   function syncHeader() {
-    var scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 24;
+    var y = window.scrollY || document.documentElement.scrollTop || 0;
+    var scrolled = y > 24;
     var overHero = currentPath === "/" || (currentPath === null && normalise(window.location.pathname) === "/");
     header.setAttribute("data-transparent", String(overHero && !scrolled && !menuOpen));
+
+    /* Hidden state is independent of the transparency above. Never hide while
+       the mobile menu is open, while a header link holds keyboard focus, or
+       mid-way through a scroll we triggered ourselves. */
+    var hide;
+    if (menuOpen || suppressHide || header.contains(document.activeElement)) {
+      if (suppressHide) armSuppressHide();
+      hide = false;
+    } else if (y <= HEADER_HIDE_THRESHOLD) {
+      hide = false;
+    } else if (y > headerLastY) {
+      hide = true;
+    } else if (y < headerLastY) {
+      hide = false;
+    } else {
+      hide = headerHidden;
+    }
+    headerLastY = y;
+
+    if (hide !== headerHidden) {
+      headerHidden = hide;
+      header.setAttribute("data-hidden", String(hide));
+    }
   }
 
   window.addEventListener("scroll", syncHeader, { passive: true });
+
+  /* Keyboard focus landing on a header link (Tab) reveals it immediately,
+     rather than waiting for the next scroll event. */
+  header.addEventListener("focusin", function () {
+    if (headerHidden) {
+      headerHidden = false;
+      header.setAttribute("data-hidden", "false");
+    }
+  });
 
   function setMenuIcon(name) {
     var url = "url('images/icon_" + name + ".svg')";
