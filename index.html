@@ -281,12 +281,54 @@ img{max-width:100%}
 .wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 4px var(--white)}
 
 /* ==========================================================================
-   Dialog (module detail popups)
+   Dialog (module detail popups) — one shared template for all sixteen,
+   populated from data read out of #module-sections (openModuleDialog /
+   buildModuleDialogContent, further down). Fixed height regardless of which
+   module is showing, so a chip swap (see .wz-modal__chips below) never
+   resizes or repositions the dialog — only the scrollable content changes.
    ========================================================================== */
 .wz-scrim{position:fixed;inset:0;background:var(--overlay-scrim);display:flex;align-items:center;justify-content:center;padding:var(--space-6);z-index:50;overflow-y:auto}
-.wz-dialog{background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:560px;width:100%;padding:var(--space-8);margin:auto}
-.wz-dialog__head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-3)}
-.wz-dialog__foot{display:flex;gap:var(--space-3);justify-content:flex-end;margin-top:var(--space-6);flex-wrap:wrap}
+.wz-dialog{position:relative;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:560px;width:100%;height:min(620px,82vh);margin:auto;display:flex;flex-direction:column;overflow:hidden}
+.wz-modal__close{position:absolute;top:var(--space-5);right:var(--space-5);z-index:2}
+/* The scrollable region grows to fill whatever space the fixed-height dialog
+   doesn't give to the footer band, so the footer band below stays pinned at
+   the bottom without needing position:sticky. */
+.wz-modal__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--space-8)}
+.wz-modal__scroll > div{transition:opacity 180ms ease}
+/* Header block: eyebrow above, icon + title in a row, summary below, all one
+   visually grouped unit — the hairline sits under the whole block, never
+   between the title and summary. */
+.wz-modal__header{padding-right:var(--space-10);margin-bottom:var(--space-6);padding-bottom:var(--space-6);border-bottom:var(--border-width) solid var(--border-hairline)}
+.wz-modal__eyebrow{display:block;margin-bottom:var(--space-3)}
+.wz-modal__title-row{display:flex;align-items:center;gap:var(--space-3)}
+.wz-modal__icon{width:32px;height:32px;color:var(--orange-press);flex:none}
+.wz-modal__title{font-size:1.8rem;margin:0}
+.wz-modal__summary{margin:var(--space-3) 0 0;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--text-body)}
+/* Bullets: the burst device as the marker, reusing the same asset and
+   pattern already used for the homepage tick list, not a redrawn glyph. */
+.wz-modal__bullets{list-style:none;margin:0 0 var(--space-6);padding:0;display:flex;flex-direction:column;gap:var(--space-3)}
+.wz-modal__bullets li{display:flex;gap:var(--space-3);align-items:flex-start;font-size:var(--text-body-md);line-height:var(--leading-body);color:var(--text-body)}
+.wz-modal__bullets li img{flex:none;margin-top:5px;width:13px;height:auto}
+/* A few modules (custom-modules) carry their real body copy as a plain
+   paragraph rather than a bullet list — same body size as bullet text. */
+.wz-modal__body-text{margin:0 0 var(--space-6);font-size:var(--text-body-md);line-height:var(--leading-body);color:var(--text-body)}
+/* "Works alongside" chips. Muted label (not the orange eyebrow treatment,
+   which is reserved for "Module" at the top) above a row of pill buttons. */
+.wz-modal__alongside-label{display:block;font-size:var(--text-micro);font-weight:var(--weight-semibold);color:var(--text-muted);margin-bottom:var(--space-2)}
+.wz-modal__chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.wz-chip{display:inline-flex;align-items:center;font-family:var(--font-body);font-size:var(--text-body-sm);font-weight:var(--weight-medium);color:var(--navy-700);background:transparent;border:var(--border-width) solid var(--navy-700);border-radius:var(--radius-pill);padding:7px var(--space-4);cursor:pointer;transition:var(--transition-hover)}
+/* Fill lightens slightly on hover — reusing --navy-050, the tint already
+   used for card/tag hover elsewhere, not a new colour. */
+.wz-chip:hover{background:var(--navy-050)}
+.wz-chip:focus-visible{outline:var(--border-width-strong) solid var(--focus-ring);outline-offset:2px}
+/* Footer band: hairline above, a pale tint distinct from the white body,
+   buttons equal height via align-items:stretch (the previous mismatch was
+   the two buttons resting at their own intrinsic height with no shared
+   reference; stretching them across the same fixed-height band settles it
+   regardless of the underlying cause). Flex-none so the scroll region above
+   absorbs any extra space instead of the footer growing. */
+.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:flex-end;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--navy-025);flex-wrap:wrap}
+.wz-modal__foot .wz-btn{flex:none;display:inline-flex;align-items:center;justify-content:center}
 
 /* ==========================================================================
    Data
@@ -885,7 +927,7 @@ img{max-width:100%}
             <li>Manual override is available and logged, for the days the hardware misbehaves.</li>
             <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Skip Hire &amp; RoRo, Materials &amp; Aggregates, Finance &amp; Sage.</p>
+          <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: Skip Hire &amp; RoRo, Materials &amp; Aggregates, Finance &amp; Sage.</p>
           <p style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
         </section>
 
@@ -920,7 +962,7 @@ img{max-width:100%}
             <li>Levies configured as a third tax tier alongside VAT and customer tax, calculated per material and disposal route.</li>
             <li>Quantities spread across multiple delivery dates, with recurring orders supported.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Weighbridge, Scheduling &amp; Dispatch, Fleet &amp; Telematics.</p>
+          <p class="wz-module-section__alongside" data-alongside="weighbridge,scheduling,fleet">Works alongside: Weighbridge, Scheduling &amp; Dispatch, Fleet &amp; Telematics.</p>
           <p style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
         </section>
 
@@ -937,7 +979,7 @@ img{max-width:100%}
             <li>Vehicles can be reassigned across group companies where one entity has capacity another needs.</li>
             <li>Scheduling for hire-based products, with jobs and products linked in both directions.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Driver App, Fleet &amp; Telematics, Skip Hire &amp; RoRo.</p>
+          <p class="wz-module-section__alongside" data-alongside="driver-app,fleet,skip-hire">Works alongside: Driver App, Fleet &amp; Telematics, Skip Hire &amp; RoRo.</p>
           <p style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
         </section>
 
@@ -955,7 +997,7 @@ img{max-width:100%}
             <li>Payment links generated on site by SMS or WhatsApp for balances owing before discharge.</li>
             <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Scheduling &amp; Dispatch, Skip Hire &amp; RoRo, Weighbridge.</p>
+          <p class="wz-module-section__alongside" data-alongside="scheduling,skip-hire,weighbridge">Works alongside: Scheduling &amp; Dispatch, Skip Hire &amp; RoRo, Weighbridge.</p>
           <p style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
         </section>
 
@@ -973,7 +1015,7 @@ img{max-width:100%}
             <li>Real-time capacity checked at the point the ticket is created rather than after the fact.</li>
             <li>Mobile device management across the fleet's handsets.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Scheduling &amp; Dispatch, Driver App.</p>
+          <p class="wz-module-section__alongside" data-alongside="scheduling,driver-app">Works alongside: Scheduling &amp; Dispatch, Driver App.</p>
           <p style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
         </section>
 
@@ -991,7 +1033,7 @@ img{max-width:100%}
             <li>Customer lookups for SIC code, zone, business type, postal area, priority and site access times.</li>
             <li>Cash and invoice payment terms held separately, with a workflow to convert a cash customer to an account customer.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Finance &amp; Sage, Skip Hire &amp; RoRo.</p>
+          <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: Finance &amp; Sage, Skip Hire &amp; RoRo.</p>
           <p style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
         </section>
 
@@ -1009,7 +1051,7 @@ img{max-width:100%}
             <li>Credit notes run through a multi-tier approval workflow before they go anywhere.</li>
             <li>Annual contract price uplifts scheduled and applied across active accounts.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Customers &amp; Pricing, Multi-Company, Reporting &amp; Dashboards.</p>
+          <p class="wz-module-section__alongside" data-alongside="customers,multi-company,reporting">Works alongside: Customers &amp; Pricing, Multi-Company, Reporting &amp; Dashboards.</p>
           <p style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
         </section>
 
@@ -1025,7 +1067,7 @@ img{max-width:100%}
             <li>A management dashboard showing daily vehicle revenue, ticket margins and tonnage.</li>
             <li>Hazardous waste consignment reports exportable in Environment Agency formats.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Multi-Company, Finance &amp; Sage, Customer Portal.</p>
+          <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: Multi-Company, Finance &amp; Sage, Customer Portal.</p>
           <p style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
         </section>
 
@@ -1040,7 +1082,7 @@ img{max-width:100%}
             <li>Site recycling reports delivered to key accounts without office involvement.</li>
             <li>Self-billing invoice workflows for contracted commercial partners.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Reporting &amp; Dashboards, Finance &amp; Sage.</p>
+          <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: Reporting &amp; Dashboards, Finance &amp; Sage.</p>
           <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
           <p style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
         </section>
@@ -1058,7 +1100,7 @@ img{max-width:100%}
             <li>Invoice templates, logos, remittance addresses and custom headers per company, so each entity invoices as itself.</li>
             <li>One master customer record shared across all entities, which removes the duplicate data entry and the inter-company notes.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Finance &amp; Sage, Scheduling &amp; Dispatch.</p>
+          <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: Finance &amp; Sage, Scheduling &amp; Dispatch.</p>
           <p style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
         </section>
 
@@ -1086,7 +1128,7 @@ img{max-width:100%}
             <li>Daily delivery tickets generated automatically for multi-load concrete orders.</li>
             <li>Concrete runs as one of the five dispatch planning views, filtered to how that side of the operation works.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Scheduling &amp; Dispatch, Weighbridge.</p>
+          <p class="wz-module-section__alongside" data-alongside="scheduling,weighbridge">Works alongside: Scheduling &amp; Dispatch, Weighbridge.</p>
           <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
           <p style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
         </section>
@@ -1113,7 +1155,7 @@ img{max-width:100%}
             <li>Restricted outlets and material-to-outlet validation, so hazardous material cannot be routed somewhere unlicensed.</li>
             <li>Duty of care records produced digitally as part of the same movement.</li>
           </ul>
-          <p class="wz-module-section__alongside">Works alongside: Skip Hire &amp; RoRo, Reporting &amp; Dashboards.</p>
+          <p class="wz-module-section__alongside" data-alongside="skip-hire,reporting">Works alongside: Skip Hire &amp; RoRo, Reporting &amp; Dashboards.</p>
           <p style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
         </section>
 
@@ -1448,14 +1490,13 @@ img{max-width:100%}
      ====================================================================== -->
 <div class="wz-scrim" id="module-scrim" hidden>
   <div class="wz-dialog" role="dialog" aria-modal="true" aria-labelledby="module-dialog-title" id="module-dialog">
-    <div class="wz-dialog__head">
-      <h3 id="module-dialog-title"></h3>
-      <button type="button" class="wz-iconbtn wz-iconbtn--bare wz-iconbtn--sm" id="module-dialog-close" aria-label="Close">
-        <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_x.svg');mask-image:url('images/icon_x.svg')"></span>
-      </button>
+    <button type="button" class="wz-iconbtn wz-iconbtn--bare wz-iconbtn--sm wz-modal__close" id="module-dialog-close" aria-label="Close">
+      <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_x.svg');mask-image:url('images/icon_x.svg')"></span>
+    </button>
+    <div class="wz-modal__scroll" id="module-dialog-scroll">
+      <div id="module-dialog-content"></div>
     </div>
-    <div id="module-dialog-body"></div>
-    <div class="wz-dialog__foot">
+    <div class="wz-modal__foot">
       <button type="button" class="wz-btn wz-btn--secondary" id="module-dialog-more">Read the full detail</button>
       <a class="wz-btn wz-btn--primary" id="module-dialog-enquire" href="/enquire">Enquire about this module</a>
     </div>
@@ -1848,36 +1889,158 @@ img{max-width:100%}
   });
 
   /* ---------------------------------------------------------------------
-     Module detail dialog. Content is cloned from the Modules route so the
-     copy lives once, in the initial HTML.
+     Module detail dialog. One shared template (buildModuleDialogContent)
+     for all sixteen modules, populated from data read out of the module's
+     own section under #module-sections, so the copy still lives once, in
+     the initial HTML — this just reads it more thoroughly than a straight
+     clone (icon, title, summary, bullets, and now which other modules to
+     show as "works alongside" chips, from that module's own
+     data-alongside attribute).
      --------------------------------------------------------------------- */
   var scrim = document.getElementById("module-scrim");
-  var dialogTitle = document.getElementById("module-dialog-title");
-  var dialogBody = document.getElementById("module-dialog-body");
+  var dialogScroll = document.getElementById("module-dialog-scroll");
+  var dialogContent = document.getElementById("module-dialog-content");
   var dialogMore = document.getElementById("module-dialog-more");
   var dialogEnquire = document.getElementById("module-dialog-enquire");
   var dialogClose = document.getElementById("module-dialog-close");
   var lastFocused = null;
   var openSlug = null;
+  var CROSSFADE_MS = 180;
 
-  function openModuleDialog(slug, trigger) {
+  function getModuleData(slug) {
     var source = document.querySelector('[data-module-detail="' + slug + '"]');
-    if (!source) return;
+    if (!source) return null;
 
-    var heading = source.querySelector("h2");
-    dialogTitle.textContent = heading ? heading.textContent : "";
+    var iconEl = source.querySelector(".wz-module-section__head .wz-icon");
+    var iconStyle = (iconEl && iconEl.getAttribute("style")) || "";
+    var iconMatch = iconStyle.match(/mask-image:\s*url\(['"]?([^'")]+)['"]?\)/);
+    var titleEl = source.querySelector(".wz-module-section__head h2");
+    var summaryEl = source.querySelector(".wz-module-section__summary");
+    var alongsideEl = source.querySelector("[data-alongside]");
+    var enquireEl = source.querySelector('a[href^="/enquire"]');
 
-    /* Everything from the source section except its heading row and its own
-       enquire link, which the dialog footer provides instead. */
-    dialogBody.textContent = "";
-    Array.prototype.forEach.call(source.children, function (child) {
-      if (child.classList.contains("wz-module-section__head")) return;
-      if (child.querySelector && child.querySelector('a[href^="/enquire"]')) return;
-      dialogBody.appendChild(child.cloneNode(true));
+    return {
+      slug: slug,
+      icon: iconMatch ? iconMatch[1] : "",
+      title: titleEl ? titleEl.textContent : "",
+      summary: summaryEl ? summaryEl.textContent : "",
+      bullets: Array.prototype.map.call(source.querySelectorAll("ul li"), function (li) {
+        return li.textContent;
+      }),
+      /* A handful of modules (custom-modules) carry their real body copy as
+         a plain <p> rather than a bullet list — picked up here so the shared
+         template still shows it, rather than silently dropping it because
+         it isn't a <ul>. .wz-pending advisory notes carry their own class,
+         but every module's enquire-link paragraph is unclassed too
+         (<p style="margin:0"><a href="/enquire...">), so excluding by class
+         alone isn't enough — it must also not contain a link. */
+      paragraphs: Array.prototype.map.call(source.querySelectorAll("p:not([class])"), function (p) {
+        return p.querySelector("a") ? null : p.textContent;
+      }).filter(function (text) {
+        return text !== null;
+      }),
+      alongside: alongsideEl ? alongsideEl.getAttribute("data-alongside").split(",").map(function (s) { return s.trim(); }).filter(Boolean) : [],
+      enquireHref: enquireEl ? enquireEl.getAttribute("href") : "/enquire"
+    };
+  }
+
+  function buildModuleDialogContent(container, data) {
+    container.innerHTML = "";
+
+    var header = document.createElement("div");
+    header.className = "wz-modal__header";
+
+    var eyebrow = document.createElement("span");
+    eyebrow.className = "wz-eyebrow wz-modal__eyebrow";
+    eyebrow.textContent = "Module";
+    header.appendChild(eyebrow);
+
+    var titleRow = document.createElement("div");
+    titleRow.className = "wz-modal__title-row";
+
+    var icon = document.createElement("span");
+    icon.className = "wz-icon wz-modal__icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.style.webkitMaskImage = "url('" + data.icon + "')";
+    icon.style.maskImage = "url('" + data.icon + "')";
+    titleRow.appendChild(icon);
+
+    var title = document.createElement("h3");
+    title.className = "wz-modal__title";
+    title.id = "module-dialog-title";
+    title.textContent = data.title;
+    titleRow.appendChild(title);
+
+    header.appendChild(titleRow);
+
+    var summary = document.createElement("p");
+    summary.className = "wz-modal__summary";
+    summary.textContent = data.summary;
+    header.appendChild(summary);
+
+    container.appendChild(header);
+
+    if (data.bullets.length) {
+      var ul = document.createElement("ul");
+      ul.className = "wz-modal__bullets";
+      data.bullets.forEach(function (text) {
+        var li = document.createElement("li");
+        var burst = document.createElement("img");
+        burst.className = "wz-burst";
+        burst.src = "images/burst.png";
+        burst.alt = "";
+        burst.setAttribute("aria-hidden", "true");
+        burst.width = 14;
+        burst.height = 14;
+        li.appendChild(burst);
+        var span = document.createElement("span");
+        span.textContent = text;
+        li.appendChild(span);
+        ul.appendChild(li);
+      });
+      container.appendChild(ul);
+    }
+
+    data.paragraphs.forEach(function (text) {
+      var p = document.createElement("p");
+      p.className = "wz-modal__body-text";
+      p.textContent = text;
+      container.appendChild(p);
     });
 
-    var enquireLink = source.querySelector('a[href^="/enquire"]');
-    dialogEnquire.setAttribute("href", enquireLink ? enquireLink.getAttribute("href") : "/enquire");
+    if (data.alongside.length) {
+      var wrap = document.createElement("div");
+      wrap.className = "wz-modal__alongside";
+
+      var label = document.createElement("span");
+      label.className = "wz-modal__alongside-label";
+      label.textContent = "Works alongside";
+      wrap.appendChild(label);
+
+      var chips = document.createElement("div");
+      chips.className = "wz-modal__chips";
+      data.alongside.forEach(function (relatedSlug) {
+        var related = getModuleData(relatedSlug);
+        if (!related) return;
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "wz-chip";
+        chip.setAttribute("data-module-chip", relatedSlug);
+        chip.textContent = related.title;
+        chips.appendChild(chip);
+      });
+      wrap.appendChild(chips);
+
+      container.appendChild(wrap);
+    }
+  }
+
+  function openModuleDialog(slug, trigger) {
+    var data = getModuleData(slug);
+    if (!data) return;
+
+    buildModuleDialogContent(dialogContent, data);
+    dialogEnquire.setAttribute("href", data.enquireHref);
 
     openSlug = slug;
     lastFocused = trigger || document.activeElement;
@@ -1885,6 +2048,31 @@ img{max-width:100%}
     document.body.style.overflow = "hidden";
     dialogClose.focus();
   }
+
+  /* Chip click: swaps the dialog's own content in place, cross-fading
+     between the old and new module rather than closing and reopening. No
+     history/back stack — whichever module was clicked simply becomes the
+     dialog's new content, and the close button always fully closes from
+     here regardless of how many chips were clicked to arrive at it. */
+  function swapModuleDialog(slug) {
+    var data = getModuleData(slug);
+    if (!data || slug === openSlug) return;
+
+    dialogContent.style.opacity = "0";
+    window.setTimeout(function () {
+      buildModuleDialogContent(dialogContent, data);
+      dialogEnquire.setAttribute("href", data.enquireHref);
+      openSlug = slug;
+      dialogScroll.scrollTop = 0;
+      dialogContent.style.opacity = "1";
+    }, CROSSFADE_MS);
+  }
+
+  dialogContent.addEventListener("click", function (event) {
+    var chip = event.target.closest ? event.target.closest("[data-module-chip]") : null;
+    if (!chip) return;
+    swapModuleDialog(chip.getAttribute("data-module-chip"));
+  });
 
   function closeModuleDialog() {
     if (scrim.hidden) return;
