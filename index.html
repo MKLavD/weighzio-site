@@ -325,47 +325,62 @@ img{max-width:100%}
    each end state's own rule, since a CSS transition takes its timing from
    the state being transitioned into. */
 .wz-header[data-hidden="true"]{transform:translateY(-100%);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 380ms var(--ease-out)}
-/* Compact state: roughly 22% smaller once scrolled past the same 350px
-   threshold hide/reveal uses (data-compact, set alongside data-hidden in the
-   same syncHeader() scroll handler — there is only one scroll listener for
-   the header; compact used to be keyed to data-transparent's much earlier
-   24px threshold instead, which is why it fired almost immediately). Grows
-   back at 220ms (matching reveal), shrinks at 380ms (matching hide), so this
-   reads as the same coordinated motion as the slide, not a separate effect.
-   Font sizes stay untouched throughout — only height, the logo, the nav gap
-   and the CTA's own padding scale, so content shrinks with the bar instead
-   of being cropped by it. */
-.wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);transition:height 220ms var(--ease-out)}
-.wz-header[data-compact="true"] .wz-header__inner{height:calc(var(--header-h) * .78);transition:height 380ms var(--ease-out)}
+/* Three explicit states, in order, all derived from one scrollY read in one
+   scroll handler (syncHeader()) so they can't drift apart:
+     1. Top of page (scrollY <= 70): full size, as below.
+     2. Compact (scrollY > 70): .hdr-compact toggled by class, not an
+        attribute driven by the same threshold hide/reveal uses — every
+        affected element gets its compact value named explicitly below,
+        rather than shrinking the container and hoping children scale with
+        it, which is what went wrong before.
+     3. Hidden (scrollY > 350, scrolling down): translateY(-100%) below,
+        applied on top of whichever size (full or compact) is already
+        current — 350 > 70, so by the time hide can engage, compact has
+        already engaged, meaning it always slides out from its compact
+        size, never its full size.
+   Shrink (state 1 -> 2) is 280ms, a quick deliberate settle. Hide (state 2
+   -> 3) stays 380ms, reveal 220ms — two separate transitions on two
+   separate properties (height/font-size/padding vs. transform), not tied
+   to the same duration. */
+.wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);transition:height 280ms var(--ease-out)}
+.wz-header.hdr-compact .wz-header__inner{height:calc(var(--header-h) * .78)}
 .wz-header a{color:var(--white);text-decoration:none}
 /* No underline in the header on hover, nav links or the CTA — this isn't body
    prose. This overrides the general a:hover rule, which does underline. */
 .wz-header a:hover{color:var(--white);text-decoration:none}
 .wz-header a:focus-visible,.wz-header button:focus-visible{outline-color:var(--focus-ring-on-ink)}
-/* Height set here (not inline on the element) specifically so the compact
-   state below can scale it through the normal cascade. */
-.wz-header .wz-logo{height:30px;transition:height 220ms var(--ease-out)}
-.wz-header[data-compact="true"] .wz-logo{height:calc(30px * .78);transition:height 380ms var(--ease-out)}
-.wz-nav{display:flex;align-items:center;gap:var(--space-8);transition:gap 220ms var(--ease-out)}
-.wz-header[data-compact="true"] .wz-nav{gap:calc(var(--space-8) * .78);transition:gap 380ms var(--ease-out)}
+/* Height set here (not inline on the element) specifically so .hdr-compact
+   below can scale it through the normal cascade — a stylesheet rule cannot
+   override a plain inline style without !important. */
+.wz-header .wz-logo{height:30px;transition:height 280ms var(--ease-out)}
+.wz-header.hdr-compact .wz-logo{height:calc(30px * .78)}
+.wz-nav{display:flex;align-items:center;gap:var(--space-8);transition:gap 280ms var(--ease-out)}
+.wz-header.hdr-compact .wz-nav{gap:calc(var(--space-8) * .78)}
 /* Muted at rest, full white on hover, on a short colour transition. The
    header background is navy in both its transparent-over-hero and solid
    states (never a light fill), so the same white-based treatment reads
    correctly either way rather than needing a separate navy-on-navy variant.
    Scoped under .wz-header throughout so this reliably outranks the generic
    .wz-header a{color:var(--white)} rule above — a bare .wz-nav__link
-   selector is lower specificity than that and would be silently overridden. */
-.wz-header .wz-nav__link{font-size:var(--text-body-md);font-weight:var(--weight-medium);color:rgba(255,255,255,.8);transition:color var(--duration-fast) var(--ease-out)}
+   selector is lower specificity than that and would be silently overridden.
+   font-size steps down one rung of the existing type scale (17px -> 15px)
+   rather than an arbitrary multiplier, so it still reads as a designed size
+   rather than a mid-way shrink. */
+.wz-header .wz-nav__link{font-size:var(--text-body-md);font-weight:var(--weight-medium);color:rgba(255,255,255,.8);transition:color var(--duration-fast) var(--ease-out),font-size 280ms var(--ease-out)}
+.wz-header.hdr-compact .wz-nav__link{font-size:var(--text-body-sm)}
 .wz-header .wz-nav__link:hover{color:var(--white)}
 .wz-header .wz-nav__link[aria-current="page"]{color:var(--white);text-decoration:underline;text-underline-offset:6px}
-/* The CTA's own padding scales with compact too, so it isn't left full-size
-   inside a smaller bar. transition repeats .wz-btn--primary's own hover/press
-   transition list alongside padding — CSS transition is a single shorthand
-   per element, so a more specific rule fully replaces rather than appends to
-   it; padding cannot be added here without re-stating the rest, or the CTA's
-   hover and press animations would silently stop working inside the header. */
-.wz-header .wz-btn--primary{transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out),padding 220ms var(--ease-out)}
-.wz-header[data-compact="true"] .wz-btn--primary{padding:calc(13px * .78) calc(var(--space-5) * .78);transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out),padding 380ms var(--ease-out)}
+/* The CTA's own padding and font-size scale with compact too, reusing the
+   exact values .wz-btn--sm already defines elsewhere for a compact button
+   (9px var(--space-4) padding, --text-micro) rather than inventing new
+   numbers. transition repeats .wz-btn--primary's own hover/press transition
+   list alongside padding/font-size — CSS transition is a single shorthand
+   per element, so a more specific rule fully replaces rather than appends
+   to it; they cannot be added here without re-stating the rest, or the
+   CTA's hover and press animations would silently stop working inside the
+   header. */
+.wz-header .wz-btn--primary{transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out),padding 280ms var(--ease-out),font-size 280ms var(--ease-out)}
+.wz-header.hdr-compact .wz-btn--primary{padding:9px var(--space-4);font-size:var(--text-micro)}
 .wz-menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid var(--border-on-ink);border-radius:var(--radius-md);color:var(--white);cursor:pointer}
 .wz-nav-mobile{background:var(--navy-700);border-top:1px solid var(--border-on-ink);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
 .wz-nav-mobile a:not(.wz-btn){padding:var(--space-3) 0;font-size:var(--text-lead);font-weight:var(--weight-medium);color:var(--white)}
@@ -516,7 +531,7 @@ img{max-width:100%}
 <!-- ======================================================================
      Header
      ====================================================================== -->
-<header class="wz-header" id="header" data-transparent="false" data-hidden="false" data-compact="false">
+<header class="wz-header" id="header" data-transparent="false" data-hidden="false">
   <div class="wz-header__inner">
     <a href="/" aria-label="weighzIO home" class="wz-logo">
       <img src="images/logoReverse.png" alt="weighzIO" width="128" height="30">
@@ -1702,7 +1717,8 @@ img{max-width:100%}
   var navMobile = document.getElementById("nav-mobile");
   var menuOpen = false;
 
-  var HEADER_HIDE_THRESHOLD = 350; // px scrolled before hide-on-scroll — and compact — engage
+  var COMPACT_THRESHOLD = 70;      // px scrolled before the header enters its compact state
+  var HEADER_HIDE_THRESHOLD = 350; // px scrolled before hide-on-scroll-down can engage
   var headerLastY = window.scrollY || document.documentElement.scrollTop || 0;
   var headerHidden = false;
   var headerCompact = false;
@@ -1723,15 +1739,36 @@ img{max-width:100%}
     suppressHideTimer = setTimeout(function () { suppressHide = false; }, SUPPRESS_HIDE_QUIET_MS);
   }
 
+  /* Single scroll listener, single read of scrollY, three states derived from
+     it every time — compact and hidden can no longer drift out of sync with
+     each other because there is nowhere else either one is computed. */
   function syncHeader() {
     var y = window.scrollY || document.documentElement.scrollTop || 0;
+
+    /* Transparency: unrelated to compact/hidden below, its own 24px threshold. */
     var scrolled = y > 24;
     var overHero = currentPath === "/" || (currentPath === null && normalise(window.location.pathname) === "/");
     header.setAttribute("data-transparent", String(overHero && !scrolled && !menuOpen));
 
-    /* Hidden state is independent of the transparency above. Never hide while
-       the mobile menu is open, while a header link holds keyboard focus, or
-       mid-way through a scroll we triggered ourselves. */
+    /* State 2, compact: unconditional on scroll direction — engages once past
+       70px, releases once back above it, on the way up or down either way.
+       Gates on its own threshold, well before the hide threshold, so by the
+       time state 3 can engage the header has already shrunk. */
+    var compact = y > COMPACT_THRESHOLD;
+    if (compact !== headerCompact) {
+      headerCompact = compact;
+      header.classList.toggle("hdr-compact", compact);
+    }
+
+    /* State 3, hidden: independent of transparency and of compact above —
+       whichever size (full or compact) is already current stays current
+       while this only slides the bar off-screen. Never hide while the mobile
+       menu is open, while a header link holds keyboard focus, or mid-way
+       through a scroll we triggered ourselves. Reappearing on scroll-up does
+       not need to step back through every state: compact is recalculated
+       from the same y on every scroll tick regardless of hidden, so by the
+       time hidden clears, whichever size matches the current position is
+       already applied. */
     var hide;
     if (menuOpen || suppressHide || header.contains(document.activeElement)) {
       if (suppressHide) armSuppressHide();
@@ -1750,17 +1787,6 @@ img{max-width:100%}
     if (hide !== headerHidden) {
       headerHidden = hide;
       header.setAttribute("data-hidden", String(hide));
-    }
-
-    /* Compact state gates on the same 350px threshold as hide/reveal, not a
-       separate one — computed here from the same y in the same function, so
-       the two can't drift out of sync. Unconditional on direction: it engages
-       once you're past the threshold and releases once you scroll back above
-       it, regardless of which way you're currently moving. */
-    var compact = y > HEADER_HIDE_THRESHOLD;
-    if (compact !== headerCompact) {
-      headerCompact = compact;
-      header.setAttribute("data-compact", String(compact));
     }
   }
 
