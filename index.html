@@ -311,10 +311,12 @@ img{max-width:100%}
 .wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 220ms var(--ease-out)}
 /* Transparent only while sitting over the navy hero photo, before any scroll. */
 .wz-header[data-transparent="true"]{background:transparent;border-bottom-color:transparent}
-/* Shadow only once solid, so it reads as separation from page content below —
-   not while floating transparent over the hero photo. Navy-tinted, matching
-   --shadow-sm/md elsewhere rather than a neutral black. */
-.wz-header[data-transparent="false"]{box-shadow:0 2px 8px rgba(18,45,75,.12)}
+/* Separation from content only once solid — not while floating transparent
+   over the hero photo. A shadow alone reads against white content below but
+   is nearly invisible over a navy band, so a soft white hairline carries the
+   edge there instead; darker/stronger shadow than a typical card shadow so
+   it holds up on both. */
+.wz-header[data-transparent="false"]{box-shadow:0 2px 12px rgba(5,15,28,.25);border-bottom:1px solid rgba(255,255,255,.08)}
 /* Hides on scroll down, reveals on scroll up — independent of the
    transparent/solid state above, which is driven by scroll position alone.
    Hide is a slower, deliberate slide; reveal is quicker so it feels
@@ -322,7 +324,15 @@ img{max-width:100%}
    each end state's own rule, since a CSS transition takes its timing from
    the state being transitioned into. */
 .wz-header[data-hidden="true"]{transform:translateY(-100%);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 380ms var(--ease-out)}
-.wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6)}
+/* Grows back to full height at 220ms, matching the reveal timing above, so
+   this reads as one coordinated motion with the hide/reveal slide rather
+   than a separately-timed effect. Font sizes are untouched — only the
+   height (there is no separate vertical-padding property on this element;
+   it is centred via flex within a fixed height) shrinks. */
+.wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);transition:height 220ms var(--ease-out)}
+/* Roughly 22% more compact once solid/scrolled. Shrinks at 380ms, matching
+   the hide timing above. */
+.wz-header[data-transparent="false"] .wz-header__inner{height:calc(var(--header-h) * .78);transition:height 380ms var(--ease-out)}
 .wz-header a{color:var(--white);text-decoration:none}
 /* No underline in the header on hover, nav links or the CTA — this isn't body
    prose. This overrides the general a:hover rule, which does underline. */
@@ -499,7 +509,7 @@ img{max-width:100%}
       <a class="wz-nav__link" href="/modules">Modules</a>
       <a class="wz-nav__link" href="/digital-waste-tracking">Digital Waste Tracking</a>
       <a class="wz-nav__link" href="/enquire">Enquire</a>
-      <a class="wz-btn wz-btn--primary wz-btn--sm" href="/enquire">Find out more</a>
+      <a class="wz-btn wz-btn--primary" href="/enquire">Find out more</a>
     </nav>
 
     <button type="button" class="wz-menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-mobile">
