@@ -282,45 +282,47 @@ img{max-width:100%}
 
 /* ==========================================================================
    Dialog (module detail popups) — one shared template for all sixteen,
-   populated from data read out of #module-sections (openModuleDialog /
-   buildModuleDialogContent, further down). Fixed height regardless of which
-   module is showing, so a chip swap (see .wz-modal__chips below) never
-   resizes or repositions the dialog — only the scrollable content changes.
+   populated from data read out of #module-sections (openModuleDialog,
+   further down). The popup only ever shows the single module it was opened
+   for — no in-modal navigation between modules, closing is the only way
+   out — so the dialog sizes naturally to whichever module's content is
+   showing, up to max-height, rather than needing a fixed height.
+   Three flex bands: header and footer are flex:none (pinned top and
+   bottom), the scroll region between them absorbs any overflow.
    ========================================================================== */
 .wz-scrim{position:fixed;inset:0;background:var(--overlay-scrim);display:flex;align-items:center;justify-content:center;padding:var(--space-6);z-index:50;overflow-y:auto}
-.wz-dialog{position:relative;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:560px;width:100%;height:min(620px,82vh);margin:auto;display:flex;flex-direction:column;overflow:hidden}
+.wz-dialog{position:relative;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:660px;width:100%;max-height:90vh;margin:auto;display:flex;flex-direction:column;overflow:hidden}
 .wz-modal__close{position:absolute;top:var(--space-5);right:var(--space-5);z-index:2}
-/* The scrollable region grows to fill whatever space the fixed-height dialog
-   doesn't give to the footer band, so the footer band below stays pinned at
-   the bottom without needing position:sticky. */
-.wz-modal__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--space-8)}
-.wz-modal__scroll > div{transition:opacity 180ms ease}
 /* Header block: eyebrow above, icon + title in a row, summary below, all one
    visually grouped unit — the hairline sits under the whole block, never
-   between the title and summary. */
-.wz-modal__header{padding-right:var(--space-10);margin-bottom:var(--space-6);padding-bottom:var(--space-6);border-bottom:var(--border-width) solid var(--border-hairline)}
+   between the title and summary. flex:none, same mechanism the footer
+   already used to stay pinned to the bottom, so this stays pinned to the
+   top: only .wz-modal__scroll below (bullets/alongside text) scrolls. */
+.wz-modal__header{flex:none;padding:var(--space-8) var(--space-10) var(--space-6) var(--space-8);border-bottom:var(--border-width) solid var(--border-hairline)}
 .wz-modal__eyebrow{display:block;margin-bottom:var(--space-3)}
 .wz-modal__title-row{display:flex;align-items:center;gap:var(--space-3)}
 .wz-modal__icon{width:32px;height:32px;color:var(--orange-press);flex:none}
 .wz-modal__title{font-size:1.8rem;margin:0}
 .wz-modal__summary{margin:var(--space-3) 0 0;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--text-body)}
+/* The only part that scrolls. Top padding is smaller than the sides/bottom —
+   the header's own bottom padding already carries the gap down to its
+   hairline, so this only needs to pick up from there. */
+.wz-modal__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--space-6) var(--space-8) var(--space-8)}
 /* Bullets: the burst device as the marker, reusing the same asset and
-   pattern already used for the homepage tick list, not a redrawn glyph. */
-.wz-modal__bullets{list-style:none;margin:0 0 var(--space-6);padding:0;display:flex;flex-direction:column;gap:var(--space-3)}
+   pattern already used for the homepage tick list, not a redrawn glyph.
+   Gap tightened slightly from the original --space-3 to reclaim height on
+   modules with longer bullet text. */
+.wz-modal__bullets{list-style:none;margin:0 0 var(--space-6);padding:0;display:flex;flex-direction:column;gap:var(--space-2)}
 .wz-modal__bullets li{display:flex;gap:var(--space-3);align-items:flex-start;font-size:var(--text-body-md);line-height:var(--leading-body);color:var(--text-body)}
 .wz-modal__bullets li img{flex:none;margin-top:5px;width:13px;height:auto}
 /* A few modules (custom-modules) carry their real body copy as a plain
    paragraph rather than a bullet list — same body size as bullet text. */
 .wz-modal__body-text{margin:0 0 var(--space-6);font-size:var(--text-body-md);line-height:var(--leading-body);color:var(--text-body)}
-/* "Works alongside" chips. Muted label (not the orange eyebrow treatment,
-   which is reserved for "Module" at the top) above a row of pill buttons. */
-.wz-modal__alongside-label{display:block;font-size:var(--text-micro);font-weight:var(--weight-semibold);color:var(--text-muted);margin-bottom:var(--space-2)}
-.wz-modal__chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
-.wz-chip{display:inline-flex;align-items:center;font-family:var(--font-body);font-size:var(--text-body-sm);font-weight:var(--weight-medium);color:var(--navy-700);background:transparent;border:var(--border-width) solid var(--navy-700);border-radius:var(--radius-pill);padding:7px var(--space-4);cursor:pointer;transition:var(--transition-hover)}
-/* Fill lightens slightly on hover — reusing --navy-050, the tint already
-   used for card/tag hover elsewhere, not a new colour. */
-.wz-chip:hover{background:var(--navy-050)}
-.wz-chip:focus-visible{outline:var(--border-width-strong) solid var(--focus-ring);outline-offset:2px}
+/* "Works alongside" — plain navy sentence, not a link or a button. Related
+   module names are plain <strong> tags, which the sitewide base rule already
+   sets to navy-700 semibold, so they read slightly heavier/darker than the
+   navy-600 label around them with no bespoke CSS needed for the emphasis. */
+.wz-modal__alongside-text{margin:0;font-size:var(--text-body-sm);color:var(--text-body)}
 /* Footer band: hairline above, a pale tint distinct from the white body,
    buttons equal height via align-items:stretch (the previous mismatch was
    the two buttons resting at their own intrinsic height with no shared
@@ -1493,8 +1495,9 @@ img{max-width:100%}
     <button type="button" class="wz-iconbtn wz-iconbtn--bare wz-iconbtn--sm wz-modal__close" id="module-dialog-close" aria-label="Close">
       <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_x.svg');mask-image:url('images/icon_x.svg')"></span>
     </button>
-    <div class="wz-modal__scroll" id="module-dialog-scroll">
-      <div id="module-dialog-content"></div>
+    <div class="wz-modal__header" id="module-dialog-header"></div>
+    <div class="wz-modal__scroll">
+      <div id="module-dialog-body"></div>
     </div>
     <div class="wz-modal__foot">
       <button type="button" class="wz-btn wz-btn--secondary" id="module-dialog-more">Read the full detail</button>
@@ -1898,14 +1901,13 @@ img{max-width:100%}
      data-alongside attribute).
      --------------------------------------------------------------------- */
   var scrim = document.getElementById("module-scrim");
-  var dialogScroll = document.getElementById("module-dialog-scroll");
-  var dialogContent = document.getElementById("module-dialog-content");
+  var dialogHeader = document.getElementById("module-dialog-header");
+  var dialogBody = document.getElementById("module-dialog-body");
   var dialogMore = document.getElementById("module-dialog-more");
   var dialogEnquire = document.getElementById("module-dialog-enquire");
   var dialogClose = document.getElementById("module-dialog-close");
   var lastFocused = null;
   var openSlug = null;
-  var CROSSFADE_MS = 180;
 
   function getModuleData(slug) {
     var source = document.querySelector('[data-module-detail="' + slug + '"]');
@@ -1944,16 +1946,14 @@ img{max-width:100%}
     };
   }
 
-  function buildModuleDialogContent(container, data) {
+  /* Fixed band, does not scroll with the bullets/alongside text below it. */
+  function buildModuleDialogHeader(container, data) {
     container.innerHTML = "";
-
-    var header = document.createElement("div");
-    header.className = "wz-modal__header";
 
     var eyebrow = document.createElement("span");
     eyebrow.className = "wz-eyebrow wz-modal__eyebrow";
     eyebrow.textContent = "Module";
-    header.appendChild(eyebrow);
+    container.appendChild(eyebrow);
 
     var titleRow = document.createElement("div");
     titleRow.className = "wz-modal__title-row";
@@ -1971,14 +1971,17 @@ img{max-width:100%}
     title.textContent = data.title;
     titleRow.appendChild(title);
 
-    header.appendChild(titleRow);
+    container.appendChild(titleRow);
 
     var summary = document.createElement("p");
     summary.className = "wz-modal__summary";
     summary.textContent = data.summary;
-    header.appendChild(summary);
+    container.appendChild(summary);
+  }
 
-    container.appendChild(header);
+  /* The only part that scrolls, between the fixed header and footer bands. */
+  function buildModuleDialogBody(container, data) {
+    container.innerHTML = "";
 
     if (data.bullets.length) {
       var ul = document.createElement("ul");
@@ -2008,30 +2011,28 @@ img{max-width:100%}
       container.appendChild(p);
     });
 
-    if (data.alongside.length) {
-      var wrap = document.createElement("div");
-      wrap.className = "wz-modal__alongside";
+    /* Plain sentence, not a link or a button — no in-modal navigation to
+       another module. Names resolved to real titles and skipped silently if
+       a slug fails to resolve, so punctuation never ends up wrong; four
+       modules (skip-hire, marketing-data-feed, trade-waste, custom-modules)
+       have no related modules in their own source content and so get no
+       line at all, rather than a label with nothing after it. */
+    var names = data.alongside.map(function (relatedSlug) {
+      var related = getModuleData(relatedSlug);
+      return related ? related.title : null;
+    }).filter(Boolean);
 
-      var label = document.createElement("span");
-      label.className = "wz-modal__alongside-label";
-      label.textContent = "Works alongside";
-      wrap.appendChild(label);
-
-      var chips = document.createElement("div");
-      chips.className = "wz-modal__chips";
-      data.alongside.forEach(function (relatedSlug) {
-        var related = getModuleData(relatedSlug);
-        if (!related) return;
-        var chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "wz-chip";
-        chip.setAttribute("data-module-chip", relatedSlug);
-        chip.textContent = related.title;
-        chips.appendChild(chip);
+    if (names.length) {
+      var p2 = document.createElement("p");
+      p2.className = "wz-modal__alongside-text";
+      p2.appendChild(document.createTextNode("Works alongside: "));
+      names.forEach(function (name, i) {
+        var strong = document.createElement("strong");
+        strong.textContent = name;
+        p2.appendChild(strong);
+        p2.appendChild(document.createTextNode(i < names.length - 1 ? ", " : "."));
       });
-      wrap.appendChild(chips);
-
-      container.appendChild(wrap);
+      container.appendChild(p2);
     }
   }
 
@@ -2039,7 +2040,8 @@ img{max-width:100%}
     var data = getModuleData(slug);
     if (!data) return;
 
-    buildModuleDialogContent(dialogContent, data);
+    buildModuleDialogHeader(dialogHeader, data);
+    buildModuleDialogBody(dialogBody, data);
     dialogEnquire.setAttribute("href", data.enquireHref);
 
     openSlug = slug;
@@ -2048,31 +2050,6 @@ img{max-width:100%}
     document.body.style.overflow = "hidden";
     dialogClose.focus();
   }
-
-  /* Chip click: swaps the dialog's own content in place, cross-fading
-     between the old and new module rather than closing and reopening. No
-     history/back stack — whichever module was clicked simply becomes the
-     dialog's new content, and the close button always fully closes from
-     here regardless of how many chips were clicked to arrive at it. */
-  function swapModuleDialog(slug) {
-    var data = getModuleData(slug);
-    if (!data || slug === openSlug) return;
-
-    dialogContent.style.opacity = "0";
-    window.setTimeout(function () {
-      buildModuleDialogContent(dialogContent, data);
-      dialogEnquire.setAttribute("href", data.enquireHref);
-      openSlug = slug;
-      dialogScroll.scrollTop = 0;
-      dialogContent.style.opacity = "1";
-    }, CROSSFADE_MS);
-  }
-
-  dialogContent.addEventListener("click", function (event) {
-    var chip = event.target.closest ? event.target.closest("[data-module-chip]") : null;
-    if (!chip) return;
-    swapModuleDialog(chip.getAttribute("data-module-chip"));
-  });
 
   function closeModuleDialog() {
     if (scrim.hidden) return;
