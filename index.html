@@ -123,6 +123,12 @@
   --gutter: var(--space-6);
   --container-max: 1200px;
   --container-narrow: 720px;
+  /* Single source for the module popup's horizontal content inset — header
+     hairline, footer hairline and the footer's own padding (which the
+     mobile full-width buttons inherit via width:100%) all reference this,
+     redefined once inside the popup's mobile media query, so they move
+     together rather than needing separate fixes each time it changes. */
+  --modal-pad-x: var(--space-8);
 
   /* Shape */
   --radius-xs: 2px;   /* tags, table cell accents */
@@ -301,8 +307,8 @@ img{max-width:100%}
    can be inset to the space-8 (32px) content column instead of spanning the
    header's own full width — its own right padding is wider (space-10) only
    to clear the close button, which the hairline doesn't need to do. */
-.wz-modal__header{position:relative;flex:none;padding:var(--space-8) var(--space-10) var(--space-6) var(--space-8)}
-.wz-modal__header::after{content:"";position:absolute;left:var(--space-8);right:var(--space-8);bottom:0;border-bottom:var(--border-width) solid var(--border-hairline)}
+.wz-modal__header{position:relative;flex:none;padding:var(--space-8) var(--space-10) var(--space-6) var(--modal-pad-x)}
+.wz-modal__header::after{content:"";position:absolute;left:var(--modal-pad-x);right:var(--modal-pad-x);bottom:0;border-bottom:var(--border-width) solid var(--border-hairline)}
 .wz-modal__eyebrow{display:block;margin-bottom:var(--space-3)}
 .wz-modal__title-row{display:flex;align-items:center;gap:var(--space-3)}
 .wz-modal__icon{width:32px;height:32px;color:var(--orange-press);flex:none}
@@ -311,7 +317,7 @@ img{max-width:100%}
 /* The only part that scrolls. Top padding is smaller than the sides/bottom —
    the header's own bottom padding already carries the gap down to its
    hairline, so this only needs to pick up from there. */
-.wz-modal__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--space-6) var(--space-8) var(--space-8)}
+.wz-modal__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--space-6) var(--modal-pad-x) var(--space-8)}
 /* Bullets: the burst device as the marker, reusing the same asset and
    pattern already used for the homepage tick list, not a redrawn glyph.
    Gap tightened slightly from the original --space-3 to reclaim height on
@@ -338,7 +344,7 @@ img{max-width:100%}
    shares the same space-8 (32px) horizontal padding as the hairline above
    and .wz-modal__scroll below, so both buttons' outer edges land on that
    same content column rather than clustering off-centre. */
-.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--space-8);border-top:var(--border-width) solid var(--border-hairline);background:var(--white);flex-wrap:wrap}
+.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--modal-pad-x);border-top:var(--border-width) solid var(--border-hairline);background:var(--white);flex-wrap:wrap}
 /* Both buttons the same width as the longer label ("Enquire about this
    module", 225.2px natural width at this padding/font-size, rounded up).
    The shorter-label button (min-width, not width) grows to match; the
@@ -365,6 +371,11 @@ img{max-width:100%}
   .wz-scrim{align-items:flex-start}
   .wz-dialog{max-height:none;margin:0 auto}
   .wz-modal__scroll{flex:none;overflow:visible}
+  /* 32px -> 20px (--space-5), a 37.5% reduction. Redefining the one shared
+     custom property here moves the header hairline, footer hairline and
+     footer padding (which the full-width buttons below inherit) together —
+     nothing else in this file references --space-8 directly for this. */
+  .wz-dialog{--modal-pad-x: var(--space-5)}
   /* Stacked, both full width of the same content column the footer's own
      padding already sets up — the desktop min-width no longer applies once
      each button spans the full row anyway. */
