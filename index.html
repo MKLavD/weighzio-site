@@ -308,12 +308,20 @@ img{max-width:100%}
 /* ==========================================================================
    Header
    ========================================================================== */
-.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),transform 200ms var(--ease-out)}
+.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 220ms var(--ease-out)}
 /* Transparent only while sitting over the navy hero photo, before any scroll. */
 .wz-header[data-transparent="true"]{background:transparent;border-bottom-color:transparent}
+/* Shadow only once solid, so it reads as separation from page content below —
+   not while floating transparent over the hero photo. Navy-tinted, matching
+   --shadow-sm/md elsewhere rather than a neutral black. */
+.wz-header[data-transparent="false"]{box-shadow:0 2px 8px rgba(18,45,75,.12)}
 /* Hides on scroll down, reveals on scroll up — independent of the
-   transparent/solid state above, which is driven by scroll position alone. */
-.wz-header[data-hidden="true"]{transform:translateY(-100%)}
+   transparent/solid state above, which is driven by scroll position alone.
+   Hide is a slower, deliberate slide; reveal is quicker so it feels
+   responsive, but transitioned rather than an instant cut. Durations live on
+   each end state's own rule, since a CSS transition takes its timing from
+   the state being transitioned into. */
+.wz-header[data-hidden="true"]{transform:translateY(-100%);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 380ms var(--ease-out)}
 .wz-header__inner{max-width:var(--container-max);margin:0 auto;height:var(--header-h);padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6)}
 .wz-header a{color:var(--white);text-decoration:none}
 /* No underline in the header on hover, nav links or the CTA — this isn't body
@@ -321,8 +329,16 @@ img{max-width:100%}
 .wz-header a:hover{color:var(--white);text-decoration:none}
 .wz-header a:focus-visible,.wz-header button:focus-visible{outline-color:var(--focus-ring-on-ink)}
 .wz-nav{display:flex;align-items:center;gap:var(--space-8)}
-.wz-nav__link{font-size:var(--text-body-md);font-weight:var(--weight-medium);color:var(--white)}
-.wz-nav__link[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+/* Muted at rest, full white on hover, on a short colour transition. The
+   header background is navy in both its transparent-over-hero and solid
+   states (never a light fill), so the same white-based treatment reads
+   correctly either way rather than needing a separate navy-on-navy variant.
+   Scoped under .wz-header throughout so this reliably outranks the generic
+   .wz-header a{color:var(--white)} rule above — a bare .wz-nav__link
+   selector is lower specificity than that and would be silently overridden. */
+.wz-header .wz-nav__link{font-size:var(--text-body-md);font-weight:var(--weight-medium);color:rgba(255,255,255,.8);transition:color var(--duration-fast) var(--ease-out)}
+.wz-header .wz-nav__link:hover{color:var(--white)}
+.wz-header .wz-nav__link[aria-current="page"]{color:var(--white);text-decoration:underline;text-underline-offset:6px}
 .wz-menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid var(--border-on-ink);border-radius:var(--radius-md);color:var(--white);cursor:pointer}
 .wz-nav-mobile{background:var(--navy-700);border-top:1px solid var(--border-on-ink);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
 .wz-nav-mobile a:not(.wz-btn){padding:var(--space-3) 0;font-size:var(--text-lead);font-weight:var(--weight-medium);color:var(--white)}
@@ -1659,7 +1675,7 @@ img{max-width:100%}
   var navMobile = document.getElementById("nav-mobile");
   var menuOpen = false;
 
-  var HEADER_HIDE_THRESHOLD = 100; // px scrolled before hide-on-scroll engages
+  var HEADER_HIDE_THRESHOLD = 350; // px scrolled before hide-on-scroll engages
   var headerLastY = window.scrollY || document.documentElement.scrollTop || 0;
   var headerHidden = false;
   var suppressHide = false; // true while a scroll jump we triggered is still moving
