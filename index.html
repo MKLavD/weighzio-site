@@ -415,15 +415,34 @@ img{max-width:100%}
 /* ==========================================================================
    Hero
    ========================================================================== */
-.wz-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:120px var(--gutter) var(--space-20)}
+/* Copy block tapers eyebrow -> H1 -> subheadline -> one button, so the
+   vertical rhythm is deliberately uneven: tightest above the H1, more room
+   below it, most room below the subheadline so the button reads as the
+   point of the shape rather than a continuation of the stack. Shifted up
+   slightly via the padding split (more bottom than top) rather than a
+   transform, so the leftover space in the 100vh band falls below the CTA. */
+.wz-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:88px var(--gutter) 140px}
 .wz-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .wz-hero__scrim{position:absolute;inset:0;background:#122D4B;opacity:.6}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
-.wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
 .wz-hero__mark .wz-eyebrow{color:var(--white)}
 .wz-hero h1{margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
-.wz-hero__lead{margin:28px auto 0;max-width:60ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--white)}
-.wz-hero__actions{margin-top:var(--space-10);display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-4)}
+/* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
+   the block visibly tapers rather than running the same width as the H1
+   above it. ch/rem rather than a percentage, so the ratio holds as the
+   viewport changes rather than tracking the H1's own fluid width 1:1. Full
+   width below 700px, where there's no taper to preserve. */
+.wz-hero__lead{margin:34px auto 0;max-width:42ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--white)}
+.wz-hero__actions{margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:var(--space-4)}
+/* Plain text link, not a second button — no border, fill or background,
+   underlined only on hover. */
+.wz-hero__link{color:var(--white);font-size:var(--text-body-md);font-weight:var(--weight-medium);text-decoration:none;text-underline-offset:3px}
+.wz-hero__link:hover{color:var(--white);text-decoration:underline}
+.wz-hero__link:focus-visible{outline-color:var(--focus-ring-on-ink)}
+@media (max-width:700px){
+  .wz-hero__lead{max-width:none}
+}
 
 /* ==========================================================================
    Tick list (burst device as the tick marker)
@@ -575,10 +594,10 @@ img{max-width:100%}
         <span class="wz-eyebrow">Modular waste management software</span>
       </div>
       <h1>Take the modules you need.<br>Not the ones you don't.</h1>
-      <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates businesses, sold module by module. There is no mandatory core. Take one module or take all of them, and the price per module comes down the more you run.</p>
+      <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates, sold module by module. No mandatory core, and the price per module drops the more you run.</p>
       <div class="wz-hero__actions">
         <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
-        <a class="wz-btn wz-btn--inverse wz-btn--lg" href="#modules">See the modules</a>
+        <a class="wz-hero__link" href="#modules">See the modules</a>
       </div>
     </div>
   </section>
