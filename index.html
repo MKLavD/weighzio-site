@@ -333,9 +333,9 @@ img{max-width:100%}
         affected element gets its compact value named explicitly below,
         rather than shrinking the container and hoping children scale with
         it, which is what went wrong before.
-     3. Hidden (scrollY > 350, scrolling down): translateY(-100%) below,
+     3. Hidden (scrollY > 680, scrolling down): translateY(-100%) below,
         applied on top of whichever size (full or compact) is already
-        current — 350 > 70, so by the time hide can engage, compact has
+        current — 680 > 70, so by the time hide can engage, compact has
         already engaged, meaning it always slides out from its compact
         size, never its full size.
    Shrink (state 1 -> 2) is 280ms, a quick deliberate settle. Hide (state 2
@@ -352,8 +352,8 @@ img{max-width:100%}
 /* Height set here (not inline on the element) specifically so .hdr-compact
    below can scale it through the normal cascade — a stylesheet rule cannot
    override a plain inline style without !important. */
-.wz-header .wz-logo{height:30px;transition:height 280ms var(--ease-out)}
-.wz-header.hdr-compact .wz-logo{height:calc(30px * .78)}
+.wz-header .wz-logo{height:37px;transition:height 280ms var(--ease-out)}
+.wz-header.hdr-compact .wz-logo{height:calc(37px * .78)}
 .wz-nav{display:flex;align-items:center;gap:var(--space-8);transition:gap 280ms var(--ease-out)}
 .wz-header.hdr-compact .wz-nav{gap:calc(var(--space-8) * .78)}
 /* Muted at rest, full white on hover, on a short colour transition. The
@@ -1718,7 +1718,7 @@ img{max-width:100%}
   var menuOpen = false;
 
   var COMPACT_THRESHOLD = 70;      // px scrolled before the header enters its compact state
-  var HEADER_HIDE_THRESHOLD = 350; // px scrolled before hide-on-scroll-down can engage
+  var HEADER_HIDE_THRESHOLD = 680; // px scrolled before hide-on-scroll-down can engage
   var headerLastY = window.scrollY || document.documentElement.scrollTop || 0;
   var headerHidden = false;
   var headerCompact = false;
