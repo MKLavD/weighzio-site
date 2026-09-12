@@ -588,6 +588,26 @@ img{max-width:100%}
    as the same surface token as the rest of the site rather than a
    one-off colour invented for this page. */
 .wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
+/* Large faint watermark, reusing each module's own icon rather than a new
+   asset. Lives as the first child of .wz-container (not .wz-module-section)
+   so its right:-* bleed is measured off the text column's own edge, not the
+   full-bleed section edge — at 1440 the column's right edge sits well
+   inside the viewport, so a small negative offset reads as a slight bleed
+   without ever risking horizontal overflow on the page. Sitting behind the
+   text needs an actual negative z-index, not just DOM order: a positioned
+   descendant with z-index:auto (or 0) still paints after static in-flow
+   content in the normal stacking order, so .wz-container is given its own
+   stacking context (position:relative + z-index:0) and the watermark uses
+   z-index:-1 within it, which is what actually pushes it behind the
+   header/bullets/alongside text rather than merely visually "under" them
+   in the markup. Hidden below 900px, matching the breakpoint the rest of
+   the page already treats as the tablet/mobile cutover (see .wz-split2) —
+   measured only ~26px of clear space to the right of the text column at
+   768px, nowhere near enough for a 120px+ icon without it sitting under
+   readable text. */
+.wz-module-section > .wz-container{position:relative;z-index:0}
+.wz-module-section__icon-bg{position:absolute;top:50%;right:-24px;transform:translateY(-50%);width:clamp(120px,11vw,160px);height:clamp(120px,11vw,160px);color:rgba(18,45,75,.06);z-index:-1;pointer-events:none}
+@media (max-width:900px){.wz-module-section__icon-bg{display:none}}
 /* Large faint numeral beside the icon, one per section, in source order —
    counter-based so it can never drift out of sync with the actual section
    order. Low-opacity navy rather than a solid pale token, so it reads
@@ -1001,6 +1021,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="weighbridge" data-module-detail="weighbridge">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1023,6 +1044,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="skip-hire" data-module-detail="skip-hire">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1046,6 +1068,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="materials" data-module-detail="materials">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1068,6 +1091,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="scheduling" data-module-detail="scheduling">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1090,6 +1114,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="driver-app" data-module-detail="driver-app">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1113,6 +1138,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="fleet" data-module-detail="fleet">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1136,6 +1162,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="customers" data-module-detail="customers">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1159,6 +1186,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="finance" data-module-detail="finance">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1182,6 +1210,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="reporting" data-module-detail="reporting">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1203,6 +1232,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="customer-portal" data-module-detail="customer-portal">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1224,6 +1254,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="multi-company" data-module-detail="multi-company">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1246,6 +1277,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="marketing-data-feed" data-module-detail="marketing-data-feed">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1265,6 +1297,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="ready-mix" data-module-detail="ready-mix">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1285,6 +1318,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="trade-waste" data-module-detail="trade-waste">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1300,6 +1334,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="hazardous-waste" data-module-detail="hazardous-waste">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1321,6 +1356,7 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="custom-modules" data-module-detail="custom-modules">
           <div class="wz-container">
+            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
