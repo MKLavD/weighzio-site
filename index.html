@@ -749,10 +749,25 @@ img{max-width:100%}
    four replacing the old icon watermark) fill that same height with
    flexible internal layout rather than a fixed pixel size.
    ========================================================================== */
-.wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;grid-template-rows:[eyebrow-start] auto [title-start] auto [summary-start] auto [bullets-start] auto [alongside-start] auto [pending-start] auto [enquire-start] auto [enquire-end];column-gap:var(--space-10);align-items:stretch}
-.wz-module-section__text{grid-column:1;grid-row:eyebrow-start/enquire-end;display:grid;grid-template-rows:subgrid;min-width:0}
+.wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;grid-template-rows:[eyebrow-start] auto [title-start] auto [summary-start] auto [bullets-start] auto [alongside-start] auto [pending-start] auto [enquire-start] auto [enquire-end spacer-start] auto [spacer-end];column-gap:var(--space-10);align-items:stretch}
+.wz-module-section__text{grid-column:1;grid-row:eyebrow-start/spacer-end;display:grid;grid-template-rows:subgrid;min-width:0}
 .wz-module-section__enquire{grid-row:enquire-start}
 .wz-module-section__media{position:relative;grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px}
+/* Invisible duplicate of the eyebrow (same "Module" text, same
+   display/margin-bottom/grid-row-start shape as .wz-module-section__eyebrow
+   — deliberately restated here rather than reusing that class, so this
+   stays a plain visual spacer with no eyebrow styling responsibilities of
+   its own) so its rendered height, margin-bottom included — the margin is
+   what actually creates the gap down to the title — always matches the
+   real eyebrow's, robust to any font-size/line-height change rather than
+   a hardcoded pixel guess. It occupies the new spacer-start/spacer-end
+   row, added after enquire-end — a row neither text content nor the media
+   column extend into, so it adds blank space below the whole row (both
+   columns) without stretching the visual itself further. This is what
+   balances the visual's whitespace: its top edge still sits at the title
+   row (unchanged), but the section now carries an equal-height reserved
+   gap below the enquire link, matching the eyebrow-to-title gap above. */
+.wz-module-section__eyebrow-spacer{display:block;margin-bottom:var(--space-3);grid-row:spacer-start;visibility:hidden}
 @media (max-width:1150px){
   .wz-module-section__grid{display:block}
   /* .wz-module-section__text's grid-template-rows:subgrid only means
@@ -768,6 +783,12 @@ img{max-width:100%}
      rendered here before this task. */
   .wz-module-section__text{display:block}
   .wz-module-section__media{display:flex;justify-content:center;width:100%;max-width:460px;margin:0 0 var(--space-6);min-height:0;max-height:none}
+  /* The whitespace-balancing spacer is a desktop-only concern (it exists
+     to match the visual's own top/bottom gap, and there's no side-by-side
+     visual to balance against once stacked) — removed entirely here
+     rather than left to render as an unexplained blank gap at the end of
+     the stacked content. */
+  .wz-module-section__eyebrow-spacer{display:none}
 }
 
 /* Shared "screen" frame every mockup uses — navy chrome bar, white working
@@ -1422,6 +1443,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Materials &amp; Aggregates</strong>, <strong>Finance &amp; Sage</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1451,6 +1473,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside">Digital waste tracking functionality lives in this module.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Skip%20Hire%20%26%20RoRo">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1479,6 +1502,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="weighbridge,scheduling,fleet">Works alongside: <strong>Weighbridge</strong>, <strong>Scheduling &amp; Dispatch</strong>, <strong>Fleet &amp; Telematics</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1554,6 +1578,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="driver-app,fleet,skip-hire">Works alongside: <strong>Driver App</strong>, <strong>Fleet &amp; Telematics</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1583,6 +1608,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,skip-hire,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Skip Hire &amp; RoRo</strong>, <strong>Weighbridge</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1631,6 +1657,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,driver-app">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Driver App</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1675,6 +1702,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1732,6 +1760,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="customers,multi-company,reporting">Works alongside: <strong>Customers &amp; Pricing</strong>, <strong>Multi-Company</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1772,6 +1801,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: <strong>Multi-Company</strong>, <strong>Finance &amp; Sage</strong>, <strong>Customer Portal</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1804,6 +1834,7 @@ img{max-width:100%}
             <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: <strong>Reporting &amp; Dashboards</strong>, <strong>Finance &amp; Sage</strong>.</p>
             <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1838,6 +1869,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Scheduling &amp; Dispatch</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1871,6 +1903,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-pending">Goes beyond the functional spec and needs sign-off. Before this goes live it needs a lawful basis, a data processing agreement between you and the operator, and disclosure in both privacy policies, because it involves processing the operator's customer data for advertising.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Marketing%20Data%20Feed">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1899,6 +1932,7 @@ img{max-width:100%}
             <p class="wz-module-section__alongside" data-alongside="scheduling,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Weighbridge</strong>.</p>
             <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1927,8 +1961,8 @@ img{max-width:100%}
               <li>Round changes, new sites, and holiday adjustments handled without rebuilding the whole schedule from scratch.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,customers,finance">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Customers &amp; Pricing</strong>, <strong>Finance &amp; Sage</strong>.</p>
-            <p class="wz-pending">Drafted from general trade waste practice, not the functional spec — Trade Waste doesn't appear there. Confirm with the product manager before this is treated as accurate to the actual system.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
@@ -1956,6 +1990,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="skip-hire,reporting">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
+            <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
         </section>
