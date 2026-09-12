@@ -672,13 +672,19 @@ img{max-width:100%}
 
 /* ==========================================================================
    Module section visuals — one shared two-column layout for all eleven
-   sections that have a visual (six photos, five UI mockups). The other
-   five (the four watermark-only sections and Custom Modules) are
-   untouched: their .wz-module-section__icon-bg markup and rules above are
-   unchanged, and they don't use .wz-module-section__grid/__text at all —
-   their .wz-container stays a plain block at the page's normal
-   --container-max, still position:relative for the watermark's own
-   z-index trick.
+   sections that have a visual (six photos, five UI mockups). Four more
+   (Customers & Pricing, Finance & Sage, Multi-Company, Marketing Data
+   Feed) stay watermark-only, untouched here: their
+   .wz-module-section__icon-bg markup and rules above are unchanged, and
+   they don't use .wz-module-section__grid/__text at all — their
+   .wz-container stays a plain block at the page's normal --container-max,
+   still position:relative for the watermark's own z-index trick.
+   Custom Modules used to carry the same icon-bg watermark as a sixteenth
+   case but never had a visual of its own to distinguish it visually from
+   the four real watermark sections above (all sixteen icons would have
+   read identically); its watermark span has been removed outright, and
+   it now reads as plain full-width text with only its orange border as
+   the distinguishing treatment, as originally intended.
 
    .wz-module-section__grid (added alongside .wz-container, not replacing
    it, so the shared gutter/positioning above still applies) is a real
@@ -756,31 +762,28 @@ img{max-width:100%}
    what leaves the gap as white space below it rather than the browser
    trying to centre it in space it no longer fully occupies.
 
-   min-height:410px and max-height:495px, both re-checked against this
-   title-start/enquire-end span rather than carried over from the old
-   eyebrow-start one — excluding the eyebrow row shortens every section
-   by roughly 30px (its own height plus margin), so both values came
-   down from the previous 435px/520px by about that much rather than
-   staying put. Still shared across all eleven, not per-module values.
-
-   Confirmed by re-measuring rather than assumed: Reporting & Dashboards
-   is the only section the floor actually binds for now (its own natural
-   span is shorter than 410px); Weighbridge, Skip Hire & RoRo, Materials
-   & Aggregates, Driver App and Fleet & Telematics are taller than 495px
-   uncapped and so are where the cap now binds, stopping the visual at
-   495px and top-aligning it with white space below rather than
-   stretching further. Skip Hire & RoRo — the section this cap exists
-   for — has the tallest span of the six photo sections (596px title-to-
-   enquire); capped at 495px and at the 580px visual column, its photo
-   keeps roughly 88% of its original width in frame, comfortably wide
-   enough to hold both the serial number and the RoRo container at once
-   (confirmed by screenshot) — see the object-position note further down
-   for the crop itself.
+   min-height:410px is the only cap left — it exists purely for the floor
+   (Reporting & Dashboards is the one section shorter than this, so its
+   visual doesn't shrink to something oddly small). The max-height cap
+   that used to sit alongside it (495px) has been removed: every visual
+   now stretches the full title-start/enquire-end span regardless of how
+   tall that span is, so all eleven sections align bottom-to-bottom with
+   their enquire link, not just the six that happened to fit under the
+   old cap. Weighbridge, Skip Hire & RoRo, Materials & Aggregates, Driver
+   App and Fleet & Telematics — the five that used to hit the 495px
+   ceiling and sit above a gap of white space — now stretch to their full
+   natural height (measured: 566–650px depending on module) same as
+   every other section. See the object-position comment below for how
+   the three photos among these five (Weighbridge, Skip Hire & RoRo,
+   Materials & Aggregates) were re-tuned for the taller crop this
+   produces, and the Driver App comment further down for why the phone
+   — the one visual that never stretches — needed a separate fix to
+   keep its own top edge aligned once the cap under it was removed.
    ========================================================================== */
 .wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;grid-template-rows:[eyebrow-start] auto [title-start] auto [summary-start] auto [bullets-start] auto [alongside-start] auto [pending-start] auto [enquire-start] auto [enquire-end];column-gap:var(--space-10);align-items:stretch}
 .wz-module-section__text{grid-column:1;grid-row:eyebrow-start/enquire-end;display:grid;grid-template-rows:subgrid;min-width:0}
 .wz-module-section__enquire{grid-row:enquire-start}
-.wz-module-section__media{grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px;max-height:495px}
+.wz-module-section__media{grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px}
 @media (max-width:1150px){
   .wz-module-section__grid{display:block}
   /* .wz-module-section__text's grid-template-rows:subgrid only means
@@ -841,25 +844,33 @@ img{max-width:100%}
 /* --- 2. Driver App: phone frame ---------------------------------------- */
 /* The one exception to the shared 4:3 box: stretching a phone screen to a
    landscape photo's ratio would look broken, so it keeps its own portrait
-   proportion. Sized up instead — 220px to 264px, ~20% — so it reads at a
-   similar visual weight to the photos beside it rather than noticeably
-   smaller, without pretending to be the same shape as them. */
-.wz-mockup--phone{width:264px;display:flex;flex-direction:column}
-.wz-mockup__phone-status{flex:none;background:var(--navy-900);color:var(--white);font-size:10px;font-weight:var(--weight-semibold);padding:6px 14px;display:flex;justify-content:space-between}
-.wz-mockup__phone-body{padding:14px}
-.wz-mockup__phone-job{margin-bottom:11px}
-.wz-mockup__phone-job strong{display:block;font-family:var(--font-display);font-size:14px;margin:3px 0 2px}
-.wz-mockup__phone-job span{display:block;color:var(--navy-400);font-size:10px}
-.wz-mockup__weights{display:flex;gap:7px;margin-bottom:11px}
-.wz-mockup__weights div{flex:1;background:var(--navy-025);border-radius:5px;padding:7px 5px;text-align:center}
-.wz-mockup__weights span{display:block;font-size:8px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
-.wz-mockup__weights b{display:block;font-size:11px;font-weight:var(--weight-semibold)}
-.wz-mockup__comp-label{font-size:9px;color:var(--navy-400);margin-bottom:4px}
-.wz-mockup__comp-bar{display:flex;height:11px;border-radius:var(--radius-pill);overflow:hidden;margin-bottom:11px}
+   proportion, scaled as a whole rather than stretched.
+   264×342 (previously sized up from an original 220×286, ~20%) started
+   reading small once the visual column itself grew wider — re-measured
+   against the 580px column and bumped again, by the same ~1.136× factor,
+   to 300×390. Every internal font-size/padding/gap below is scaled by
+   that same factor (e.g. 14px status text -> 16px, 11px gaps -> 12–13px)
+   rather than just widening the outer frame, so the screen's own type
+   and spacing grow with it instead of the layout simply gaining margin
+   around unchanged small text. */
+.wz-mockup--phone{width:300px;display:flex;flex-direction:column}
+.wz-mockup--phone .wz-mockup__bar{padding:12px 16px;font-size:14px}
+.wz-mockup__phone-status{flex:none;background:var(--navy-900);color:var(--white);font-size:11px;font-weight:var(--weight-semibold);padding:7px 16px;display:flex;justify-content:space-between}
+.wz-mockup__phone-body{padding:16px}
+.wz-mockup__phone-job{margin-bottom:13px}
+.wz-mockup__phone-job strong{display:block;font-family:var(--font-display);font-size:16px;margin:3px 0 2px}
+.wz-mockup__phone-job span{display:block;color:var(--navy-400);font-size:11px}
+.wz-mockup__weights{display:flex;gap:8px;margin-bottom:13px}
+.wz-mockup__weights div{flex:1;background:var(--navy-025);border-radius:5px;padding:8px 6px;text-align:center}
+.wz-mockup__weights span{display:block;font-size:9px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.wz-mockup__weights b{display:block;font-size:12px;font-weight:var(--weight-semibold)}
+.wz-mockup__comp-label{font-size:10px;color:var(--navy-400);margin-bottom:5px}
+.wz-mockup__comp-bar{display:flex;height:12px;border-radius:var(--radius-pill);overflow:hidden;margin-bottom:13px}
 .wz-mockup__comp-bar span{display:block;height:100%}
-.wz-mockup__sig{border-top:var(--border-width) solid var(--border-hairline);padding-top:10px}
-.wz-mockup__sig-label{font-size:9px;color:var(--navy-400);margin-bottom:5px}
-.wz-mockup__sig-line{display:block;width:100%;height:32px;margin-bottom:8px}
+.wz-mockup__sig{border-top:var(--border-width) solid var(--border-hairline);padding-top:11px}
+.wz-mockup__sig-label{font-size:10px;color:var(--navy-400);margin-bottom:6px}
+.wz-mockup__sig-line{display:block;width:100%;height:36px;margin-bottom:9px}
+.wz-mockup--phone .wz-mockup__badge{font-size:11px;padding:5px 9px}
 
 /* --- 3. Reporting & Dashboards: executive dashboard --------------------- */
 .wz-mockup__metrics{flex:none;display:flex;gap:9px;padding:14px 14px 0}
@@ -916,17 +927,32 @@ img{max-width:100%}
    (stacked) ends up being; a generic centred crop would cut into exactly
    the thing each photo is chosen to show.
 
-   Skip Hire & RoRo no longer needs the sacrifice this comment used to
-   describe: its row (628px) is now taller than the 520px cap above, so
-   the photo stops stretching at 520px instead of continuing to 628px —
-   at the wider 580px column that's roughly 84% of the photo's original
-   width in frame, wide enough to hold the serial number and the RoRo
-   container at once (confirmed by screenshot). Before the cap and the
-   wider column existed, only ~45% of the width stayed visible and the
-   serial number had to be chosen over the RoRo entirely. Below 1150px
-   this doesn't apply regardless — stacked mode uses a plain 4:3 box,
-   matching the photo's own native ratio closely enough that neither
-   dimension crops much no matter the position. */
+   The shared max-height cap that used to sit on .wz-module-section__media
+   (495px) has been removed so every visual reaches full top/bottom
+   alignment — which means these three photos now stretch further than
+   they used to (Weighbridge and Materials & Aggregates to 509px,
+   Skip Hire & RoRo to 596px, all at the fixed 580px column), and cover
+   crops more tightly into the width as a result. Re-checked by
+   measurement and screenshot at the new heights, not assumed carried
+   over:
+   - Weighbridge (509px row, ~86% of width in frame): the indicator unit
+     sits well inside the crop with room to spare either side, unaffected.
+   - Materials & Aggregates (509px row, ~86%): the loader and stockpile
+     are dead centre, comfortably clear of both crop edges.
+   - Skip Hire & RoRo (596px row, ~73%): this is the one genuine trade-off.
+     The serial number and the RoRo container sit close to opposite edges
+     of the source photo (roughly its full width apart), wider apart than
+     any crop narrower than the original 4:3 frame can hold at once.
+     Centred object-position keeps both partially in frame — the serial
+     number fully legible, the RoRo's front face and identifying shape
+     visible but its trailing edge trimmed — rather than sacrificing
+     either one outright, which is the best available compromise at this
+     height and column width. Reported here rather than silently
+     over-cropped or left short of the same bottom alignment as the other
+     ten sections.
+   Below 1150px this doesn't apply regardless — stacked mode uses a plain
+   4:3 box, matching the photo's own native ratio closely enough that
+   neither dimension crops much no matter the position. */
 #weighbridge .wz-module-section__photo{object-position:68% 42%}       /* the indicator/readout unit and the loaded skip, right-of-centre, mid-height */
 #skip-hire .wz-module-section__photo{object-position:50% 55%}        /* the stencilled serial number and the RoRo for scale, lower-middle band */
 #materials .wz-module-section__photo{object-position:50% 45%}        /* the shovel bucket cutting into the stockpile, dead centre */
@@ -1837,7 +1863,6 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="custom-modules" data-module-detail="custom-modules">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
