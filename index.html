@@ -640,25 +640,35 @@ img{max-width:100%}
 .wz-pending{font-size:var(--text-body-sm);color:var(--text-muted);border-left:var(--border-width-strong) solid var(--border-strong);padding-left:var(--space-4);margin:0 0 var(--space-5);max-width:68ch}
 
 /* ==========================================================================
-   Module UI mockups — five sections (Scheduling & Dispatch, Driver App,
-   Reporting & Dashboards, Customer Portal, Fleet & Telematics) get a real
-   inline mockup of that module's own screen instead of the plain icon
-   watermark, in the same right-hand slot. The other eleven sections are
-   untouched: their .wz-module-section__icon-bg markup and rules above are
-   unchanged.
+   Module section visuals — one shared container for all eleven sections
+   that have one (six photos, five UI mockups). The other five (the four
+   watermark-only sections and Custom Modules) are untouched: their
+   .wz-module-section__icon-bg markup and rules above are unchanged, and
+   they don't use this class at all.
 
-   .wz-module-section__media is the positioning wrapper, independent of the
-   watermark's own — a fixed 380px card needs more clearance than the icon
-   did, so it switches to static/stacked well before the watermark's own
-   900px cutoff: clear space to the right of the (68ch-capped) text column
-   only reaches a comfortable 380px+margin once the viewport is past
-   roughly 1150px, so anything narrower stacks the mockup in the normal
-   flow — after the header, before the bullets — exactly like the six
-   photos are meant to (never hidden; these are content, not texture).
+   .wz-module-section__media is a single standardised slot, not a per-visual
+   size: same width, same right-hand edge, same vertical centring, for
+   every one of the eleven regardless of whether what's inside is a
+   landscape photo or a portrait phone mockup. display:flex +
+   justify-content:center is what makes that work — content narrower than
+   the slot (only the Driver App phone) centres inside it instead of
+   hugging the left edge, at every breakpoint, not just the stacked one.
+
+   The right edge reuses the page's own grid rather than a hand-picked
+   offset: .wz-module-section > .wz-container (below) is the positioned
+   ancestor, so right:var(--gutter) lands the slot's right edge on the
+   container's own padding edge — the same line the header nav and hero
+   content align to at this width, not an arbitrary bleed past it.
+
+   Switches to static/stacked well before the watermark's own 900px
+   cutoff: clear space to the right of the (68ch-capped) text column only
+   reaches a comfortable 380px+margin once the viewport is past roughly
+   1150px, so anything narrower stacks the visual in the normal flow —
+   after the header, before the bullets — rather than hiding it.
    ========================================================================== */
-.wz-module-section__media{position:absolute;top:50%;right:-16px;transform:translateY(-50%);width:380px;z-index:1}
+.wz-module-section__media{position:absolute;top:50%;right:var(--gutter);transform:translateY(-50%);width:380px;z-index:1;display:flex;justify-content:center}
 @media (max-width:1150px){
-  .wz-module-section__media{position:static;top:auto;right:auto;transform:none;width:100%;max-width:460px;margin:0 0 var(--space-6);display:flex;justify-content:center}
+  .wz-module-section__media{position:static;top:auto;right:auto;transform:none;width:100%;max-width:460px;margin:0 0 var(--space-6)}
 }
 
 /* Shared "screen" frame every mockup uses — navy chrome bar, white working
