@@ -597,22 +597,35 @@ img{max-width:100%}
 /* Large faint watermark, reusing each module's own icon rather than a new
    asset. Lives as the first child of .wz-container (not .wz-module-section)
    so its right:-* bleed is measured off the text column's own edge, not the
-   full-bleed section edge — at 1440 the column's right edge sits well
-   inside the viewport, so a small negative offset reads as a slight bleed
-   without ever risking horizontal overflow on the page. Sitting behind the
-   text needs an actual negative z-index, not just DOM order: a positioned
-   descendant with z-index:auto (or 0) still paints after static in-flow
-   content in the normal stacking order, so .wz-container is given its own
-   stacking context (position:relative + z-index:0) and the watermark uses
+   full-bleed section edge. Sitting behind the text needs an actual
+   negative z-index, not just DOM order: a positioned descendant with
+   z-index:auto (or 0) still paints after static in-flow content in the
+   normal stacking order, so .wz-container is given its own stacking
+   context (position:relative + z-index:0) and the watermark uses
    z-index:-1 within it, which is what actually pushes it behind the
    header/bullets/alongside text rather than merely visually "under" them
    in the markup. Hidden below 900px, matching the breakpoint the rest of
    the page already treats as the tablet/mobile cutover (see .wz-split2) —
    measured only ~26px of clear space to the right of the text column at
    768px, nowhere near enough for a 120px+ icon without it sitting under
-   readable text. */
+   readable text.
+
+   right:-16px, reduced from -24px: the page's own container widened to
+   1400px below (for the eleven visual sections' sake, but it's the same
+   shared .wz-container these five watermark-only sections use too), which
+   leaves only 20px of margin either side at 1440px instead of the 120px
+   there used to be. -24px would have bled 4px past the actual viewport
+   edge there — caught by checking body scroll width at 1440, not assumed
+   safe from the old margin. -16px fits with 4px to spare at 1440.
+   Flagging rather than silently patching further: the same shared
+   .wz-container still has zero side margin at any width between roughly
+   900px and 1400px (it simply fills the viewport in that range, whether
+   the cap is 1200px or 1400px), so this bleed technically oversteps the
+   viewport by 8px across that whole band — pre-existing before this
+   session's width change, not introduced by it, and outside the three
+   breakpoints (1440/768/390) this and prior tasks have checked. */
 .wz-module-section > .wz-container{position:relative;z-index:0}
-.wz-module-section__icon-bg{position:absolute;top:50%;right:-24px;transform:translateY(-50%);width:clamp(120px,11vw,160px);height:clamp(120px,11vw,160px);color:rgba(18,45,75,.06);z-index:-1;pointer-events:none}
+.wz-module-section__icon-bg{position:absolute;top:50%;right:-16px;transform:translateY(-50%);width:clamp(120px,11vw,160px);height:clamp(120px,11vw,160px);color:rgba(18,45,75,.06);z-index:-1;pointer-events:none}
 @media (max-width:900px){.wz-module-section__icon-bg{display:none}}
 /* Large faint numeral beside the icon, one per section, in source order —
    counter-based so it can never drift out of sync with the actual section
@@ -645,20 +658,37 @@ img{max-width:100%}
    five (the four watermark-only sections and Custom Modules) are
    untouched: their .wz-module-section__icon-bg markup and rules above are
    unchanged, and they don't use .wz-module-section__grid/__text at all —
-   their .wz-container stays a plain block, still position:relative for
-   the watermark's own z-index trick.
+   their .wz-container stays a plain block at the page's normal
+   --container-max, still position:relative for the watermark's own
+   z-index trick.
 
    .wz-module-section__grid (added alongside .wz-container, not replacing
-   it, so the shared max-width/gutter/positioning above still applies) is
-   a real grid rather than the previous position:absolute + top:50% float:
-   text column first (flexible width), visual column second (fixed
-   380px), align-items:stretch — the default for grid anyway, named here
-   for clarity — so the row's height comes from whichever column is
-   taller, and the shorter one is stretched to match rather than floating
-   at a fixed size. Because .wz-module-section__text wraps the eyebrow
-   through the enquire link as one grid item, its top edge — and so the
-   visual column's top edge, stretched to the same row — lands on the
-   title block, not the bullet list.
+   it, so the shared gutter/positioning above still applies) is a real
+   grid rather than the previous position:absolute + top:50% float: text
+   column first (flexible width), visual column second (fixed 580px),
+   align-items:stretch — the default for grid anyway, named here for
+   clarity — so the row's height comes from whichever column is taller,
+   and the shorter one is stretched to match rather than floating at a
+   fixed size. Because .wz-module-section__text wraps the eyebrow through
+   the enquire link as one grid item, its top edge — and so the visual
+   column's top edge, stretched to the same row — lands on the title
+   block, not the bullet list.
+
+   #route-modules .wz-container{max-width:1400px} overrides the shared
+   --container-max (1200px) for every .wz-container on this one page —
+   not just these eleven — rather than raising --container-max itself,
+   which would also widen the header, hero and every other route's
+   container. It has to be the whole page, not just the eleven grid
+   sections: scoping the wider max-width to .wz-module-section__grid
+   alone left the container centred 100px further left/right than the
+   five watermark-only sections' (still at 1200px), so every title on
+   the page would have jumped sideways between sections while scrolling.
+   Widening the shared page container keeps all sixteen sections' text
+   starting at the same left edge; only the eleven with a visual column
+   see any benefit from the extra width, exactly as intended. The +200px
+   goes entirely to the visual column (380px to 580px); the text column
+   is still exactly 732px (1400 − 48 gutters − 40 gap − 580), unchanged
+   from before this widened the page.
 
    grid-column is set explicitly on both children rather than relying on
    source order, so the visual can stay first in the markup (matching the
@@ -673,31 +703,54 @@ img{max-width:100%}
    own height.
 
    Switches to a single stacked column well before the watermark's own
-   900px cutoff: clear space to the right of the text column only reaches
-   a comfortable 380px+margin once the viewport is past roughly 1150px,
-   so anything narrower stacks the visual above the title in normal flow
-   instead — never hidden, and back to each visual sizing itself by its
-   own aspect ratio rather than being stretched against text it no longer
-   sits beside.
+   900px cutoff: even with the text column now flexible rather than
+   fixed, a viewport has to be past roughly 1150px before there's a
+   sensible amount of room left for it once the wider 580px visual column
+   and the gap are accounted for, so anything narrower stacks the visual
+   above the title in normal flow instead — never hidden, and back to
+   each visual sizing itself by its own aspect ratio rather than being
+   stretched against text it no longer sits beside.
 
-   min-height:285px is the shared floor for every one of the eleven, not
-   a per-module value — 285px is a photo's own natural height at the
-   380px column width (380 × 3÷4), i.e. the height it would sit at anyway
-   if the row weren't being stretched by anything shorter. The floor
-   exists so a future content edit can't push a section's text below
-   that and squeeze a photo's protected crop tighter than its own natural
-   proportions; at today's actual copy it doesn't change anything —
-   every one of the eleven sections' text already measures 299px or
-   taller at 1440px (shortest is Trade Waste, the section this floor was
-   written for), so the row height is text-driven everywhere right now,
-   confirmed by measuring rather than assumed.
+   align-items:flex-start (was center) — a deliberate design change, not
+   a fix: every visual now top-aligns with the title row instead of
+   centring in the row. This mattered only for the Driver App phone,
+   which is the one visual that doesn't stretch to fill the row (kept at
+   its own 264×342 portrait size) — it previously centred vertically in
+   whatever height the row came to; now it sits flush with the top like
+   the other ten. It also does the work for the max-height cap just
+   below: when a capped visual is shorter than the row, flex-start is
+   what leaves the gap as white space below it rather than the browser
+   trying to centre it in space it no longer fully occupies.
+
+   min-height:435px is the shared floor for every one of the eleven, not
+   a per-module value — 435px is a photo's own natural height at the new
+   580px column width (580 × 3÷4), i.e. the height it would sit at anyway
+   if the row weren't being stretched by anything shorter (raised from
+   285px, which was the same calculation at the old 380px width).
+
+   max-height:520px is the shared cap for every one of the eleven, not a
+   per-module value. Skip Hire & RoRo has the tallest text column of the
+   six photo sections (628px), which — uncapped, at the new 580px visual
+   width — still only leaves about 70% of the photo's original width in
+   frame, enough to show the serial number but not the RoRo container
+   behind it. 520px keeps that section's photo at roughly 84% of its
+   original width, wide enough to hold both in frame (confirmed by
+   screenshot, not just the arithmetic) — see the object-position note
+   further down for the crop itself. At 520px, most sections still
+   reach their own full text height uncapped; only Skip Hire & RoRo
+   (628px) and Fleet & Telematics (549px) are taller than the cap and so
+   are the two sections where the visual stops short of the text
+   column's height, top-aligned with white space below rather than
+   stretching further — confirmed by measuring which sections' rows
+   actually exceed 520px, not assumed from bullet count alone.
    ========================================================================== */
-.wz-module-section__grid{display:grid;grid-template-columns:1fr 380px;column-gap:var(--space-10);align-items:stretch}
+#route-modules .wz-container{max-width:1400px}
+.wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;column-gap:var(--space-10);align-items:stretch}
 .wz-module-section__text{grid-column:1;grid-row:1;min-width:0}
-.wz-module-section__media{grid-column:2;grid-row:1;display:flex;justify-content:center;align-items:center;min-height:285px}
+.wz-module-section__media{grid-column:2;grid-row:1;display:flex;justify-content:center;align-items:flex-start;min-height:435px;max-height:520px}
 @media (max-width:1150px){
   .wz-module-section__grid{display:block}
-  .wz-module-section__media{display:flex;justify-content:center;width:100%;max-width:460px;margin:0 0 var(--space-6);min-height:0}
+  .wz-module-section__media{display:flex;justify-content:center;width:100%;max-width:460px;margin:0 0 var(--space-6);min-height:0;max-height:none}
 }
 
 /* Shared "screen" frame every mockup uses — navy chrome bar, white working
@@ -818,20 +871,19 @@ img{max-width:100%}
    (stacked) ends up being; a generic centred crop would cut into exactly
    the thing each photo is chosen to show.
 
-   Flagged conflict, not silently over-cropped: Skip Hire & RoRo's row is
-   the tallest of the six (628px at 1440, from five bullets plus the
-   digital-waste-tracking line) against a fixed 380px column, which
-   scales the photo up enough to only leave ~45% of its original width
-   visible — nowhere near enough to keep both the serial number (left
-   third of frame) and the RoRo container (right edge) in shot at once.
-   Chose the serial number: it's the concrete, legible identifying
-   detail; the RoRo is there for scale contrast, which is lost here but
-   isn't the thing a viewer would miss. Below 1150px this doesn't apply —
-   stacked mode uses a plain 4:3 box, matching the photo's own native
-   ratio closely enough that neither dimension crops much regardless of
-   position. */
+   Skip Hire & RoRo no longer needs the sacrifice this comment used to
+   describe: its row (628px) is now taller than the 520px cap above, so
+   the photo stops stretching at 520px instead of continuing to 628px —
+   at the wider 580px column that's roughly 84% of the photo's original
+   width in frame, wide enough to hold the serial number and the RoRo
+   container at once (confirmed by screenshot). Before the cap and the
+   wider column existed, only ~45% of the width stayed visible and the
+   serial number had to be chosen over the RoRo entirely. Below 1150px
+   this doesn't apply regardless — stacked mode uses a plain 4:3 box,
+   matching the photo's own native ratio closely enough that neither
+   dimension crops much no matter the position. */
 #weighbridge .wz-module-section__photo{object-position:68% 42%}       /* the indicator/readout unit and the loaded skip, right-of-centre, mid-height */
-#skip-hire .wz-module-section__photo{object-position:20% 55%}        /* the stencilled serial number, lower-middle band — see the flagged conflict note above the six rules */
+#skip-hire .wz-module-section__photo{object-position:50% 55%}        /* the stencilled serial number and the RoRo for scale, lower-middle band */
 #materials .wz-module-section__photo{object-position:50% 45%}        /* the shovel bucket cutting into the stockpile, dead centre */
 #ready-mix .wz-module-section__photo{object-position:68% 60%}        /* the chute, falling concrete and the worker guiding it, right-of-centre and low */
 #hazardous-waste .wz-module-section__photo{object-position:65% 35%}  /* the near drum's hazard label and the two labelled drums behind, centre-right, upper-middle */
