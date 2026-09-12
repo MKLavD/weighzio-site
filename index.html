@@ -583,9 +583,21 @@ img{max-width:100%}
    alone is the separator, not colour plus a hairline.
    ========================================================================== */
 .wz-module-section{position:relative;padding:var(--space-10) 0}
-/* #F47D2D at 5% opacity, per the brand brief's own note for warming flat
-   sections (deck section 6) — not a new value invented for this. */
-.wz-module-section:nth-of-type(even){background:rgba(244,125,45,.05)}
+/* Same light blue-grey the home page alternates .wz-band--canvas with
+   (--navy-025, #F7F9FB) — a solid value, not an opacity tint, so it reads
+   as the same surface token as the rest of the site rather than a
+   one-off colour invented for this page. */
+.wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
+/* The text column (header through "works alongside") reads narrower than
+   the 1200px section it sits in and is centred within it, rather than
+   sitting flush left with empty space to its right — measured 693px of
+   1200px before this change, so 46ch lands at roughly two-thirds of
+   that. Text inside stays left-aligned; only this wrapper is centred.
+   The child rules below still cap at 68ch, which is now always the
+   larger of the two limits and so a no-op — left in place rather than
+   removed, since .wz-pending is shared with other pages and its 68ch
+   there still matters. */
+.wz-module-section > .wz-container{max-width:46ch;margin:0 auto}
 /* Large faint numeral beside the icon, one per section, in source order —
    counter-based so it can never drift out of sync with the actual section
    order. Low-opacity navy rather than a solid pale token, so it reads
