@@ -127,7 +127,10 @@
   --space-24: 96px;
 
   --gutter: var(--space-6);
-  --container-max: 1200px;
+  --container-max: 1400px; /* raised from 1200px so the Modules page's wider
+     visual column has room without its own container override — every
+     .wz-container, .wz-header__inner and .wz-hero__inner site-wide inherits
+     this, not just Modules. */
   --container-narrow: 720px;
   /* Single source for the module popup's horizontal content inset — header
      hairline, footer hairline and the footer's own padding (which the
@@ -634,23 +637,25 @@ img{max-width:100%}
 #module-sections{counter-reset:module-num}
 .wz-module-section{counter-increment:module-num}
 .wz-module-section__head::before{content:counter(module-num,decimal-leading-zero);flex:none;font-family:var(--font-display);font-weight:var(--weight-semibold);font-size:clamp(2.5rem,5vw,3.75rem);line-height:1;color:rgba(18,45,75,.08)}
-/* Header block: eyebrow, icon + title, summary, matching the module popup's
-   own header pattern. Hairline is a plain border on this wrapper rather
-   than a pseudo-element like the popup's — this block already sits inside
-   .wz-container and isn't full-bleed the way the popup's header is, so it
-   only needs the max-width below to land on the same content column the
-   bullets/alongside line use, not an explicit inset. */
-.wz-module-section__header{max-width:68ch;margin-bottom:var(--space-6);padding-bottom:var(--space-6);border-bottom:var(--border-width) solid var(--border-hairline)}
-.wz-module-section__eyebrow{display:block;margin-bottom:var(--space-3)}
-.wz-module-section__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
-.wz-module-section__summary{font-size:var(--text-lead);color:var(--text-body);margin:0}
-.wz-module-section ul{margin:0 0 var(--space-5);padding-left:var(--space-5);max-width:68ch;display:flex;flex-direction:column;gap:var(--space-2)}
+/* Eyebrow, icon + title, summary, matching the module popup's own header
+   pattern. These three used to share one wrapping div (with the hairline
+   as its border-bottom); that wrapper is gone now that each one needs to
+   be its own named grid row for the visual column to size against (see
+   the row-line block below) — the hairline moves to the summary
+   paragraph instead, which still lands it in the same visual place,
+   right after the summary and before the bullets. max-width:68ch on the
+   summary (rather than the old wrapper) is what keeps the hairline the
+   same content-column width it always was. */
+.wz-module-section__eyebrow{display:block;margin-bottom:var(--space-3);grid-row:eyebrow-start}
+.wz-module-section__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3);grid-row:title-start}
+.wz-module-section__summary{font-size:var(--text-lead);color:var(--text-body);max-width:68ch;margin:0 0 var(--space-6);padding-bottom:var(--space-6);border-bottom:var(--border-width) solid var(--border-hairline);grid-row:summary-start}
+.wz-module-section ul{margin:0 0 var(--space-5);padding-left:var(--space-5);max-width:68ch;display:flex;flex-direction:column;gap:var(--space-2);grid-row:bullets-start}
 /* Navy, not grey, matching the popup's "Works alongside" line — module
    names are plain <strong> tags in the markup, so the sitewide base rule
    (navy-700 semibold) already gives them the right emphasis with no
    bespoke colour rule needed here. */
-.wz-module-section__alongside{font-size:var(--text-body-sm);color:var(--text-body);max-width:68ch;margin:0 0 var(--space-5)}
-.wz-pending{font-size:var(--text-body-sm);color:var(--text-muted);border-left:var(--border-width-strong) solid var(--border-strong);padding-left:var(--space-4);margin:0 0 var(--space-5);max-width:68ch}
+.wz-module-section__alongside{font-size:var(--text-body-sm);color:var(--text-body);max-width:68ch;margin:0 0 var(--space-5);grid-row:alongside-start}
+.wz-pending{font-size:var(--text-body-sm);color:var(--text-muted);border-left:var(--border-width-strong) solid var(--border-strong);padding-left:var(--space-4);margin:0 0 var(--space-5);max-width:68ch;grid-row:pending-start}
 
 /* ==========================================================================
    Module section visuals — one shared two-column layout for all eleven
@@ -674,33 +679,49 @@ img{max-width:100%}
    column's top edge, stretched to the same row — lands on the title
    block, not the bullet list.
 
-   #route-modules .wz-container{max-width:1400px} overrides the shared
-   --container-max (1200px) for every .wz-container on this one page —
-   not just these eleven — rather than raising --container-max itself,
-   which would also widen the header, hero and every other route's
-   container. It has to be the whole page, not just the eleven grid
-   sections: scoping the wider max-width to .wz-module-section__grid
-   alone left the container centred 100px further left/right than the
-   five watermark-only sections' (still at 1200px), so every title on
-   the page would have jumped sideways between sections while scrolling.
-   Widening the shared page container keeps all sixteen sections' text
-   starting at the same left edge; only the eleven with a visual column
-   see any benefit from the extra width, exactly as intended. The +200px
-   goes entirely to the visual column (380px to 580px); the text column
-   is still exactly 732px (1400 − 48 gutters − 40 gap − 580), unchanged
-   from before this widened the page.
+   The 580px visual column needs --container-max itself at 1400px (see
+   :root) to have room without squeezing the text column — that token is
+   now shared site-wide (header, hero, footer, every .wz-container on
+   every route), not overridden per-page, precisely so the Modules page
+   doesn't drift out of step with the rest of the site the way an
+   earlier version of this rule did. The +200px goes entirely to the
+   visual column (380px to 580px); the text column is still exactly
+   732px (1400 − 48 gutters − 40 gap − 580), unchanged from before
+   --container-max widened.
 
    grid-column is set explicitly on both children rather than relying on
    source order, so the visual can stay first in the markup (matching the
    stacked mobile order below) while still rendering second/right at this
-   width. grid-row:1 is also explicit on both, not left to auto-placement —
-   sparse packing (the grid default) advances a single placement cursor
-   forward through the grid and never backfills a cell behind it, so
-   without this the media item (column 2, placed first in DOM) pushes the
-   cursor past row 1 entirely, landing the text item in row 2 instead of
-   alongside it. Caught this by measuring, not by eye: text rendered
-   285px below where it should have started, exactly the media column's
-   own height.
+   width.
+
+   The grid's rows are named — eyebrow / title / summary / bullets /
+   alongside / pending / enquire, one per semantic piece of the text
+   column, sized auto — rather than a single row spanning the whole
+   column, precisely so the visual can start at title-start (skipping
+   the eyebrow) instead of eyebrow-start, and always end at enquire-end,
+   with no manually-guessed pixel offset that would drift as bullet
+   count or summary length changes. .wz-module-section__text spans the
+   full eyebrow-start/enquire-end range with grid-template-rows:subgrid,
+   so its own children (each given a matching grid-row below) land in
+   those same named tracks rather than needing their own nested grid.
+   Not every section populates every row — Trade Waste has no <ul>,
+   several have no .wz-pending — an empty named row simply auto-sizes to
+   zero, so the ones that do apply still always land in the correct
+   track regardless of what a given section skips; auto-placement alone
+   couldn't do this, since it fills rows in document order and would
+   shift everything up when an earlier piece is missing, landing the
+   enquire link in whatever row happened to be next rather than always
+   the last one.
+
+   grid-row is explicit (not left to auto-placement) on both top-level
+   grid children too, not just the row names above — sparse packing (the
+   grid default) advances a single placement cursor forward through the
+   grid and never backfills a cell behind it, so without this the media
+   item (column 2, placed first in DOM) pushes the cursor past row 1
+   entirely, landing the text item in a later row instead of alongside
+   it. Caught this by measuring, not by eye, the first time this grid was
+   built: text rendered 285px below where it should have started, exactly
+   the media column's own height.
 
    Switches to a single stacked column well before the watermark's own
    900px cutoff: even with the text column now flexible rather than
@@ -722,34 +743,45 @@ img{max-width:100%}
    what leaves the gap as white space below it rather than the browser
    trying to centre it in space it no longer fully occupies.
 
-   min-height:435px is the shared floor for every one of the eleven, not
-   a per-module value — 435px is a photo's own natural height at the new
-   580px column width (580 × 3÷4), i.e. the height it would sit at anyway
-   if the row weren't being stretched by anything shorter (raised from
-   285px, which was the same calculation at the old 380px width).
+   min-height:410px and max-height:495px, both re-checked against this
+   title-start/enquire-end span rather than carried over from the old
+   eyebrow-start one — excluding the eyebrow row shortens every section
+   by roughly 30px (its own height plus margin), so both values came
+   down from the previous 435px/520px by about that much rather than
+   staying put. Still shared across all eleven, not per-module values.
 
-   max-height:520px is the shared cap for every one of the eleven, not a
-   per-module value. Skip Hire & RoRo has the tallest text column of the
-   six photo sections (628px), which — uncapped, at the new 580px visual
-   width — still only leaves about 70% of the photo's original width in
-   frame, enough to show the serial number but not the RoRo container
-   behind it. 520px keeps that section's photo at roughly 84% of its
-   original width, wide enough to hold both in frame (confirmed by
-   screenshot, not just the arithmetic) — see the object-position note
-   further down for the crop itself. At 520px, most sections still
-   reach their own full text height uncapped; only Skip Hire & RoRo
-   (628px) and Fleet & Telematics (549px) are taller than the cap and so
-   are the two sections where the visual stops short of the text
-   column's height, top-aligned with white space below rather than
-   stretching further — confirmed by measuring which sections' rows
-   actually exceed 520px, not assumed from bullet count alone.
+   Confirmed by re-measuring rather than assumed: Reporting & Dashboards
+   is the only section the floor actually binds for now (its own natural
+   span is shorter than 410px); Weighbridge, Skip Hire & RoRo, Materials
+   & Aggregates, Driver App and Fleet & Telematics are taller than 495px
+   uncapped and so are where the cap now binds, stopping the visual at
+   495px and top-aligning it with white space below rather than
+   stretching further. Skip Hire & RoRo — the section this cap exists
+   for — has the tallest span of the six photo sections (596px title-to-
+   enquire); capped at 495px and at the 580px visual column, its photo
+   keeps roughly 88% of its original width in frame, comfortably wide
+   enough to hold both the serial number and the RoRo container at once
+   (confirmed by screenshot) — see the object-position note further down
+   for the crop itself.
    ========================================================================== */
-#route-modules .wz-container{max-width:1400px}
-.wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;column-gap:var(--space-10);align-items:stretch}
-.wz-module-section__text{grid-column:1;grid-row:1;min-width:0}
-.wz-module-section__media{grid-column:2;grid-row:1;display:flex;justify-content:center;align-items:flex-start;min-height:435px;max-height:520px}
+.wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;grid-template-rows:[eyebrow-start] auto [title-start] auto [summary-start] auto [bullets-start] auto [alongside-start] auto [pending-start] auto [enquire-start] auto [enquire-end];column-gap:var(--space-10);align-items:stretch}
+.wz-module-section__text{grid-column:1;grid-row:eyebrow-start/enquire-end;display:grid;grid-template-rows:subgrid;min-width:0}
+.wz-module-section__enquire{grid-row:enquire-start}
+.wz-module-section__media{grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px;max-height:495px}
 @media (max-width:1150px){
   .wz-module-section__grid{display:block}
+  /* .wz-module-section__text's grid-template-rows:subgrid only means
+     anything with an actual grid parent to inherit tracks from — once
+     .wz-module-section__grid above turns into a plain block, the
+     subgrid declaration doesn't just harmlessly no-op, it leaves the
+     text column as its own orphaned single-row grid, which collapsed
+     the eyebrow/title/summary/bullets/alongside/enquire elements (each
+     still carrying a grid-row: line name from the desktop rules) into
+     that one row side by side instead of stacked — caught by checking
+     body scroll width at 390px, not assumed safe. Resetting to plain
+     block restores normal document flow, matching how it always
+     rendered here before this task. */
+  .wz-module-section__text{display:block}
   .wz-module-section__media{display:flex;justify-content:center;width:100%;max-width:460px;margin:0 0 var(--space-6);min-height:0;max-height:none}
 }
 
@@ -1284,14 +1316,12 @@ img{max-width:100%}
               </picture>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
               <h2>Weighbridge</h2>
               </div>
             <p class="wz-module-section__summary">Live weight capture straight off your indicator, onto the ticket.</p>
-            </div>
             <ul>
               <li>Reads standard RS232 weighbridge indicators through a locally hosted connection on site, so weights arrive on the ticket as they are taken.</li>
               <li>Captures gross, tare and net together, with the container tare handled separately where a skip is involved.</li>
@@ -1300,7 +1330,7 @@ img{max-width:100%}
               <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Materials &amp; Aggregates</strong>, <strong>Finance &amp; Sage</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1314,14 +1344,12 @@ img{max-width:100%}
               </picture>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
               <h2>Skip Hire &amp; RoRo</h2>
               </div>
             <p class="wz-module-section__summary">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
-            </div>
             <ul>
               <li>Handles the full order range: delivery, exchange, collection, weigh and load, and reposition, each priced on its own terms.</li>
               <li>Hire periods with allowance days, expiry dates, rental day allowances and automatic over-tonnage charges.</li>
@@ -1331,7 +1359,7 @@ img{max-width:100%}
               <li>Tip outlet licences and material-to-outlet rules checked before the tip, so a driver cannot be sent somewhere unlicensed to take the material.</li>
             </ul>
             <p class="wz-module-section__alongside">Digital waste tracking functionality lives in this module.</p>
-            <p style="margin:0"><a href="/enquire?module=Skip%20Hire%20%26%20RoRo">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Skip%20Hire%20%26%20RoRo">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1345,14 +1373,12 @@ img{max-width:100%}
               </picture>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
               <h2>Materials &amp; Aggregates</h2>
               </div>
             <p class="wz-module-section__summary">Material orders, haulage, disposal routes and automatic load splitting.</p>
-            </div>
             <ul>
               <li>Large orders split into legal delivery tickets automatically, so a 200 tonne order becomes ten tickets rather than ten phone calls.</li>
               <li>Haulage handled as a buy and sell line, with disposal routes, waiting time charges and site permits held against the order.</li>
@@ -1361,7 +1387,7 @@ img{max-width:100%}
               <li>Quantities spread across multiple delivery dates, with recurring orders supported.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="weighbridge,scheduling,fleet">Works alongside: <strong>Weighbridge</strong>, <strong>Scheduling &amp; Dispatch</strong>, <strong>Fleet &amp; Telematics</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1422,14 +1448,12 @@ img{max-width:100%}
               </div>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span>
               <h2>Scheduling &amp; Dispatch</h2>
               </div>
             <p class="wz-module-section__summary">Drag-and-drop planning boards that hold thousands of live tickets.</p>
-            </div>
             <ul>
               <li>Five distinct planning views covering skips, tippers, concrete, artics and bulk, each filtered to how that side of the operation actually runs.</li>
               <li>An unscheduled jobs dock, so dispatchers drag work onto a vehicle-by-day grid rather than rebuilding the day in their head.</li>
@@ -1438,7 +1462,7 @@ img{max-width:100%}
               <li>Scheduling for hire-based products, with jobs and products linked in both directions.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="driver-app,fleet,skip-hire">Works alongside: <strong>Driver App</strong>, <strong>Fleet &amp; Telematics</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1477,14 +1501,12 @@ img{max-width:100%}
               </div>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span>
               <h2>Driver App</h2>
               </div>
             <p class="wz-module-section__summary">Job cards, weights, load breakdowns and signatures from the cab.</p>
-            </div>
             <ul>
               <li>Skip and material tickets completed on the phone: weights, load breakdown and variances, without a paper docket.</li>
               <li>Delivery sites geofenced, so arrival, waiting time and departure are recorded rather than estimated.</li>
@@ -1494,7 +1516,7 @@ img{max-width:100%}
               <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,skip-hire,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Skip Hire &amp; RoRo</strong>, <strong>Weighbridge</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1527,14 +1549,12 @@ img{max-width:100%}
               </div>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span>
               <h2>Fleet &amp; Telematics</h2>
               </div>
             <p class="wz-module-section__summary">Live vehicle tracking and weight limits enforced before dispatch.</p>
-            </div>
             <ul>
               <li>Live GPS positions from Teletrac shown on the dispatch map, so you can see where drivers actually are.</li>
               <li>Vehicle records hold type, default load size, and maximum and tare weight limits.</li>
@@ -1544,7 +1564,7 @@ img{max-width:100%}
               <li>Mobile device management across the fleet's handsets.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,driver-app">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Driver App</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1619,14 +1639,12 @@ img{max-width:100%}
               </div>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span>
               <h2>Reporting &amp; Dashboards</h2>
               </div>
             <p class="wz-module-section__summary">Operational, financial and compliance reporting.</p>
-            </div>
             <ul>
               <li>Consolidated monthly and annual reporting across orders, waste streams and invoices.</li>
               <li>Reports generated as PDFs and dispatched by email on a schedule, so the recurring ones stop being a job.</li>
@@ -1634,7 +1652,7 @@ img{max-width:100%}
               <li>Hazardous waste consignment reports exportable in Environment Agency formats.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: <strong>Multi-Company</strong>, <strong>Finance &amp; Sage</strong>, <strong>Customer Portal</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1653,14 +1671,12 @@ img{max-width:100%}
               </div>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span>
               <h2>Customer Portal</h2>
               </div>
             <p class="wz-module-section__summary">Self-serve ordering, ticket history and site reports for your customers.</p>
-            </div>
             <ul>
               <li>Scheduled weekly and monthly reports emailed to customers automatically, which takes the recurring report requests off your phone lines.</li>
               <li>Site recycling reports delivered to key accounts without office involvement.</li>
@@ -1668,7 +1684,7 @@ img{max-width:100%}
             </ul>
             <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: <strong>Reporting &amp; Dashboards</strong>, <strong>Finance &amp; Sage</strong>.</p>
             <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
-            <p style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1725,21 +1741,19 @@ img{max-width:100%}
               </picture>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
               <h2>Ready-Mix Concrete</h2>
               </div>
             <p class="wz-module-section__summary">Concrete orders, batching schedules and delivery.</p>
-            </div>
             <ul>
               <li>Daily delivery tickets generated automatically for multi-load concrete orders.</li>
               <li>Concrete runs as one of the five dispatch planning views, filtered to how that side of the operation works.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Weighbridge</strong>.</p>
             <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
-            <p style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1753,16 +1767,14 @@ img{max-width:100%}
               </picture>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
               <h2>Trade Waste</h2>
               </div>
             <p class="wz-module-section__summary">Route-based commercial collections.</p>
-            </div>
             <p class="wz-pending">No source material. Trade Waste does not appear anywhere in the twelve-section functional spec. The product manager either supplies the detail or the module comes off the grid. Writing a popup from nothing would be inventing product capability.</p>
-            <p style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
             </div>
           </div>
         </section>
@@ -1776,14 +1788,12 @@ img{max-width:100%}
               </picture>
             </div>
             <div class="wz-module-section__text">
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
               <h2>Hazardous Waste</h2>
               </div>
             <p class="wz-module-section__summary">Consignment tracking and Environment Agency reporting.</p>
-            </div>
             <ul>
               <li>Hazardous waste consignment reports exportable in Environment Agency standard formats.</li>
               <li>Consignments tracked per physical unit through the European Waste Catalogue register.</li>
@@ -1791,7 +1801,7 @@ img{max-width:100%}
               <li>Duty of care records produced digitally as part of the same movement.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="skip-hire,reporting">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
             </div>
           </div>
         </section>
