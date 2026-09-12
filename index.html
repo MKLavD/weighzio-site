@@ -610,39 +610,16 @@ img{max-width:100%}
    as the same surface token as the rest of the site rather than a
    one-off colour invented for this page. */
 .wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
-/* Large faint watermark, reusing each module's own icon rather than a new
-   asset. Lives as the first child of .wz-container (not .wz-module-section)
-   so its right:-* bleed is measured off the text column's own edge, not the
-   full-bleed section edge. Sitting behind the text needs an actual
-   negative z-index, not just DOM order: a positioned descendant with
-   z-index:auto (or 0) still paints after static in-flow content in the
-   normal stacking order, so .wz-container is given its own stacking
-   context (position:relative + z-index:0) and the watermark uses
-   z-index:-1 within it, which is what actually pushes it behind the
-   header/bullets/alongside text rather than merely visually "under" them
-   in the markup. Hidden below 900px, matching the breakpoint the rest of
-   the page already treats as the tablet/mobile cutover (see .wz-split2) —
-   measured only ~26px of clear space to the right of the text column at
-   768px, nowhere near enough for a 120px+ icon without it sitting under
-   readable text.
-
-   right:-16px, reduced from -24px: the page's own container widened to
-   1400px below (for the eleven visual sections' sake, but it's the same
-   shared .wz-container these five watermark-only sections use too), which
-   leaves only 20px of margin either side at 1440px instead of the 120px
-   there used to be. -24px would have bled 4px past the actual viewport
-   edge there — caught by checking body scroll width at 1440, not assumed
-   safe from the old margin. -16px fits with 4px to spare at 1440.
-   Flagging rather than silently patching further: the same shared
-   .wz-container still has zero side margin at any width between roughly
-   900px and 1400px (it simply fills the viewport in that range, whether
-   the cap is 1200px or 1400px), so this bleed technically oversteps the
-   viewport by 8px across that whole band — pre-existing before this
-   session's width change, not introduced by it, and outside the three
-   breakpoints (1440/768/390) this and prior tasks have checked. */
-.wz-module-section > .wz-container{position:relative;z-index:0}
-.wz-module-section__icon-bg{position:absolute;top:50%;right:-16px;transform:translateY(-50%);width:clamp(120px,11vw,160px);height:clamp(120px,11vw,160px);color:rgba(18,45,75,.06);z-index:-1;pointer-events:none}
-@media (max-width:900px){.wz-module-section__icon-bg{display:none}}
+/* The plain icon-watermark treatment (.wz-module-section__icon-bg) that
+   used to mark the sections without a real photo or mockup is gone —
+   Customers & Pricing, Finance & Sage, Multi-Company and Marketing Data
+   Feed were the last four still using it, and all four now have a real
+   mockup instead (see the wz-mockup variants further down). Custom
+   Modules dropped the same treatment in an earlier pass. No section
+   uses the watermark any more, so its CSS (the stacking-context rule on
+   .wz-module-section > .wz-container included, which existed solely to
+   give the watermark's negative z-index somewhere to sit) has been
+   removed rather than left in place unused. */
 /* Large faint numeral beside the icon, one per section, in source order —
    counter-based so it can never drift out of sync with the actual section
    order. Low-opacity navy rather than a solid pale token, so it reads
@@ -671,20 +648,18 @@ img{max-width:100%}
 .wz-pending{font-size:var(--text-body-sm);color:var(--text-muted);border-left:var(--border-width-strong) solid var(--border-strong);padding-left:var(--space-4);margin:0 0 var(--space-5);max-width:68ch;grid-row:pending-start}
 
 /* ==========================================================================
-   Module section visuals — one shared two-column layout for all eleven
-   sections that have a visual (seven photos, four UI mockups). Four more
-   (Customers & Pricing, Finance & Sage, Multi-Company, Marketing Data
-   Feed) stay watermark-only, untouched here: their
-   .wz-module-section__icon-bg markup and rules above are unchanged, and
-   they don't use .wz-module-section__grid/__text at all — their
-   .wz-container stays a plain block at the page's normal --container-max,
-   still position:relative for the watermark's own z-index trick.
-   Custom Modules used to carry the same icon-bg watermark as a sixteenth
-   case but never had a visual of its own to distinguish it visually from
-   the four real watermark sections above (all sixteen icons would have
-   read identically); its watermark span has been removed outright, and
-   it now reads as plain full-width text with only its orange border as
-   the distinguishing treatment, as originally intended.
+   Module section visuals — one shared two-column layout for all fifteen
+   sections that have a visual (seven photos, eight UI mockups). Customers
+   & Pricing, Finance & Sage, Multi-Company and Marketing Data Feed were
+   the last four still on the plain icon watermark; each now has a real
+   mockup (account screen, invoicing/sync screen, entity switcher and
+   campaign performance panel respectively — see the numbered mockup
+   variants further down) built into this same grid/text/media system,
+   not a bespoke layout of their own. Only Custom Modules — the
+   sixteenth section — has no visual at all, by design: it was never
+   meant to carry the watermark either (that stray instance was removed
+   in an earlier pass), and reads as plain full-width text with only its
+   orange border as the distinguishing treatment.
 
    .wz-module-section__grid (added alongside .wz-container, not replacing
    it, so the shared gutter/positioning above still applies) is a real
@@ -742,8 +717,9 @@ img{max-width:100%}
    built: text rendered 285px below where it should have started, exactly
    the media column's own height.
 
-   Switches to a single stacked column well before the watermark's own
-   900px cutoff: even with the text column now flexible rather than
+   Switches to a single stacked column well before the 900px breakpoint
+   the rest of the page treats as its tablet/mobile cutover (see
+   .wz-split2): even with the text column now flexible rather than
    fixed, a viewport has to be past roughly 1150px before there's a
    sensible amount of room left for it once the wider 580px visual column
    and the gap are accounted for, so anything narrower stacks the visual
@@ -765,10 +741,13 @@ img{max-width:100%}
    min-height:410px is the only cap here — it exists purely for that
    floor. There is no max-height: every visual stretches the full
    title-start/enquire-end span regardless of how tall that span is, so
-   all eleven sections align bottom-to-bottom with their enquire link.
-   See the object-position comment further down for how the seven real
-   photos (including Driver App) are cropped to protect their own
-   detail at whatever height this produces.
+   all fifteen sections with a visual align bottom-to-bottom with their
+   enquire link. See the object-position comment further down for how
+   the seven real photos (including Driver App) are cropped to protect
+   their own detail at whatever height this produces, and the numbered
+   mockup variants below for how the eight UI mockups (four original,
+   four replacing the old icon watermark) fill that same height with
+   flexible internal layout rather than a fixed pixel size.
    ========================================================================== */
 .wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;grid-template-rows:[eyebrow-start] auto [title-start] auto [summary-start] auto [bullets-start] auto [alongside-start] auto [pending-start] auto [enquire-start] auto [enquire-end];column-gap:var(--space-10);align-items:stretch}
 .wz-module-section__text{grid-column:1;grid-row:eyebrow-start/enquire-end;display:grid;grid-template-rows:subgrid;min-width:0}
@@ -862,8 +841,71 @@ img{max-width:100%}
 .wz-mockup__dot--stopped{background:var(--navy-200)}
 .wz-mockup__fleet-row em{font-style:normal;margin-left:auto;color:var(--navy-400)}
 
+/* Shared status/tier tag, reused by the account, finance and (implicitly,
+   via the active-row treatment) entities mockups below. Success green is
+   reserved for a genuine compliance/posted state (Finance & Sage's
+   "Posted to Sage"); every other tag uses a neutral navy tint so colour
+   never carries decorative meaning it doesn't have. */
+.wz-mockup__tag{flex:none;display:inline-flex;align-items:center;font-size:10px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:4px 8px;border-radius:var(--radius-pill);white-space:nowrap}
+.wz-mockup__tag--success{background:var(--color-success-tint);color:var(--color-success)}
+.wz-mockup__tag--success::before{content:"✓";margin-right:4px}
+.wz-mockup__tag--pending{background:var(--navy-100);color:var(--navy-600)}
+.wz-mockup__tag--tier{align-self:flex-start;background:var(--navy-050);color:var(--navy-700)}
+
+/* --- 5. Customers & Pricing: account screen ----------------------------- */
+/* justify-content:center on the body, not justify-content:space-between on
+   the row lists — with only three site rows this content is genuinely
+   short, and stretching that little to fill an arbitrarily tall row (the
+   min-height floor, or a section with a lot of bullet copy) would space
+   the rows out into obvious gaps rather than reading as a denser account
+   screen would. Centring instead means any extra height becomes even
+   breathing room above and below the whole card's content — which is
+   what a real card-style UI does when it has more room than it needs —
+   rather than one row drifting away from the next. Internal row spacing
+   (gap) stays fixed regardless of the outer height. */
+.wz-mockup__account-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:14px}
+.wz-mockup__account-address{font-size:11px;color:var(--navy-400)}
+.wz-mockup__account-credit{display:flex;flex-direction:column;gap:6px}
+.wz-mockup__account-credit-label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:10px;color:var(--navy-400)}
+.wz-mockup__account-credit-label b{font-weight:var(--weight-semibold);color:var(--navy-700);font-size:11px;white-space:nowrap}
+.wz-mockup__account-credit-bar{height:8px;border-radius:var(--radius-pill);background:var(--navy-100);overflow:hidden}
+.wz-mockup__account-credit-bar span{display:block;height:100%;background:var(--navy-600);border-radius:var(--radius-pill)}
+.wz-mockup__account-sites{border-top:var(--border-width) solid var(--border-hairline);padding-top:10px}
+.wz-mockup__account-sites-head{font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:8px}
+.wz-mockup__account-site-rows{display:flex;flex-direction:column;gap:8px}
+.wz-mockup__account-site-row{display:flex;justify-content:space-between;gap:8px;font-size:12px}
+.wz-mockup__account-site-row em{font-style:normal;color:var(--navy-400);font-size:10px;flex:none}
+
+/* --- 6. Finance & Sage: invoicing/sync screen --------------------------- */
+.wz-mockup__finance-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:14px}
+.wz-mockup__finance-rows{display:flex;flex-direction:column;gap:10px}
+.wz-mockup__finance-row{display:flex;align-items:center;gap:10px;font-size:11px}
+.wz-mockup__finance-num{flex:none;width:66px;color:var(--navy-400);font-feature-settings:var(--numeric-tabular)}
+.wz-mockup__finance-row em{flex:1;min-width:0;font-style:normal;color:var(--text-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wz-mockup__finance-row b{flex:none;font-weight:var(--weight-semibold);color:var(--navy-700);font-feature-settings:var(--numeric-tabular)}
+.wz-mockup__finance-vat{display:flex;justify-content:space-between;align-items:baseline;border-top:var(--border-width) solid var(--border-hairline);padding-top:11px;font-size:11px;color:var(--navy-400)}
+.wz-mockup__finance-vat b{font-weight:var(--weight-semibold);color:var(--navy-700);font-size:13px;font-feature-settings:var(--numeric-tabular)}
+
+/* --- 7. Multi-Company: entity switcher ----------------------------------- */
+.wz-mockup__entities-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px 14px 14px}
+.wz-mockup__entity-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 9px;border-radius:7px;font-size:12px;font-weight:var(--weight-medium)}
+.wz-mockup__entity-row em{flex:none;font-style:normal;font-size:10px;color:var(--navy-400)}
+.wz-mockup__entity-row.is-active{background:var(--navy-050);font-weight:var(--weight-semibold);color:var(--navy-700)}
+.wz-mockup__entity-row.is-active em{color:var(--navy-600)}
+
+/* --- 8. Marketing Data Feed: campaign performance ------------------------ */
+.wz-mockup__campaigns-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:14px}
+.wz-mockup__campaign-head{display:flex;gap:8px;padding-bottom:8px;border-bottom:var(--border-width) solid var(--border-hairline);font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400)}
+.wz-mockup__campaign-head span:first-child{flex:1}
+.wz-mockup__campaign-head span{width:64px;flex:none;text-align:right}
+.wz-mockup__campaign-head span:first-child{text-align:left}
+.wz-mockup__campaign-rows{display:flex;flex-direction:column;gap:10px}
+.wz-mockup__campaign-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.wz-mockup__campaign-row span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-body)}
+.wz-mockup__campaign-row b{width:64px;flex:none;text-align:right;font-weight:var(--weight-semibold);color:var(--navy-700);font-feature-settings:var(--numeric-tabular)}
+
 /* --- Real photography, seven sections: same .wz-module-section__media slot
-   the four remaining mockups use, --radius-lg to match the site's existing
+   the eight UI mockups use, --radius-lg to match the site's existing
    card/tile corner convention rather than a bespoke radius. At the
    two-column desktop width, height:100% + object-fit:cover lets the photo
    fill whatever height the grid row stretches to (matching the text
@@ -1594,16 +1636,35 @@ img{max-width:100%}
         </section>
 
         <section class="wz-module-section" id="customers" data-module-detail="customers">
-          <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+          <div class="wz-container wz-module-section__grid">
+            <div class="wz-module-section__media" aria-hidden="true">
+              <div class="wz-mockup wz-mockup--account">
+                <div class="wz-mockup__bar">Hinckley Builders Merchants <em>Account</em></div>
+                <div class="wz-mockup__account-body">
+                  <div class="wz-mockup__account-address">Watling Street, Hinckley, Leicestershire LE10 3EH</div>
+                  <div class="wz-mockup__account-credit">
+                    <div class="wz-mockup__account-credit-label"><span>Credit limit</span><b>&pound;12,400 of &pound;20,000 used</b></div>
+                    <div class="wz-mockup__account-credit-bar"><span style="width:62%"></span></div>
+                  </div>
+                  <span class="wz-mockup__tag wz-mockup__tag--tier">Tier 2 &middot; bespoke rate</span>
+                  <div class="wz-mockup__account-sites">
+                    <div class="wz-mockup__account-sites-head">Linked sites</div>
+                    <div class="wz-mockup__account-site-rows">
+                      <div class="wz-mockup__account-site-row"><span>Hinckley Depot</span><em>Primary</em></div>
+                      <div class="wz-mockup__account-site-row"><span>Nuneaton Yard</span><em>Site 2</em></div>
+                      <div class="wz-mockup__account-site-row"><span>Burbage Store</span><em>Site 3</em></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wz-module-section__text">
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
               <h2>Customers &amp; Pricing</h2>
               </div>
             <p class="wz-module-section__summary">Accounts, sites, bespoke rates and credit control.</p>
-            </div>
             <ul>
               <li>One customer account with many sites, each with its own contacts and geo-addressed location.</li>
               <li>Bespoke pricing per customer, applied automatically on every order and ticket, so nobody looks a rate up by hand and nobody issues a credit note to fix it.</li>
@@ -1613,21 +1674,54 @@ img{max-width:100%}
               <li>Cash and invoice payment terms held separately, with a workflow to convert a cash customer to an account customer.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
+            </div>
           </div>
         </section>
 
         <section class="wz-module-section" id="finance" data-module-detail="finance">
-          <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+          <div class="wz-container wz-module-section__grid">
+            <div class="wz-module-section__media" aria-hidden="true">
+              <div class="wz-mockup wz-mockup--finance">
+                <div class="wz-mockup__bar">Sage sync <em>Last synced 2 min ago</em></div>
+                <div class="wz-mockup__finance-body">
+                  <div class="wz-mockup__finance-rows">
+                    <div class="wz-mockup__finance-row">
+                      <span class="wz-mockup__finance-num">INV-10482</span>
+                      <em>Hinckley Builders Merchants</em>
+                      <b>&pound;2,140.00</b>
+                      <span class="wz-mockup__tag wz-mockup__tag--success">Posted to Sage</span>
+                    </div>
+                    <div class="wz-mockup__finance-row">
+                      <span class="wz-mockup__finance-num">INV-10483</span>
+                      <em>Nuneaton Skips Ltd</em>
+                      <b>&pound;860.40</b>
+                      <span class="wz-mockup__tag wz-mockup__tag--success">Posted to Sage</span>
+                    </div>
+                    <div class="wz-mockup__finance-row">
+                      <span class="wz-mockup__finance-num">INV-10484</span>
+                      <em>Tamworth Aggregates</em>
+                      <b>&pound;3,315.90</b>
+                      <span class="wz-mockup__tag wz-mockup__tag--pending">Pending</span>
+                    </div>
+                    <div class="wz-mockup__finance-row">
+                      <span class="wz-mockup__finance-num">INV-10485</span>
+                      <em>Redditch Waste Co</em>
+                      <b>&pound;475.00</b>
+                      <span class="wz-mockup__tag wz-mockup__tag--pending">Pending</span>
+                    </div>
+                  </div>
+                  <div class="wz-mockup__finance-vat"><span>T21 domestic reverse charge VAT</span><b>&pound;612.35</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="wz-module-section__text">
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
               <h2>Finance &amp; Sage</h2>
               </div>
             <p class="wz-module-section__summary">Invoicing, VAT, recurring billing and background posting to Sage.</p>
-            </div>
             <ul>
               <li>Invoices and tickets post to Sage in the background, across every company you run, without anyone triggering a sync out of hours.</li>
               <li>Nominal codes mapped per product, per tip outlet and per company, so the general ledger posting is right first time.</li>
@@ -1637,7 +1731,8 @@ img{max-width:100%}
               <li>Annual contract price uplifts scheduled and applied across active accounts.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="customers,multi-company,reporting">Works alongside: <strong>Customers &amp; Pricing</strong>, <strong>Multi-Company</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
+            </div>
           </div>
         </section>
 
@@ -1714,16 +1809,26 @@ img{max-width:100%}
         </section>
 
         <section class="wz-module-section" id="multi-company" data-module-detail="multi-company">
-          <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+          <div class="wz-container wz-module-section__grid">
+            <div class="wz-module-section__media" aria-hidden="true">
+              <div class="wz-mockup wz-mockup--entities">
+                <div class="wz-mockup__bar">Switch company <em>9 entities</em></div>
+                <div class="wz-mockup__entities-body">
+                  <div class="wz-mockup__entity-row is-active"><span>Midland Skip Hire Ltd</span><em>VAT GB245 1190 12</em></div>
+                  <div class="wz-mockup__entity-row"><span>Midland Aggregates Ltd</span><em>VAT GB245 1190 44</em></div>
+                  <div class="wz-mockup__entity-row"><span>Trent Valley Waste Ltd</span><em>VAT GB308 6620 71</em></div>
+                  <div class="wz-mockup__entity-row"><span>Trent Valley Haulage Ltd</span><em>VAT GB308 6620 93</em></div>
+                  <div class="wz-mockup__entity-row"><span>Hinckley Recycling Ltd</span><em>VAT GB119 4470 28</em></div>
+                </div>
+              </div>
+            </div>
+            <div class="wz-module-section__text">
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
               <h2>Multi-Company</h2>
               </div>
             <p class="wz-module-section__summary">Separate entities with their own VAT, ledgers and branding under one login.</p>
-            </div>
             <ul>
               <li>One login across every company in the group, with instant switching rather than logging in and out.</li>
               <li>A default organisation per user, so people land where they work.</li>
@@ -1732,27 +1837,43 @@ img{max-width:100%}
               <li>One master customer record shared across all entities, which removes the duplicate data entry and the inter-company notes.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Scheduling &amp; Dispatch</strong>.</p>
-            <p style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
+            </div>
           </div>
         </section>
 
         <section class="wz-module-section" id="marketing-data-feed" data-module-detail="marketing-data-feed">
-          <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
-            <div class="wz-module-section__header">
-              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+          <div class="wz-container wz-module-section__grid">
+            <div class="wz-module-section__media" aria-hidden="true">
+              <div class="wz-mockup wz-mockup--campaigns">
+                <div class="wz-mockup__bar">Campaign performance <em>Last 30 days</em></div>
+                <div class="wz-mockup__campaigns-body">
+                  <div class="wz-mockup__campaign-head"><span>Campaign</span><span>Spend</span><span>Job value</span></div>
+                  <div class="wz-mockup__campaign-rows">
+                    <div class="wz-mockup__campaign-row"><span>Skip Hire &mdash; Leicester</span><b>&pound;640</b><b>&pound;4,920</b></div>
+                    <div class="wz-mockup__campaign-row"><span>Aggregates &mdash; Search</span><b>&pound;410</b><b>&pound;3,180</b></div>
+                    <div class="wz-mockup__campaign-row"><span>RoRo &mdash; Coventry</span><b>&pound;295</b><b>&pound;1,860</b></div>
+                    <div class="wz-mockup__campaign-row"><span>Trade Waste &mdash; Meta</span><b>&pound;180</b><b>&pound;340</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wz-module-section__text">
+            <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
               <h2>Marketing Data Feed</h2>
               </div>
             <p class="wz-module-section__summary">Job and enquiry data fed back into your Google and Meta campaigns.</p>
-            </div>
             <ul>
               <li>Completed job and enquiry data fed back into Google and Meta, so advertising is measured against work that was booked and paid for rather than clicks and form fills.</li>
               <li>Budget follows the campaigns producing real jobs.</li>
             </ul>
             <p class="wz-pending">Goes beyond the functional spec and needs sign-off. Before this goes live it needs a lawful basis, a data processing agreement between you and the operator, and disclosure in both privacy policies, because it involves processing the operator's customer data for advertising.</p>
-            <p style="margin:0"><a href="/enquire?module=Marketing%20Data%20Feed">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Marketing%20Data%20Feed">Enquire about this module</a></p>
+            </div>
+          </div>
+        </section>
           </div>
         </section>
 
