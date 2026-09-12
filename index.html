@@ -672,7 +672,7 @@ img{max-width:100%}
 
 /* ==========================================================================
    Module section visuals — one shared two-column layout for all eleven
-   sections that have a visual (six photos, five UI mockups). Four more
+   sections that have a visual (seven photos, four UI mockups). Four more
    (Customers & Pricing, Finance & Sage, Multi-Company, Marketing Data
    Feed) stay watermark-only, untouched here: their
    .wz-module-section__icon-bg markup and rules above are unchanged, and
@@ -753,37 +753,27 @@ img{max-width:100%}
 
    align-items:flex-start (was center) — a deliberate design change, not
    a fix: every visual now top-aligns with the title row instead of
-   centring in the row. This mattered only for the Driver App phone,
-   which is the one visual that doesn't stretch to fill the row (kept at
-   its own 264×342 portrait size) — it previously centred vertically in
-   whatever height the row came to; now it sits flush with the top like
-   the other ten. It also does the work for the max-height cap just
-   below: when a capped visual is shorter than the row, flex-start is
-   what leaves the gap as white space below it rather than the browser
-   trying to centre it in space it no longer fully occupies.
+   centring in the row. This used to matter most for the Driver App
+   phone, the one visual that didn't stretch to fill the row; Driver App
+   is a photo like the other six now (see the object-position comment
+   further down), so every visual here stretches via height:100% and
+   flex-start's remaining job is just the min-height floor below: on the
+   one section it binds (Reporting & Dashboards), it's what leaves any
+   leftover space as white space below the visual rather than the
+   browser trying to centre it vertically.
 
-   min-height:410px is the only cap left — it exists purely for the floor
-   (Reporting & Dashboards is the one section shorter than this, so its
-   visual doesn't shrink to something oddly small). The max-height cap
-   that used to sit alongside it (495px) has been removed: every visual
-   now stretches the full title-start/enquire-end span regardless of how
-   tall that span is, so all eleven sections align bottom-to-bottom with
-   their enquire link, not just the six that happened to fit under the
-   old cap. Weighbridge, Skip Hire & RoRo, Materials & Aggregates, Driver
-   App and Fleet & Telematics — the five that used to hit the 495px
-   ceiling and sit above a gap of white space — now stretch to their full
-   natural height (measured: 566–650px depending on module) same as
-   every other section. See the object-position comment below for how
-   the three photos among these five (Weighbridge, Skip Hire & RoRo,
-   Materials & Aggregates) were re-tuned for the taller crop this
-   produces, and the Driver App comment further down for why the phone
-   — the one visual that never stretches — needed a separate fix to
-   keep its own top edge aligned once the cap under it was removed.
+   min-height:410px is the only cap here — it exists purely for that
+   floor. There is no max-height: every visual stretches the full
+   title-start/enquire-end span regardless of how tall that span is, so
+   all eleven sections align bottom-to-bottom with their enquire link.
+   See the object-position comment further down for how the seven real
+   photos (including Driver App) are cropped to protect their own
+   detail at whatever height this produces.
    ========================================================================== */
 .wz-module-section__grid{display:grid;grid-template-columns:1fr 580px;grid-template-rows:[eyebrow-start] auto [title-start] auto [summary-start] auto [bullets-start] auto [alongside-start] auto [pending-start] auto [enquire-start] auto [enquire-end];column-gap:var(--space-10);align-items:stretch}
 .wz-module-section__text{grid-column:1;grid-row:eyebrow-start/enquire-end;display:grid;grid-template-rows:subgrid;min-width:0}
 .wz-module-section__enquire{grid-row:enquire-start}
-.wz-module-section__media{grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px}
+.wz-module-section__media{position:relative;grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px}
 @media (max-width:1150px){
   .wz-module-section__grid{display:block}
   /* .wz-module-section__text's grid-template-rows:subgrid only means
@@ -810,21 +800,17 @@ img{max-width:100%}
    (the board's rows, the chart, the map) absorb that height via flex:1
    rather than the box being a fixed pixel size. Once stacked (no text
    column to match), it falls back to the same 4:3 the photos use there,
-   sized by its own width like before. The phone is the one exception
-   throughout (see below) — kept at its own portrait proportion, never
-   stretched. Font bumped from the original 11px to 13px so nothing reads
-   as a small screenshot enlarged past its own detail. */
+   sized by its own width like before. Font bumped from the original
+   11px to 13px so nothing reads as a small screenshot enlarged past its
+   own detail. */
 .wz-mockup{position:relative;width:100%;background:var(--white);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--navy-700)}
-.wz-mockup:not(.wz-mockup--phone){height:100%;display:flex;flex-direction:column}
+.wz-mockup{height:100%;display:flex;flex-direction:column}
 @media (max-width:1150px){
-  .wz-mockup:not(.wz-mockup--phone){height:auto;aspect-ratio:4/3}
+  .wz-mockup{height:auto;aspect-ratio:4/3}
 }
 .wz-mockup__bar{flex:none;background:var(--navy-700);color:var(--white);padding:11px 14px;font-size:12px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .wz-mockup__bar em{font-style:normal;font-weight:var(--weight-regular);opacity:.68}
 .wz-mockup__body{padding:15px}
-.wz-mockup__badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:4px 8px;border-radius:var(--radius-pill);white-space:nowrap}
-.wz-mockup__badge--success{background:var(--color-success-tint);color:var(--color-success)}
-.wz-mockup__badge--success::before{content:"✓";margin-right:1px}
 
 /* --- 1. Scheduling & Dispatch: planning board ------------------------- */
 .wz-mockup__board{display:flex;gap:11px;padding:14px;flex:1;min-height:0}
@@ -841,38 +827,7 @@ img{max-width:100%}
 .wz-mockup__board-queue-items{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between}
 .wz-mockup__board-queue-item{background:var(--navy-025);border-radius:4px;padding:6px 7px;font-size:9px;line-height:1.35}
 
-/* --- 2. Driver App: phone frame ---------------------------------------- */
-/* The one exception to the shared 4:3 box: stretching a phone screen to a
-   landscape photo's ratio would look broken, so it keeps its own portrait
-   proportion, scaled as a whole rather than stretched.
-   264×342 (previously sized up from an original 220×286, ~20%) started
-   reading small once the visual column itself grew wider — re-measured
-   against the 580px column and bumped again, by the same ~1.136× factor,
-   to 300×390. Every internal font-size/padding/gap below is scaled by
-   that same factor (e.g. 14px status text -> 16px, 11px gaps -> 12–13px)
-   rather than just widening the outer frame, so the screen's own type
-   and spacing grow with it instead of the layout simply gaining margin
-   around unchanged small text. */
-.wz-mockup--phone{width:300px;display:flex;flex-direction:column}
-.wz-mockup--phone .wz-mockup__bar{padding:12px 16px;font-size:14px}
-.wz-mockup__phone-status{flex:none;background:var(--navy-900);color:var(--white);font-size:11px;font-weight:var(--weight-semibold);padding:7px 16px;display:flex;justify-content:space-between}
-.wz-mockup__phone-body{padding:16px}
-.wz-mockup__phone-job{margin-bottom:13px}
-.wz-mockup__phone-job strong{display:block;font-family:var(--font-display);font-size:16px;margin:3px 0 2px}
-.wz-mockup__phone-job span{display:block;color:var(--navy-400);font-size:11px}
-.wz-mockup__weights{display:flex;gap:8px;margin-bottom:13px}
-.wz-mockup__weights div{flex:1;background:var(--navy-025);border-radius:5px;padding:8px 6px;text-align:center}
-.wz-mockup__weights span{display:block;font-size:9px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
-.wz-mockup__weights b{display:block;font-size:12px;font-weight:var(--weight-semibold)}
-.wz-mockup__comp-label{font-size:10px;color:var(--navy-400);margin-bottom:5px}
-.wz-mockup__comp-bar{display:flex;height:12px;border-radius:var(--radius-pill);overflow:hidden;margin-bottom:13px}
-.wz-mockup__comp-bar span{display:block;height:100%}
-.wz-mockup__sig{border-top:var(--border-width) solid var(--border-hairline);padding-top:11px}
-.wz-mockup__sig-label{font-size:10px;color:var(--navy-400);margin-bottom:6px}
-.wz-mockup__sig-line{display:block;width:100%;height:36px;margin-bottom:9px}
-.wz-mockup--phone .wz-mockup__badge{font-size:11px;padding:5px 9px}
-
-/* --- 3. Reporting & Dashboards: executive dashboard --------------------- */
+/* --- 2. Reporting & Dashboards: executive dashboard --------------------- */
 .wz-mockup__metrics{flex:none;display:flex;gap:9px;padding:14px 14px 0}
 .wz-mockup__metric{flex:1;background:var(--navy-025);border-radius:7px;padding:9px 10px}
 .wz-mockup__metric span{display:block;font-size:8px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
@@ -883,7 +838,7 @@ img{max-width:100%}
 .wz-mockup__chart span em{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-style:normal;font-size:9px;color:var(--navy-400)}
 .wz-mockup__chart span.is-today{background:var(--navy-300)}
 
-/* --- 4. Customer Portal: softer, consumer-facing ------------------------ */
+/* --- 3. Customer Portal: softer, consumer-facing ------------------------ */
 .wz-mockup--portal{border-radius:var(--radius-xl)}
 .wz-mockup--portal .wz-mockup__bar{background:var(--navy-050);color:var(--navy-700)}
 .wz-mockup--portal .wz-mockup__body{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -894,7 +849,7 @@ img{max-width:100%}
 .wz-mockup__portal-row span{flex:none;font-weight:var(--weight-semibold)}
 .wz-mockup__portal-cta{flex:none;align-self:flex-start;margin-top:auto;background:var(--surface-cta);color:var(--text-on-orange);font-size:11px;font-weight:var(--weight-semibold);padding:8px 16px;border-radius:var(--radius-pill)}
 
-/* --- 5. Fleet & Telematics: live map ------------------------------------ */
+/* --- 4. Fleet & Telematics: live map ------------------------------------ */
 .wz-mockup__map{flex:1;min-height:0;position:relative;background:var(--navy-025);overflow:hidden}
 .wz-mockup__map-road{position:absolute;background:var(--navy-100)}
 .wz-mockup__pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--navy-600);border:2px solid var(--white);box-shadow:0 1px 3px rgba(18,45,75,.35);transform:translate(-50%,-50%)}
@@ -907,19 +862,42 @@ img{max-width:100%}
 .wz-mockup__dot--stopped{background:var(--navy-200)}
 .wz-mockup__fleet-row em{font-style:normal;margin-left:auto;color:var(--navy-400)}
 
-/* --- Real photography, six sections: same .wz-module-section__media slot
-   the five mockups use, --radius-lg to match the site's existing card/tile
-   corner convention rather than a bespoke radius. At the two-column
-   desktop width, height:100% + object-fit:cover lets the photo fill
-   whatever height the grid row stretches to (matching the text column,
-   never a fixed 4:3 box) — object-position is tuned per photo below to
-   protect the detail that makes each one work regardless of how that
-   crop lands. Once stacked, falls back to a plain 4:3 box like the
-   mockups do, since there's no text column left to match. */
-.wz-module-section__media picture{display:block;width:100%;height:100%}
+/* --- Real photography, seven sections: same .wz-module-section__media slot
+   the four remaining mockups use, --radius-lg to match the site's existing
+   card/tile corner convention rather than a bespoke radius. At the
+   two-column desktop width, height:100% + object-fit:cover lets the photo
+   fill whatever height the grid row stretches to (matching the text
+   column, never a fixed 4:3 box) — object-position is tuned per photo
+   below to protect the detail that makes each one work regardless of how
+   that crop lands. Once stacked, falls back to a plain 4:3 box like the
+   mockups do, since there's no text column left to match.
+
+   picture is taken out of flow (position:absolute;inset:0) at the
+   two-column width rather than just sized at width/height:100% — this
+   matters specifically for Driver App's portrait photo. A grid track's
+   auto height is sized to fit the tallest thing spanning it, and an <img>
+   still contributes its own intrinsic aspect-ratio size to that
+   calculation even though object-fit:cover/height:100% is what actually
+   renders it, because the percentage height can't resolve until the
+   track size is already decided. For the six landscape (4:3) photos that
+   intrinsic contribution (580px column -> ~435px tall) was always
+   comfortably under the text column's natural height, so it never
+   visibly mattered. Driver App's portrait crop implies ~664px at the
+   same column width — taller than the text column needs — and without
+   this fix that pushed the whole row taller than the text, landing as a
+   115px gap between "Works alongside" and the enquire link instead of
+   the ~20px every other section has (caught by comparing that gap
+   against Scheduling & Dispatch, not assumed fine because the top/bottom
+   diffs alone read as 0). Taking the picture out of flow means the
+   media item itself contributes no intrinsic size, so the row is sized
+   by the text column alone as intended, and the photo is then
+   positioned to fill whatever height that produces. Reset to normal flow
+   in the stacked media query below, where there's no text column height
+   for it to compete with. */
+.wz-module-section__media picture{position:absolute;inset:0;display:block;width:100%;height:100%}
 .wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)}
 @media (max-width:1150px){
-  .wz-module-section__media picture{height:auto}
+  .wz-module-section__media picture{position:static;height:auto}
   .wz-module-section__photo{height:auto;aspect-ratio:4/3}
 }
 /* Per-photo crop bias — protects the detail specified for each image
@@ -952,10 +930,26 @@ img{max-width:100%}
      ten sections.
    Below 1150px this doesn't apply regardless — stacked mode uses a plain
    4:3 box, matching the photo's own native ratio closely enough that
-   neither dimension crops much no matter the position. */
+   neither dimension crops much no matter the position.
+
+   Driver App's photo (948×1086) is portrait, unlike the other six
+   (1200×900 landscape) — it replaced the phone mockup outright rather
+   than sitting alongside it. That flips which axis cover actually crops:
+   at the 580px column, cover's required scale is set by width
+   (580/948=0.612) for any row height under ~664px, which is every
+   height this section is likely to reach — meaning the full image WIDTH
+   always stays in frame (nothing left/right ever gets cropped) and only
+   the vertical position matters. The phone screen and the holding hand
+   sit in the lower ~60% of the frame (roughly y 42%–100% of the source
+   image); object-position is biased down (50% 75%) to crop from the
+   background/yard visible above the windscreen first, keeping the phone
+   and hand comfortably inside the frame even at the shortest heights
+   this section reaches, rather than being centred and risking the top
+   of the phone getting cut. */
 #weighbridge .wz-module-section__photo{object-position:68% 42%}       /* the indicator/readout unit and the loaded skip, right-of-centre, mid-height */
 #skip-hire .wz-module-section__photo{object-position:50% 55%}        /* the stencilled serial number and the RoRo for scale, lower-middle band */
 #materials .wz-module-section__photo{object-position:50% 45%}        /* the shovel bucket cutting into the stockpile, dead centre */
+#driver-app .wz-module-section__photo{object-position:50% 75%}       /* the phone screen and the hand holding it, centre-left and low in the frame */
 #ready-mix .wz-module-section__photo{object-position:68% 60%}        /* the chute, falling concrete and the worker guiding it, right-of-centre and low */
 #hazardous-waste .wz-module-section__photo{object-position:65% 35%}  /* the near drum's hazard label and the two labelled drums behind, centre-right, upper-middle */
 #trade-waste .wz-module-section__photo{object-position:50% 25%}      /* the bin mid-tip and the cradle lift gripping it, upper-centre */
@@ -1524,36 +1518,11 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="driver-app" data-module-detail="driver-app">
           <div class="wz-container wz-module-section__grid">
-            <div class="wz-module-section__media" aria-hidden="true">
-              <div class="wz-mockup wz-mockup--phone">
-                <div class="wz-mockup__phone-status"><span>09:41</span><span>4G</span></div>
-                <div class="wz-mockup__bar">Job #48213 <em>In progress</em></div>
-                <div class="wz-mockup__phone-body">
-                  <div class="wz-mockup__phone-job">
-                    <span>Customer</span>
-                    <strong>Hinckley Builders Merchants</strong>
-                    <span>Watling Street, Hinckley LE10 3EH</span>
-                  </div>
-                  <div class="wz-mockup__weights">
-                    <div><span>Gross</span><b>18,420 kg</b></div>
-                    <div><span>Tare</span><b>7,960 kg</b></div>
-                    <div><span>Net</span><b>10,460 kg</b></div>
-                  </div>
-                  <div class="wz-mockup__comp-label">Load composition</div>
-                  <div class="wz-mockup__comp-bar">
-                    <span style="width:62%;background:var(--navy-600)"></span>
-                    <span style="width:23%;background:var(--navy-400)"></span>
-                    <span style="width:15%;background:var(--navy-200)"></span>
-                  </div>
-                  <div class="wz-mockup__sig">
-                    <div class="wz-mockup__sig-label">Customer signature</div>
-                    <svg class="wz-mockup__sig-line" viewBox="0 0 180 40" preserveAspectRatio="none" fill="none">
-                      <path d="M6 30 C 18 10, 26 10, 34 26 S 50 34, 58 14 S 74 6, 82 24 S 100 32, 110 16 S 128 8, 138 22 S 156 30, 170 18" stroke="var(--navy-400)" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <span class="wz-mockup__badge wz-mockup__badge--success">Duty of care filed</span>
-                  </div>
-                </div>
-              </div>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/driver-app.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/driver-app.jpg" alt="Job cards, weights, load breakdowns and signatures from the cab." loading="lazy" width="948" height="1086">
+              </picture>
             </div>
             <div class="wz-module-section__text">
             <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
