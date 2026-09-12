@@ -270,7 +270,13 @@ img{max-width:100%}
 .wz-module--custom .wz-module__icon{color:var(--orange-press)}
 .wz-module__icon{color:var(--navy-700)}
 
-.wz-grid-modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:var(--space-6)}
+/* Fixed 4 columns so all sixteen modules land as 4 even rows of 4 (16/4, no
+   orphaned final row) instead of auto-fit's width-dependent column count.
+   Steps down to 2 columns at tablet and 1 at mobile, matching the site's
+   existing 900px/700px breakpoints used elsewhere. */
+.wz-grid-modules{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
+@media (max-width:900px){.wz-grid-modules{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.wz-grid-modules{grid-template-columns:1fr}}
 
 /* ==========================================================================
    Forms
