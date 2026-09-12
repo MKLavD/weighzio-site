@@ -573,14 +573,42 @@ img{max-width:100%}
 @media (max-width:900px){.wz-split2{grid-template-columns:1fr;gap:var(--space-10)}}
 
 /* ==========================================================================
-   Modules page
+   Modules page — sixteen sections read as distinct numbered bands rather
+   than one flat scroll. Each section is now a full-width sibling of
+   #module-sections (not nested inside the shared .wz-container the intro
+   band uses), with its own .wz-container inside it, so the alternating
+   background can run edge to edge while the content still lines up with
+   the rest of the page. No border between sections any more — matching the
+   home page's own .wz-band/.wz-band--canvas convention, alternating colour
+   alone is the separator, not colour plus a hairline.
    ========================================================================== */
-.wz-module-section{padding:var(--space-10) 0;border-bottom:var(--border-width) solid var(--border-hairline)}
-.wz-module-section:last-child{border-bottom:0}
+.wz-module-section{position:relative;padding:var(--space-10) 0}
+/* #F47D2D at 5% opacity, per the brand brief's own note for warming flat
+   sections (deck section 6) — not a new value invented for this. */
+.wz-module-section:nth-of-type(even){background:rgba(244,125,45,.05)}
+/* Large faint numeral beside the icon, one per section, in source order —
+   counter-based so it can never drift out of sync with the actual section
+   order. Low-opacity navy rather than a solid pale token, so it reads
+   correctly against both the white and the tinted alternating background. */
+#module-sections{counter-reset:module-num}
+.wz-module-section{counter-increment:module-num}
+.wz-module-section__head::before{content:counter(module-num,decimal-leading-zero);flex:none;font-family:var(--font-display);font-weight:var(--weight-semibold);font-size:clamp(2.5rem,5vw,3.75rem);line-height:1;color:rgba(18,45,75,.08)}
+/* Header block: eyebrow, icon + title, summary, matching the module popup's
+   own header pattern. Hairline is a plain border on this wrapper rather
+   than a pseudo-element like the popup's — this block already sits inside
+   .wz-container and isn't full-bleed the way the popup's header is, so it
+   only needs the max-width below to land on the same content column the
+   bullets/alongside line use, not an explicit inset. */
+.wz-module-section__header{max-width:68ch;margin-bottom:var(--space-6);padding-bottom:var(--space-6);border-bottom:var(--border-width) solid var(--border-hairline)}
+.wz-module-section__eyebrow{display:block;margin-bottom:var(--space-3)}
 .wz-module-section__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)}
-.wz-module-section__summary{font-size:var(--text-lead);color:var(--text-body);max-width:68ch;margin:0 0 var(--space-5)}
+.wz-module-section__summary{font-size:var(--text-lead);color:var(--text-body);margin:0}
 .wz-module-section ul{margin:0 0 var(--space-5);padding-left:var(--space-5);max-width:68ch;display:flex;flex-direction:column;gap:var(--space-2)}
-.wz-module-section__alongside{font-size:var(--text-body-sm);color:var(--text-muted);max-width:68ch;margin:0 0 var(--space-5)}
+/* Navy, not grey, matching the popup's "Works alongside" line — module
+   names are plain <strong> tags in the markup, so the sitewide base rule
+   (navy-700 semibold) already gives them the right emphasis with no
+   bespoke colour rule needed here. */
+.wz-module-section__alongside{font-size:var(--text-body-sm);color:var(--text-body);max-width:68ch;margin:0 0 var(--space-5)}
 .wz-pending{font-size:var(--text-body-sm);color:var(--text-muted);border-left:var(--border-width-strong) solid var(--border-strong);padding-left:var(--space-4);margin:0 0 var(--space-5);max-width:68ch}
 
 /* ==========================================================================
@@ -958,273 +986,353 @@ img{max-width:100%}
      ====================================================================== -->
 <div class="wz-route wz-route--inner" data-route="/modules" id="route-modules" hidden>
   <section class="wz-band">
-    <div class="wz-container wz-stack">
+    <div class="wz-container">
       <div class="wz-section-head">
         <span class="wz-eyebrow">Modules</span>
         <h1>Every module, in detail</h1>
         <p>Each one is priced and sold on its own. Take the ones that fit.</p>
       </div>
+    </div>
+  </section>
 
-      <div id="module-sections">
+  <div id="module-sections">
 
         <section class="wz-module-section" id="weighbridge" data-module-detail="weighbridge">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
-            <h2>Weighbridge</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
+              <h2>Weighbridge</h2>
+              </div>
+            <p class="wz-module-section__summary">Live weight capture straight off your indicator, onto the ticket.</p>
+            </div>
+            <ul>
+              <li>Reads standard RS232 weighbridge indicators through a locally hosted connection on site, so weights arrive on the ticket as they are taken.</li>
+              <li>Captures gross, tare and net together, with the container tare handled separately where a skip is involved.</li>
+              <li>Records where each weight came from, and flags the variance between what the customer requested and what was actually recorded.</li>
+              <li>Manual override is available and logged, for the days the hardware misbehaves.</li>
+              <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Materials &amp; Aggregates</strong>, <strong>Finance &amp; Sage</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Live weight capture straight off your indicator, onto the ticket.</p>
-          <ul>
-            <li>Reads standard RS232 weighbridge indicators through a locally hosted connection on site, so weights arrive on the ticket as they are taken.</li>
-            <li>Captures gross, tare and net together, with the container tare handled separately where a skip is involved.</li>
-            <li>Records where each weight came from, and flags the variance between what the customer requested and what was actually recorded.</li>
-            <li>Manual override is available and logged, for the days the hardware misbehaves.</li>
-            <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: Skip Hire &amp; RoRo, Materials &amp; Aggregates, Finance &amp; Sage.</p>
-          <p style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="skip-hire" data-module-detail="skip-hire">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
-            <h2>Skip Hire &amp; RoRo</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
+              <h2>Skip Hire &amp; RoRo</h2>
+              </div>
+            <p class="wz-module-section__summary">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
+            </div>
+            <ul>
+              <li>Handles the full order range: delivery, exchange, collection, weigh and load, and reposition, each priced on its own terms.</li>
+              <li>Hire periods with allowance days, expiry dates, rental day allowances and automatic over-tonnage charges.</li>
+              <li>Every skip and RoRo tracked as a physical unit by serial number, across yards and customer sites, so you know where each container actually is.</li>
+              <li>Load composition recorded on the bridge as a percentage split by waste type, with bulky items listed separately and contamination photos attached to the ticket.</li>
+              <li>European Waste Catalogue codes assigned from a register behind the product list, so records stay consistent whoever is on the weighbridge.</li>
+              <li>Tip outlet licences and material-to-outlet rules checked before the tip, so a driver cannot be sent somewhere unlicensed to take the material.</li>
+            </ul>
+            <p class="wz-module-section__alongside">Digital waste tracking functionality lives in this module.</p>
+            <p style="margin:0"><a href="/enquire?module=Skip%20Hire%20%26%20RoRo">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
-          <ul>
-            <li>Handles the full order range: delivery, exchange, collection, weigh and load, and reposition, each priced on its own terms.</li>
-            <li>Hire periods with allowance days, expiry dates, rental day allowances and automatic over-tonnage charges.</li>
-            <li>Every skip and RoRo tracked as a physical unit by serial number, across yards and customer sites, so you know where each container actually is.</li>
-            <li>Load composition recorded on the bridge as a percentage split by waste type, with bulky items listed separately and contamination photos attached to the ticket.</li>
-            <li>European Waste Catalogue codes assigned from a register behind the product list, so records stay consistent whoever is on the weighbridge.</li>
-            <li>Tip outlet licences and material-to-outlet rules checked before the tip, so a driver cannot be sent somewhere unlicensed to take the material.</li>
-          </ul>
-          <p class="wz-module-section__alongside">Digital waste tracking functionality lives in this module.</p>
-          <p style="margin:0"><a href="/enquire?module=Skip%20Hire%20%26%20RoRo">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="materials" data-module-detail="materials">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
-            <h2>Materials &amp; Aggregates</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
+              <h2>Materials &amp; Aggregates</h2>
+              </div>
+            <p class="wz-module-section__summary">Material orders, haulage, disposal routes and automatic load splitting.</p>
+            </div>
+            <ul>
+              <li>Large orders split into legal delivery tickets automatically, so a 200 tonne order becomes ten tickets rather than ten phone calls.</li>
+              <li>Haulage handled as a buy and sell line, with disposal routes, waiting time charges and site permits held against the order.</li>
+              <li>Product records carry activity, product group, VAT code, tax code and nominal codes, so material margins survive contact with the accounts system.</li>
+              <li>Levies configured as a third tax tier alongside VAT and customer tax, calculated per material and disposal route.</li>
+              <li>Quantities spread across multiple delivery dates, with recurring orders supported.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="weighbridge,scheduling,fleet">Works alongside: <strong>Weighbridge</strong>, <strong>Scheduling &amp; Dispatch</strong>, <strong>Fleet &amp; Telematics</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Material orders, haulage, disposal routes and automatic load splitting.</p>
-          <ul>
-            <li>Large orders split into legal delivery tickets automatically, so a 200 tonne order becomes ten tickets rather than ten phone calls.</li>
-            <li>Haulage handled as a buy and sell line, with disposal routes, waiting time charges and site permits held against the order.</li>
-            <li>Product records carry activity, product group, VAT code, tax code and nominal codes, so material margins survive contact with the accounts system.</li>
-            <li>Levies configured as a third tax tier alongside VAT and customer tax, calculated per material and disposal route.</li>
-            <li>Quantities spread across multiple delivery dates, with recurring orders supported.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="weighbridge,scheduling,fleet">Works alongside: Weighbridge, Scheduling &amp; Dispatch, Fleet &amp; Telematics.</p>
-          <p style="margin:0"><a href="/enquire?module=Materials%20%26%20Aggregates">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="scheduling" data-module-detail="scheduling">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span>
-            <h2>Scheduling &amp; Dispatch</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span>
+              <h2>Scheduling &amp; Dispatch</h2>
+              </div>
+            <p class="wz-module-section__summary">Drag-and-drop planning boards that hold thousands of live tickets.</p>
+            </div>
+            <ul>
+              <li>Five distinct planning views covering skips, tippers, concrete, artics and bulk, each filtered to how that side of the operation actually runs.</li>
+              <li>An unscheduled jobs dock, so dispatchers drag work onto a vehicle-by-day grid rather than rebuilding the day in their head.</li>
+              <li>Job cards load lazily, so the board does not freeze when the ticket volume is heavy.</li>
+              <li>Vehicles can be reassigned across group companies where one entity has capacity another needs.</li>
+              <li>Scheduling for hire-based products, with jobs and products linked in both directions.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="driver-app,fleet,skip-hire">Works alongside: <strong>Driver App</strong>, <strong>Fleet &amp; Telematics</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Drag-and-drop planning boards that hold thousands of live tickets.</p>
-          <ul>
-            <li>Five distinct planning views covering skips, tippers, concrete, artics and bulk, each filtered to how that side of the operation actually runs.</li>
-            <li>An unscheduled jobs dock, so dispatchers drag work onto a vehicle-by-day grid rather than rebuilding the day in their head.</li>
-            <li>Job cards load lazily, so the board does not freeze when the ticket volume is heavy.</li>
-            <li>Vehicles can be reassigned across group companies where one entity has capacity another needs.</li>
-            <li>Scheduling for hire-based products, with jobs and products linked in both directions.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="driver-app,fleet,skip-hire">Works alongside: Driver App, Fleet &amp; Telematics, Skip Hire &amp; RoRo.</p>
-          <p style="margin:0"><a href="/enquire?module=Scheduling%20%26%20Dispatch">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="driver-app" data-module-detail="driver-app">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span>
-            <h2>Driver App</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span>
+              <h2>Driver App</h2>
+              </div>
+            <p class="wz-module-section__summary">Job cards, weights, load breakdowns and signatures from the cab.</p>
+            </div>
+            <ul>
+              <li>Skip and material tickets completed on the phone: weights, load breakdown and variances, without a paper docket.</li>
+              <li>Delivery sites geofenced, so arrival, waiting time and departure are recorded rather than estimated.</li>
+              <li>Digital duty of care notes produced on site with the customer signing on glass.</li>
+              <li>Over-quantity variances calculated in the cab, with the surcharge worked out before the driver leaves.</li>
+              <li>Payment links generated on site by SMS or WhatsApp for balances owing before discharge.</li>
+              <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="scheduling,skip-hire,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Skip Hire &amp; RoRo</strong>, <strong>Weighbridge</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Job cards, weights, load breakdowns and signatures from the cab.</p>
-          <ul>
-            <li>Skip and material tickets completed on the phone: weights, load breakdown and variances, without a paper docket.</li>
-            <li>Delivery sites geofenced, so arrival, waiting time and departure are recorded rather than estimated.</li>
-            <li>Digital duty of care notes produced on site with the customer signing on glass.</li>
-            <li>Over-quantity variances calculated in the cab, with the surcharge worked out before the driver leaves.</li>
-            <li>Payment links generated on site by SMS or WhatsApp for balances owing before discharge.</li>
-            <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="scheduling,skip-hire,weighbridge">Works alongside: Scheduling &amp; Dispatch, Skip Hire &amp; RoRo, Weighbridge.</p>
-          <p style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="fleet" data-module-detail="fleet">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span>
-            <h2>Fleet &amp; Telematics</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span>
+              <h2>Fleet &amp; Telematics</h2>
+              </div>
+            <p class="wz-module-section__summary">Live vehicle tracking and weight limits enforced before dispatch.</p>
+            </div>
+            <ul>
+              <li>Live GPS positions from Teletrac shown on the dispatch map, so you can see where drivers actually are.</li>
+              <li>Vehicle records hold type, default load size, and maximum and tare weight limits.</li>
+              <li>Product types validated against vehicle axle ratings before a ticket leaves dispatch, which is what keeps you out of DVSA overloading trouble.</li>
+              <li>Part load tolerances, demurrage and waiting time thresholds, skip type suitability and driver sign-off all held per vehicle.</li>
+              <li>Real-time capacity checked at the point the ticket is created rather than after the fact.</li>
+              <li>Mobile device management across the fleet's handsets.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="scheduling,driver-app">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Driver App</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Live vehicle tracking and weight limits enforced before dispatch.</p>
-          <ul>
-            <li>Live GPS positions from Teletrac shown on the dispatch map, so you can see where drivers actually are.</li>
-            <li>Vehicle records hold type, default load size, and maximum and tare weight limits.</li>
-            <li>Product types validated against vehicle axle ratings before a ticket leaves dispatch, which is what keeps you out of DVSA overloading trouble.</li>
-            <li>Part load tolerances, demurrage and waiting time thresholds, skip type suitability and driver sign-off all held per vehicle.</li>
-            <li>Real-time capacity checked at the point the ticket is created rather than after the fact.</li>
-            <li>Mobile device management across the fleet's handsets.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="scheduling,driver-app">Works alongside: Scheduling &amp; Dispatch, Driver App.</p>
-          <p style="margin:0"><a href="/enquire?module=Fleet%20%26%20Telematics">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="customers" data-module-detail="customers">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
-            <h2>Customers &amp; Pricing</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span>
+              <h2>Customers &amp; Pricing</h2>
+              </div>
+            <p class="wz-module-section__summary">Accounts, sites, bespoke rates and credit control.</p>
+            </div>
+            <ul>
+              <li>One customer account with many sites, each with its own contacts and geo-addressed location.</li>
+              <li>Bespoke pricing per customer, applied automatically on every order and ticket, so nobody looks a rate up by hand and nobody issues a credit note to fix it.</li>
+              <li>Live credit position checked during order entry, with the warning arriving while the customer is still on the phone.</li>
+              <li>Waste carrier registration numbers and waste site licence expiry dates tracked against the account, with a warning before the job is booked.</li>
+              <li>Customer lookups for SIC code, zone, business type, postal area, priority and site access times.</li>
+              <li>Cash and invoice payment terms held separately, with a workflow to convert a cash customer to an account customer.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Accounts, sites, bespoke rates and credit control.</p>
-          <ul>
-            <li>One customer account with many sites, each with its own contacts and geo-addressed location.</li>
-            <li>Bespoke pricing per customer, applied automatically on every order and ticket, so nobody looks a rate up by hand and nobody issues a credit note to fix it.</li>
-            <li>Live credit position checked during order entry, with the warning arriving while the customer is still on the phone.</li>
-            <li>Waste carrier registration numbers and waste site licence expiry dates tracked against the account, with a warning before the job is booked.</li>
-            <li>Customer lookups for SIC code, zone, business type, postal area, priority and site access times.</li>
-            <li>Cash and invoice payment terms held separately, with a workflow to convert a cash customer to an account customer.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: Finance &amp; Sage, Skip Hire &amp; RoRo.</p>
-          <p style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="finance" data-module-detail="finance">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
-            <h2>Finance &amp; Sage</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
+              <h2>Finance &amp; Sage</h2>
+              </div>
+            <p class="wz-module-section__summary">Invoicing, VAT, recurring billing and background posting to Sage.</p>
+            </div>
+            <ul>
+              <li>Invoices and tickets post to Sage in the background, across every company you run, without anyone triggering a sync out of hours.</li>
+              <li>Nominal codes mapped per product, per tip outlet and per company, so the general ledger posting is right first time.</li>
+              <li>T21 domestic reverse charge VAT calculated automatically rather than corrected by hand.</li>
+              <li>Recurring monthly billing generated and emailed as PDFs on a schedule.</li>
+              <li>Credit notes run through a multi-tier approval workflow before they go anywhere.</li>
+              <li>Annual contract price uplifts scheduled and applied across active accounts.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="customers,multi-company,reporting">Works alongside: <strong>Customers &amp; Pricing</strong>, <strong>Multi-Company</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Invoicing, VAT, recurring billing and background posting to Sage.</p>
-          <ul>
-            <li>Invoices and tickets post to Sage in the background, across every company you run, without anyone triggering a sync out of hours.</li>
-            <li>Nominal codes mapped per product, per tip outlet and per company, so the general ledger posting is right first time.</li>
-            <li>T21 domestic reverse charge VAT calculated automatically rather than corrected by hand.</li>
-            <li>Recurring monthly billing generated and emailed as PDFs on a schedule.</li>
-            <li>Credit notes run through a multi-tier approval workflow before they go anywhere.</li>
-            <li>Annual contract price uplifts scheduled and applied across active accounts.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="customers,multi-company,reporting">Works alongside: Customers &amp; Pricing, Multi-Company, Reporting &amp; Dashboards.</p>
-          <p style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="reporting" data-module-detail="reporting">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span>
-            <h2>Reporting &amp; Dashboards</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span>
+              <h2>Reporting &amp; Dashboards</h2>
+              </div>
+            <p class="wz-module-section__summary">Operational, financial and compliance reporting.</p>
+            </div>
+            <ul>
+              <li>Consolidated monthly and annual reporting across orders, waste streams and invoices.</li>
+              <li>Reports generated as PDFs and dispatched by email on a schedule, so the recurring ones stop being a job.</li>
+              <li>A management dashboard showing daily vehicle revenue, ticket margins and tonnage.</li>
+              <li>Hazardous waste consignment reports exportable in Environment Agency formats.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: <strong>Multi-Company</strong>, <strong>Finance &amp; Sage</strong>, <strong>Customer Portal</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Operational, financial and compliance reporting.</p>
-          <ul>
-            <li>Consolidated monthly and annual reporting across orders, waste streams and invoices.</li>
-            <li>Reports generated as PDFs and dispatched by email on a schedule, so the recurring ones stop being a job.</li>
-            <li>A management dashboard showing daily vehicle revenue, ticket margins and tonnage.</li>
-            <li>Hazardous waste consignment reports exportable in Environment Agency formats.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: Multi-Company, Finance &amp; Sage, Customer Portal.</p>
-          <p style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="customer-portal" data-module-detail="customer-portal">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span>
-            <h2>Customer Portal</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span>
+              <h2>Customer Portal</h2>
+              </div>
+            <p class="wz-module-section__summary">Self-serve ordering, ticket history and site reports for your customers.</p>
+            </div>
+            <ul>
+              <li>Scheduled weekly and monthly reports emailed to customers automatically, which takes the recurring report requests off your phone lines.</li>
+              <li>Site recycling reports delivered to key accounts without office involvement.</li>
+              <li>Self-billing invoice workflows for contracted commercial partners.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: <strong>Reporting &amp; Dashboards</strong>, <strong>Finance &amp; Sage</strong>.</p>
+            <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
+            <p style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Self-serve ordering, ticket history and site reports for your customers.</p>
-          <ul>
-            <li>Scheduled weekly and monthly reports emailed to customers automatically, which takes the recurring report requests off your phone lines.</li>
-            <li>Site recycling reports delivered to key accounts without office involvement.</li>
-            <li>Self-billing invoice workflows for contracted commercial partners.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: Reporting &amp; Dashboards, Finance &amp; Sage.</p>
-          <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
-          <p style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="multi-company" data-module-detail="multi-company">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
-            <h2>Multi-Company</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span>
+              <h2>Multi-Company</h2>
+              </div>
+            <p class="wz-module-section__summary">Separate entities with their own VAT, ledgers and branding under one login.</p>
+            </div>
+            <ul>
+              <li>One login across every company in the group, with instant switching rather than logging in and out.</li>
+              <li>A default organisation per user, so people land where they work.</li>
+              <li>Company-specific VAT settings, legal registration numbers and financial rules held independently.</li>
+              <li>Invoice templates, logos, remittance addresses and custom headers per company, so each entity invoices as itself.</li>
+              <li>One master customer record shared across all entities, which removes the duplicate data entry and the inter-company notes.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Scheduling &amp; Dispatch</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Separate entities with their own VAT, ledgers and branding under one login.</p>
-          <ul>
-            <li>One login across every company in the group, with instant switching rather than logging in and out.</li>
-            <li>A default organisation per user, so people land where they work.</li>
-            <li>Company-specific VAT settings, legal registration numbers and financial rules held independently.</li>
-            <li>Invoice templates, logos, remittance addresses and custom headers per company, so each entity invoices as itself.</li>
-            <li>One master customer record shared across all entities, which removes the duplicate data entry and the inter-company notes.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: Finance &amp; Sage, Scheduling &amp; Dispatch.</p>
-          <p style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="marketing-data-feed" data-module-detail="marketing-data-feed">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
-            <h2>Marketing Data Feed</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span>
+              <h2>Marketing Data Feed</h2>
+              </div>
+            <p class="wz-module-section__summary">Job and enquiry data fed back into your Google and Meta campaigns.</p>
+            </div>
+            <ul>
+              <li>Completed job and enquiry data fed back into Google and Meta, so advertising is measured against work that was booked and paid for rather than clicks and form fills.</li>
+              <li>Budget follows the campaigns producing real jobs.</li>
+            </ul>
+            <p class="wz-pending">Goes beyond the functional spec and needs sign-off. Before this goes live it needs a lawful basis, a data processing agreement between you and the operator, and disclosure in both privacy policies, because it involves processing the operator's customer data for advertising.</p>
+            <p style="margin:0"><a href="/enquire?module=Marketing%20Data%20Feed">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Job and enquiry data fed back into your Google and Meta campaigns.</p>
-          <ul>
-            <li>Completed job and enquiry data fed back into Google and Meta, so advertising is measured against work that was booked and paid for rather than clicks and form fills.</li>
-            <li>Budget follows the campaigns producing real jobs.</li>
-          </ul>
-          <p class="wz-pending">Goes beyond the functional spec and needs sign-off. Before this goes live it needs a lawful basis, a data processing agreement between you and the operator, and disclosure in both privacy policies, because it involves processing the operator's customer data for advertising.</p>
-          <p style="margin:0"><a href="/enquire?module=Marketing%20Data%20Feed">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="ready-mix" data-module-detail="ready-mix">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
-            <h2>Ready-Mix Concrete</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
+              <h2>Ready-Mix Concrete</h2>
+              </div>
+            <p class="wz-module-section__summary">Concrete orders, batching schedules and delivery.</p>
+            </div>
+            <ul>
+              <li>Daily delivery tickets generated automatically for multi-load concrete orders.</li>
+              <li>Concrete runs as one of the five dispatch planning views, filtered to how that side of the operation works.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="scheduling,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Weighbridge</strong>.</p>
+            <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
+            <p style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Concrete orders, batching schedules and delivery.</p>
-          <ul>
-            <li>Daily delivery tickets generated automatically for multi-load concrete orders.</li>
-            <li>Concrete runs as one of the five dispatch planning views, filtered to how that side of the operation works.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="scheduling,weighbridge">Works alongside: Scheduling &amp; Dispatch, Weighbridge.</p>
-          <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
-          <p style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="trade-waste" data-module-detail="trade-waste">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
-            <h2>Trade Waste</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
+              <h2>Trade Waste</h2>
+              </div>
+            <p class="wz-module-section__summary">Route-based commercial collections.</p>
+            </div>
+            <p class="wz-pending">No source material. Trade Waste does not appear anywhere in the twelve-section functional spec. The product manager either supplies the detail or the module comes off the grid. Writing a popup from nothing would be inventing product capability.</p>
+            <p style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Route-based commercial collections.</p>
-          <p class="wz-pending">No source material. Trade Waste does not appear anywhere in the twelve-section functional spec. The product manager either supplies the detail or the module comes off the grid. Writing a popup from nothing would be inventing product capability.</p>
-          <p style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="hazardous-waste" data-module-detail="hazardous-waste">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
-            <h2>Hazardous Waste</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
+              <h2>Hazardous Waste</h2>
+              </div>
+            <p class="wz-module-section__summary">Consignment tracking and Environment Agency reporting.</p>
+            </div>
+            <ul>
+              <li>Hazardous waste consignment reports exportable in Environment Agency standard formats.</li>
+              <li>Consignments tracked per physical unit through the European Waste Catalogue register.</li>
+              <li>Restricted outlets and material-to-outlet validation, so hazardous material cannot be routed somewhere unlicensed.</li>
+              <li>Duty of care records produced digitally as part of the same movement.</li>
+            </ul>
+            <p class="wz-module-section__alongside" data-alongside="skip-hire,reporting">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
+            <p style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Consignment tracking and Environment Agency reporting.</p>
-          <ul>
-            <li>Hazardous waste consignment reports exportable in Environment Agency standard formats.</li>
-            <li>Consignments tracked per physical unit through the European Waste Catalogue register.</li>
-            <li>Restricted outlets and material-to-outlet validation, so hazardous material cannot be routed somewhere unlicensed.</li>
-            <li>Duty of care records produced digitally as part of the same movement.</li>
-          </ul>
-          <p class="wz-module-section__alongside" data-alongside="skip-hire,reporting">Works alongside: Skip Hire &amp; RoRo, Reporting &amp; Dashboards.</p>
-          <p style="margin:0"><a href="/enquire?module=Hazardous%20Waste">Enquire about this module</a></p>
         </section>
 
         <section class="wz-module-section" id="custom-modules" data-module-detail="custom-modules">
-          <div class="wz-module-section__head">
-            <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;color:var(--orange-press);-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>
-            <h2>Custom Modules</h2>
+          <div class="wz-container">
+            <div class="wz-module-section__header">
+              <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
+              <div class="wz-module-section__head">
+          <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;color:var(--orange-press);-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>
+              <h2>Custom Modules</h2>
+              </div>
+            <p class="wz-module-section__summary">Something your operation needs that nobody has built yet.</p>
+            </div>
+            <p>If you have a process that matters to your business and no software handles it properly, we'll scope it, price it and build it as a module of your own. It sits alongside the standard modules, uses the same data, and it's yours.</p>
+            <p style="margin:0"><a href="/enquire?module=Custom%20Modules">Enquire about this module</a></p>
           </div>
-          <p class="wz-module-section__summary">Something your operation needs that nobody has built yet.</p>
-          <p>If you have a process that matters to your business and no software handles it properly, we'll scope it, price it and build it as a module of your own. It sits alongside the standard modules, uses the same data, and it's yours.</p>
-          <p style="margin:0"><a href="/enquire?module=Custom%20Modules">Enquire about this module</a></p>
         </section>
 
-      </div>
-    </div>
-  </section>
+  </div>
 </div>
 
 <!-- ======================================================================
