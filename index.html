@@ -663,83 +663,107 @@ img{max-width:100%}
 
 /* Shared "screen" frame every mockup uses — navy chrome bar, white working
    area, hairline border and a card shadow so it reads as a captured screen
-   sitting on the page rather than page background. Font is deliberately
-   small and dense (11px) since these stand in for real operational UI, not
-   marketing illustration. */
-.wz-mockup{position:relative;width:100%;background:var(--white);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:11px;line-height:1.4;color:var(--navy-700)}
-.wz-mockup__bar{background:var(--navy-700);color:var(--white);padding:9px 12px;font-size:11px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
+   sitting on the page rather than page background. Sized to the same 4:3
+   box the six photos render at (their own aspect-ratio, at the same
+   380px/460px/~342px slot width) so all eleven image-bearing sections
+   share one footprint — everything except the phone, which keeps its own
+   proportion by design (see below) and is sized up separately instead.
+   Content fills that box via flex rather than the box shrinking to fit a
+   fixed pixel layout, so the same markup reads correctly at 285px tall
+   (desktop), 345px (tablet-stacked) and 257px (mobile) without separate
+   per-breakpoint tuning. Font bumped from the original 11px to 13px to
+   match the photos' now-larger footprint — still dense, real-UI scale,
+   just no longer noticeably smaller than the image beside it. */
+.wz-mockup{position:relative;width:100%;background:var(--white);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--navy-700)}
+.wz-mockup:not(.wz-mockup--phone){aspect-ratio:4/3;display:flex;flex-direction:column}
+.wz-mockup__bar{flex:none;background:var(--navy-700);color:var(--white);padding:11px 14px;font-size:12px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .wz-mockup__bar em{font-style:normal;font-weight:var(--weight-regular);opacity:.68}
-.wz-mockup__body{padding:12px}
-.wz-mockup__badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:3px 7px;border-radius:var(--radius-pill);white-space:nowrap}
+.wz-mockup__body{padding:15px}
+.wz-mockup__badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:4px 8px;border-radius:var(--radius-pill);white-space:nowrap}
 .wz-mockup__badge--success{background:var(--color-success-tint);color:var(--color-success)}
 .wz-mockup__badge--success::before{content:"✓";margin-right:1px}
 
 /* --- 1. Scheduling & Dispatch: planning board ------------------------- */
-.wz-mockup__board{display:flex;gap:9px;padding:11px}
-.wz-mockup__board-grid{flex:1;min-width:0}
-.wz-mockup__board-times{display:flex;justify-content:space-between;font-size:8px;font-weight:var(--weight-semibold);color:var(--navy-400);padding:0 2px 5px 48px}
-.wz-mockup__board-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.wz-mockup__board-row:last-child{margin-bottom:0}
-.wz-mockup__board-veh{width:48px;flex:none;font-size:9px;font-weight:var(--weight-semibold);letter-spacing:.01em}
-.wz-mockup__board-track{position:relative;flex:1;height:17px;background:var(--navy-025);border-radius:3px}
-.wz-mockup__board-job{position:absolute;top:1px;bottom:1px;background:var(--navy-600);border-radius:2px;color:var(--white);font-size:7px;font-weight:var(--weight-semibold);display:flex;align-items:center;padding:0 4px;white-space:nowrap;overflow:hidden}
+.wz-mockup__board{display:flex;gap:11px;padding:14px;flex:1;min-height:0}
+.wz-mockup__board-grid{flex:1;min-width:0;display:flex;flex-direction:column}
+.wz-mockup__board-times{flex:none;display:flex;justify-content:space-between;font-size:9px;font-weight:var(--weight-semibold);color:var(--navy-400);padding:0 2px 7px 58px}
+.wz-mockup__board-rows{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between}
+.wz-mockup__board-row{display:flex;align-items:center;gap:8px}
+.wz-mockup__board-veh{width:58px;flex:none;font-size:10px;font-weight:var(--weight-semibold);letter-spacing:.01em}
+.wz-mockup__board-track{position:relative;flex:1;height:22px;background:var(--navy-025);border-radius:4px}
+.wz-mockup__board-job{position:absolute;top:2px;bottom:2px;background:var(--navy-600);border-radius:3px;color:var(--white);font-size:8px;font-weight:var(--weight-semibold);display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden}
 .wz-mockup__board-job--light{background:var(--navy-300);color:var(--navy-700)}
-.wz-mockup__board-queue{width:82px;flex:none;border-left:var(--border-width) solid var(--border-hairline);padding-left:9px}
-.wz-mockup__board-queue-head{font-size:8px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:6px}
-.wz-mockup__board-queue-item{background:var(--navy-025);border-radius:3px;padding:4px 5px;font-size:8px;margin-bottom:5px;line-height:1.3}
-.wz-mockup__board-queue-item:last-child{margin-bottom:0}
+.wz-mockup__board-queue{width:100px;flex:none;border-left:var(--border-width) solid var(--border-hairline);padding-left:11px;display:flex;flex-direction:column}
+.wz-mockup__board-queue-head{flex:none;font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:8px}
+.wz-mockup__board-queue-items{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between}
+.wz-mockup__board-queue-item{background:var(--navy-025);border-radius:4px;padding:6px 7px;font-size:9px;line-height:1.35}
 
 /* --- 2. Driver App: phone frame ---------------------------------------- */
-.wz-mockup--phone{width:220px}
-.wz-mockup__phone-status{background:var(--navy-900);color:var(--white);font-size:8px;font-weight:var(--weight-semibold);padding:5px 12px;display:flex;justify-content:space-between}
-.wz-mockup__phone-body{padding:11px}
-.wz-mockup__phone-job{margin-bottom:9px}
-.wz-mockup__phone-job strong{display:block;font-family:var(--font-display);font-size:12px;margin:2px 0 1px}
-.wz-mockup__phone-job span{display:block;color:var(--navy-400);font-size:9px}
-.wz-mockup__weights{display:flex;gap:6px;margin-bottom:9px}
-.wz-mockup__weights div{flex:1;background:var(--navy-025);border-radius:4px;padding:5px 4px;text-align:center}
-.wz-mockup__weights span{display:block;font-size:7px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:2px}
-.wz-mockup__weights b{display:block;font-size:9px;font-weight:var(--weight-semibold)}
-.wz-mockup__comp-label{font-size:8px;color:var(--navy-400);margin-bottom:3px}
-.wz-mockup__comp-bar{display:flex;height:9px;border-radius:var(--radius-pill);overflow:hidden;margin-bottom:9px}
+/* The one exception to the shared 4:3 box: stretching a phone screen to a
+   landscape photo's ratio would look broken, so it keeps its own portrait
+   proportion. Sized up instead — 220px to 264px, ~20% — so it reads at a
+   similar visual weight to the photos beside it rather than noticeably
+   smaller, without pretending to be the same shape as them. */
+.wz-mockup--phone{width:264px;display:flex;flex-direction:column}
+.wz-mockup__phone-status{flex:none;background:var(--navy-900);color:var(--white);font-size:10px;font-weight:var(--weight-semibold);padding:6px 14px;display:flex;justify-content:space-between}
+.wz-mockup__phone-body{padding:14px}
+.wz-mockup__phone-job{margin-bottom:11px}
+.wz-mockup__phone-job strong{display:block;font-family:var(--font-display);font-size:14px;margin:3px 0 2px}
+.wz-mockup__phone-job span{display:block;color:var(--navy-400);font-size:10px}
+.wz-mockup__weights{display:flex;gap:7px;margin-bottom:11px}
+.wz-mockup__weights div{flex:1;background:var(--navy-025);border-radius:5px;padding:7px 5px;text-align:center}
+.wz-mockup__weights span{display:block;font-size:8px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.wz-mockup__weights b{display:block;font-size:11px;font-weight:var(--weight-semibold)}
+.wz-mockup__comp-label{font-size:9px;color:var(--navy-400);margin-bottom:4px}
+.wz-mockup__comp-bar{display:flex;height:11px;border-radius:var(--radius-pill);overflow:hidden;margin-bottom:11px}
 .wz-mockup__comp-bar span{display:block;height:100%}
-.wz-mockup__sig{border-top:var(--border-width) solid var(--border-hairline);padding-top:8px}
-.wz-mockup__sig-label{font-size:8px;color:var(--navy-400);margin-bottom:4px}
-.wz-mockup__sig-line{display:block;width:100%;height:26px;margin-bottom:6px}
+.wz-mockup__sig{border-top:var(--border-width) solid var(--border-hairline);padding-top:10px}
+.wz-mockup__sig-label{font-size:9px;color:var(--navy-400);margin-bottom:5px}
+.wz-mockup__sig-line{display:block;width:100%;height:32px;margin-bottom:8px}
 
 /* --- 3. Reporting & Dashboards: executive dashboard --------------------- */
-.wz-mockup__metrics{display:flex;gap:7px;padding:11px 11px 0}
-.wz-mockup__metric{flex:1;background:var(--navy-025);border-radius:6px;padding:7px 8px}
-.wz-mockup__metric span{display:block;font-size:7px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
-.wz-mockup__metric b{display:block;font-family:var(--font-display);font-size:14px;font-weight:var(--weight-semibold)}
-.wz-mockup__metric em{font-style:normal;display:block;font-size:8px;color:var(--navy-400);margin-top:2px}
-.wz-mockup__chart{display:flex;align-items:flex-end;gap:6px;height:70px;padding:14px 11px 11px}
+.wz-mockup__metrics{flex:none;display:flex;gap:9px;padding:14px 14px 0}
+.wz-mockup__metric{flex:1;background:var(--navy-025);border-radius:7px;padding:9px 10px}
+.wz-mockup__metric span{display:block;font-size:8px;color:var(--navy-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
+.wz-mockup__metric b{display:block;font-family:var(--font-display);font-size:17px;font-weight:var(--weight-semibold)}
+.wz-mockup__metric em{font-style:normal;display:block;font-size:9px;color:var(--navy-400);margin-top:3px}
+.wz-mockup__chart{flex:1;min-height:0;display:flex;align-items:flex-end;gap:8px;padding:20px 14px 24px}
 .wz-mockup__chart span{flex:1;background:var(--navy-600);border-radius:2px 2px 0 0;position:relative}
-.wz-mockup__chart span em{position:absolute;bottom:-13px;left:0;right:0;text-align:center;font-style:normal;font-size:7px;color:var(--navy-400)}
+.wz-mockup__chart span em{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-style:normal;font-size:9px;color:var(--navy-400)}
 .wz-mockup__chart span.is-today{background:var(--navy-300)}
 
 /* --- 4. Customer Portal: softer, consumer-facing ------------------------ */
 .wz-mockup--portal{border-radius:var(--radius-xl)}
 .wz-mockup--portal .wz-mockup__bar{background:var(--navy-050);color:var(--navy-700)}
-.wz-mockup__portal-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:var(--border-width) solid var(--border-hairline);font-size:10px}
+.wz-mockup--portal .wz-mockup__body{flex:1;min-height:0;display:flex;flex-direction:column}
+.wz-mockup__portal-row{flex:none;display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:var(--border-width) solid var(--border-hairline);font-size:12px}
 .wz-mockup__portal-row:last-of-type{border-bottom:0}
-.wz-mockup__portal-row em{font-style:normal;color:var(--navy-400);width:44px;flex:none}
+.wz-mockup__portal-row em{font-style:normal;color:var(--navy-400);width:52px;flex:none}
 .wz-mockup__portal-row strong{flex:1;font-weight:var(--weight-medium);color:var(--text-body)}
 .wz-mockup__portal-row span{flex:none;font-weight:var(--weight-semibold)}
-.wz-mockup__portal-cta{display:inline-block;margin-top:10px;background:var(--surface-cta);color:var(--text-on-orange);font-size:9px;font-weight:var(--weight-semibold);padding:6px 12px;border-radius:var(--radius-pill)}
+.wz-mockup__portal-cta{flex:none;align-self:flex-start;margin-top:auto;background:var(--surface-cta);color:var(--text-on-orange);font-size:11px;font-weight:var(--weight-semibold);padding:8px 16px;border-radius:var(--radius-pill)}
 
 /* --- 5. Fleet & Telematics: live map ------------------------------------ */
-.wz-mockup__map{position:relative;height:120px;background:var(--navy-025);overflow:hidden}
+.wz-mockup__map{flex:1;min-height:0;position:relative;background:var(--navy-025);overflow:hidden}
 .wz-mockup__map-road{position:absolute;background:var(--navy-100)}
-.wz-mockup__pin{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--navy-600);border:2px solid var(--white);box-shadow:0 1px 3px rgba(18,45,75,.35);transform:translate(-50%,-50%)}
-.wz-mockup__pin-info{position:absolute;background:var(--navy-700);color:var(--white);font-size:8px;border-radius:6px;padding:6px 8px;white-space:nowrap;box-shadow:var(--shadow-md)}
-.wz-mockup__pin-info strong{display:block;font-size:9px;margin-bottom:1px}
-.wz-mockup__fleet-list{padding:9px 11px 11px}
-.wz-mockup__fleet-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:9px}
-.wz-mockup__dot{width:6px;height:6px;border-radius:50%;background:var(--navy-600);flex:none}
+.wz-mockup__pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--navy-600);border:2px solid var(--white);box-shadow:0 1px 3px rgba(18,45,75,.35);transform:translate(-50%,-50%)}
+.wz-mockup__pin-info{position:absolute;background:var(--navy-700);color:var(--white);font-size:10px;border-radius:7px;padding:7px 9px;white-space:nowrap;box-shadow:var(--shadow-md)}
+.wz-mockup__pin-info strong{display:block;font-size:11px;margin-bottom:1px}
+.wz-mockup__fleet-list{flex:none;padding:11px 14px 14px}
+.wz-mockup__fleet-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:11px}
+.wz-mockup__dot{width:7px;height:7px;border-radius:50%;background:var(--navy-600);flex:none}
 .wz-mockup__dot--idle{background:var(--navy-300)}
 .wz-mockup__dot--stopped{background:var(--navy-200)}
 .wz-mockup__fleet-row em{font-style:normal;margin-left:auto;color:var(--navy-400)}
+
+/* --- Real photography, six sections: same .wz-module-section__media slot
+   the five mockups use, same 4:3 photo box every module shares regardless
+   of the source image's exact pixel ratio (object-fit:cover absorbs the
+   ~1px difference on hazardous-waste's 1150x862 source), --radius-lg to
+   match the site's existing card/tile corner convention rather than a
+   bespoke radius. ------------------------------------------------------ */
+.wz-module-section__media picture{display:block;width:100%}
+.wz-module-section__photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)}
 
 /* ==========================================================================
    Guide
@@ -1129,7 +1153,12 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="weighbridge" data-module-detail="weighbridge">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/weighbridge.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/weighbridge.jpg" alt="Live weight capture straight off your indicator, onto the ticket." loading="lazy" width="1200" height="900">
+              </picture>
+            </div>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1152,7 +1181,12 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="skip-hire" data-module-detail="skip-hire">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/skip-hire-roro.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/skip-hire-roro.jpg" alt="Skips, exchanges, hire terms, container tracking and digital waste tracking." loading="lazy" width="1200" height="900">
+              </picture>
+            </div>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1176,7 +1210,12 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="materials" data-module-detail="materials">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/materials-aggregates.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/materials-aggregates.jpg" alt="Material orders, haulage, disposal routes and automatic load splitting." loading="lazy" width="1200" height="900">
+              </picture>
+            </div>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1205,45 +1244,49 @@ img{max-width:100%}
                 <div class="wz-mockup__board">
                   <div class="wz-mockup__board-grid">
                     <div class="wz-mockup__board-times"><span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span></div>
-                    <div class="wz-mockup__board-row">
-                      <span class="wz-mockup__board-veh">DL21 KVM</span>
-                      <div class="wz-mockup__board-track">
-                        <span class="wz-mockup__board-job" style="left:13%;width:9%">Tamworth</span>
-                        <span class="wz-mockup__board-job" style="left:58%;width:13%">Coleshill</span>
+                    <div class="wz-mockup__board-rows">
+                      <div class="wz-mockup__board-row">
+                        <span class="wz-mockup__board-veh">DL21 KVM</span>
+                        <div class="wz-mockup__board-track">
+                          <span class="wz-mockup__board-job" style="left:13%;width:9%">Tamworth</span>
+                          <span class="wz-mockup__board-job" style="left:58%;width:13%">Coleshill</span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="wz-mockup__board-row">
-                      <span class="wz-mockup__board-veh">YG19 FXP</span>
-                      <div class="wz-mockup__board-track">
-                        <span class="wz-mockup__board-job wz-mockup__board-job--light" style="left:17%;width:10%">Nuneaton</span>
-                        <span class="wz-mockup__board-job" style="left:42%;width:8%">Rugby</span>
+                      <div class="wz-mockup__board-row">
+                        <span class="wz-mockup__board-veh">YG19 FXP</span>
+                        <div class="wz-mockup__board-track">
+                          <span class="wz-mockup__board-job wz-mockup__board-job--light" style="left:17%;width:10%">Nuneaton</span>
+                          <span class="wz-mockup__board-job" style="left:42%;width:8%">Rugby</span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="wz-mockup__board-row">
-                      <span class="wz-mockup__board-veh">BX70 LWH</span>
-                      <div class="wz-mockup__board-track">
-                        <span class="wz-mockup__board-job" style="left:29%;width:13%">Redditch</span>
+                      <div class="wz-mockup__board-row">
+                        <span class="wz-mockup__board-veh">BX70 LWH</span>
+                        <div class="wz-mockup__board-track">
+                          <span class="wz-mockup__board-job" style="left:29%;width:13%">Redditch</span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="wz-mockup__board-row">
-                      <span class="wz-mockup__board-veh">KP68 GNZ</span>
-                      <div class="wz-mockup__board-track">
-                        <span class="wz-mockup__board-job wz-mockup__board-job--light" style="left:4%;width:10%">Walsall</span>
-                        <span class="wz-mockup__board-job" style="left:66%;width:12%">Cannock</span>
+                      <div class="wz-mockup__board-row">
+                        <span class="wz-mockup__board-veh">KP68 GNZ</span>
+                        <div class="wz-mockup__board-track">
+                          <span class="wz-mockup__board-job wz-mockup__board-job--light" style="left:4%;width:10%">Walsall</span>
+                          <span class="wz-mockup__board-job" style="left:66%;width:12%">Cannock</span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="wz-mockup__board-row">
-                      <span class="wz-mockup__board-veh">MV22 RTS</span>
-                      <div class="wz-mockup__board-track">
-                        <span class="wz-mockup__board-job" style="left:33%;width:25%">Solihull</span>
+                      <div class="wz-mockup__board-row">
+                        <span class="wz-mockup__board-veh">MV22 RTS</span>
+                        <div class="wz-mockup__board-track">
+                          <span class="wz-mockup__board-job" style="left:33%;width:25%">Solihull</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="wz-mockup__board-queue">
                     <div class="wz-mockup__board-queue-head">Unscheduled</div>
-                    <div class="wz-mockup__board-queue-item">Hinckley — 8yd skip</div>
-                    <div class="wz-mockup__board-queue-item">Atherstone — RoRo exch.</div>
-                    <div class="wz-mockup__board-queue-item">Lichfield — tipper</div>
+                    <div class="wz-mockup__board-queue-items">
+                      <div class="wz-mockup__board-queue-item">Hinckley — 8yd skip</div>
+                      <div class="wz-mockup__board-queue-item">Atherstone — RoRo exch.</div>
+                      <div class="wz-mockup__board-queue-item">Lichfield — tipper</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1535,7 +1578,12 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="ready-mix" data-module-detail="ready-mix">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/ready-mix-concrete.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/ready-mix-concrete.jpg" alt="Concrete orders, batching schedules and delivery." loading="lazy" width="1200" height="900">
+              </picture>
+            </div>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1556,7 +1604,12 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="trade-waste" data-module-detail="trade-waste">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/trade-waste.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/trade-waste.jpg" alt="Route-based commercial collections." loading="lazy" width="1200" height="900">
+              </picture>
+            </div>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
@@ -1572,7 +1625,12 @@ img{max-width:100%}
 
         <section class="wz-module-section" id="hazardous-waste" data-module-detail="hazardous-waste">
           <div class="wz-container">
-            <span class="wz-icon wz-module-section__icon-bg" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span>
+            <div class="wz-module-section__media">
+              <picture>
+                <source srcset="images/Modules%20Page/hazardous-waste.webp" type="image/webp">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/hazardous-waste.jpg" alt="Consignment tracking and Environment Agency reporting." loading="lazy" width="1150" height="862">
+              </picture>
+            </div>
             <div class="wz-module-section__header">
               <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
