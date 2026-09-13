@@ -175,7 +175,12 @@
    ========================================================================== */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + var(--space-6))}
-body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-body);font-size:var(--text-body-md);line-height:var(--leading-body);font-feature-settings:var(--numeric-tabular);-webkit-font-smoothing:antialiased}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--surface-page);color:var(--text-body);font-family:var(--font-body);font-size:var(--text-body-md);line-height:var(--leading-body);font-feature-settings:var(--numeric-tabular);-webkit-font-smoothing:antialiased}
+/* Sticky-footer flex layout: <main> (not .wz-route - the route divs are
+   nested a level deeper, inside <main>) is the direct flex child of body
+   that actually needs to grow, so a short route's content doesn't leave
+   the footer floating above the bottom of the viewport. */
+#main{flex:1 0 auto}
 h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
 h1{font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
 h2{font-size:var(--text-h2)}
@@ -1086,7 +1091,7 @@ img{max-width:100%}
 /* ==========================================================================
    Footer
    ========================================================================== */
-.wz-footer{background:var(--navy-900);color:rgba(255,255,255,.72);padding:var(--space-16) 0 var(--space-8)}
+.wz-footer{flex:none;background:var(--navy-900);color:rgba(255,255,255,.72);padding:var(--space-16) 0 var(--space-8)}
 .wz-footer a{color:var(--white);text-decoration:none}
 .wz-footer a:hover{text-decoration:underline}
 .wz-footer a:focus-visible{outline-color:var(--focus-ring-on-ink)}
