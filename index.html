@@ -1432,7 +1432,7 @@ img{max-width:100%}
      ROUTE: /modules
      ====================================================================== -->
 <div class="wz-route wz-route--inner" data-route="/modules" id="route-modules" hidden>
-  <section class="wz-band">
+  <section class="wz-band wz-band--tight">
     <div class="wz-container">
       <div class="wz-section-head">
         <span class="wz-eyebrow">Modules</span>
@@ -2535,8 +2535,8 @@ img{max-width:100%}
 
     applyMeta(path);
     markCurrent(path);
-    syncHeader();
     currentPath = path;
+    syncHeader();
 
     if (restoreScroll) return;
 
