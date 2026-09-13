@@ -2188,6 +2188,7 @@ img{max-width:100%}
               <label for="wz-website">Website</label>
               <input type="text" id="wz-website" name="website" tabindex="-1" autocomplete="off">
             </div>
+            <input type="hidden" id="wz-loaded-at" name="loaded_at" value="">
 
             <div class="wz-field">
               <label class="wz-label" for="name">Name</label>
@@ -2585,7 +2586,7 @@ img{max-width:100%}
     closeMenu();
     render(path, hash, false);
     /* Module enquiry links carry ?module=, which pre-ticks the checkbox. */
-    if (path === "/enquire") preselectModules(search);
+    if (path === "/enquire") { preselectModules(search); stampEnquireLoaded(); }
   }
 
   /* ---------------------------------------------------------------------
@@ -2636,7 +2637,7 @@ img{max-width:100%}
   window.addEventListener("popstate", function () {
     var path = normalise(window.location.pathname) || DEFAULT_ROUTE;
     render(path, window.location.hash, false);
-    if (path === "/enquire") preselectModules(window.location.search);
+    if (path === "/enquire") { preselectModules(window.location.search); stampEnquireLoaded(); }
   });
 
   /* ---------------------------------------------------------------------
@@ -2998,8 +2999,18 @@ img{max-width:100%}
     updateModuleCount();
   }
 
-  function showMessage(text) {
-    formMsg.textContent = text;
+  /* Stamped once the /enquire form actually becomes visible, so the
+     server can reject a submission that arrives implausibly soon after -
+     a real person, however fast they type, takes at least a few seconds
+     to reach submit; a bot filling and submitting within milliseconds of
+     the SPA route rendering does not. */
+  function stampEnquireLoaded() {
+    var field = document.getElementById("wz-loaded-at");
+    if (field) field.value = String(Date.now());
+  }
+
+  function showMessage(html) {
+    formMsg.innerHTML = html;
     formMsg.hidden = false;
   }
 
@@ -3015,7 +3026,8 @@ img{max-width:100%}
       if (!field.value.trim()) return { field: field, message: required[i][1] };
     }
     var email = document.getElementById("email");
-    if (email.value.indexOf("@") === -1) return { field: email, message: "Enter a valid email address." };
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!EMAIL_RE.test(email.value.trim())) return { field: email, message: "Enter a valid email address." };
 
     var consent = form.querySelector('input[name="consent"]');
     if (!consent.checked) return { field: consent, message: "Tick the box so we can reply to your enquiry." };
@@ -3054,7 +3066,7 @@ img{max-width:100%}
       })
       .then(function () {
         form.hidden = true;
-        showMessage("Enquiry sent. We reply within two working days. In the meantime the digital waste tracking guide is at /digital-waste-tracking.");
+        showMessage("Enquiry sent. We reply within two working days. In the meantime, the <a href=\"/digital-waste-tracking\">digital waste tracking guide</a> is worth a read.");
       })
       .catch(function () {
         submitBtn.disabled = false;
@@ -3104,7 +3116,7 @@ img{max-width:100%}
     history.replaceState({ path: bootPath }, "", window.location.pathname + window.location.search + window.location.hash);
   }
   render(bootPath, window.location.hash, false);
-  if (bootPath === "/enquire") preselectModules(window.location.search);
+  if (bootPath === "/enquire") { preselectModules(window.location.search); stampEnquireLoaded(); }
 })();
 </script>
 
