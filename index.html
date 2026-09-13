@@ -1063,6 +1063,8 @@ img{max-width:100%}
 .wz-form__full{grid-column:1/-1}
 @media (max-width:700px){.wz-form{grid-template-columns:1fr}}
 .wz-checkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-3);margin-top:var(--space-3)}
+.wz-checkgrid--inline{grid-template-columns:repeat(3,max-content);justify-content:start;column-gap:var(--space-8)}
+@media (max-width:480px){.wz-checkgrid--inline{grid-template-columns:1fr;justify-content:stretch}}
 .wz-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .wz-formmsg{padding:var(--space-4);border-radius:var(--radius-md);font-size:var(--text-body-sm);margin:0 0 var(--space-4);border:var(--border-width) solid var(--border-strong);background:var(--navy-025);color:var(--text-heading)}
 .wz-contact{display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-8)}
@@ -2235,7 +2237,7 @@ img{max-width:100%}
 
             <fieldset class="wz-form__full" style="border:0;padding:0;margin:0">
               <legend class="wz-label" style="padding:0">Do you receive waste at your own permitted site?</legend>
-              <div class="wz-checkgrid">
+              <div class="wz-checkgrid wz-checkgrid--inline">
                 <label class="wz-choice"><input type="radio" name="permitted_site" value="Yes"><span>Yes</span></label>
                 <label class="wz-choice"><input type="radio" name="permitted_site" value="No"><span>No</span></label>
                 <label class="wz-choice"><input type="radio" name="permitted_site" value="Not sure"><span>Not sure</span></label>
