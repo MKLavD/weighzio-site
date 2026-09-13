@@ -252,6 +252,17 @@ img{max-width:100%}
 .wz-section-head--center{margin:0 auto;text-align:center;align-items:center}
 .wz-band--ink .wz-section-head h2,.wz-band--ink .wz-section-head h3{color:var(--white)}
 .wz-band--ink .wz-section-head p{color:rgba(255,255,255,.82)}
+
+/* Thank-you route: a calm, centred confirmation - deliberately not
+   styled as a form-adjacent notice, since it's now its own page. */
+.wz-thankyou{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:52ch;margin:0 auto}
+.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--navy-050);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
+.wz-thankyou__icon .wz-icon{width:28px;height:28px;background-color:var(--navy-700)}
+.wz-thankyou .wz-eyebrow{margin-bottom:var(--space-3)}
+.wz-thankyou h1{margin:0 0 var(--space-4)}
+.wz-thankyou__lead{font-size:var(--text-lead);color:var(--text-heading);margin:0 0 var(--space-4)}
+.wz-thankyou p:not(.wz-thankyou__lead){color:var(--text-body);margin:0}
+.wz-thankyou a{color:var(--navy-700);text-decoration:underline;text-underline-offset:3px}
 .wz-band--ink .wz-eyebrow{color:rgba(255,255,255,.66)}
 
 /* ==========================================================================
@@ -2275,6 +2286,25 @@ img{max-width:100%}
 </div>
 
 <!-- ======================================================================
+     ROUTE: /thank-you
+     ====================================================================== -->
+<div class="wz-route wz-route--inner" data-route="/thank-you" id="route-thank-you" hidden>
+  <section class="wz-band">
+    <div class="wz-container">
+      <div class="wz-thankyou">
+        <span class="wz-thankyou__icon" aria-hidden="true">
+          <span class="wz-icon" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span>
+        </span>
+        <span class="wz-eyebrow">Enquiry sent</span>
+        <h1>Thanks - we've got it.</h1>
+        <p class="wz-thankyou__lead">We reply within two working days with a quote and a straight answer on fit.</p>
+        <p>In the meantime, the <a href="/digital-waste-tracking">digital waste tracking guide</a> is worth a read, or head back to the <a href="/modules">modules</a> if there's anything else you want to look at.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================================
      ROUTE: /privacy
      ====================================================================== -->
 <div class="wz-route wz-route--inner" data-route="/privacy" id="route-privacy" hidden>
@@ -2437,6 +2467,11 @@ img{max-width:100%}
     "/enquire": {
       title: "Enquire | weighzIO",
       description: "Tell us which modules you need and we'll come back with a quote within two working days.",
+      noindex: true
+    },
+    "/thank-you": {
+      title: "Thanks | weighzIO",
+      description: "Your enquiry has been sent. We reply within two working days.",
       noindex: true
     },
     "/privacy": {
@@ -3065,8 +3100,15 @@ img{max-width:100%}
         return response.json().catch(function () { return {}; });
       })
       .then(function () {
-        form.hidden = true;
-        showMessage("Enquiry sent. We reply within two working days. In the meantime, the <a href=\"/digital-waste-tracking\">digital waste tracking guide</a> is worth a read.");
+        form.reset();
+        /* form.reset() doesn't fire "change" on the module checkboxes, so
+           the chip picker's counter/tick state would otherwise still read
+           the pre-reset selection if the visitor ever comes back to
+           /enquire via the browser's back button. */
+        updateModuleCount();
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send enquiry";
+        navigate("/thank-you", "", "");
       })
       .catch(function () {
         submitBtn.disabled = false;
