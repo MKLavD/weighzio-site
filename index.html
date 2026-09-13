@@ -179,8 +179,16 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
 /* Sticky-footer flex layout: <main> (not .wz-route - the route divs are
    nested a level deeper, inside <main>) is the direct flex child of body
    that actually needs to grow, so a short route's content doesn't leave
-   the footer floating above the bottom of the viewport. */
-#main{flex:1 0 auto}
+   the footer floating above the bottom of the viewport.
+   display:flex/flex-direction:column added alongside (not part of the
+   original sticky-footer fix) so a route that needs to vertically centre
+   itself within this leftover space - currently just #route-thank-you -
+   can do so with flex:1 0 auto rather than an unreliable percentage
+   height; every other route's .wz-route child is an ordinary flex item
+   with no flex-grow of its own, sized to its natural content height
+   exactly as plain block flow produced before, so this is inert for
+   them. */
+#main{flex:1 0 auto;display:flex;flex-direction:column}
 h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
 h1{font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
 h2{font-size:var(--text-h2)}
@@ -268,6 +276,31 @@ img{max-width:100%}
 .wz-thankyou__lead{font-size:var(--text-lead);color:var(--text-heading);margin:0 0 var(--space-4)}
 .wz-thankyou p:not(.wz-thankyou__lead){color:var(--text-body);margin:0}
 .wz-thankyou a{color:var(--navy-700);text-decoration:underline;text-underline-offset:3px}
+/* Vertically centres the confirmation within the header-to-footer space,
+   not just within the page's own content height.
+
+   height:100% (reading #main's flex:1 0 auto height, per the original
+   plan for this) turned out not to work: #main's `height` computed value
+   is still `auto` — flex-grow only affects its used/rendered size during
+   layout, not the specified height percentage children resolve against —
+   so #route-thank-you's height:100% silently fell back to `auto` too,
+   sizing to its own content and leaving nothing for justify-content to
+   centre within. Confirmed via getBoundingClientRect before settling on
+   this, not assumed from the CSS alone: #route-thank-you measured 512px
+   (exactly its content height) against #main's real 567px.
+
+   Fixed by making #main a flex container in its own right (harmless for
+   every other route: their .wz-route child gets the flex default of
+   flex:0 1 auto, i.e. natural content height, same as plain block flow
+   produced before) and giving #route-thank-you flex:1 0 auto instead of
+   a percentage height — flex sizing composes correctly through nested
+   flex containers regardless of whether an ancestor's own height came
+   from an explicit value or from its own flex-grow, which is exactly
+   the case that tripped up the percentage approach above.
+
+   Scoped to this one route ID only; .wz-route itself is untouched, so
+   every other route's layout is unaffected. */
+#route-thank-you{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center}
 .wz-band--ink .wz-eyebrow{color:rgba(255,255,255,.66)}
 
 /* ==========================================================================
@@ -644,6 +677,15 @@ img{max-width:100%}
    alone is the separator, not colour plus a hairline.
    ========================================================================== */
 .wz-module-section{position:relative;padding:var(--space-10) 0}
+/* The very first module section sits directly under the intro head band,
+   which already provides clear separation via its own bottom padding
+   (.wz-band--tight, fd502c8) - this section's own top padding would just
+   stack on top of that, making the intro-to-first-module gap noticeably
+   larger than the gap between any two module sections further down.
+   Removing it means that one gap comes from a single padding value
+   instead of two stacked ones; every other module section keeps its
+   normal top+bottom padding from the shared rule above, unaffected. */
+#module-sections > .wz-module-section:first-child{padding-top:0}
 /* Same light blue-grey the home page alternates .wz-band--canvas with
    (--navy-025, #F7F9FB) — a solid value, not an opacity tint, so it reads
    as the same surface token as the rest of the site rather than a
