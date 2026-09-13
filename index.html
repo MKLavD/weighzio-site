@@ -308,6 +308,29 @@ img{max-width:100%}
 .wz-choice input[type="checkbox"]:checked{background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:14px;background-position:center;background-repeat:no-repeat}
 .wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 4px var(--white)}
 
+/* Module picker: the enquiry form's module multi-select rebuilt as
+   selectable chips, since this is the single field the copy deck calls
+   "the most valuable on the site" - it should look like one, not like
+   every other checkbox on the page. Reuses the same icon set as the
+   home page module grid, and orange as the one accent, consistent with
+   the site-wide rule that orange marks the interactive/selected state. */
+.wz-modpicker-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-3)}
+.wz-modpicker-count{font-size:var(--text-micro);color:var(--text-muted);white-space:nowrap}
+.wz-modpicker-count[data-count="0"]{visibility:hidden}
+.wz-modgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-2)}
+.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;background:var(--surface-card);transition:var(--transition-hover)}
+.wz-modchip:hover{border-color:var(--navy-400)}
+.wz-modchip input{position:absolute;opacity:0;width:100%;height:100%;margin:0;top:0;left:0;cursor:pointer}
+.wz-modchip__icon{color:var(--navy-500);flex:none;width:18px;height:18px}
+.wz-modchip__label{font-size:var(--text-body-sm);color:var(--text-body);line-height:1.25}
+.wz-modchip__tick{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--orange-400);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:opacity var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)}
+.wz-modchip__tick .wz-icon{width:11px;height:11px;background-color:var(--white)}
+.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--orange-400);background:rgba(244,125,45,.06)}
+.wz-modchip:has(input:checked) .wz-modchip__label,.wz-modchip.is-checked .wz-modchip__label{color:var(--text-heading);font-weight:var(--weight-medium)}
+.wz-modchip:has(input:checked) .wz-modchip__icon,.wz-modchip.is-checked .wz-modchip__icon{color:var(--orange-press)}
+.wz-modchip:has(input:checked) .wz-modchip__tick,.wz-modchip.is-checked .wz-modchip__tick{opacity:1;transform:scale(1)}
+.wz-modchip input:focus-visible{outline:2px solid var(--navy-700);outline-offset:2px;border-radius:var(--radius-md)}
+
 /* ==========================================================================
    Dialog (module detail popups) — one shared template for all sixteen,
    populated from data read out of #module-sections (openModuleDialog,
@@ -2139,16 +2162,20 @@ img{max-width:100%}
             <p>Seven questions. We'll come back within two working days with a quote and a straight answer on fit.</p>
           </div>
 
-          <div class="wz-contact">
-            <div class="wz-contact__row">
-              <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_mail.svg');mask-image:url('images/icon_mail.svg')"></span>
-              <div><strong>Email</strong><p>Replies within two working days.</p></div>
-            </div>
-            <div class="wz-contact__row">
-              <span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span>
-              <div><strong>Phone</strong><p>Monday to Friday, office hours.</p></div>
-            </div>
-          </div>
+          <ul class="wz-ticks" style="margin-top:var(--space-8)">
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>No cost, no commitment.</strong><p>We'll tell you plainly if you're better off where you are.</p></div>
+            </li>
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>A straight answer on fit.</strong><p>We'll say if a module won't earn its place, not just sell you all of them.</p></div>
+            </li>
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>Email or phone, Monday to Friday.</strong><p>Office hours, and a reply within two working days either way.</p></div>
+            </li>
+          </ul>
         </div>
 
         <div class="wz-card wz-card--pad-lg wz-card--raised">
@@ -2181,25 +2208,28 @@ img{max-width:100%}
             </div>
 
             <fieldset class="wz-form__full" style="border:0;padding:0;margin:0">
-              <legend class="wz-label" style="padding:0">Which modules are you interested in?</legend>
-              <div class="wz-checkgrid">
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Weighbridge"><span>Weighbridge</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Skip Hire &amp; RoRo"><span>Skip Hire &amp; RoRo</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Materials &amp; Aggregates"><span>Materials &amp; Aggregates</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Scheduling &amp; Dispatch"><span>Scheduling &amp; Dispatch</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Driver App"><span>Driver App</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Fleet &amp; Telematics"><span>Fleet &amp; Telematics</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Customers &amp; Pricing"><span>Customers &amp; Pricing</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Finance &amp; Sage"><span>Finance &amp; Sage</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Reporting &amp; Dashboards"><span>Reporting &amp; Dashboards</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Customer Portal"><span>Customer Portal</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Multi-Company"><span>Multi-Company</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Marketing Data Feed"><span>Marketing Data Feed</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Ready-Mix Concrete"><span>Ready-Mix Concrete</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Trade Waste"><span>Trade Waste</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Hazardous Waste"><span>Hazardous Waste</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Custom Modules"><span>Custom Modules</span></label>
-                <label class="wz-choice"><input type="checkbox" name="modules" value="Not sure yet, advise me"><span>Not sure yet, advise me</span></label>
+              <div class="wz-modpicker-head">
+                <legend class="wz-label" style="padding:0">Which modules are you interested in?</legend>
+                <span class="wz-modpicker-count" id="modpicker-count" data-count="0">0 selected</span>
+              </div>
+              <div class="wz-modgrid" id="modpicker-grid">
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Weighbridge"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span><span class="wz-modchip__label">Weighbridge</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Skip Hire &amp; RoRo"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span><span class="wz-modchip__label">Skip Hire &amp; RoRo</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Materials &amp; Aggregates"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span><span class="wz-modchip__label">Materials &amp; Aggregates</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Scheduling &amp; Dispatch"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span><span class="wz-modchip__label">Scheduling &amp; Dispatch</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Driver App"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span><span class="wz-modchip__label">Driver App</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Fleet &amp; Telematics"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span><span class="wz-modchip__label">Fleet &amp; Telematics</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Customers &amp; Pricing"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span><span class="wz-modchip__label">Customers &amp; Pricing</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Finance &amp; Sage"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span><span class="wz-modchip__label">Finance &amp; Sage</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Reporting &amp; Dashboards"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span><span class="wz-modchip__label">Reporting &amp; Dashboards</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Customer Portal"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span><span class="wz-modchip__label">Customer Portal</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Multi-Company"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span><span class="wz-modchip__label">Multi-Company</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Marketing Data Feed"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span><span class="wz-modchip__label">Marketing Data Feed</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Ready-Mix Concrete"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span><span class="wz-modchip__label">Ready-Mix Concrete</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Trade Waste"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span><span class="wz-modchip__label">Trade Waste</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Hazardous Waste"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span><span class="wz-modchip__label">Hazardous Waste</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Custom Modules"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span><span class="wz-modchip__label">Custom Modules</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Not sure yet, advise me"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_info.svg');mask-image:url('images/icon_info.svg')"></span><span class="wz-modchip__label">Not sure yet, advise me</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
               </div>
             </fieldset>
 
@@ -2929,6 +2959,29 @@ img{max-width:100%}
   var formMsg = document.getElementById("form-msg");
   var submitBtn = document.getElementById("enquiry-submit");
 
+  /* Module picker: keeps the selected-state class in sync for browsers
+     without :has() support, and drives the "N selected" counter. */
+  var modGrid = document.getElementById("modpicker-grid");
+  var modCount = document.getElementById("modpicker-count");
+
+  function updateModuleCount() {
+    if (!modGrid || !modCount) return;
+    var boxes = modGrid.querySelectorAll('input[name="modules"]');
+    var n = 0;
+    Array.prototype.forEach.call(boxes, function (box) {
+      var chip = box.closest(".wz-modchip");
+      if (chip) chip.classList.toggle("is-checked", box.checked);
+      if (box.checked) n++;
+    });
+    modCount.textContent = n === 1 ? "1 selected" : n + " selected";
+    modCount.setAttribute("data-count", String(n));
+  }
+
+  if (modGrid) {
+    modGrid.addEventListener("change", updateModuleCount);
+    updateModuleCount();
+  }
+
   /* Module enquiry links pass the module name as a query parameter and the
      matching checkbox is pre-ticked on arrival. */
   function preselectModules(search) {
@@ -2939,6 +2992,7 @@ img{max-width:100%}
     Array.prototype.forEach.call(form.querySelectorAll('input[name="modules"]'), function (box) {
       if (wanted.indexOf(box.value) !== -1) box.checked = true;
     });
+    updateModuleCount();
   }
 
   function showMessage(text) {
