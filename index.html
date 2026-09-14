@@ -246,6 +246,13 @@ img{max-width:100%}
 .wz-btn--secondary{background:var(--white);color:var(--navy-700);border-color:var(--navy-700)}
 .wz-btn--secondary:hover{background:var(--navy-050);color:var(--navy-700)}
 .wz-btn--secondary:active{background:var(--navy-100);transform:translateY(1px)}
+/* Optional-further-reading CTA on a navy band - transparent/white outline,
+   never the solid-orange primary treatment, since it isn't a conversion
+   action. */
+.wz-btn--outline-white{background:transparent;color:var(--white);border-color:var(--white)}
+.wz-btn--outline-white:hover{background:var(--white);color:var(--navy-700)}
+.wz-btn__arrow{width:14px;height:14px;background-color:currentColor;transition:transform var(--duration-fast) var(--ease-out)}
+.wz-btn--outline-white:hover .wz-btn__arrow{transform:translateX(3px)}
 .wz-btn--inverse{background:transparent;color:var(--white);border-color:var(--border-on-ink)}
 .wz-btn--inverse:hover{background:rgba(255,255,255,.10);color:var(--white)}
 .wz-btn--inverse:focus-visible{outline-color:var(--focus-ring-on-ink)}
@@ -1522,7 +1529,7 @@ img{max-width:100%}
 
       <div>
         <p style="max-width:68ch">Duty of care notes are produced digitally with the customer signing on the driver's phone. Hazardous waste consignment reports export in Environment Agency formats.</p>
-        <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/digital-waste-tracking">What the regulations require</a></p>
+        <p style="margin:0"><a class="wz-btn wz-btn--outline-white" href="/digital-waste-tracking">What the regulations require<span class="wz-icon wz-btn__arrow" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span></a></p>
       </div>
     </div>
   </section>
@@ -1543,7 +1550,7 @@ img{max-width:100%}
             <li>It sits alongside the standard modules, uses the same data, and it is yours.</li>
             <li>Custom modules are part of the offering, not a favour.</li>
           </ul>
-          <p style="margin:0"><a class="wz-btn wz-btn--secondary" href="/enquire?module=Custom%20Modules">Talk to us about a custom module</a></p>
+          <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire?module=Custom%20Modules"><span class="wz-icon" aria-hidden="true" style="width:16px;height:16px;-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span>Talk to us about a custom module</a></p>
         </div>
       </div>
     </div>
