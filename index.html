@@ -689,6 +689,14 @@ img{max-width:100%}
    transform, so the leftover space in the 100vh band falls below the CTA. */
 .wz-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:88px var(--gutter) 140px}
 .wz-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+/* The photo is a wide shot: the skip lorry sits in the left third, a long
+   stretch of empty wet tarmac fills the middle. Centred cropping on a
+   narrow viewport lands on that empty middle and crops the truck out of
+   frame entirely. Shifted left toward the subject - a starting point
+   based on the photo's actual composition, nudge if the truck is still
+   clipped or if this goes far enough left to lose the containers behind
+   it. */
+@media (max-width:700px){.wz-hero__img{object-position:20% center}}
 .wz-hero__scrim{position:absolute;inset:0;background:#122D4B;opacity:.6}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
@@ -700,9 +708,14 @@ img{max-width:100%}
    viewport changes rather than tracking the H1's own fluid width 1:1. Full
    width below 700px, where there's no taper to preserve. */
 .wz-hero__lead{margin:34px auto 0;max-width:42ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--white)}
-.wz-hero__actions{margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:var(--space-4)}
+.wz-hero__actions{margin-top:56px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:var(--space-4);flex-wrap:wrap}
+@media (max-width:480px){
+  .wz-hero__actions{flex-direction:column;width:100%}
+  .wz-hero__actions .wz-btn{width:100%;justify-content:center}
+}
 /* Plain text link, not a second button — no border, fill or background,
-   underlined only on hover. */
+   underlined only on hover. Unused now that "See the modules" is a real
+   button, kept in case a future single-link case needs it again. */
 .wz-hero__link{color:var(--white);font-size:var(--text-body-md);font-weight:var(--weight-medium);text-decoration:none;text-underline-offset:3px}
 .wz-hero__link:hover{color:var(--white);text-decoration:underline}
 .wz-hero__link:focus-visible{outline-color:var(--focus-ring-on-ink)}
@@ -1305,8 +1318,8 @@ img{max-width:100%}
       <h1>Take the modules you need.<br>Not the ones you don't.</h1>
       <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates, sold module by module. No mandatory core, and the price per module drops the more you run.</p>
       <div class="wz-hero__actions">
-        <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
-        <a class="wz-hero__link" href="#modules">See the modules</a>
+        <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a>
+        <a class="wz-btn wz-btn--outline-white wz-btn--lg" href="#modules">See the modules</a>
       </div>
     </div>
   </section>
