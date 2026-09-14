@@ -713,11 +713,31 @@ img{max-width:100%}
 /* ==========================================================================
    Steps
    ========================================================================== */
-.wz-steps{list-style:none;counter-reset:step;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-6)}
-.wz-steps li{counter-increment:step;display:flex;flex-direction:column;gap:var(--space-2)}
-.wz-steps li::before{content:counter(step,decimal-leading-zero);font-family:var(--font-display);font-size:var(--text-h3);font-weight:var(--weight-semibold);color:var(--navy-300);font-variant-numeric:tabular-nums}
-.wz-steps h3{font-size:var(--text-h4)}
-.wz-steps p{margin:0;font-size:var(--text-body-sm)}
+/* Desktop: 4-column grid, badges sitting on a thin horizontal line. */
+.wz-steps-track{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
+.wz-steps-line{position:absolute;top:16px;left:5%;right:5%;height:1.5px;background:var(--border-hairline);z-index:0}
+.wz-step{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--space-2)}
+.wz-step__marker{display:flex;align-items:center}
+.wz-step__badge{width:32px;height:32px;border:1.5px solid var(--navy-700);color:var(--navy-700);background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-micro);border-radius:var(--radius-md);flex-shrink:0;font-variant-numeric:tabular-nums}
+.wz-step__badge--final{background:var(--orange-400);border:none;color:var(--navy-700)}
+.wz-step__connector{display:none}
+.wz-step h3{font-size:var(--text-h4);margin:var(--space-3) 0 var(--space-1)}
+.wz-step p{margin:0;font-size:var(--text-body-sm);color:var(--text-body)}
+
+/* Mobile: vertical stack, connector line fills navy as each step scrolls
+   into view (see the scroll-fill script) - unused above 768px, where the
+   horizontal line above does the same job statically. */
+@media (max-width:768px){
+  .wz-steps-track{display:block;max-width:360px;margin:0 auto}
+  .wz-steps-line{display:none}
+  .wz-step{flex-direction:row;gap:var(--space-3)}
+  .wz-step__marker{flex-direction:column;align-items:center;flex-shrink:0}
+  .wz-step__content{padding-bottom:var(--space-5)}
+  .wz-step h3{margin:2px 0 var(--space-1)}
+  .wz-step__connector{display:block;flex:1;width:1.5px;background:var(--border-hairline);margin-top:var(--space-1);transform:scaleY(0);transform-origin:top;transition:transform 350ms ease,background-color 350ms ease}
+  .wz-step__connector.is-filled{transform:scaleY(1);background:var(--navy-700)}
+  .wz-step:last-child .wz-step__content{padding-bottom:0}
+}
 
 /* ==========================================================================
    FAQ
@@ -1553,12 +1573,48 @@ img{max-width:100%}
         <span class="wz-eyebrow">Getting started</span>
         <h2>Four steps</h2>
       </div>
-      <ol class="wz-steps">
-        <li><h3>Tell us how you run.</h3><p>Sites, vehicles, weighbridges, companies, what's working and what isn't.</p></li>
-        <li><h3>Pick your modules.</h3><p>We'll say plainly if a module won't earn its place.</p></li>
-        <li><h3>Get a quote.</h3><p>Priced on your modules, your sites and your users.</p></li>
-        <li><h3>Move over.</h3><p>Customers, live jobs, historical invoices and every lookup table migrated and checked against the originals before cutover, with custom customer prices validated line by line.</p></li>
-      </ol>
+      <div class="wz-steps-track">
+        <div class="wz-steps-line" aria-hidden="true"></div>
+        <div class="wz-step">
+          <div class="wz-step__marker">
+            <span class="wz-step__badge">01</span>
+            <span class="wz-step__connector"></span>
+          </div>
+          <div class="wz-step__content">
+            <h3>Tell us how you run.</h3>
+            <p>Sites, <a href="/modules#fleet">vehicles</a>, <a href="/modules#weighbridge">weighbridges</a>, companies, what's working and what isn't.</p>
+          </div>
+        </div>
+        <div class="wz-step">
+          <div class="wz-step__marker">
+            <span class="wz-step__badge">02</span>
+            <span class="wz-step__connector"></span>
+          </div>
+          <div class="wz-step__content">
+            <h3>Pick your modules.</h3>
+            <p>We'll say plainly if a <a href="/modules">module</a> won't earn its place.</p>
+          </div>
+        </div>
+        <div class="wz-step">
+          <div class="wz-step__marker">
+            <span class="wz-step__badge">03</span>
+            <span class="wz-step__connector"></span>
+          </div>
+          <div class="wz-step__content">
+            <h3>Get a quote.</h3>
+            <p>Priced on your <a href="/modules">modules</a>, your <a href="/enquire">sites</a> and your users.</p>
+          </div>
+        </div>
+        <div class="wz-step">
+          <div class="wz-step__marker">
+            <span class="wz-step__badge wz-step__badge--final">04</span>
+          </div>
+          <div class="wz-step__content">
+            <h3>Move over.</h3>
+            <p>Customers, live jobs, historical <a href="/enquire">invoices</a> and every lookup table migrated and checked against the originals before cutover, with custom customer prices validated line by line.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3317,6 +3373,38 @@ img{max-width:100%}
   }
   render(bootPath, window.location.hash, false);
   if (bootPath === "/enquire") { preselectModules(window.location.search); stampEnquireLoaded(); }
+})();
+</script>
+
+<!-- Four steps: mobile-only scroll-triggered connector fill. Route divs are
+     never removed from the DOM (only [hidden] toggled), so observing these
+     once at boot works correctly whenever the section is later scrolled
+     into view, regardless of which route loaded first. -->
+<script>
+(function () {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var markers = document.querySelectorAll('.wz-step__marker');
+  if (!markers.length) return;
+
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.wz-step__connector').forEach(function (el) {
+      el.style.transition = 'none';
+      el.classList.add('is-filled');
+    });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var connector = entry.target.querySelector('.wz-step__connector');
+        if (connector) connector.classList.add('is-filled');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+
+  markers.forEach(function (marker) { observer.observe(marker); });
 })();
 </script>
 
