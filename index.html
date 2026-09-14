@@ -804,7 +804,7 @@ img{max-width:100%}
 .wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
 /* The plain icon-watermark treatment (.wz-module-section__icon-bg) that
    used to mark the sections without a real photo or mockup is gone —
-   Customers & Pricing, Finance & Sage, Multi-Company and Marketing Data
+   Customers & Pricing, Finance & Payments, Multi-Company and Marketing Data
    Feed were the last four still using it, and all four now have a real
    mockup instead (see the wz-mockup variants further down). Custom
    Modules dropped the same treatment in an earlier pass. No section
@@ -842,7 +842,7 @@ img{max-width:100%}
 /* ==========================================================================
    Module section visuals — one shared two-column layout for all fifteen
    sections that have a visual (seven photos, eight UI mockups). Customers
-   & Pricing, Finance & Sage, Multi-Company and Marketing Data Feed were
+   & Pricing, Finance & Payments, Multi-Company and Marketing Data Feed were
    the last four still on the plain icon watermark; each now has a real
    mockup (account screen, invoicing/sync screen, entity switcher and
    campaign performance panel respectively — see the numbered mockup
@@ -1056,7 +1056,7 @@ img{max-width:100%}
 
 /* Shared status/tier tag, reused by the account, finance and (implicitly,
    via the active-row treatment) entities mockups below. Success green is
-   reserved for a genuine compliance/posted state (Finance & Sage's
+   reserved for a genuine compliance/posted state (Finance & Payments's
    "Posted to Sage"); every other tag uses a neutral navy tint so colour
    never carries decorative meaning it doesn't have. */
 .wz-mockup__tag{flex:none;display:inline-flex;align-items:center;font-size:10px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:4px 8px;border-radius:var(--radius-pill);white-space:nowrap}
@@ -1089,7 +1089,7 @@ img{max-width:100%}
 .wz-mockup__account-site-row{display:flex;justify-content:space-between;gap:8px;font-size:12px}
 .wz-mockup__account-site-row em{font-style:normal;color:var(--navy-400);font-size:10px;flex:none}
 
-/* --- 6. Finance & Sage: invoicing/sync screen --------------------------- */
+/* --- 6. Finance & Payments: invoicing/sync screen --------------------------- */
 .wz-mockup__finance-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:14px}
 .wz-mockup__finance-rows{display:flex;flex-direction:column;gap:10px}
 .wz-mockup__finance-row{display:flex;align-items:center;gap:10px;font-size:11px}
@@ -1408,7 +1408,7 @@ img{max-width:100%}
             </a>
             <a class="wz-module" href="/modules#finance" data-module="finance" data-group="money">
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span></span>
-              <span class="wz-module__title">Finance &amp; Sage</span>
+              <span class="wz-module__title">Finance &amp; Payments</span>
               <p class="wz-module__body">Invoicing, VAT, recurring billing and background posting to Sage.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
@@ -1712,7 +1712,7 @@ img{max-width:100%}
               <li>Manual override is available and logged, for the days the hardware misbehaves.</li>
               <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
             </ul>
-            <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Materials &amp; Aggregates</strong>, <strong>Finance &amp; Sage</strong>.</p>
+            <p class="wz-module-section__alongside" data-alongside="skip-hire,materials,finance">Works alongside: <strong>Skip Hire &amp; RoRo</strong>, <strong>Materials &amp; Aggregates</strong>, <strong>Finance &amp; Payments</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Weighbridge">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
@@ -1971,7 +1971,7 @@ img{max-width:100%}
               <li>Customer lookups for SIC code, zone, business type, postal area, priority and site access times.</li>
               <li>Cash and invoice payment terms held separately, with a workflow to convert a cash customer to an account customer.</li>
             </ul>
-            <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
+            <p class="wz-module-section__alongside" data-alongside="finance,skip-hire">Works alongside: <strong>Finance &amp; Payments</strong>, <strong>Skip Hire &amp; RoRo</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customers%20%26%20Pricing">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
@@ -2018,7 +2018,7 @@ img{max-width:100%}
             <span class="wz-eyebrow wz-module-section__eyebrow">Module</span>
               <div class="wz-module-section__head">
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span>
-              <h2>Finance &amp; Sage</h2>
+              <h2>Finance &amp; Payments</h2>
               </div>
             <p class="wz-module-section__summary">Invoicing, VAT, recurring billing and background posting to Sage.</p>
             <ul>
@@ -2030,7 +2030,7 @@ img{max-width:100%}
               <li>Annual contract price uplifts scheduled and applied across active accounts.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="customers,multi-company,reporting">Works alongside: <strong>Customers &amp; Pricing</strong>, <strong>Multi-Company</strong>, <strong>Reporting &amp; Dashboards</strong>.</p>
-            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Finance%20%26%20Sage">Enquire about this module</a></p>
+            <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Finance%20%26%20Payments">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
           </div>
@@ -2070,7 +2070,7 @@ img{max-width:100%}
               <li>A management dashboard showing daily vehicle revenue, ticket margins and tonnage.</li>
               <li>Hazardous waste consignment reports exportable in Environment Agency formats.</li>
             </ul>
-            <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: <strong>Multi-Company</strong>, <strong>Finance &amp; Sage</strong>, <strong>Customer Portal</strong>.</p>
+            <p class="wz-module-section__alongside" data-alongside="multi-company,finance,customer-portal">Works alongside: <strong>Multi-Company</strong>, <strong>Finance &amp; Payments</strong>, <strong>Customer Portal</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Reporting%20%26%20Dashboards">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
@@ -2102,7 +2102,7 @@ img{max-width:100%}
               <li>Site recycling reports delivered to key accounts without office involvement.</li>
               <li>Self-billing invoice workflows for contracted commercial partners.</li>
             </ul>
-            <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: <strong>Reporting &amp; Dashboards</strong>, <strong>Finance &amp; Sage</strong>.</p>
+            <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: <strong>Reporting &amp; Dashboards</strong>, <strong>Finance &amp; Payments</strong>.</p>
             <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
@@ -2138,7 +2138,7 @@ img{max-width:100%}
               <li>Invoice templates, logos, remittance addresses and custom headers per company, so each entity invoices as itself.</li>
               <li>One master customer record shared across all entities, which removes the duplicate data entry and the inter-company notes.</li>
             </ul>
-            <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: <strong>Finance &amp; Sage</strong>, <strong>Scheduling &amp; Dispatch</strong>.</p>
+            <p class="wz-module-section__alongside" data-alongside="finance,scheduling">Works alongside: <strong>Finance &amp; Payments</strong>, <strong>Scheduling &amp; Dispatch</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Multi-Company">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
@@ -2231,7 +2231,7 @@ img{max-width:100%}
               <li>Recurring invoicing runs off the round itself, so commercial customers are billed for the collections that actually happened.</li>
               <li>Round changes, new sites, and holiday adjustments handled without rebuilding the whole schedule from scratch.</li>
             </ul>
-            <p class="wz-module-section__alongside" data-alongside="scheduling,customers,finance">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Customers &amp; Pricing</strong>, <strong>Finance &amp; Sage</strong>.</p>
+            <p class="wz-module-section__alongside" data-alongside="scheduling,customers,finance">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Customers &amp; Pricing</strong>, <strong>Finance &amp; Payments</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Trade%20Waste">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
@@ -2469,7 +2469,7 @@ img{max-width:100%}
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Driver App"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span><span class="wz-modchip__label">Driver App</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Fleet &amp; Telematics"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span><span class="wz-modchip__label">Fleet &amp; Telematics</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Customers &amp; Pricing"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span><span class="wz-modchip__label">Customers &amp; Pricing</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
-                <label class="wz-modchip"><input type="checkbox" name="modules" value="Finance &amp; Sage"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span><span class="wz-modchip__label">Finance &amp; Sage</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="Finance &amp; Payments"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span><span class="wz-modchip__label">Finance &amp; Payments</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Reporting &amp; Dashboards"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span><span class="wz-modchip__label">Reporting &amp; Dashboards</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Customer Portal"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span><span class="wz-modchip__label">Customer Portal</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Multi-Company"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span><span class="wz-modchip__label">Multi-Company</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
