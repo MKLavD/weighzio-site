@@ -756,7 +756,9 @@ img{max-width:100%}
   .wz-step__content{padding-bottom:var(--space-5)}
   .wz-step h3{margin:2px 0 var(--space-1)}
   .wz-step__connector{display:block;flex:1;width:1.5px;background:var(--border-hairline);margin-top:var(--space-1);transform:scaleY(0);transform-origin:top;transition:transform 350ms ease,background-color 350ms ease}
-  .wz-step__connector.is-filled{transform:scaleY(1);background:var(--navy-700)}
+  .wz-step__content{opacity:.35;transition:opacity 400ms ease}
+  .wz-step.is-revealed .wz-step__content{opacity:1}
+  .wz-step.is-revealed .wz-step__connector{transform:scaleY(1);background:var(--navy-700)}
   .wz-step:last-child .wz-step__content{padding-bottom:0}
 }
 
@@ -3397,35 +3399,38 @@ img{max-width:100%}
 })();
 </script>
 
-<!-- Four steps: mobile-only scroll-triggered connector fill. Route divs are
-     never removed from the DOM (only [hidden] toggled), so observing these
-     once at boot works correctly whenever the section is later scrolled
-     into view, regardless of which route loaded first. -->
+<!-- Four steps: mobile-only scroll-triggered reveal, reversible both ways
+     (connector fills/empties, copy brightens/dims back down on re-entry) -
+     a deliberate change from the original add-once-then-unobserve
+     behaviour, per direct feedback after testing on a real phone. Nothing
+     is ever unobserved, so this keeps firing for the life of the page.
+     Route divs are never removed from the DOM (only [hidden] toggled), so
+     observing these once at boot works correctly whenever the section is
+     later scrolled into view, regardless of which route loaded first. -->
 <script>
 (function () {
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var markers = document.querySelectorAll('.wz-step__marker');
-  if (!markers.length) return;
+  var steps = document.querySelectorAll('.wz-step');
+  if (!steps.length) return;
 
   if (prefersReducedMotion) {
-    document.querySelectorAll('.wz-step__connector').forEach(function (el) {
-      el.style.transition = 'none';
-      el.classList.add('is-filled');
+    steps.forEach(function (step) {
+      step.classList.add('is-revealed');
+      var content = step.querySelector('.wz-step__content');
+      if (content) content.style.transition = 'none';
+      var connector = step.querySelector('.wz-step__connector');
+      if (connector) connector.style.transition = 'none';
     });
     return;
   }
 
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var connector = entry.target.querySelector('.wz-step__connector');
-        if (connector) connector.classList.add('is-filled');
-        observer.unobserve(entry.target);
-      }
+      entry.target.classList.toggle('is-revealed', entry.isIntersecting);
     });
-  }, { threshold: 0.6 });
+  }, { threshold: 0.5, rootMargin: '-15% 0px -15% 0px' });
 
-  markers.forEach(function (marker) { observer.observe(marker); });
+  steps.forEach(function (step) { observer.observe(step); });
 })();
 </script>
 
