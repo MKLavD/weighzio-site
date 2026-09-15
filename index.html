@@ -790,6 +790,7 @@ img{max-width:100%}
 .wz-hero__scrim{position:absolute;inset:0;background:#122D4B;opacity:.6}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+@media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
 .wz-hero__mark .wz-eyebrow{color:var(--white)}
 .wz-hero h1{margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
 /* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
@@ -1608,7 +1609,7 @@ img{max-width:100%}
         <span class="wz-eyebrow">Compliance</span>
         <h2>Digital waste tracking, built into Skip Hire</h2>
         <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
-        <p>Take the Skip Hire module and that is handled.</p>
+        <p>Our modules handle that.</p>
       </div>
 
       <ul class="wz-ticks">
@@ -1742,7 +1743,7 @@ img{max-width:100%}
           </div>
           <div class="wz-step__content">
             <h3>Move over.</h3>
-            <p>Customers, live jobs, historical <a href="/enquire">invoices</a> and every lookup table migrated and checked against the originals before cutover, with custom customer prices validated line by line.</p>
+            <p>Customers, sites, outlets, historical <a href="/enquire">invoices</a> and every lookup table migrated and checked against the originals before cutover, with custom customer prices validated line by line.</p>
           </div>
         </div>
       </div>
@@ -1817,7 +1818,7 @@ img{max-width:100%}
             <p class="wz-module-section__summary">Live weight capture straight off your indicator, onto the ticket.</p>
             <ul>
               <li>Reads standard RS232 weighbridge indicators through a locally hosted connection on site, so weights arrive on the ticket as they are taken.</li>
-              <li>Captures gross, tare and net together, with the container tare handled separately where a skip is involved.</li>
+              <li>Captures gross, tare and net on material loads, and the single recorded weight on a skip.</li>
               <li>Records where each weight came from, and flags the variance between what the customer requested and what was actually recorded.</li>
               <li>Manual override is available and logged, for the days the hardware misbehaves.</li>
               <li>Removes the re-typing step between the scale display and the ticket, which is where billing errors start.</li>
@@ -1979,14 +1980,19 @@ img{max-width:100%}
               <h2>Driver App</h2>
               </div>
             <p class="wz-module-section__summary">Job cards, weights, load breakdowns and signatures from the cab.</p>
-            <ul>
-              <li>Skip and material tickets completed on the phone: weights, load breakdown and variances, without a paper docket.</li>
-              <li>Delivery sites geofenced, so arrival, waiting time and departure are recorded rather than estimated.</li>
-              <li>Digital duty of care notes produced on site with the customer signing on glass.</li>
-              <li>Over-quantity variances calculated in the cab, with the surcharge worked out before the driver leaves.</li>
-              <li>Payment links generated on site by SMS or WhatsApp for balances owing before discharge.</li>
-              <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
-            </ul>
+            <div style="grid-row:bullets-start;grid-column:1">
+              <ul>
+                <li>Skip and material tickets completed on the phone: weights, load breakdown and variances, without a paper docket.</li>
+                <li>Delivery sites geofenced, so arrival, waiting time and departure are recorded rather than estimated.</li>
+                <li>Digital duty of care notes produced on site with the customer signing on glass.</li>
+                <li>Over-quantity variances calculated in the cab, with the surcharge worked out before the driver leaves.</li>
+                <li>Payment links generated on site by SMS or WhatsApp for balances owing before discharge.</li>
+              </ul>
+              <p class="wz-pending">Concrete Specific: bullet content not yet supplied - needs the actual detail before this reads as finished copy rather than a placeholder.</p>
+              <ul>
+                <li>Drivers can switch company, so one person can complete jobs for any division in the group. Job status protected by biometric or PIN.</li>
+              </ul>
+            </div>
             <p class="wz-module-section__alongside" data-alongside="scheduling,skip-hire,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Skip Hire &amp; RoRo</strong>, <strong>Weighbridge</strong>.</p>
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Driver%20App">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
@@ -2029,7 +2035,7 @@ img{max-width:100%}
               </div>
             <p class="wz-module-section__summary">Live vehicle tracking and weight limits enforced before dispatch.</p>
             <ul>
-              <li>Live GPS positions from Teletrac shown on the dispatch map, so you can see where drivers actually are.</li>
+              <li>Live GPS positions from the Driver App shown on the dispatch map, so you can see where drivers actually are.</li>
               <li>Vehicle records hold type, default load size, and maximum and tare weight limits.</li>
               <li>Product types validated against vehicle axle ratings before a ticket leaves dispatch, which is what keeps you out of DVSA overloading trouble.</li>
               <li>Part load tolerances, demurrage and waiting time thresholds, skip type suitability and driver sign-off all held per vehicle.</li>
