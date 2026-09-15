@@ -2398,6 +2398,85 @@ img{max-width:100%}
 </div>
 
 <!-- ======================================================================
+     ROUTE: /ai-voice-agent
+     ====================================================================== -->
+<div class="wz-route wz-route--inner" data-route="/ai-voice-agent" id="route-ai-voice-agent" hidden>
+  <section class="wz-band">
+    <div class="wz-container">
+      <div class="wz-section-head">
+        <span class="wz-eyebrow">weighzIO</span>
+        <h1>Answer every call. Book every skip.</h1>
+        <p>An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
+      </div>
+
+      <div class="wz-stack" style="margin-top:var(--space-12)">
+
+        <div>
+          <h2>The phone doesn't stop when the office does</h2>
+          <p>Skip hire runs on the phone, and the phone doesn't keep office hours. A driver can't answer while he's out on a job. The yard's short-staffed on a Friday afternoon. Someone rings at half seven in the evening wanting a same-day collection, gets no answer, and books with whoever answers next.</p>
+          <p>Every missed call is a booking that either waits until tomorrow or goes to a competitor.</p>
+        </div>
+
+        <div>
+          <h2>It answers, and it actually books the job</h2>
+          <ul class="wz-ticks">
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>Answers immediately, day or night.</strong><p>No hold music, no voicemail, no "we'll call you back."</p></div>
+            </li>
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>Books against your real availability.</strong><p>Not a generic script - it works from the same jobs and schedule your team already sees, so it isn't promising a Tuesday slot that's already full.</p></div>
+            </li>
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>Arranges collections and swaps</strong><p>Confirms the date and gets the address right without anyone having to repeat themselves twice.</p></div>
+            </li>
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>Quotes a price for standard jobs on the spot.</strong><p>Using your actual rates rather than a rough estimate someone has to correct later.</p></div>
+            </li>
+            <li>
+              <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
+              <div><strong>Confirms everything by text.</strong><p>So the customer has it in writing and the office has a record without anyone typing it up.</p></div>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>The admin that piles up around every call</h2>
+          <p>Answering the phone is the headline, but the same system picks up the work that usually falls through the cracks around it: capturing and qualifying enquiries so nothing sits unread, keeping customer records tidy without someone doing it by hand at the end of the day, and chasing quotes that never got a reply instead of them quietly going cold.</p>
+          <p>None of this touches advertising or ad spend - it's about what happens to a call or enquiry once it's already come in, not how it got there.</p>
+        </div>
+
+        <div>
+          <h2>FAQ</h2>
+          <div class="wz-faq">
+            <details><summary>Will it replace our office team?</summary><p>No. It picks up what a small team can't always get to - the call at half seven, the one that comes in while everyone's on another line - so your team spends less time chasing and more time on the jobs that need a real person.</p></details>
+            <details><summary>Does it work with our existing phone number?</summary><p>Yes, it sits on the number you already advertise. Customers don't dial anything different.</p></details>
+            <details><summary>Will it sound like a robot?</summary><p>No. It's trained on your yard's actual processes, prices and tone, not a generic script read out loud.</p></details>
+            <details><summary>What if a call genuinely needs a person?</summary><p>It hands off - a complicated query, an angry customer, anything outside the ordinary goes straight to your team rather than the agent guessing.</p></details>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <div class="wz-section-head wz-section-head--center">
+        <h2>Stop losing bookings to a missed call</h2>
+        <p>Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
+        <div style="margin-top:var(--space-6)">
+          <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================================
      ROUTE: /enquire
      ====================================================================== -->
 <div class="wz-route wz-route--inner" data-route="/enquire" id="route-enquire" hidden>
@@ -2460,7 +2539,7 @@ img{max-width:100%}
 
             <fieldset class="wz-form__full" style="border:0;padding:0;margin:0">
               <div class="wz-modpicker-head">
-                <legend class="wz-label" style="padding:0">Which modules are you interested in?</legend>
+                <legend class="wz-label" style="padding:0">Which module or service are you interested in?</legend>
                 <span class="wz-modpicker-count" id="modpicker-count" data-count="0">0 selected</span>
               </div>
               <div class="wz-modgrid" id="modpicker-grid">
@@ -2480,6 +2559,7 @@ img{max-width:100%}
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Trade Waste"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span><span class="wz-modchip__label">Trade Waste</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Hazardous Waste"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span><span class="wz-modchip__label">Hazardous Waste</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Custom Modules"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span><span class="wz-modchip__label">Custom Modules</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
+                <label class="wz-modchip"><input type="checkbox" name="modules" value="AI Voice Agent"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span><span class="wz-modchip__label">AI Voice Agent</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
                 <label class="wz-modchip"><input type="checkbox" name="modules" value="Not sure yet, advise me"><span class="wz-icon wz-modchip__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_info.svg');mask-image:url('images/icon_info.svg')"></span><span class="wz-modchip__label">Not sure yet, advise me</span><span class="wz-modchip__tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span></label>
               </div>
             </fieldset>
@@ -2606,6 +2686,7 @@ img{max-width:100%}
           <h2>Guides</h2>
           <ul>
             <li><a href="/digital-waste-tracking">Digital waste tracking</a></li>
+            <li><a href="/ai-voice-agent">AI voice agent</a></li>
           </ul>
         </div>
         <div>
@@ -2700,6 +2781,10 @@ img{max-width:100%}
     "/digital-waste-tracking": {
       title: "Digital Waste Tracking Explained: What UK Waste Operators Must Do",
       description: "What the Digital Waste Tracking Regulations require, who is in scope and when, what you must record for every load, and how digital waste transfer notes work. Updated September 2026."
+    },
+    "/ai-voice-agent": {
+      title: "AI Voice Agent for Skip Hire | weighzIO",
+      description: "An AI voice agent that answers calls, books skips and collections, and confirms swap dates for skip hire and waste operators - any time, without a queue."
     },
     "/enquire": {
       title: "Enquire | weighzIO",
