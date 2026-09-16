@@ -1543,7 +1543,7 @@ img{max-width:100%}
             <a class="wz-module" href="/modules#ready-mix" data-module="ready-mix" data-group="specialist">
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span></span>
               <span class="wz-module__title">Ready-Mix Concrete</span>
-              <p class="wz-module__body">Concrete orders, batching schedules and delivery.</p>
+              <p class="wz-module__body">Concrete orders, volumetric metering and delivery.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
             <a class="wz-module" href="/modules#trade-waste" data-module="trade-waste" data-group="specialist">
@@ -2219,7 +2219,11 @@ img{max-width:100%}
               <li>Self-billing invoice workflows for contracted commercial partners.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="reporting,finance">Works alongside: <strong>Reporting &amp; Dashboards</strong>, <strong>Finance &amp; Payments</strong>.</p>
-            <p class="wz-pending">Self-serve ordering appears on the module card but is not described in the functional spec. Confirm with the product manager before the copy claims it.</p>
+            <!-- UNVERIFIED: "self-serve ordering" is claimed on this module's
+                 card and summary but is not described in the functional spec.
+                 The visible warning was removed at the client's request; the
+                 underlying claim still has not been confirmed with the product
+                 manager. -->
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Customer%20Portal">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
@@ -2302,7 +2306,7 @@ img{max-width:100%}
             <div class="wz-module-section__media">
               <picture>
                 <source srcset="images/Modules%20Page/ready-mix-concrete.webp" type="image/webp">
-                <img class="wz-module-section__photo" src="images/Modules%20Page/ready-mix-concrete.jpg" alt="Concrete orders, batching schedules and delivery." loading="lazy" width="1200" height="900">
+                <img class="wz-module-section__photo" src="images/Modules%20Page/ready-mix-concrete.jpg" alt="Concrete orders, volumetric metering and delivery." loading="lazy" width="1200" height="900">
               </picture>
             </div>
             <div class="wz-module-section__text">
@@ -2311,13 +2315,21 @@ img{max-width:100%}
           <span class="wz-icon wz-module__icon" aria-hidden="true" style="width:24px;height:24px;-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span>
               <h2>Ready-Mix Concrete</h2>
               </div>
-            <p class="wz-module-section__summary">Concrete orders, batching schedules and delivery.</p>
+            <p class="wz-module-section__summary">Concrete orders, volumetric metering and delivery.</p>
             <ul>
               <li>Daily delivery tickets generated automatically for multi-load concrete orders.</li>
               <li>Concrete runs as one of the five dispatch planning views, filtered to how that side of the operation works.</li>
+              <li>Volumetric loads are metered on the mixer with a first-cube minimum, so the poured volume - and final price - can exceed the original order.</li>
             </ul>
             <p class="wz-module-section__alongside" data-alongside="scheduling,weighbridge">Works alongside: <strong>Scheduling &amp; Dispatch</strong>, <strong>Weighbridge</strong>.</p>
-            <p class="wz-pending">Thin spec coverage: these are the only two concrete references in the functional spec. Detail beyond this is needed from the product manager. Do not add batching plant integration, mix designs or slump records, none of which appear in the spec.</p>
+            <!-- UNVERIFIED: the volumetric-metering/first-cube-minimum bullet
+                 above was added at the client's request. The previous visible
+                 warning here explicitly said not to add batching-plant-
+                 integration detail without product-manager sign-off - that
+                 sign-off has not happened. This bullet is exactly the category
+                 of detail that warning was written to catch. Flag before this
+                 goes further, e.g. into sales conversations or further copy that
+                 builds on it as established fact. -->
             <p class="wz-module-section__enquire" style="margin:0"><a href="/enquire?module=Ready-Mix%20Concrete">Enquire about this module</a></p>
             <span class="wz-eyebrow wz-module-section__eyebrow-spacer" aria-hidden="true">Module</span>
             </div>
