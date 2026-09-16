@@ -1230,6 +1230,18 @@ img{max-width:100%}
 .wz-mockup__campaign-row span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-body)}
 .wz-mockup__campaign-row b{width:64px;flex:none;text-align:right;font-weight:var(--weight-semibold);color:var(--navy-700);font-feature-settings:var(--numeric-tabular)}
 
+/* --- 9. Pricing: module picker --------------------------------------- */
+/* Reuses the same visual language as the real enquiry-form chip picker
+   (orange border/tint for selected, same tick-badge idea) rather than
+   inventing a new selection style, so this reads as "the real picker"
+   rather than a new graphic. */
+.wz-mockup__picker-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:16px}
+.wz-mockup__picker-chip{display:flex;align-items:center;gap:10px;border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-md);padding:9px 12px;font-size:13px;color:var(--text-body)}
+.wz-mockup__picker-chip--on{border-color:var(--orange-400);background:rgba(244,125,45,.06);color:var(--text-heading);font-weight:var(--weight-medium)}
+.wz-mockup__picker-tick{flex:none;width:16px;height:16px;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;border:1.5px solid var(--navy-300)}
+.wz-mockup__picker-chip--on .wz-mockup__picker-tick{background:var(--orange-400);border-color:var(--orange-400)}
+.wz-mockup__picker-tick .wz-icon{width:9px;height:9px;background-color:var(--white)}
+
 /* --- Real photography, seven sections: same .wz-module-section__media slot
    the eight UI mockups use, --radius-lg to match the site's existing
    card/tile corner convention rather than a bespoke radius. At the
@@ -1595,12 +1607,25 @@ img{max-width:100%}
   <!-- 2.3 How the pricing works -->
   <section class="wz-band">
     <div class="wz-container">
-      <div class="wz-section-head" style="max-width:60ch">
-        <span class="wz-eyebrow">Pricing</span>
-        <h2>You pay for what you run</h2>
-        <p>Each module is priced on its own. Take one and that's all you pay for; take several and the rate per module drops. There's no minimum bundle, no core licence, and no published price list - every operation is different, so tell us which modules you're interested in and we'll put a real figure in front of you.</p>
+      <div class="wz-split2">
+        <div class="wz-section-head">
+          <span class="wz-eyebrow">Pricing</span>
+          <h2>You pay for what you run</h2>
+          <p>Each module is priced on its own. Take one and that's all you pay for; take several and the rate per module drops. There's no minimum bundle, no core licence, and no published price list - every operation is different, so tell us which modules you're interested in and we'll put a real figure in front of you.</p>
+          <p style="margin:var(--space-6) 0 0"><a class="wz-btn wz-btn--primary" href="/enquire">Get a quote for my modules</a></p>
+        </div>
+        <div class="wz-mockup" aria-hidden="true">
+          <div class="wz-mockup__bar">Your modules <em>3 selected</em></div>
+          <div class="wz-mockup__picker-body">
+            <div class="wz-mockup__picker-chip wz-mockup__picker-chip--on"><span class="wz-mockup__picker-tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span>Weighbridge</div>
+            <div class="wz-mockup__picker-chip wz-mockup__picker-chip--on"><span class="wz-mockup__picker-tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span>Skip Hire &amp; RoRo</div>
+            <div class="wz-mockup__picker-chip wz-mockup__picker-chip--on"><span class="wz-mockup__picker-tick"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span></span>Driver App</div>
+            <div class="wz-mockup__picker-chip"><span class="wz-mockup__picker-tick"></span>Ready-Mix Concrete</div>
+            <div class="wz-mockup__picker-chip"><span class="wz-mockup__picker-tick"></span>Multi-Company</div>
+            <div class="wz-mockup__picker-chip"><span class="wz-mockup__picker-tick"></span>Custom Modules</div>
+          </div>
+        </div>
       </div>
-      <p style="margin:var(--space-6) 0 0"><a class="wz-btn wz-btn--primary" href="/enquire">Get a quote for my modules</a></p>
     </div>
   </section>
 
