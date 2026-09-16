@@ -1038,6 +1038,20 @@ img{max-width:100%}
 .wz-module-section__text{grid-column:1;grid-row:eyebrow-start/spacer-end;display:grid;grid-template-rows:subgrid;min-width:0}
 .wz-module-section__enquire{grid-row:enquire-start}
 .wz-module-section__media{position:relative;grid-column:2;grid-row:title-start/enquire-end;display:flex;justify-content:center;align-items:flex-start;min-height:410px}
+/* Marketing Data Feed has no "Works alongside" line and no pending
+   note, so its title-start/enquire-end row span is naturally shorter
+   than every other module. The shared 410px floor above forced those
+   now-empty rows to stretch to make up the difference, opening a gap
+   between the bullets and the Enquire link. Scoped override, measured
+   against this module's actual content height - do not apply the
+   shared floor's value to any other module. Desktop-only: the
+   min-width:1151px guard stops this id-selector override (which would
+   otherwise outrank the plain-class .wz-module-section__media rule
+   below on specificity alone) from clobbering the mobile min-height:0
+   reset. */
+@media (min-width:1151px){
+  #marketing-data-feed .wz-module-section__media{min-height:284px}
+}
 /* Invisible duplicate of the eyebrow (same "Module" text, same
    display/margin-bottom/grid-row-start shape as .wz-module-section__eyebrow
    — deliberately restated here rather than reusing that class, so this
