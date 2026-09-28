@@ -1393,16 +1393,6 @@ img{max-width:100%}
 .wz-footer__nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-body-sm)}
 .wz-footer__base{border-top:1px solid var(--border-on-ink);padding-top:var(--space-6);font-size:var(--text-micro);display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
 .wz-footer__blurb{max-width:44ch;font-size:var(--text-body-sm);margin:var(--space-4) 0 0}
-
-/* ==========================================================================
-   Cookie banner — declines non-essential by default
-   ========================================================================== */
-.wz-cookie{position:fixed;bottom:var(--space-4);right:var(--space-4);left:var(--space-4);max-width:420px;margin-left:auto;z-index:40;background:var(--surface-ink);color:rgba(255,255,255,.86);border:var(--border-width) solid var(--border-on-ink);border-radius:var(--radius-md);padding:var(--space-4);box-shadow:var(--shadow-on-ink);font-size:var(--text-body-sm)}
-.wz-cookie strong{color:var(--white);display:block;font-family:var(--font-display);font-size:var(--text-body-md)}
-.wz-cookie p{margin:var(--space-2) 0 var(--space-4)}
-.wz-cookie a{color:var(--white)}
-.wz-cookie a:focus-visible{outline-color:var(--focus-ring-on-ink)}
-.wz-cookie__actions{display:flex;gap:var(--space-2);flex-wrap:wrap}
 </style>
 <script>var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
 <script src="//s.ksrndkehqnwntyxlhgto.com/175655.js"></script>
@@ -2918,18 +2908,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<!-- ======================================================================
-     Cookie banner — declines non-essential by default
-     ====================================================================== -->
-<div class="wz-cookie" id="cookie-banner" role="region" aria-label="Cookies" hidden>
-  <strong>Cookies</strong>
-  <p>Non-essential cookies are off unless you turn them on. Declining changes nothing about how the site works. See <a href="/privacy">privacy and cookies</a>.</p>
-  <div class="wz-cookie__actions">
-    <button type="button" class="wz-btn wz-btn--inverse wz-btn--sm" data-cookie="declined">Decline</button>
-    <button type="button" class="wz-btn wz-btn--primary wz-btn--sm" data-cookie="accepted">Accept</button>
-  </div>
-</div>
-
 <script type="application/ld+json" id="schema-site">
 {
   "@context": "https://schema.org",
@@ -3648,33 +3626,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         submitBtn.textContent = "Send enquiry";
         showMessage("That did not send. Try again, or ring the office and we will take the details over the phone.");
       });
-  });
-
-  /* ---------------------------------------------------------------------
-     Cookie banner — non-essential declined by default
-     --------------------------------------------------------------------- */
-  var banner = document.getElementById("cookie-banner");
-  var COOKIE_KEY = "wz-cookie-choice";
-
-  function readChoice() {
-    try {
-      return window.localStorage.getItem(COOKIE_KEY);
-    } catch (e) {
-      return "declined";
-    }
-  }
-
-  if (!readChoice()) banner.hidden = false;
-
-  Array.prototype.forEach.call(banner.querySelectorAll("[data-cookie]"), function (button) {
-    button.addEventListener("click", function () {
-      try {
-        window.localStorage.setItem(COOKIE_KEY, button.getAttribute("data-cookie"));
-      } catch (e) {
-        /* Choice cannot be remembered; the banner simply returns next visit. */
-      }
-      banner.hidden = true;
-    });
   });
 
   /* ---------------------------------------------------------------------
