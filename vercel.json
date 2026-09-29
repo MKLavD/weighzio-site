@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|robots\\.txt|sitemap\\.xml|favicon\\.ico).*)", "destination": "/index.html" }
   ]
 }

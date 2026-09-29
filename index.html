@@ -23,6 +23,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image" content="/images/hero-yard-1920.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
+<link rel="icon" href="/favicon.ico">
 <link rel="icon" href="images/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="images/weighzio-apple-touch-icon.png">
 
@@ -2936,6 +2937,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function () {
   "use strict";
 
+  var SITE_ORIGIN = "https://weighz.io";
   var ORIGIN = window.location.origin;
 
   /* ---------------------------------------------------------------------
@@ -2990,10 +2992,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     routeEls[el.getAttribute("data-route")] = el;
   });
 
-  /* Absolute URLs are built from window.location.origin so nothing needs
-     editing when the real domain is pointed at the deployment. */
+  /* Absolute URLs are built from SITE_ORIGIN, not window.location.origin,
+     so they stay pointed at the canonical domain on any host that serves
+     this file (previews, staging, weighz.io itself). */
   function absolute(path) {
-    return ORIGIN + path;
+    return SITE_ORIGIN + path;
+  }
+
+  function canonicalUrl(path) {
+    return SITE_ORIGIN + path;
   }
 
   function normalise(pathname) {
@@ -3018,7 +3025,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   function applyMeta(path) {
     var meta = ROUTES[path];
-    var url = absolute(path);
+    var url = canonicalUrl(path);
 
     document.title = meta.title;
     metaDescription.setAttribute("content", meta.description);
@@ -3026,7 +3033,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     ogTitle.setAttribute("content", meta.title);
     ogDescription.setAttribute("content", meta.description);
     ogUrl.setAttribute("content", url);
-    ogImage.setAttribute("content", absolute("/images/hero-yard-1920.jpg"));
+    ogImage.setAttribute("content", canonicalUrl("/images/hero-yard-1920.jpg"));
     setRobots(meta.noindex);
   }
 
