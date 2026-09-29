@@ -3079,7 +3079,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   var currentPath = null;
 
-  function render(path, hash, restoreScroll) {
+  function render(path, hash, restoreScroll, trackRouteChange) {
     Object.keys(routeEls).forEach(function (key) {
       routeEls[key].hidden = key !== path;
     });
@@ -3088,6 +3088,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     markCurrent(path);
     currentPath = path;
     syncHeader();
+
+    if (trackRouteChange) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        event: "route_change",
+        page_path: path,
+        page_title: document.title
+      });
+    }
 
     if (restoreScroll) return;
 
@@ -3134,7 +3143,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function navigate(path, search, hash) {
     history.pushState({ path: path }, "", path + (search || "") + (hash || ""));
     closeMenu();
-    render(path, hash, false);
+    render(path, hash, false, true);
     /* Module enquiry links carry ?module=, which pre-ticks the checkbox. */
     if (path === "/enquire") { preselectModules(search); stampEnquireLoaded(); }
   }
