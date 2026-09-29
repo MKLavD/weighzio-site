@@ -3195,7 +3195,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   window.addEventListener("popstate", function () {
     var path = normalise(window.location.pathname) || DEFAULT_ROUTE;
-    render(path, window.location.hash, false);
+    render(path, window.location.hash, false, true);
     if (path === "/enquire") { preselectModules(window.location.search); stampEnquireLoaded(); }
   });
 
