@@ -205,8 +205,8 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
    exactly as plain block flow produced before, so this is inert for
    them. */
 #main{flex:1 0 auto;display:flex;flex-direction:column}
-h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
-h1{font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
+h1:not(.wz-eyebrow),h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
+h1:not(.wz-eyebrow){font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
 h2{font-size:var(--text-h2)}
 h3{font-size:var(--text-h3)}
 h4{font-size:var(--text-h4)}
@@ -812,7 +812,7 @@ img{max-width:100%}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
 .wz-hero__mark .wz-eyebrow{color:var(--white)}
-.wz-hero h1{margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
+.wz-hero__mark+p{font-family:var(--font-display);font-weight:var(--weight-semibold);line-height:var(--leading-tight);margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
 /* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
    the block visibly tapers rather than running the same width as the H1
    above it. ch/rem rather than a percentage, so the ratio holds as the
@@ -1457,9 +1457,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-hero__inner">
       <div class="wz-hero__mark">
         <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="24" height="24" style="width:24px;height:auto">
-        <span class="wz-eyebrow">Modular waste management software</span>
+        <h1 class="wz-eyebrow">Modular waste management software</h1>
       </div>
-      <h1>Take the modules you need.<br>Not the ones you don't.</h1>
+      <p>Take the modules you need.<br>Not the ones you don't.</p>
       <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates, sold module by module. No mandatory core, and the price per module drops the more you run.</p>
       <div class="wz-hero__actions">
         <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a>
