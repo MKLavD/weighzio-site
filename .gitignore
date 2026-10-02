@@ -1,2 +1,20 @@
 .DS_Store
 **/.DS_Store
+
+# Internal documents, removed from the repo - do not re-add
+/Design.pdf
+/WeighSoft System Rebuild.pdf
+/weighzio-copy-deck-v3.md
+/weighzio-module-details.md
+/internal/
+
+# Internal scratch files, moved out of the repo - do not re-add
+/Example Module Layout.png
+/Weighzio Feedback.md
+/weighzio-handoff.md
+/module-image-prompts.md
+/convert-images.py
+/Four Steps CSS.txt
+/Four Steps HTML.txt
+/Four Steps JS — scroll-triggered fill (mobile only, respects reduced motion).txt
+/module card code.txt
