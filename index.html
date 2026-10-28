@@ -349,7 +349,7 @@ img{max-width:100%}
 .wz-section-head p{margin:0;font-size:var(--text-lead);color:var(--text-body)}
 .wz-section-head--center{margin:0 auto;text-align:center;align-items:center}
 .wz-band--ink .wz-section-head h2,.wz-band--ink .wz-section-head h3{color:var(--white)}
-.wz-band--ink .wz-section-head p{color:rgba(255,255,255,.82)}
+.wz-band--ink .wz-section-head p{color:var(--c-text-bright)}
 
 /* Thank-you route: a calm, centred confirmation - deliberately not
    styled as a form-adjacent notice, since it's now its own page. */
@@ -386,7 +386,7 @@ img{max-width:100%}
    Scoped to this one route ID only; .wz-route itself is untouched, so
    every other route's layout is unaffected. */
 #route-thank-you{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center}
-.wz-band--ink .wz-eyebrow{color:rgba(255,255,255,.66)}
+.wz-band--ink .wz-eyebrow{color:var(--c-tagline)}
 
 /* ==========================================================================
    Module tile (sixteen-module grid)
@@ -798,21 +798,18 @@ img{max-width:100%}
    Bands and routes
    ========================================================================== */
 .wz-route{display:block}
-.wz-band{padding:var(--space-24) 0;background:var(--surface-page)}
-.wz-band--tight{padding:var(--space-16) 0}
-.wz-band--canvas{background:var(--surface-canvas)}
-.wz-band--ink{background:var(--surface-ink);color:rgba(255,255,255,.82)}
+.wz-band{padding:var(--section-gap) 0;background:var(--surface-page)}
+.wz-band--tight{padding:calc(var(--section-gap) * .6) 0}
+/* Canvas bands: a breath lighter than black, with the CSS dot texture (no image asset). */
+.wz-band--canvas{background:var(--dots) 0 0/var(--dots-size),var(--surface-canvas)}
+.wz-band--ink{background:radial-gradient(70% 90% at 85% 0%,rgba(124,94,251,.20),transparent 65%),radial-gradient(60% 80% at 5% 100%,rgba(47,98,246,.16),transparent 65%),var(--g-panel);color:var(--c-text-bright)}
 .wz-band--ink h2,.wz-band--ink h3,.wz-band--ink strong{color:var(--white)}
-.wz-band--ink a:not(.wz-btn){color:var(--white)}
+.wz-band--ink a:not(.wz-btn){color:var(--c-link)}
 .wz-band--ink a:not(.wz-btn):focus-visible{outline-color:var(--focus-ring-on-ink)}
 /* First band on a route with no hero clears the fixed header. */
 .wz-route--inner > .wz-band:first-child{padding-top:calc(var(--header-h) + var(--space-16))}
 .wz-stack{display:flex;flex-direction:column;gap:var(--space-12)}
 
-@media (max-width:700px){
-  .wz-band{padding:var(--space-16) 0}
-  .wz-band--tight{padding:var(--space-12) 0}
-}
 
 /* ==========================================================================
    Hero
@@ -833,18 +830,31 @@ img{max-width:100%}
    clipped or if this goes far enough left to lose the containers behind
    it. */
 @media (max-width:700px){.wz-hero__img{object-position:20% center}}
-.wz-hero__scrim{position:absolute;inset:0;background:#122D4B;opacity:.6}
+/* Black to deep blue/purple over the photograph: the yard stays visible in the
+   middle, the top fades under the header and the bottom melts into the black
+   page. Dot texture rides on top. */
+.wz-hero__scrim{position:absolute;inset:0;background:var(--dots) 0 0/var(--dots-size),radial-gradient(70% 55% at 50% 42%,rgba(0,0,0,.30),transparent 75%),linear-gradient(180deg,rgba(0,0,0,.66) 0%,rgba(10,16,44,.58) 40%,rgba(20,13,43,.72) 78%,#000 100%)}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
 .wz-hero__mark .wz-eyebrow{color:var(--white)}
-.wz-hero__mark+p{font-family:var(--font-display);font-weight:var(--weight-semibold);line-height:var(--leading-tight);margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
+.wz-hero__mark+p{font-family:var(--font-display);font-weight:var(--weight-xbold);line-height:var(--leading-tight);margin:0 auto;max-width:27ch;font-size:var(--fs-h1);letter-spacing:var(--tracking-display);color:var(--white)}
+/* Headline gradient: the hero headline and a few key H2s. Solid white colour
+   is the fallback; the text stays real, selectable text. Drift only runs for
+   users who have not asked for reduced motion. */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .wz-hero__mark+p,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{background:var(--g-headline);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+}
+@keyframes wz-drift{from{background-position:0% 50%}to{background-position:100% 50%}}
+@media (prefers-reduced-motion:no-preference){
+  .wz-hero__mark+p,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{animation:wz-drift 16s ease-in-out infinite alternate}
+}
 /* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
    the block visibly tapers rather than running the same width as the H1
    above it. ch/rem rather than a percentage, so the ratio holds as the
    viewport changes rather than tracking the H1's own fluid width 1:1. Full
    width below 700px, where there's no taper to preserve. */
-.wz-hero__lead{margin:34px auto 0;max-width:42ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--white)}
+.wz-hero__lead{margin:34px auto 0;max-width:42ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--c-text-bright)}
 .wz-hero__actions{margin-top:56px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:var(--space-4);flex-wrap:wrap}
 .wz-hero__actions .wz-btn{min-width:200px}
 @media (max-width:480px){
@@ -873,11 +883,11 @@ img{max-width:100%}
    ========================================================================== */
 /* Desktop: 4-column grid, badges sitting on a thin horizontal line. */
 .wz-steps-track{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
-.wz-steps-line{position:absolute;top:16px;left:5%;right:5%;height:1.5px;background:var(--border-hairline);z-index:0}
+.wz-steps-line{position:absolute;top:16px;left:5%;right:5%;height:1.5px;background:var(--g-card-border);opacity:.55;z-index:0}
 .wz-step{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--space-2)}
 .wz-step__marker{display:flex;align-items:center}
-.wz-step__badge{width:32px;height:32px;border:1.5px solid var(--navy-700);color:var(--navy-700);background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-micro);border-radius:var(--radius-md);flex-shrink:0;font-variant-numeric:tabular-nums}
-.wz-step__badge--final{background:var(--orange-400);border:none;color:var(--navy-700)}
+.wz-step__badge{width:34px;height:34px;border:0;color:var(--white);background:var(--g-chip);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-micro);border-radius:var(--radius-pill);flex-shrink:0;font-variant-numeric:tabular-nums}
+.wz-step__badge--final{background:var(--c-cyan);color:var(--c-on-cyan);box-shadow:var(--glow-cyan)}
 .wz-step__connector{display:none}
 .wz-step h3{font-size:var(--text-h4);margin:var(--space-3) 0 var(--space-1)}
 .wz-step p{margin:0;font-size:var(--text-body-sm);color:var(--text-body)}
@@ -895,7 +905,7 @@ img{max-width:100%}
   .wz-step__connector{display:block;flex:1;width:1.5px;background:var(--border-hairline);margin-top:var(--space-1);transform:scaleY(0);transform-origin:top;transition:transform 350ms ease,background-color 350ms ease}
   .wz-step__content{opacity:.35;transition:opacity 400ms ease}
   .wz-step.is-revealed .wz-step__content{opacity:1}
-  .wz-step.is-revealed .wz-step__connector{transform:scaleY(1);background:var(--navy-700)}
+  .wz-step.is-revealed .wz-step__connector{transform:scaleY(1);background:var(--c-hero-blue)}
   .wz-step:last-child .wz-step__content{padding-bottom:0}
 }
 
@@ -904,7 +914,7 @@ img{max-width:100%}
    ========================================================================== */
 .wz-faq{display:flex;flex-direction:column;gap:0;border-top:var(--border-width) solid var(--border-hairline)}
 .wz-faq details{border-bottom:var(--border-width) solid var(--border-hairline)}
-.wz-faq summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;cursor:pointer;font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-semibold);color:var(--text-heading);list-style:none}
+.wz-faq summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;cursor:pointer;font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-bold);color:var(--text-heading);list-style:none}
 .wz-faq summary::-webkit-details-marker{display:none}
 .wz-faq summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background-color:currentColor;-webkit-mask:url("images/icon_arrow-right.svg") no-repeat center/contain;mask:url("images/icon_arrow-right.svg") no-repeat center/contain;transform:rotate(90deg);transition:transform var(--duration-base) var(--ease-out)}
 .wz-faq details[open] summary::after{transform:rotate(-90deg)}
@@ -926,7 +936,7 @@ img{max-width:100%}
    home page's own .wz-band/.wz-band--canvas convention, alternating colour
    alone is the separator, not colour plus a hairline.
    ========================================================================== */
-.wz-module-section{position:relative;padding:var(--space-10) 0}
+.wz-module-section{position:relative;padding:clamp(40px,5vw,72px) 0}
 /* The very first module section sits directly under the intro head band,
    which already provides clear separation via its own bottom padding
    (.wz-band--tight, fd502c8) - this section's own top padding would just
@@ -940,7 +950,7 @@ img{max-width:100%}
    (--navy-025, #F7F9FB) — a solid value, not an opacity tint, so it reads
    as the same surface token as the rest of the site rather than a
    one-off colour invented for this page. */
-.wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
+.wz-module-section:nth-of-type(even){background:var(--dots) 0 0/var(--dots-size),var(--surface-canvas)}
 /* The plain icon-watermark treatment (.wz-module-section__icon-bg) that
    used to mark the sections without a real photo or mockup is gone —
    Customers & Pricing, Finance & Payments, Multi-Company and Marketing Data
@@ -957,7 +967,7 @@ img{max-width:100%}
    correctly against both the white and the tinted alternating background. */
 #module-sections{counter-reset:module-num}
 .wz-module-section{counter-increment:module-num}
-.wz-module-section__head::before{content:counter(module-num,decimal-leading-zero);flex:none;font-family:var(--font-display);font-weight:var(--weight-semibold);font-size:clamp(2.5rem,5vw,3.75rem);line-height:1;color:rgba(18,45,75,.08)}
+.wz-module-section__head::before{content:counter(module-num,decimal-leading-zero);flex:none;font-family:var(--font-display);font-weight:var(--weight-semibold);font-size:clamp(2.5rem,5vw,3.75rem);font-weight:var(--weight-xbold);line-height:1;color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 /* Eyebrow, icon + title, summary, matching the module popup's own header
    pattern. These three used to share one wrapping div (with the hairline
    as its border-bottom); that wrapper is gone now that each one needs to
@@ -1409,20 +1419,20 @@ img{max-width:100%}
 /* ==========================================================================
    Footer
    ========================================================================== */
-.wz-footer{flex:none;background:var(--navy-900);color:rgba(255,255,255,.72);padding:var(--space-16) 0 var(--space-8)}
-.wz-footer a{color:var(--white);text-decoration:none}
+.wz-footer{flex:none;background:var(--c-bg);border-top:1px solid var(--border-hairline);color:var(--c-text-small);padding:var(--space-16) 0 var(--space-8)}
+.wz-footer a{color:var(--c-link);text-decoration:none}
 .wz-footer a:hover{text-decoration:underline}
 .wz-footer a:focus-visible{outline-color:var(--focus-ring-on-ink)}
 .wz-footer__top{display:flex;justify-content:space-between;gap:var(--space-12);flex-wrap:wrap;margin-bottom:var(--space-12)}
 .wz-footer__nav{display:flex;gap:var(--space-8);flex-wrap:wrap}
-.wz-footer__nav h2{font-size:var(--text-micro);font-family:var(--font-body);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 var(--space-3)}
+.wz-footer__nav h2{font-size:var(--text-micro);font-family:var(--font-heading);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--c-heading);margin:0 0 var(--space-3)}
 .wz-footer__nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-body-sm)}
 .wz-footer__base{border-top:1px solid var(--border-on-ink);padding-top:var(--space-6);font-size:var(--text-micro);display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
 .wz-footer__blurb{max-width:44ch;font-size:var(--text-body-sm);margin:var(--space-4) 0 0}
 .wz-footer__social{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-4) 0 0}
 .wz-footer__social-label{font-size:var(--text-body-sm)}
-.wz-footer a.wz-footer__social-link{display:inline-flex;align-items:center;justify-content:center;padding:var(--space-3);margin:calc(var(--space-3) * -1);color:rgba(255,255,255,.7)}
-.wz-footer a.wz-footer__social-link:hover{color:var(--orange-400);text-decoration:none}
+.wz-footer a.wz-footer__social-link{display:inline-flex;align-items:center;justify-content:center;padding:var(--space-3);margin:calc(var(--space-3) * -1);color:var(--c-text-small)}
+.wz-footer a.wz-footer__social-link:hover{color:var(--c-heading);text-decoration:none}
 .wz-footer a.wz-footer__social-link svg{width:20px;height:20px}
 </style>
 <script>var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
