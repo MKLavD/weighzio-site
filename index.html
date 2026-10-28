@@ -10,12 +10,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-/* Entrance motion is opt-in: only when the reader has not asked for reduced
-   motion and IntersectionObserver exists. Without this class nothing is ever
-   hidden. Set here, before first paint. */
-(function(){try{if(window.IntersectionObserver&&window.matchMedia&&window.matchMedia("(prefers-reduced-motion: no-preference)").matches)document.documentElement.classList.add("js-motion")}catch(e){}})();
-</script>
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 
@@ -1605,37 +1599,157 @@ img{max-width:100%}
 .wz-footer a.wz-footer__social-link svg{width:20px;height:20px}
 
 /* ==========================================================================
-   Entrance motion. Content is fully visible by default; only under .js-motion
-   (set in <head> when reduced motion is not requested) does the script mark
-   below-the-fold blocks [data-reveal], which start hidden and ease in once.
-   Only opacity and transform are animated. The script strips the attribute
-   when it is done, so the element returns to its normal CSS (hover included).
+   Entrance motion, scroll-linked as on laventusdigital.co.uk.
+   Pure CSS, no JavaScript: each element's animation is tied to its own
+   position in the viewport (animation-timeline: view()), so it scrubs forward
+   as the element rises into view and backwards when you scroll back up. The
+   keyframes only define the start state; the end state is the element's normal
+   styling. translate/scale/rotate are used (not transform) so hover and press
+   transforms on cards and buttons are untouched. Everything sits inside
+   no-preference motion, and the scroll-linked part inside @supports, so other
+   browsers and reduced-motion readers just see the content.
+   Ranges: "entry A% cover B%" for ordinary blocks; "entry A% entry B%" for
+   anything in the last screen of a page, which can never scroll as far as a
+   cover range needs. Siblings step by about 6% through --s.
    ========================================================================== */
 :root{--ease-reveal:cubic-bezier(.22,1,.36,1)}
-@keyframes wz-fade-up{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:none}}
-@keyframes wz-breathe{from{opacity:.85}to{opacity:1}}
+#main{overflow-x:clip}   /* slide-ins travel sideways; clip (not hidden) keeps sticky working */
 @media (prefers-reduced-motion:no-preference){
-  .js-motion [data-reveal]{opacity:0;transform:translate3d(var(--rx,0px),var(--ry,0px),0) scale(var(--rs,1));transition:opacity var(--reveal-dur,600ms) var(--ease-reveal) var(--reveal-delay,0ms),transform var(--reveal-dur,600ms) var(--ease-reveal) var(--reveal-delay,0ms)}
-  .js-motion [data-reveal].is-in{opacity:1;transform:none;will-change:opacity,transform}
-  .js-motion [data-reveal][data-reveal-instant]{transition:none!important}
-  .js-motion [data-reveal="up"]{--ry:24px}
-  .js-motion [data-reveal="left"]{--rx:-24px}
-  .js-motion [data-reveal="right"]{--rx:24px}
-  .js-motion [data-reveal="zoom"]{--rs:.96}
-  .js-motion [data-reveal="pop"]{--rs:.8;--reveal-dur:400ms;transition:opacity 400ms var(--ease-reveal) var(--reveal-delay,0ms),transform 400ms cubic-bezier(.34,1.56,.64,1) var(--reveal-delay,0ms)}
-  /* Stacked layouts: side reveals become upward ones. */
-  @media (max-width:1150px){.js-motion [data-reveal="left"],.js-motion [data-reveal="right"]{--rx:0px;--ry:24px}}
-  /* Phones: shorter distance, quicker. */
-  @media (max-width:700px){
-    .js-motion [data-reveal]{--reveal-dur:450ms}
-    .js-motion [data-reveal="up"],.js-motion [data-reveal="left"],.js-motion [data-reveal="right"]{--ry:16px}
-  }
-  /* Hero, on load: the lead and the buttons rise in turn. The eyebrow is the
-     page's H1 and the headline is the likely LCP, so neither is delayed. */
-  .js-motion .wz-hero__lead{animation:wz-fade-up 400ms var(--ease-reveal) 80ms both}
-  .js-motion .wz-hero__actions{animation:wz-fade-up 400ms var(--ease-reveal) 160ms both}
-  /* Ambient: the glow behind the ink bands breathes slowly (off on phones). */
+  @keyframes wz-load-in{0%{opacity:0;translate:0 36px;filter:blur(10px)}}
+  @keyframes wz-panel-in{0%{opacity:0;translate:0 90px;scale:.9}}
+  @keyframes wz-breathe{from{opacity:.85}to{opacity:1}}
+  @media (max-width:700px){@keyframes wz-load-in{0%{opacity:0;translate:0 18px;filter:blur(6px)}}}
+
+  /* ---- Time-based load-in: the hero and each page's header (already on screen at load) ---- */
+  .wz-hero__mark{animation:wz-load-in 700ms var(--ease-reveal) both}
+  /* The headline is the LCP element and animating it stops Chrome reporting LCP at
+     all, so it appears at once (gradient drift only); the eyebrow, lead and buttons rise in. */
+  .wz-hero__lead{animation:wz-load-in 700ms var(--ease-reveal) 160ms both}
+  .wz-hero__actions{animation:wz-load-in 700ms var(--ease-reveal) 240ms both}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>*{animation:wz-load-in 700ms var(--ease-reveal) both}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(2){animation-delay:80ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(3){animation-delay:160ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(n+4){animation-delay:240ms}
+  #route-enquire .wz-split2>div:first-child{animation:wz-load-in 700ms var(--ease-reveal) both}
+  #route-enquire .wz-split2>.wz-card{animation:wz-panel-in 700ms var(--ease-reveal) 120ms both}
+  .wz-thankyou__icon{animation:wz-load-in 700ms var(--ease-reveal) both}
+  .wz-thankyou>.wz-eyebrow{animation:wz-load-in 700ms var(--ease-reveal) 80ms both}
+  .wz-thankyou h1{animation:wz-load-in 700ms var(--ease-reveal) 160ms both}
+  .wz-thankyou>p{animation:wz-load-in 700ms var(--ease-reveal) 240ms both}
+
+  /* ---- Ambient: the glow behind the ink bands breathes slowly (off on phones) ---- */
   @media (min-width:701px){.wz-band--ink::after{animation:wz-breathe 10s ease-in-out infinite alternate}}
+
+  @supports (animation-timeline: view()) {
+    @keyframes wz-blur-rise{0%{opacity:0;translate:0 64px;filter:blur(12px)}}
+    @keyframes wz-pop{0%{opacity:0;translate:0 56px;scale:.78;filter:blur(10px)}}
+    @keyframes wz-slide-in{0%{opacity:0;translate:90px 0}}
+    @media (max-width:700px){
+      @keyframes wz-blur-rise{0%{opacity:0;translate:0 32px;filter:blur(6px)}}
+      @keyframes wz-pop{0%{opacity:0;translate:0 28px;scale:.86;filter:blur(6px)}}
+      @keyframes wz-panel-in{0%{opacity:0;translate:0 45px;scale:.94}}
+      @keyframes wz-slide-in{0%{opacity:0;translate:45px 0}}
+    }
+
+    /* Blur-rise: eyebrows, headings and text blocks. */
+    :where(
+      #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:not(.wz-band-visual):not(:has(>.wz-btn)),
+      #route-home .wz-module-group__head,
+      #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:not(:has(>.wz-btn)),
+      #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:not(:has(>.wz-btn)),
+      #route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer),
+      #route-ai-voice-agent .wz-guide__prose>h2,
+      #route-ai-voice-agent .wz-guide__prose>p:not(:has(>.wz-btn))
+    ){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,6%) cover calc(var(--s,6%) + var(--len,18%))}
+
+    /* Pop: cards, steps and secondary buttons. */
+    :where(
+      #route-home .wz-grid-modules>.wz-module,
+      #route-home .wz-step,
+      #route-home .wz-band:not(.wz-band--tight) .wz-btn:not(.wz-btn--primary)
+    ){animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,24%) cover calc(var(--s,24%) + var(--len,18%))}
+
+    /* Panels, mockups and photographs: no blur. */
+    :where(
+      #route-home .wz-split2>.wz-mockup,
+      #route-home .wz-facts,
+      #route-home .wz-band-visual,
+      #route-modules .wz-module-section__media,
+      #route-modules #custom-modules .wz-container,
+      #route-guide #dwt-dates+ul,
+      #route-guide #dwt-two-days+p,
+      #route-guide #dwt-cost+p,
+      #route-ai-voice-agent .wz-voice__aside
+    ){animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 30%}
+
+    /* Slide-in: list items and FAQ rows. */
+    :where(
+      #route-home .wz-ticks li,
+      #route-home .wz-faq details,
+      #route-ai-voice-agent .wz-ticks li,
+      #route-ai-voice-agent .wz-faq details
+    ){animation:wz-slide-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,4%) cover calc(var(--s,4%) + 18%)}
+
+    /* ---- Steps through --s (about 6% per sibling) ---- */
+    #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:nth-child(2){--s:12%}
+    #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:nth-child(3){--s:18%}
+    #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:nth-child(n+4){--s:24%}
+    #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(1){--s:14%}
+    #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(2){--s:22%}
+    #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(n+3){--s:30%}
+    #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:nth-child(2){--s:14%}
+    #route-modules .wz-module-section__text>:nth-child(2){--s:12%}
+    #route-modules .wz-module-section__text>:nth-child(3){--s:18%}
+    #route-modules .wz-module-section__text>:nth-child(4){--s:24%}
+    #route-modules .wz-module-section__text>:nth-child(5){--s:30%}
+    #route-modules .wz-module-section__text>:nth-child(6){--s:36%}
+    #route-modules .wz-module-section__text>:nth-child(n+7){--s:42%}
+    #route-home .wz-grid-modules>.wz-module{--len:20%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n+1){--s:10%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n+2){--s:16%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n+3){--s:22%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n){--s:28%}
+    @media (max-width:900px){
+      #route-home .wz-grid-modules>.wz-module:nth-child(2n+1){--s:10%}
+      #route-home .wz-grid-modules>.wz-module:nth-child(2n){--s:16%}
+    }
+    @media (max-width:700px){#route-home .wz-grid-modules>.wz-module{--s:10%}}
+    #route-home .wz-step:nth-child(2){--s:10%}
+    #route-home .wz-step:nth-child(3){--s:16%}
+    #route-home .wz-step:nth-child(4){--s:22%}
+    #route-home .wz-step:nth-child(5){--s:28%}
+    @media (max-width:768px){#route-home .wz-step{--s:10%}}
+    #route-home .wz-ticks li:nth-child(1){--s:4%}
+    #route-home .wz-ticks li:nth-child(2){--s:10%}
+    #route-home .wz-ticks li:nth-child(3){--s:16%}
+    #route-home .wz-ticks li:nth-child(4){--s:22%}
+    #route-home .wz-ticks li:nth-child(5){--s:28%}
+    #route-ai-voice-agent .wz-ticks li:nth-child(2){--s:10%}
+    #route-ai-voice-agent .wz-ticks li:nth-child(3){--s:16%}
+    #route-ai-voice-agent .wz-ticks li:nth-child(4){--s:22%}
+    #route-ai-voice-agent .wz-ticks li:nth-child(5){--s:28%}
+
+    /* ---- Elements that already run an animation keep it: lists of animations ---- */
+    /* Gradient-drift headings (drift + blur-rise). */
+    #route-home #modules .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 6% cover 24%,normal}
+    #route-home .wz-band--ink:not(.wz-band--tight) .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 12% cover 30%,normal}
+    /* Primary buttons (glow pulse + pop). Hover and press keep their own rules, as before. */
+    #route-home .wz-band:not(.wz-band--tight) .wz-btn--primary:not(:hover):not(:active),
+    #route-ai-voice-agent .wz-card .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 24% cover 42%}
+
+    /* ---- Last screen of a page: ranges that finish once the element is on screen ---- */
+    #main .wz-band--tight .wz-section-head--center{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 60%}
+    #main .wz-band--tight .wz-section-head--center>*{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,10%) entry calc(var(--s,10%) + 60%)}
+    #main .wz-band--tight .wz-section-head--center>:nth-child(2){--s:20%}
+    #main .wz-band--tight .wz-section-head--center>:nth-child(3){--s:30%}
+    #main .wz-band--tight .wz-section-head--center>:nth-child(4){--s:30%}
+    #main .wz-band--tight .wz-section-head--center>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 10% entry 70%,normal}
+    #main .wz-band--tight .wz-section-head--center>div{animation:none}
+    #main .wz-band--tight .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 30% entry 100%}
+    #route-ai-voice-agent .wz-card.wz-card--tint{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 70%}
+    #route-ai-voice-agent .wz-card .wz-btn--primary:not(:hover):not(:active){animation-range:normal,entry 20% entry 100%}
+    #route-ai-voice-agent .wz-voice__aside{animation-range:entry 0% entry 60%}
+  }
 }
 
 /* ==========================================================================
@@ -1646,7 +1760,6 @@ img{max-width:100%}
   *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
   html,body{background:#fff!important}
   body{font-size:11pt;line-height:1.5;display:block}
-  [data-reveal],.wz-hero__lead,.wz-hero__actions{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
   .wz-band::after,.wz-module::after{display:none!important}
   .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::before,.wz-module-section::before,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
   .wz-band,.wz-band--tight{padding:14pt 0!important}
@@ -4050,152 +4163,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
-<script>
-/* Entrance reveals. Tags blocks at runtime (the HTML is untouched), reveals each
-   once as it scrolls into view, and re-runs for whichever route panel is
-   showing. Hooked to the panels' own `hidden` attribute with a
-   MutationObserver, so the router and render() are not involved. Does nothing
-   unless <html> has .js-motion (set in <head> for no-preference motion). */
-(function () {
-  var root = document.documentElement;
-  if (!root.classList.contains("js-motion") || !("MutationObserver" in window)) return;
-
-  var panels = Array.prototype.slice.call(document.querySelectorAll("[data-route]"));
-  var pending = [];            /* tagged, not yet revealed */
-  var io = null, active = null, timer = 0, gen = 0, ticking = false;
-  var reduceMq = window.matchMedia("(prefers-reduced-motion: no-preference)");
-
-  function small() { return window.innerWidth <= 700; }
-  function dur(type) { return type === "pop" ? 400 : small() ? 450 : 600; }
-
-  function clean(el) {
-    el.removeAttribute("data-reveal");
-    el.removeAttribute("data-reveal-instant");
-    el.classList.remove("is-in");
-    el.style.removeProperty("--reveal-delay");
-    if (!el.getAttribute("style")) el.removeAttribute("style");
-    el.__rvGen = 0;
-  }
-
-  function reveal(el, instant) {
-    var i = pending.indexOf(el);
-    if (i < 0) return;
-    pending.splice(i, 1);
-    if (io) io.unobserve(el);
-    var g = el.__rvGen, wait = 0;
-    if (instant) el.setAttribute("data-reveal-instant", "");
-    else wait = (el.__rvDelay || 0) + dur(el.getAttribute("data-reveal")) + 80;
-    el.classList.add("is-in");
-    window.setTimeout(function () { if (el.__rvGen === g) clean(el); }, wait + 40);
-  }
-
-  function tag(el, type, delay) {
-    if (!el || el.hasAttribute("data-reveal")) return;
-    el.__rvGen = gen;
-    el.__rvDelay = delay || 0;
-    el.setAttribute("data-reveal", type);
-    if (delay) el.style.setProperty("--reveal-delay", delay + "ms");
-    pending.push(el);
-  }
-
-  function targets(panel) {
-    var id = panel.id, cap = small() ? 120 : 240;
-    var list = [];
-    function add(el, type, delay) { if (el) list.push([el, type, delay || 0]); }
-    function each(sel, fn) { Array.prototype.forEach.call(panel.querySelectorAll(sel), fn); }
-
-    /* Section headings everywhere; the closing CTA heading zooms in. */
-    each(".wz-section-head", function (h) {
-      if (h.parentElement.classList.contains("wz-split2")) return;
-      add(h, h.closest(".wz-band--tight") ? "zoom" : "up");
-    });
-
-    if (id === "route-home") {
-      /* Two-column bands: text from the left, the visual from the right (or zooming in). */
-      each(".wz-split2", function (sp) {
-        add(sp.children[0], "left");
-        var b = sp.children[1];
-        if (b) add(b, b.matches(".wz-mockup,.wz-facts") ? "zoom" : "right", 120);
-      });
-      each(".wz-module-group__head", function (h) { add(h, "up"); });
-      each(".wz-grid-modules", function (g) {
-        Array.prototype.forEach.call(g.children, function (c, i) { add(c, "up", Math.min((i % 4) * 60, cap)); });
-      });
-      each(".wz-step", function (s, i) { add(s, "up", Math.min(i * 100, small() ? 200 : 300)); });
-    } else if (id === "route-modules") {
-      each(".wz-module-section__text", function (t) { add(t, "left"); });
-      each(".wz-module-section__media", function (m) { add(m, "right", 100); });
-      add(panel.querySelector("#custom-modules .wz-container"), "up");
-    } else if (id === "route-enquire") {
-      each(".wz-split2", function (sp) {
-        Array.prototype.forEach.call(sp.children, function (c, i) { add(c, "up", i * 120); });
-      });
-    } else if (id === "route-thank-you") {
-      add(panel.querySelector(".wz-thankyou__icon"), "pop");
-      add(panel.querySelector(".wz-thankyou h1"), "up", 150);
-    } else if (id === "route-ai-voice-agent") {
-      add(panel.querySelector(".wz-voice__aside"), "right", 100);
-    }
-    return list;
-  }
-
-  /* Reveal at once whatever is already above the viewport: anchor jumps and fast scrolls. */
-  function sweep() {
-    ticking = false;
-    pending.slice().forEach(function (el) {
-      if (el.getBoundingClientRect().bottom < 0) reveal(el, true);
-    });
-  }
-  function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(sweep); } }
-
-  /* Safety net: after 2.5s, anything in view or above it that is still hidden is revealed. */
-  function safety(g) {
-    if (g !== gen) return;
-    pending.slice().forEach(function (el) {
-      if (el.getBoundingClientRect().top < window.innerHeight) reveal(el, true);
-    });
-  }
-
-  function activate(panel) {
-    gen++;
-    window.clearTimeout(timer);
-    if (io) io.disconnect();
-    /* Reset anything left tagged from the last time this panel was shown. */
-    Array.prototype.forEach.call(panel.querySelectorAll("[data-reveal]"), clean);
-    pending = [];
-    io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) reveal(e.target, false); });
-    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
-    targets(panel).forEach(function (t) { tag(t[0], t[1], t[2]); });
-    pending.forEach(function (el) { io.observe(el); });
-    sweep();
-    var g = gen;
-    timer = window.setTimeout(function () { safety(g); }, 2500);
-  }
-
-  function check() {
-    var vis = null;
-    panels.forEach(function (p) { if (!p.hidden) vis = p; });
-    if (vis && vis !== active) { active = vis; activate(vis); }
-  }
-
-  var mo = new MutationObserver(check);
-  panels.forEach(function (p) { mo.observe(p, { attributes: true, attributeFilter: ["hidden"] }); });
-  window.addEventListener("scroll", onScroll, { passive: true });
-
-  /* If the reader switches reduced motion on mid-visit, show everything and stop. */
-  function onMotionChange() {
-    if (reduceMq.matches) return;
-    pending.slice().forEach(function (el) { reveal(el, true); });
-    root.classList.remove("js-motion");
-    if (io) io.disconnect();
-    mo.disconnect();
-  }
-  if (reduceMq.addEventListener) reduceMq.addEventListener("change", onMotionChange);
-
-  check();
-})();
-</script>
 <script>
 /* Guide contents list: mark the section being read (aria-current) so the
    sticky list shows where you are. Display only; touches nothing else. */
