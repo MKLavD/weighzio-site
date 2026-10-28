@@ -1289,6 +1289,84 @@ img{max-width:100%}
 .wz-mockup__picker-chip--on .wz-mockup__picker-tick{background:var(--g-chip);border-color:transparent}
 .wz-mockup__picker-tick .wz-icon{width:9px;height:9px;background-color:var(--white)}
 
+/* --- Mockup layout: natural height, top-aligned, fixed rhythm. -------------
+   The mockups used to stretch to the text column's height (height:100%,
+   flex:1, space-between), which pinned content top and bottom with big gaps.
+   They now keep their own height and stay in view beside long text. Nothing
+   inside is smaller than 11px. This block deliberately comes after the
+   per-mockup rules above and overrides their sizing. */
+.wz-mockup{height:auto;align-self:flex-start}
+.wz-module-section__media .wz-mockup{position:sticky;top:96px}
+@media (max-width:1150px){.wz-mockup,.wz-module-section__media .wz-mockup{height:auto;aspect-ratio:auto;position:relative;top:auto}}
+.wz-mockup__bar{font-size:13px;padding:12px 18px}
+.wz-mockup__bar em{font-size:12px}
+.wz-mockup__tag{font-size:11px}
+/* 1. Dispatch */
+.wz-mockup__board{flex:none;gap:14px;padding:18px}
+.wz-mockup__board-times{font-size:11px;padding:0 2px 10px 84px;white-space:nowrap}
+.wz-mockup__board-rows{flex:none;gap:18px;justify-content:flex-start}
+.wz-mockup__board-veh{width:76px;font-size:12px;white-space:nowrap}
+.wz-mockup__board-track{height:32px}
+.wz-mockup__board-job{top:3px;bottom:3px;font-size:11px;padding:0 8px;min-width:max-content}
+.wz-mockup__board-queue{width:132px}
+.wz-mockup__board-queue-head{font-size:11px;margin-bottom:10px}
+.wz-mockup__board-queue-items{flex:none;gap:10px;justify-content:flex-start}
+.wz-mockup__board-queue-item{font-size:11px;padding:8px 9px}
+@media (max-width:1150px){
+  .wz-mockup__board{flex-direction:column}
+  .wz-mockup__board-queue{width:auto;border-left:0;padding-left:0;border-top:var(--border-width) solid var(--border-hairline);padding-top:12px}
+  .wz-mockup__board-queue-items{flex-direction:row;flex-wrap:wrap}
+}
+/* 2. Dashboard */
+.wz-mockup__metrics{gap:12px;padding:18px 18px 0}
+.wz-mockup__metric{padding:12px}
+.wz-mockup__metric span{font-size:11px}
+.wz-mockup__metric b{font-size:20px}
+.wz-mockup__metric em{font-size:11px}
+.wz-mockup__chart{flex:none;height:210px;gap:12px;padding:24px 18px 36px}
+.wz-mockup__chart span em{font-size:11px;bottom:-22px}
+/* 3. Portal */
+.wz-mockup--portal .wz-mockup__body{flex:none;padding:24px 18px}
+.wz-mockup__portal-row{font-size:13px;padding:18px 0}
+.wz-mockup__portal-row em{width:56px}
+.wz-mockup__portal-cta{margin-top:22px;font-size:12px;padding:10px 18px}
+/* 4. Fleet */
+.wz-mockup__map{flex:none;height:230px}
+.wz-mockup__pin-info{font-size:11px}
+.wz-mockup__pin-info strong{font-size:12px}
+.wz-mockup__fleet-list{padding:14px 18px 18px}
+.wz-mockup__fleet-row{font-size:12px;padding:5px 0}
+/* 5. Account */
+.wz-mockup__account-body{flex:none;justify-content:flex-start;gap:20px;padding:24px 18px}
+.wz-mockup__account-address{font-size:12px}
+.wz-mockup__account-credit-label{font-size:11px}
+.wz-mockup__account-credit-label b{font-size:12px}
+.wz-mockup__account-sites-head{font-size:11px}
+.wz-mockup__account-site-rows{gap:14px}
+.wz-mockup__account-site-row{font-size:13px}
+.wz-mockup__account-site-row em{font-size:11px}
+/* 6. Finance */
+.wz-mockup__finance-body{flex:none;justify-content:flex-start;gap:22px;padding:24px 18px}
+.wz-mockup__finance-rows{gap:22px}
+.wz-mockup__finance-row{font-size:12px}
+@media (max-width:1150px){.wz-mockup__finance-row em{white-space:normal}}
+.wz-mockup__finance-num{width:78px}
+.wz-mockup__finance-vat{font-size:12px}
+.wz-mockup__finance-vat b{font-size:14px}
+/* 7. Multi-company */
+.wz-mockup__entities-body{flex:none;justify-content:flex-start;gap:8px;padding:18px}
+.wz-mockup__entity-row{font-size:13px;padding:14px 12px}
+.wz-mockup__entity-row em{font-size:11px}
+/* 8. Marketing data feed */
+.wz-mockup__campaigns-body{flex:none;justify-content:flex-start;gap:16px;padding:24px 18px}
+.wz-mockup__campaign-head{font-size:11px}
+.wz-mockup__campaign-head span{width:76px}
+.wz-mockup__campaign-rows{gap:24px}
+.wz-mockup__campaign-row{font-size:13px}
+.wz-mockup__campaign-row b{width:76px}
+/* 9. Pricing picker (home) */
+.wz-mockup__picker-body{flex:none;justify-content:flex-start}
+
 /* --- Real photography, seven sections: same .wz-module-section__media slot
    the eight UI mockups use, --radius-lg to match the site's existing
    card/tile corner convention rather than a bespoke radius. At the
