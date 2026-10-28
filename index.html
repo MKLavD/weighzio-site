@@ -1479,6 +1479,29 @@ img{max-width:100%}
 }
 
 /* ==========================================================================
+   One-sided layouts: AI Voice Agent aside, privacy, enquire
+   ========================================================================== */
+.wz-voice{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:var(--space-16);align-items:start}
+.wz-voice__aside{position:sticky;top:96px}
+@media (max-width:1000px){.wz-voice{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}.wz-voice__aside{order:-1;position:static;max-width:460px}}
+.wz-mockup__call-body{padding:18px;display:flex;flex-direction:column;gap:12px}
+.wz-mockup__call-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--c-text)}
+.wz-mockup__msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.4}
+.wz-mockup__msg em,.wz-mockup__sms em{display:block;font-style:normal;font-size:11px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;opacity:.8;margin-bottom:3px}
+.wz-mockup__msg--agent{align-self:flex-start;background:rgba(47,98,246,.28);color:var(--white);border-bottom-left-radius:4px}
+.wz-mockup__msg--caller{align-self:flex-end;background:rgba(255,255,255,.08);color:var(--c-text-bright);border-bottom-right-radius:4px}
+.wz-mockup__booked{display:flex;flex-direction:column;gap:3px;padding:12px 14px;border-radius:var(--radius-md);background:var(--g-chip);color:var(--white);font-size:12px}
+.wz-mockup__booked b{font-family:var(--font-heading);font-size:14px}
+.wz-mockup__sms{padding:10px 12px;border:1px dashed var(--border-strong);border-radius:var(--radius-md);font-size:12px;color:var(--c-text)}
+#route-privacy .wz-guide__prose{margin-inline:auto}
+#route-enquire .wz-split2>div:first-child{position:sticky;top:96px}
+@media (max-width:900px){#route-enquire .wz-split2>div:first-child{position:static}}
+.wz-enquire-contact{margin-top:var(--space-8);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3)}
+.wz-enquire-contact__title{margin:0;font-family:var(--font-heading);font-weight:var(--weight-bold);color:var(--white);font-size:var(--text-body-md)}
+.wz-enquire-contact .wz-contact__row p{font-size:var(--text-body-md);color:var(--c-text)}
+.wz-enquire-contact__note{margin:var(--space-1) 0 0;font-size:var(--text-body-sm);color:var(--c-text-small)}
+
+/* ==========================================================================
    Enquiry form
    ========================================================================== */
 .wz-form{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5)}
@@ -2721,6 +2744,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
       </div>
 
+      <div class="wz-voice">
       <div class="wz-guide__prose">
 
         <h2>The phone doesn't stop when the office does</h2>
@@ -2770,6 +2794,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
       </div>
+      <div class="wz-voice__aside" aria-hidden="true">
+        <div class="wz-mockup wz-mockup--call">
+          <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
+          <div class="wz-mockup__call-body">
+            <div class="wz-mockup__call-meta"><span class="wz-mockup__tag wz-mockup__tag--tier">After hours</span><span>Hinckley Builders Merchants</span></div>
+            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Good evening. How can I help?</div>
+            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>I need an 8 yard skip tomorrow morning, Nuneaton Yard.</div>
+            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Tomorrow morning is free. I'll book it at your account rate. Shall I confirm?</div>
+            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>Yes please.</div>
+            <div class="wz-mockup__booked"><b>Booked</b><span>8yd skip &middot; Nuneaton Yard &middot; Sat 18 Oct, morning</span><span>Checked against the live schedule</span></div>
+            <div class="wz-mockup__sms"><em>Text sent</em>Your 8yd skip is booked for Sat 18 Oct, morning. Nuneaton Yard.</div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
   </section>
 </div>
@@ -2803,6 +2842,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div><strong>Email or phone, Monday to Friday.</strong><p>Office hours, and a reply within two working days either way.</p></div>
             </li>
           </ul>
+          <div class="wz-card wz-enquire-contact">
+            <p class="wz-enquire-contact__title">Call us</p>
+            <div class="wz-contact__row"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span><p><a href="tel:+442895685338">Belfast: 028 9568 5338</a></p></div>
+            <div class="wz-contact__row"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span><p><a href="tel:+441418460840">Glasgow: 0141 846 0840</a></p></div>
+            <p class="wz-enquire-contact__note">Office hours, Monday to Friday. A reply within two working days either way.</p>
+          </div>
         </div>
 
         <div class="wz-card wz-card--pad-lg wz-card--raised">
