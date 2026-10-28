@@ -261,9 +261,9 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
    exactly as plain block flow produced before, so this is inert for
    them. */
 #main{flex:1 0 auto;display:flex;flex-direction:column}
-h1:not(.wz-eyebrow),h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
-h1:not(.wz-eyebrow){font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
-h2{font-size:var(--text-h2)}
+h1:not(.wz-eyebrow),h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-bold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
+h1:not(.wz-eyebrow){font-size:var(--text-h1);font-weight:var(--weight-xbold);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
+h2{font-size:var(--text-h2);line-height:1.08}
 h3{font-size:var(--text-h3)}
 h4{font-size:var(--text-h4)}
 p{margin:0 0 var(--space-4);text-wrap:pretty}
@@ -275,7 +275,7 @@ table{border-collapse:collapse;font-variant-numeric:tabular-nums}
 th{font-family:var(--font-body);font-weight:var(--weight-semibold);color:var(--text-heading);text-align:left}
 td,th{font-feature-settings:var(--numeric-tabular)}
 img{max-width:100%}
-::selection{background:var(--navy-700);color:var(--white)}
+::selection{background:var(--c-blue);color:var(--white)}
 [hidden]{display:none!important}
 
 .wz-eyebrow{font-family:var(--font-body);font-size:var(--text-micro);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--text-eyebrow)}
@@ -296,32 +296,32 @@ img{max-width:100%}
 /* ==========================================================================
    Buttons
    ========================================================================== */
-.wz-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-body-sm);line-height:1;letter-spacing:0;border-radius:var(--radius-md);border:var(--border-width) solid transparent;padding:13px var(--space-5);cursor:pointer;text-decoration:none;transition:var(--transition-hover),transform var(--duration-fast) var(--ease-out);white-space:nowrap}
+.wz-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-heading);font-weight:var(--weight-bold);font-size:var(--text-body-sm);line-height:1;letter-spacing:0;border-radius:var(--radius-btn);border:var(--border-width) solid transparent;padding:14px var(--space-6);cursor:pointer;text-decoration:none;transition:var(--transition-hover),transform var(--duration-fast) var(--ease-out);white-space:nowrap}
 .wz-btn:hover{text-decoration:none}
-.wz-btn--sm{padding:9px var(--space-4);font-size:var(--text-micro)}
-.wz-btn--lg{padding:16px var(--space-6);font-size:var(--text-body-md)}
+.wz-btn--sm{padding:10px var(--space-4);font-size:var(--text-micro)}
+.wz-btn--lg{padding:17px var(--space-8);font-size:var(--text-body-md)}
 .wz-btn--block{width:100%}
-.wz-btn--primary{background:var(--surface-cta);color:var(--text-on-orange);border-color:var(--orange-border);box-shadow:var(--shadow-cta);animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite;transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out)}
-.wz-btn--primary:hover{background:var(--surface-cta-hover);color:var(--text-on-orange);border-color:#FBC9A6;transform:scale(1.025)}
-.wz-btn--primary:active{background:var(--surface-cta-press);transform:scale(.985);animation:none;box-shadow:var(--shadow-cta-press);transition-duration:70ms}
-@keyframes wz-cta-pulse{0%,100%{box-shadow:var(--shadow-cta)}50%{box-shadow:var(--shadow-cta-wide)}}
-@media (prefers-reduced-motion:reduce){.wz-btn--primary{animation:none}.wz-btn--primary:active{transform:scale(.985);box-shadow:var(--shadow-cta-press)}}
-.wz-btn--secondary{background:var(--white);color:var(--navy-700);border-color:var(--navy-700)}
-.wz-btn--secondary:hover{background:var(--navy-050);color:var(--navy-700)}
-.wz-btn--secondary:active{background:var(--navy-100);transform:translateY(1px)}
+.wz-btn--primary{background:var(--surface-cta);color:var(--c-on-cyan);border-color:transparent;box-shadow:var(--glow-cyan);animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite;transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out)}
+.wz-btn--primary:hover{background:var(--surface-cta-hover);color:var(--c-on-cyan);box-shadow:var(--glow-cyan-hover);animation:none;transform:scale(1.025)}
+.wz-btn--primary:active{background:var(--surface-cta-press);transform:scale(.985);animation:none;box-shadow:var(--glow-cyan-press);transition-duration:70ms}
+@keyframes wz-cta-pulse{0%,100%{box-shadow:var(--glow-cyan)}50%{box-shadow:var(--glow-cyan-mid)}}
+@media (prefers-reduced-motion:reduce){.wz-btn--primary{animation:none}.wz-btn--primary:active{transform:scale(.985);box-shadow:var(--glow-cyan-press)}.wz-btn--primary:hover,.wz-btn--secondary:hover{transform:none}}
+.wz-btn--secondary{background:rgba(255,255,255,.08);color:var(--white);border-color:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:var(--transition-hover),transform 200ms cubic-bezier(.2,.8,.3,1)}
+.wz-btn--secondary:hover{background:rgba(255,255,255,.14);color:var(--white);border-color:rgba(255,255,255,.45);transform:scale(1.025)}
+.wz-btn--secondary:active{background:rgba(255,255,255,.18);transform:scale(.985);transition-duration:70ms}
 /* Optional-further-reading CTA on a navy band - transparent/white outline,
    never the solid-orange primary treatment, since it isn't a conversion
    action. */
-.wz-btn--outline-white{background:transparent;color:var(--white);border-color:var(--white)}
-.wz-btn--outline-white:hover{background:var(--white);color:var(--navy-700)}
+.wz-btn--outline-white{background:rgba(255,255,255,.08);color:var(--white);border-color:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.wz-btn--outline-white:hover{background:rgba(255,255,255,.16);color:var(--white);border-color:rgba(255,255,255,.45)}
 .wz-btn__arrow{width:14px;height:14px;background-color:currentColor;transition:transform var(--duration-fast) var(--ease-out)}
 .wz-btn--outline-white:hover .wz-btn__arrow{transform:translateX(3px)}
-.wz-btn--inverse{background:transparent;color:var(--white);border-color:var(--border-on-ink)}
+.wz-btn--inverse{background:rgba(255,255,255,.06);color:var(--white);border-color:var(--border-on-ink)}
 .wz-btn--inverse:hover{background:rgba(255,255,255,.10);color:var(--white)}
 .wz-btn--inverse:focus-visible{outline-color:var(--focus-ring-on-ink)}
 .wz-btn[disabled],.wz-btn[aria-disabled="true"]{opacity:.42;cursor:not-allowed;transform:none;box-shadow:none;animation:none}
 
-.wz-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-md);border:var(--border-width) solid var(--border-hairline);background:var(--white);color:var(--navy-700);cursor:pointer;transition:var(--transition-hover)}
+.wz-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-pill);border:var(--border-width) solid var(--border-strong);background:rgba(255,255,255,.08);color:var(--white);cursor:pointer;transition:var(--transition-hover)}
 .wz-iconbtn:hover{background:var(--navy-050);border-color:var(--border-strong)}
 .wz-iconbtn:active{background:var(--navy-100)}
 .wz-iconbtn--bare{border-color:transparent;background:transparent}
@@ -733,16 +733,16 @@ img{max-width:100%}
 /* ==========================================================================
    Header
    ========================================================================== */
-.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 220ms var(--ease-out)}
+.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(0,0,0,.88);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 220ms var(--ease-out)}
 /* Transparent only while sitting over the navy hero photo, before any scroll. */
-.wz-header[data-transparent="true"]{background:transparent;border-bottom-color:transparent}
+.wz-header[data-transparent="true"]{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:transparent}
 /* Separation from content only once solid — not while floating transparent
    over the hero photo. Neutral black rather than navy-tinted: a navy-tinted
    shadow reads as a smudge against the header's own navy background, so it
    needs real black to register against navy, not just against light content
    below. Hairline border-bottom carries the edge on navy specifically, where
    even a strong shadow underneath a navy-on-navy boundary is hard to see. */
-.wz-header[data-transparent="false"]{box-shadow:0 4px 16px rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.15)}
+.wz-header[data-transparent="false"]{box-shadow:0 8px 32px rgba(47,98,246,.14);border-bottom:1px solid rgba(255,255,255,.12)}
 /* Hides on scroll down, reveals on scroll up — independent of the
    transparent/solid state above, which is driven by scroll position alone.
    Hide is a slower, deliberate slide; reveal is quicker so it feels
@@ -811,7 +811,7 @@ img{max-width:100%}
 .wz-header__phones a:hover{color:var(--white);text-decoration:underline}
 .wz-header.hdr-compact .wz-header__phones a{font-size:16px}
 .wz-menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid var(--border-on-ink);border-radius:var(--radius-md);color:var(--white);cursor:pointer}
-.wz-nav-mobile{background:var(--navy-700);border-top:1px solid var(--border-on-ink);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
+.wz-nav-mobile{background:var(--c-bg);border-top:1px solid var(--border-on-ink);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
 .wz-nav-mobile a:not(.wz-btn){padding:var(--space-3) 0;font-size:var(--text-lead);font-weight:var(--weight-medium);color:var(--white)}
 .wz-nav-mobile .wz-btn{margin-top:var(--space-3)}
 .wz-nav-mobile__phones{display:flex;flex-direction:column;gap:2px;padding:var(--space-2) 0}
