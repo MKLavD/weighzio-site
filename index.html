@@ -344,7 +344,7 @@ img{max-width:100%}
 /* Thank-you route: a calm, centred confirmation - deliberately not
    styled as a form-adjacent notice, since it's now its own page. */
 .wz-thankyou{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:52ch;margin:0 auto}
-.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--g-chip);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
+.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--g-chip);box-shadow:0 0 0 8px rgba(47,98,246,.18),0 0 0 18px rgba(124,94,251,.09),0 0 44px rgba(47,98,246,.55);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
 .wz-thankyou__icon .wz-icon{width:28px;height:28px;background-color:var(--white)}
 .wz-thankyou .wz-eyebrow{margin-bottom:var(--space-3)}
 .wz-thankyou h1{margin:0 0 var(--space-4)}
@@ -376,6 +376,7 @@ img{max-width:100%}
    Scoped to this one route ID only; .wz-route itself is untouched, so
    every other route's layout is unaffected. */
 #route-thank-you{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center}
+#route-thank-you .wz-band{padding:calc(var(--header-h) + 32px) 0 clamp(40px,5vw,64px)}
 .wz-band--ink .wz-eyebrow{color:var(--c-tagline)}
 
 /* ==========================================================================
