@@ -109,8 +109,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --shadow-lg: inset 0 1px 0 rgba(255,255,255,.08), 0 0 64px rgba(47,98,246,.22), 0 0 28px rgba(124,94,251,.14);
 
   /* Dot texture: pure CSS, no asset */
-  --dots: radial-gradient(rgba(156,200,255,.16) 1px, transparent 1.4px);
-  --dots-size: 22px 22px;
+  --dots: radial-gradient(rgba(156,200,255,.09) 1px, transparent 1.4px);
+  --dots-size: 26px 26px;
 
   /* Type scale */
   --fs-h1: clamp(44px, 5.3vw, 76px);
@@ -791,8 +791,14 @@ img{max-width:100%}
 .wz-route{display:block}
 .wz-band{padding:var(--section-gap) 0;background:var(--surface-page)}
 .wz-band--tight{padding:calc(var(--section-gap) * .6) 0}
-/* Canvas bands: a breath lighter than black, with the CSS dot texture (no image asset). */
-.wz-band--canvas{background:var(--dots) 0 0/var(--dots-size),var(--surface-canvas)}
+/* Canvas bands: a breath lighter than black. */
+.wz-band--canvas{background:var(--surface-canvas)}
+/* Dot texture: pure CSS, applied to a few bands only (digital waste tracking,
+   final CTA, pricing, /modules header) through one masked pseudo-element, so
+   it fades out at the band edges instead of starting a new lattice at every
+   section seam. Sits behind content (isolation + z-index:-1). */
+.wz-band--ink,.wz-band:has(.wz-mockup__picker-body),#route-modules>.wz-band:first-child{position:relative;isolation:isolate}
+.wz-band--ink::before,.wz-band:has(.wz-mockup__picker-body)::before,#route-modules>.wz-band:first-child::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--dots) center top/var(--dots-size);-webkit-mask-image:radial-gradient(ellipse 70% 80% at 30% 40%,#000 15%,transparent 75%);mask-image:radial-gradient(ellipse 70% 80% at 30% 40%,#000 15%,transparent 75%)}
 .wz-band--ink{background:radial-gradient(70% 90% at 85% 0%,rgba(124,94,251,.20),transparent 65%),radial-gradient(60% 80% at 5% 100%,rgba(47,98,246,.16),transparent 65%),var(--g-panel);color:var(--c-text-bright)}
 .wz-band--ink h2,.wz-band--ink h3,.wz-band--ink strong{color:var(--white)}
 .wz-band--ink a:not(.wz-btn){color:var(--c-link)}
@@ -824,7 +830,7 @@ img{max-width:100%}
 /* Black to deep blue/purple over the photograph: the yard stays visible in the
    middle, the top fades under the header and the bottom melts into the black
    page. Dot texture rides on top. */
-.wz-hero__scrim{position:absolute;inset:0;background:var(--dots) 0 0/var(--dots-size),radial-gradient(75% 60% at 50% 42%,rgba(0,0,0,.42),transparent 78%),linear-gradient(180deg,rgba(0,0,0,.74) 0%,rgba(10,16,44,.72) 40%,rgba(20,13,43,.80) 78%,#000 100%)}
+.wz-hero__scrim{position:absolute;inset:0;background:radial-gradient(75% 60% at 50% 42%,rgba(0,0,0,.42),transparent 78%),linear-gradient(180deg,rgba(0,0,0,.74) 0%,rgba(10,16,44,.72) 40%,rgba(20,13,43,.80) 78%,#000 100%)}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
@@ -941,7 +947,7 @@ img{max-width:100%}
    (--navy-025, #F7F9FB) — a solid value, not an opacity tint, so it reads
    as the same surface token as the rest of the site rather than a
    one-off colour invented for this page. */
-.wz-module-section:nth-of-type(even){background:var(--dots) 0 0/var(--dots-size),var(--surface-canvas)}
+.wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
 /* The plain icon-watermark treatment (.wz-module-section__icon-bg) that
    used to mark the sections without a real photo or mockup is gone —
    Customers & Pricing, Finance & Payments, Multi-Company and Marketing Data
@@ -1434,7 +1440,7 @@ img{max-width:100%}
   *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
   html,body{background:#fff!important}
   body{font-size:11pt;line-height:1.5;display:block}
-  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before{display:none!important}
+  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::before{display:none!important}
   .wz-band,.wz-band--tight{padding:14pt 0!important}
   .wz-route--inner > .wz-band:first-child{padding-top:0!important}
   .wz-guide{display:block}
