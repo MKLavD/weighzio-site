@@ -1476,6 +1476,18 @@ img{max-width:100%}
   .wz-guide__toc{position:static;border-left:0}
 }
 
+/* Visuals inside the home page's text-only bands, and the waste tracking facts panel. */
+.wz-band-visual{margin-top:var(--space-8);max-width:540px;width:100%}
+.wz-split2:has(.wz-band-visual){align-items:center}
+.wz-facts{padding:clamp(24px,3vw,40px)}
+.wz-facts__title{margin:0 0 var(--space-5);font-family:var(--font-heading);font-weight:var(--weight-bold);font-size:var(--text-h4);color:var(--white)}
+.wz-facts__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-4)}
+.wz-facts__list li{position:relative;padding-left:var(--space-8);color:var(--c-text-bright);font-size:var(--text-body-md);line-height:1.5}
+.wz-facts__list li::before{content:"";position:absolute;left:5px;top:.7em;bottom:calc(-1 * var(--space-4) - .7em);width:2px;background:var(--g-card-border);opacity:.5}
+.wz-facts__list li:last-child::before{display:none}
+.wz-facts__dot{position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 10px rgba(47,98,246,.7)}
+.wz-dwt{align-items:center}
+
 /* ==========================================================================
    One-sided layouts: AI Voice Agent aside, privacy, enquire
    ========================================================================== */
@@ -1810,11 +1822,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- 2.4 Digital waste tracking -->
   <section class="wz-band wz-band--ink">
     <div class="wz-container wz-stack">
+      <div class="wz-split2 wz-dwt">
       <div class="wz-section-head">
-        <span class="wz-eyebrow">Compliance</span>
-        <h2>Digital waste tracking, built into Skip Hire</h2>
-        <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
-        <p>Our modules handle that.</p>
+          <span class="wz-eyebrow">Compliance</span>
+          <h2>Digital waste tracking, built into Skip Hire</h2>
+          <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
+          <p>Our modules handle that.</p>
+    </div>
+        <aside class="wz-card wz-facts" aria-label="Key facts">
+          <p class="wz-facts__title">The key facts</p>
+          <ul class="wz-facts__list">
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>England and Wales: 1 October 2026.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>Scotland and Northern Ireland: January 2027.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>Carriers, brokers and dealers: October 2027.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>Each load has to be recorded within two working days of arriving.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>The service charges £26 a year per legal entity that creates or edits records.</li>
+          </ul>
+        </aside>
       </div>
 
       <ul class="wz-ticks">
@@ -1875,6 +1899,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wz-section-head">
           <span class="wz-eyebrow">Marketing data feed</span>
           <h2>Know which adverts actually brought the work in</h2>
+          <div class="wz-band-visual" aria-hidden="true"><div class="wz-mockup wz-mockup--campaigns">
+                  <div class="wz-mockup__bar">Campaign performance <em>Last 30 days</em></div>
+                  <div class="wz-mockup__campaigns-body">
+                    <div class="wz-mockup__campaign-head"><span>Campaign</span><span>Spend</span><span>Job value</span></div>
+                    <div class="wz-mockup__campaign-rows">
+                      <div class="wz-mockup__campaign-row"><span>Skip Hire &mdash; Leicester</span><b>&pound;640</b><b>&pound;4,920</b></div>
+                      <div class="wz-mockup__campaign-row"><span>Aggregates &mdash; Search</span><b>&pound;410</b><b>&pound;3,180</b></div>
+                      <div class="wz-mockup__campaign-row"><span>RoRo &mdash; Coventry</span><b>&pound;295</b><b>&pound;1,860</b></div>
+                      <div class="wz-mockup__campaign-row"><span>Trade Waste &mdash; Meta</span><b>&pound;180</b><b>&pound;340</b></div>
+                    </div>
+                  </div>
+                </div></div>
         </div>
         <div>
           <p>Most waste operators spend money on Google and Meta and have no idea which of it worked. The reporting stops at the enquiry and the enquiry is where the useful part starts.</p>
@@ -1892,6 +1928,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wz-section-head">
           <span class="wz-eyebrow">AI Voice Agent</span>
           <h2>Answer every call. Book every skip.</h2>
+          <div class="wz-band-visual" aria-hidden="true"><div class="wz-mockup wz-mockup--call">
+            <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
+            <div class="wz-mockup__call-body">
+              <div class="wz-mockup__call-meta"><span class="wz-mockup__tag wz-mockup__tag--tier">After hours</span><span>Hinckley Builders Merchants</span></div>
+              <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Good evening. How can I help?</div>
+              <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>I need an 8 yard skip tomorrow morning, Nuneaton Yard.</div>
+              <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Tomorrow morning is free. I'll book it at your account rate. Shall I confirm?</div>
+              <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>Yes please.</div>
+              <div class="wz-mockup__booked"><b>Booked</b><span>8yd skip &middot; Nuneaton Yard &middot; Sat 18 Oct, morning</span><span>Checked against the live schedule</span></div>
+              <div class="wz-mockup__sms"><em>Text sent</em>Your 8yd skip is booked for Sat 18 Oct, morning. Nuneaton Yard.</div>
+            </div>
+          </div></div>
         </div>
         <div>
           <p>A missed call during a busy afternoon, or one that comes in after the office has shut, is a booking that either waits until tomorrow or goes to a competitor.</p>
