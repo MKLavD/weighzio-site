@@ -422,17 +422,15 @@ img{max-width:100%}
 .wz-module-group__label{font-family:var(--font-heading);font-size:var(--text-body-sm);font-weight:var(--weight-bold);color:var(--text-heading);white-space:nowrap}
 .wz-module-group__line{flex:1;height:1px;background:var(--border-hairline)}
 
-/* Fixed 4 columns so a full group's cards land in even rows (16/4, no
-   orphaned final row on the largest group) instead of auto-fit's
-   width-dependent column count. Steps down to 2 columns at tablet and 1
-   at mobile, matching the site's existing 900px/700px breakpoints used
-   elsewhere. A group with fewer than 4 cards (Fleet & field) simply
-   doesn't fill the last columns of its own row rather than stretching -
-   grid-template-columns:repeat(4,1fr) sizes the tracks regardless of
-   how many cards occupy them. */
-.wz-grid-modules{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
-@media (max-width:900px){.wz-grid-modules{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:700px){.wz-grid-modules{grid-template-columns:1fr}}
+/* Four tiles per row, two on tablet, one on phones. An incomplete last row
+   (Fleet & field has two tiles, Money & reporting ends on two) is centred
+   rather than left hanging with empty columns beside it. Tile width is the
+   same everywhere, so all sixteen keep equal weight. Breakpoints match the
+   site's existing 900px and 700px ones. */
+.wz-grid-modules{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-6)}
+.wz-grid-modules>.wz-module{width:auto;min-width:0;flex:0 0 calc((100% - 3 * var(--space-6)) / 4)}
+@media (max-width:900px){.wz-grid-modules>.wz-module{flex-basis:calc((100% - var(--space-6)) / 2)}}
+@media (max-width:700px){.wz-grid-modules>.wz-module{flex-basis:100%}}
 
 /* ==========================================================================
    Forms
