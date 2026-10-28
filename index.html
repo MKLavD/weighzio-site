@@ -264,6 +264,8 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
 h1:not(.wz-eyebrow),h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-bold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
 h1:not(.wz-eyebrow){font-size:var(--text-h1);font-weight:var(--weight-xbold);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
 h2{font-size:var(--text-h2);line-height:1.08}
+/* Inner-route page titles are long sentences; the full display size is for the hero. */
+.wz-route--inner h1:not(.wz-eyebrow){font-size:clamp(36px,4.2vw,58px)}
 h3{font-size:var(--text-h3)}
 h4{font-size:var(--text-h4)}
 p{margin:0 0 var(--space-4);text-wrap:pretty}
@@ -1389,10 +1391,10 @@ img{max-width:100%}
    ========================================================================== */
 .wz-guide{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--space-16);align-items:start}
 .wz-guide__toc{position:sticky;top:calc(var(--header-h) + var(--space-6));display:flex;flex-direction:column;gap:var(--space-1)}
-.wz-guide__toc a{font-size:var(--text-body-sm);color:var(--text-body);text-decoration:none;padding:var(--space-2) var(--space-3);border-left:var(--border-width-strong) solid var(--border-hairline);line-height:1.35}
-.wz-guide__toc a:hover{color:var(--navy-700);background:var(--navy-025);border-left-color:var(--border-strong)}
-.wz-guide__prose{max-width:68ch}
-.wz-guide__prose h2{margin:var(--space-12) 0 var(--space-4)}
+.wz-guide__toc a{font-size:var(--text-body-sm);color:var(--text-body);text-decoration:none;padding:var(--space-2) var(--space-3);border-left:var(--border-width-strong) solid var(--border-hairline);border-radius:0 var(--radius-sm) var(--radius-sm) 0;line-height:1.35}
+.wz-guide__toc a:hover{color:var(--white);background:rgba(47,98,246,.14);border-left-color:var(--c-hero-blue)}
+.wz-guide__prose{max-width:70ch;font-size:var(--fs-body);line-height:1.7}
+.wz-guide__prose h2{margin:var(--space-12) 0 var(--space-4);font-size:clamp(28px,3vw,38px)}
 .wz-guide__prose h2:first-child{margin-top:0}
 .wz-guide__prose ul,.wz-guide__prose ol{margin:0 0 var(--space-4);padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
 @media (max-width:900px){
@@ -1434,6 +1436,28 @@ img{max-width:100%}
 .wz-footer a.wz-footer__social-link{display:inline-flex;align-items:center;justify-content:center;padding:var(--space-3);margin:calc(var(--space-3) * -1);color:var(--c-text-small)}
 .wz-footer a.wz-footer__social-link:hover{color:var(--c-heading);text-decoration:none}
 .wz-footer a.wz-footer__social-link svg{width:20px;height:20px}
+
+/* ==========================================================================
+   Print — the guide is printed. White paper, black ink, no effects.
+   ========================================================================== */
+@media print{
+  :root{color-scheme:light}
+  *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
+  html,body{background:#fff!important}
+  body{font-size:11pt;line-height:1.5;display:block}
+  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before{display:none!important}
+  .wz-band,.wz-band--tight{padding:14pt 0!important}
+  .wz-route--inner > .wz-band:first-child{padding-top:0!important}
+  .wz-guide{display:block}
+  .wz-guide__prose{max-width:none;font-size:11pt}
+  .wz-card,.wz-card--tint{border:1px solid #999!important;border-radius:0!important}
+  h1,h2,h3,h4{break-after:avoid;page-break-after:avoid;font-weight:700}
+  table,tr,img,.wz-card,.wz-faq details{break-inside:avoid;page-break-inside:avoid}
+  a{text-decoration:underline!important}
+  .wz-guide__prose a[href]::after,.wz-route--inner p a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}
+  .wz-footer{border-top:1px solid #999;padding:10pt 0}
+  .wz-footer img{filter:invert(1)!important}
+}
 </style>
 <script>var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
 <script src="//s.ksrndkehqnwntyxlhgto.com/175655.js"></script>
