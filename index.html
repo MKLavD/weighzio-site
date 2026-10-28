@@ -1479,7 +1479,7 @@ img{max-width:100%}
 .wz-guide__toc{position:sticky;top:calc(var(--header-h) + var(--space-6));display:flex;flex-direction:column;gap:var(--space-1)}
 .wz-guide__toc a{font-size:var(--text-body-sm);color:var(--text-body);text-decoration:none;padding:var(--space-2) var(--space-3);border-left:var(--border-width-strong) solid var(--border-hairline);border-radius:0 var(--radius-sm) var(--radius-sm) 0;line-height:1.35}
 .wz-guide__toc a:hover{color:var(--white);background:rgba(47,98,246,.14);border-left-color:var(--c-hero-blue)}
-.wz-guide__prose{max-width:70ch;font-size:var(--fs-body);line-height:1.7}
+.wz-guide__prose{max-width:70ch;font-size:var(--fs-lead);line-height:1.7}
 .wz-guide__prose h2{margin:var(--space-12) 0 var(--space-4);font-size:clamp(28px,3vw,38px)}
 .wz-guide__prose h2:first-child{margin-top:0}
 .wz-guide__prose ul,.wz-guide__prose ol{margin:0 0 var(--space-4);padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
@@ -1522,6 +1522,20 @@ img{max-width:100%}
 .wz-enquire-contact__title{margin:0;font-family:var(--font-heading);font-weight:var(--weight-bold);color:var(--white);font-size:var(--text-body-md)}
 .wz-enquire-contact .wz-contact__row p{font-size:var(--text-body-md);color:var(--c-text)}
 .wz-enquire-contact__note{margin:var(--space-1) 0 0;font-size:var(--text-body-sm);color:var(--c-text-small)}
+
+/* Guide emphasis, styled in place so the original lists and sentences stay
+   untouched in the DOM: the dates list becomes a timeline card, the two
+   working day and cost sentences become callouts with a gradient figure. */
+#route-guide h1{font-weight:var(--weight-bold)}
+.wz-guide__toc a[aria-current="true"]{color:var(--white);font-weight:var(--weight-semibold);background:rgba(47,98,246,.22);border-left-color:var(--c-cyan)}
+#dwt-dates+ul{list-style:none;margin:0 0 var(--space-6);padding:var(--space-6);background:var(--g-card);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:var(--space-5)}
+#dwt-dates+ul li{position:relative;padding-left:var(--space-8);color:var(--c-text-bright)}
+#dwt-dates+ul li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 10px rgba(47,98,246,.7)}
+#dwt-dates+ul li:not(:last-child)::after{content:"";position:absolute;left:5px;top:1.4em;bottom:calc(-1 * var(--space-5) - .1em);width:2px;background:var(--g-card-border);opacity:.5}
+#dwt-two-days+p,#dwt-cost+p{display:flex;align-items:center;gap:var(--space-6);padding:var(--space-6);background:var(--g-panel);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);font-size:var(--text-lead);color:var(--white)}
+#dwt-two-days+p::before,#dwt-cost+p::before{flex:none;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(56px,7vw,84px);line-height:1;letter-spacing:var(--tracking-display);color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#dwt-two-days+p::before{content:"2";content:"2" / ""}
+#dwt-cost+p::before{content:"£26";content:"£26" / ""}
 
 /* ==========================================================================
    Enquiry form
@@ -1578,6 +1592,11 @@ img{max-width:100%}
   .wz-guide__prose a[href]::after,.wz-route--inner p a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}
   .wz-footer{border-top:1px solid #999;padding:10pt 0}
   .wz-footer img{filter:invert(1)!important}
+  /* Guide callouts print as plain bordered boxes. */
+  #dwt-dates+ul,#dwt-two-days+p,#dwt-cost+p{border:1px solid #999!important;border-radius:0!important;padding:8pt 10pt!important;break-inside:avoid}
+  #dwt-two-days+p::before,#dwt-cost+p::before{font-size:28pt!important}
+  #dwt-dates+ul li::before,#dwt-dates+ul li::after{display:none!important}
+  #dwt-dates+ul li{padding-left:0}
 }
 </style>
 <script>var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
@@ -3963,5 +3982,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<script>
+/* Guide contents list: mark the section being read (aria-current) so the
+   sticky list shows where you are. Display only; touches nothing else. */
+(function () {
+  var links = document.querySelectorAll('.wz-guide__toc a[href^="#dwt-"]');
+  if (!links.length || !("IntersectionObserver" in window)) return;
+  var byId = {};
+  Array.prototype.forEach.call(links, function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      Array.prototype.forEach.call(links, function (a) { a.removeAttribute("aria-current"); });
+      if (byId[e.target.id]) byId[e.target.id].setAttribute("aria-current", "true");
+    });
+  }, { rootMargin: "0px 0px -72% 0px" });
+  Object.keys(byId).forEach(function (id) { var h = document.getElementById(id); if (h) io.observe(h); });
+})();
+</script>
 </body>
 </html>
