@@ -820,7 +820,7 @@ img{max-width:100%}
 .wz-band--ink.wz-band--tight{padding-bottom:calc(var(--section-gap) * .6 + 64px)}
 /* The blue and purple glows sit on their own layer inside the panel so their opacity can breathe. */
 .wz-band--ink>.wz-container::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(70% 90% at 85% 0%,rgba(124,94,251,.20),transparent 65%),radial-gradient(60% 80% at 5% 100%,rgba(47,98,246,.16),transparent 65%)}
-.wz-band--ink>.wz-container>*{position:relative;z-index:1}
+.wz-band--ink>.wz-container>:not(.wz-fx){position:relative;z-index:1}
 .wz-band--ink h2,.wz-band--ink h3,.wz-band--ink strong{color:var(--white)}
 .wz-band--ink a:not(.wz-btn){color:var(--c-link)}
 .wz-band--ink a:not(.wz-btn):focus-visible{outline-color:var(--focus-ring-on-ink)}
@@ -1776,6 +1776,23 @@ img{max-width:100%}
   }
 }
 
+/* Closing CTA panel: particle texture on both outer sides (centred copy stays clean), a drifting purple glow,
+   and a slowly pulsing panel shadow. Only this one large element animates a shadow. */
+.wz-band--ink.wz-band--tight>.wz-container{isolation:isolate;overflow:clip}
+.wz-fx--cta{background:url("images/weighzio-dots-hero.webp") 85% 50%/cover no-repeat;opacity:.7;filter:none;-webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 18%,transparent 38%,transparent 62%,rgba(0,0,0,.5) 82%,#000 100%);mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.5) 18%,transparent 38%,transparent 62%,rgba(0,0,0,.5) 82%,#000 100%)}
+@media (max-width:700px){.wz-fx--cta{opacity:.3;-webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.4) 22%,transparent 45%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.4) 22%,transparent 45%,transparent 100%)}}
+.wz-band--ink.wz-band--tight>.wz-container::after{content:"";position:absolute;z-index:0;width:560px;height:560px;right:-160px;top:-220px;border-radius:50%;pointer-events:none;filter:blur(24px);background:radial-gradient(closest-side,rgba(124,94,251,.5),transparent)}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes wz-drift-glow{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-40px,24px,0) scale(1.08)}}
+  @keyframes wz-panel-glow{0%,100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 40px 120px -40px rgba(47,98,246,.5)}50%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 40px 130px -36px rgba(124,94,251,.6)}}
+  .wz-band--ink.wz-band--tight>.wz-container::after{animation:wz-drift-glow 12s ease-in-out infinite alternate}
+  .wz-band--ink.wz-band--tight>.wz-container{animation:wz-panel-glow 7s ease-in-out infinite}
+  @supports (animation-timeline: view()){
+    @keyframes wz-pan-panel{0%{background-position:85% 50%}100%{background-position:35% 50%}}
+    .wz-fx--cta{animation:wz-pan-panel linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 100%}
+  }
+}
+
 /* ==========================================================================
    Print — the guide is printed. White paper, black ink, no effects.
    ========================================================================== */
@@ -1784,7 +1801,7 @@ img{max-width:100%}
   *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
   html,body{background:#fff!important}
   body{font-size:11pt;line-height:1.5;display:block}
-  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::after,.wz-fx,.wz-module::after,.wz-facts::after,.wz-card::after,.wz-band--ink>.wz-container::before,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
+  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::after,.wz-fx,.wz-module::after,.wz-facts::after,.wz-card::after,.wz-band--ink>.wz-container::before,.wz-band--ink>.wz-container::after,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
   .wz-band,.wz-band--tight{padding:14pt 0!important}
   .wz-route--inner > .wz-band:first-child{padding-top:0!important}
   .wz-guide{display:block}
@@ -2260,6 +2277,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- 2.10 Final CTA -->
   <section class="wz-band wz-band--ink wz-band--tight">
     <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
       <div class="wz-section-head wz-section-head--center">
         <h2>Start with what you need</h2>
         <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
@@ -2904,6 +2922,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- Closing CTA (same band as the home page) -->
   <section class="wz-band wz-band--ink wz-band--tight">
     <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
       <div class="wz-section-head wz-section-head--center">
         <h2>Start with what you need</h2>
         <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
