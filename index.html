@@ -33,7 +33,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito+Sans:opsz,wght@6..12,400..700&display=swap">
 
-<link rel="preload" as="image" href="images/hero-yard-1920.webp" imagesrcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="images/hero-yard-1920.webp" imagesrcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1916w" imagesizes="max(100vw, calc(min(100vh, 860px) * 2.33))" fetchpriority="high">
 
 <style>
 /* ==========================================================================
@@ -817,7 +817,8 @@ img{max-width:100%}
    point of the shape rather than a continuation of the stack. Shifted up
    slightly via the padding split (more bottom than top) rather than a
    transform, so the leftover space in the 100vh band falls below the CTA. */
-.wz-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:88px var(--gutter) 140px}
+/* Capped to roughly one screen so the photo isn't stretched into a tall box. */
+.wz-hero{position:relative;min-height:min(100vh,860px);min-height:min(100svh,860px);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:calc(var(--header-h) + 28px) var(--gutter) 64px}
 .wz-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 /* The photo is a wide shot: the skip lorry sits in the left third, a long
    stretch of empty wet tarmac fills the middle. Centred cropping on a
@@ -830,7 +831,9 @@ img{max-width:100%}
 /* Black to deep blue/purple over the photograph: the yard stays visible in the
    middle, the top fades under the header and the bottom melts into the black
    page. Dot texture rides on top. */
-.wz-hero__scrim{position:absolute;inset:0;background:radial-gradient(75% 60% at 50% 42%,rgba(0,0,0,.42),transparent 78%),linear-gradient(180deg,rgba(0,0,0,.74) 0%,rgba(10,16,44,.72) 40%,rgba(20,13,43,.80) 78%,#000 100%)}
+.wz-hero__scrim{position:absolute;inset:0;background:radial-gradient(78% 34% at 50% 36%,rgba(0,0,0,.72),transparent 88%),radial-gradient(60% 50% at 50% 62%,rgba(0,0,0,.40),transparent 85%),linear-gradient(180deg,rgba(0,0,0,.58) 0%,rgba(10,16,44,.46) 40%,rgba(20,13,43,.62) 72%,#000 100%)}
+/* Phones: the headline spans the full width, so darken the whole photo a touch more. */
+@media (max-width:700px){.wz-hero__scrim{background-image:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,.28)),radial-gradient(78% 34% at 50% 36%,rgba(0,0,0,.72),transparent 88%),radial-gradient(60% 50% at 50% 62%,rgba(0,0,0,.40),transparent 85%),linear-gradient(180deg,rgba(0,0,0,.58) 0%,rgba(10,16,44,.46) 40%,rgba(20,13,43,.62) 72%,#000 100%)}}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
@@ -1589,7 +1592,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- 2.1 Hero -->
   <section class="wz-hero">
-    <img class="wz-hero__img" src="images/hero-yard-1920.jpg" srcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" sizes="100vw" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+    <img class="wz-hero__img" src="images/hero-yard-1920.jpg" srcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1916w" sizes="max(100vw, calc(min(100vh, 860px) * 2.33))" width="1916" height="821" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
     <div class="wz-hero__scrim" aria-hidden="true"></div>
 
     <div class="wz-hero__inner">
