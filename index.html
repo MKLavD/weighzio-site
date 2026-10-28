@@ -454,21 +454,23 @@ img{max-width:100%}
 .wz-label{font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading)}
 .wz-label span{font-weight:var(--weight-regular);color:var(--text-muted)}
 .wz-hint{font-size:var(--text-micro);color:var(--text-muted)}
-.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:var(--white);border:var(--border-width) solid var(--border-strong);border-radius:var(--radius-sm);padding:11px var(--space-3);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
-.wz-input::placeholder,.wz-textarea::placeholder{color:var(--navy-300)}
-.wz-input:hover,.wz-textarea:hover,.wz-select:hover{border-color:var(--navy-400)}
-.wz-input:focus,.wz-textarea:focus,.wz-select:focus{border-color:var(--navy-700);outline:none;box-shadow:inset 0 0 0 1px var(--navy-700)}
-.wz-input[aria-invalid="true"],.wz-textarea[aria-invalid="true"],.wz-select[aria-invalid="true"]{border-color:var(--navy-700);box-shadow:inset 0 0 0 1px var(--navy-700)}
+.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:rgba(255,255,255,.05);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-sm);padding:12px var(--space-4);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
+.wz-input::placeholder,.wz-textarea::placeholder{color:#98A4BE;opacity:1}
+.wz-input:hover,.wz-textarea:hover,.wz-select:hover{border-color:var(--c-text-small)}
+.wz-input:focus,.wz-textarea:focus,.wz-select:focus{border-color:var(--c-cyan);outline:none;box-shadow:0 0 0 3px rgba(0,206,255,.25)}
+.wz-input:focus-visible,.wz-textarea:focus-visible,.wz-select:focus-visible{outline:2px solid var(--c-cyan);outline-offset:2px}
+.wz-input[aria-invalid="true"],.wz-textarea[aria-invalid="true"],.wz-select[aria-invalid="true"]{border-color:var(--color-error);box-shadow:inset 0 0 0 1px var(--color-error)}
 .wz-textarea{min-height:120px;resize:vertical;line-height:var(--leading-body)}
 .wz-select{appearance:none;padding-right:var(--space-8);background-image:linear-gradient(45deg,transparent 50%,var(--navy-500) 50%),linear-gradient(135deg,var(--navy-500) 50%,transparent 50%);background-position:calc(100% - 20px) 19px,calc(100% - 14px) 19px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
 .wz-choice{display:flex;gap:var(--space-3);align-items:flex-start;cursor:pointer;font-size:var(--text-body-md);color:var(--text-body)}
-.wz-choice input{appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:var(--border-width-strong) solid var(--navy-300);background:var(--white);cursor:pointer;transition:var(--transition-hover)}
+.wz-choice input{appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:var(--border-width-strong) solid var(--navy-300);background:rgba(255,255,255,.05);cursor:pointer;transition:var(--transition-hover)}
 .wz-choice input[type="checkbox"]{border-radius:var(--radius-xs)}
 .wz-choice input[type="radio"]{border-radius:var(--radius-pill)}
-.wz-choice:hover input{border-color:var(--navy-500)}
-.wz-choice input:checked{background:var(--navy-700);border-color:var(--navy-700)}
+.wz-choice:hover input{border-color:var(--c-hero-blue)}
+.wz-choice input:focus-visible{outline:2px solid var(--c-cyan);outline-offset:2px}
+.wz-choice input:checked{background:var(--g-chip);border-color:var(--c-hero-blue)}
 .wz-choice input[type="checkbox"]:checked{background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:14px;background-position:center;background-repeat:no-repeat}
-.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 4px var(--white)}
+.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 4px var(--c-bg)}
 
 /* Module picker: the enquiry form's module multi-select rebuilt as
    selectable chips, since this is the single field the copy deck calls
@@ -480,18 +482,18 @@ img{max-width:100%}
 .wz-modpicker-count{font-size:var(--text-micro);color:var(--text-muted);white-space:nowrap}
 .wz-modpicker-count[data-count="0"]{visibility:hidden}
 .wz-modgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-2)}
-.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;background:var(--surface-card);transition:var(--transition-hover)}
-.wz-modchip:hover{border-color:var(--navy-400)}
+.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;background:rgba(255,255,255,.04);transition:var(--transition-hover)}
+.wz-modchip:hover{border-color:var(--c-hero-blue)}
 .wz-modchip input{position:absolute;opacity:0;width:100%;height:100%;margin:0;top:0;left:0;cursor:pointer}
-.wz-modchip__icon{color:var(--navy-500);flex:none;width:18px;height:18px}
+.wz-modchip__icon{color:var(--c-tagline);flex:none;width:18px;height:18px}
 .wz-modchip__label{font-size:var(--text-body-sm);color:var(--text-body);line-height:1.25}
-.wz-modchip__tick{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--orange-400);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:opacity var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)}
+.wz-modchip__tick{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--g-chip);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:opacity var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)}
 .wz-modchip__tick .wz-icon{width:11px;height:11px;background-color:var(--white)}
-.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--orange-400);background:rgba(244,125,45,.06)}
+.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--c-hero-blue);background:rgba(47,98,246,.16)}
 .wz-modchip:has(input:checked) .wz-modchip__label,.wz-modchip.is-checked .wz-modchip__label{color:var(--text-heading);font-weight:var(--weight-medium)}
-.wz-modchip:has(input:checked) .wz-modchip__icon,.wz-modchip.is-checked .wz-modchip__icon{color:var(--orange-press)}
+.wz-modchip:has(input:checked) .wz-modchip__icon,.wz-modchip.is-checked .wz-modchip__icon{color:var(--white)}
 .wz-modchip:has(input:checked) .wz-modchip__tick,.wz-modchip.is-checked .wz-modchip__tick{opacity:1;transform:scale(1)}
-.wz-modchip input:focus-visible{outline:2px solid var(--navy-700);outline-offset:2px;border-radius:var(--radius-md)}
+.wz-modchip input:focus-visible{outline:2px solid var(--c-cyan);outline-offset:2px;border-radius:var(--radius-md)}
 
 /* ==========================================================================
    Dialog (module detail popups) — one shared template for all sixteen,
@@ -504,7 +506,7 @@ img{max-width:100%}
    bottom), the scroll region between them absorbs any overflow.
    ========================================================================== */
 .wz-scrim{position:fixed;inset:0;background:var(--overlay-scrim);display:flex;align-items:center;justify-content:center;padding:var(--space-6);z-index:50;overflow-y:auto}
-.wz-dialog{position:relative;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:660px;width:100%;max-height:90vh;margin:auto;display:flex;flex-direction:column;overflow:hidden}
+.wz-dialog{position:relative;background:var(--g-panel);border:var(--border-width) solid var(--border-strong);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:660px;width:100%;max-height:90vh;margin:auto;display:flex;flex-direction:column;overflow:hidden}
 .wz-modal__close{position:absolute;top:var(--space-5);right:var(--space-5);z-index:2}
 /* Header block: eyebrow above, icon + title in a row, summary below, all one
    visually grouped unit. flex:none, same mechanism the footer already used
@@ -518,7 +520,7 @@ img{max-width:100%}
 .wz-modal__header::after{content:"";position:absolute;left:var(--modal-pad-x);right:var(--modal-pad-x);bottom:0;border-bottom:var(--border-width) solid var(--border-hairline)}
 .wz-modal__eyebrow{display:block;margin-bottom:var(--space-3)}
 .wz-modal__title-row{display:flex;align-items:center;gap:var(--space-3)}
-.wz-modal__icon{width:32px;height:32px;color:var(--orange-press);flex:none}
+.wz-modal__icon{width:32px;height:32px;color:var(--c-tagline);flex:none}
 .wz-modal__title{font-size:1.8rem;margin:0}
 .wz-modal__summary{margin:var(--space-3) 0 0;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--text-body)}
 /* The only part that scrolls. Top padding is smaller than the sides/bottom —
@@ -551,7 +553,7 @@ img{max-width:100%}
    shares the same space-8 (32px) horizontal padding as the hairline above
    and .wz-modal__scroll below, so both buttons' outer edges land on that
    same content column rather than clustering off-centre. */
-.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--modal-pad-x);border-top:var(--border-width) solid var(--border-hairline);background:var(--white);flex-wrap:wrap}
+.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--modal-pad-x);border-top:var(--border-width) solid var(--border-hairline);background:transparent;flex-wrap:wrap}
 /* Both buttons the same width as the longer label ("Enquire about this
    module", 225.2px natural width at this padding/font-size, rounded up).
    The shorter-label button (min-width, not width) grows to match; the
@@ -1412,10 +1414,10 @@ img{max-width:100%}
 .wz-checkgrid--inline{grid-template-columns:repeat(3,max-content);justify-content:start;column-gap:var(--space-8)}
 @media (max-width:480px){.wz-checkgrid--inline{grid-template-columns:1fr;justify-content:stretch}}
 .wz-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.wz-formmsg{padding:var(--space-4);border-radius:var(--radius-md);font-size:var(--text-body-sm);margin:0 0 var(--space-4);border:var(--border-width) solid var(--border-strong);background:var(--navy-025);color:var(--text-heading)}
+.wz-formmsg{padding:var(--space-4);border-radius:var(--radius-md);font-size:var(--text-body-sm);margin:0 0 var(--space-4);border:var(--border-width) solid var(--c-input-border);background:var(--c-panel-1);color:var(--text-heading)}
 .wz-contact{display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-8)}
 .wz-contact__row{display:flex;gap:var(--space-3);align-items:flex-start}
-.wz-contact__row .wz-icon{margin-top:3px;color:var(--navy-700)}
+.wz-contact__row .wz-icon{margin-top:3px;color:var(--c-tagline)}
 .wz-contact__row p{margin:0;font-size:var(--text-body-sm);color:var(--text-muted)}
 
 /* ==========================================================================
