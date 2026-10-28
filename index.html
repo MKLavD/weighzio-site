@@ -325,9 +325,6 @@ img{max-width:100%}
 .wz-card,.wz-module{position:relative}
 .wz-card::before,.wz-module::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:var(--g-card-border);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;transition:opacity var(--duration-base) var(--ease-out);pointer-events:none}
 .wz-card:hover::before,.wz-module:hover::before,.wz-module:focus-visible::before{opacity:1}
-/* Hover glow: a static shadow on a pseudo-element whose opacity fades in, so no box-shadow is ever animated on sixteen cards. */
-.wz-module::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 38px rgba(47,98,246,.38);opacity:0;transition:opacity var(--duration-base) var(--ease-out);pointer-events:none}
-.wz-module:hover::after,.wz-module:focus-visible::after{opacity:1}
 .wz-card:has(form)::before{display:none}
 .wz-card{background:var(--g-card);border:0;border-radius:var(--radius-card);padding:var(--space-6);box-shadow:var(--shadow-sm)}
 .wz-card--tint{background:var(--g-panel);border-radius:var(--radius-panel)}
@@ -1754,6 +1751,32 @@ img{max-width:100%}
 }
 
 /* ==========================================================================
+   Laventus card finish: top-edge highlight and gradient line, corner glow, and the
+   particle texture inside the card (top right) that pans as the card scrolls.
+   ========================================================================== */
+:root{--wz-particles:url("images/weighzio-dots-hero-1280.webp")}
+.wz-module,.wz-facts,.wz-card--tint:not(:has(form)){isolation:isolate;overflow:clip}
+.wz-module{border-radius:24px;background:radial-gradient(240px 240px at calc(100% + 30px) -30px,rgba(42,128,255,.25),transparent 70%),var(--g-card);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(42,128,255,.45)}
+.wz-facts,.wz-card--tint:not(:has(form)){box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(42,128,255,.45)}
+/* children above the dots (flex items take z-index without being positioned, so the tile's absolute arrow is untouched) */
+.wz-module>:not(.wz-fx){z-index:1}
+.wz-facts>:not(.wz-fx),.wz-card--tint:not(:has(form))>:not(.wz-fx){position:relative;z-index:1}
+.wz-fx{position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--wz-particles) 100% 0%/cover no-repeat;mix-blend-mode:screen;opacity:.8;filter:brightness(1.2);-webkit-mask-image:radial-gradient(90% 66% at 100% 0%,#000 0%,rgba(0,0,0,.7) 34%,transparent 66%);mask-image:radial-gradient(90% 66% at 100% 0%,#000 0%,rgba(0,0,0,.7) 34%,transparent 66%)}
+/* top-edge gradient line */
+.wz-module::after,.wz-facts::after,.wz-card--tint:not(:has(form))::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent 0%,#00CEFF 25%,#7C5EFB 50%,#00CEFF 75%,transparent 100%) 0 0/200% 100%}
+.wz-module:hover{outline:1px solid rgba(0,206,255,.45);outline-offset:-1px}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes wz-shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+  .wz-module::after,.wz-facts::after,.wz-card--tint:not(:has(form))::after{animation:wz-shift 5s ease-in-out infinite alternate}
+  @supports (animation-timeline: view()){
+    @keyframes wz-pan-card{0%{background-position:100% 0%}100%{background-position:30% 0%}}
+    .wz-module>.wz-fx,.wz-facts>.wz-fx,.wz-card--tint>.wz-fx{animation:wz-pan-card linear both;animation-duration:auto;animation-timeline:view();animation-range:cover}
+    /* phones: the dots stay static */
+    @media (max-width:700px){.wz-module>.wz-fx,.wz-facts>.wz-fx,.wz-card--tint>.wz-fx{animation:none}}
+  }
+}
+
+/* ==========================================================================
    Print — the guide is printed. White paper, black ink, no effects.
    ========================================================================== */
 @media print{
@@ -1761,8 +1784,7 @@ img{max-width:100%}
   *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
   html,body{background:#fff!important}
   body{font-size:11pt;line-height:1.5;display:block}
-  .wz-band::after,.wz-module::after{display:none!important}
-  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::after,.wz-band--ink>.wz-container::before,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
+  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::after,.wz-fx,.wz-module::after,.wz-facts::after,.wz-card::after,.wz-band--ink>.wz-container::before,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
   .wz-band,.wz-band--tight{padding:14pt 0!important}
   .wz-route--inner > .wz-band:first-child{padding-top:0!important}
   .wz-guide{display:block}
@@ -1874,25 +1896,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#weighbridge" data-module="weighbridge" data-group="operations">
+            <a class="wz-module" href="/modules#weighbridge" data-module="weighbridge" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span></span>
               <span class="wz-module__title">Weighbridge</span>
               <p class="wz-module__body">Live weight capture straight off your indicator, onto the ticket.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#skip-hire" data-module="skip-hire" data-group="operations">
+            <a class="wz-module" href="/modules#skip-hire" data-module="skip-hire" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span></span>
               <span class="wz-module__title">Skip Hire &amp; RoRo</span>
               <p class="wz-module__body">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#materials" data-module="materials" data-group="operations">
+            <a class="wz-module" href="/modules#materials" data-module="materials" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span></span>
               <span class="wz-module__title">Materials &amp; Aggregates</span>
               <p class="wz-module__body">Material orders, haulage, disposal routes and automatic load splitting.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#scheduling" data-module="scheduling" data-group="operations">
+            <a class="wz-module" href="/modules#scheduling" data-module="scheduling" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span></span>
               <span class="wz-module__title">Scheduling &amp; Dispatch</span>
               <p class="wz-module__body">Drag-and-drop planning boards that hold thousands of live tickets.</p>
@@ -1908,13 +1930,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#driver-app" data-module="driver-app" data-group="fleet">
+            <a class="wz-module" href="/modules#driver-app" data-module="driver-app" data-group="fleet"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span></span>
               <span class="wz-module__title">Driver App</span>
               <p class="wz-module__body">Job cards, weights, load breakdowns and signatures from the cab.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#fleet" data-module="fleet" data-group="fleet">
+            <a class="wz-module" href="/modules#fleet" data-module="fleet" data-group="fleet"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span></span>
               <span class="wz-module__title">Fleet &amp; Telematics</span>
               <p class="wz-module__body">Live vehicle tracking and weight limits enforced before dispatch.</p>
@@ -1930,37 +1952,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#customers" data-module="customers" data-group="money">
+            <a class="wz-module" href="/modules#customers" data-module="customers" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span></span>
               <span class="wz-module__title">Customers &amp; Pricing</span>
               <p class="wz-module__body">Accounts, sites, bespoke rates and credit control.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#finance" data-module="finance" data-group="money">
+            <a class="wz-module" href="/modules#finance" data-module="finance" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span></span>
               <span class="wz-module__title">Finance &amp; Payments</span>
               <p class="wz-module__body">Invoicing, VAT, recurring billing and background posting to Sage.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#reporting" data-module="reporting" data-group="money">
+            <a class="wz-module" href="/modules#reporting" data-module="reporting" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span></span>
               <span class="wz-module__title">Reporting &amp; Dashboards</span>
               <p class="wz-module__body">Operational, financial and compliance reporting.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#customer-portal" data-module="customer-portal" data-group="money">
+            <a class="wz-module" href="/modules#customer-portal" data-module="customer-portal" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span></span>
               <span class="wz-module__title">Customer Portal</span>
               <p class="wz-module__body">Self-serve ordering, ticket history and site reports for your customers.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#multi-company" data-module="multi-company" data-group="money">
+            <a class="wz-module" href="/modules#multi-company" data-module="multi-company" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span></span>
               <span class="wz-module__title">Multi-Company</span>
               <p class="wz-module__body">Separate entities with their own VAT, ledgers and branding under one login.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#marketing-data-feed" data-module="marketing-data-feed" data-group="money">
+            <a class="wz-module" href="/modules#marketing-data-feed" data-module="marketing-data-feed" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span></span>
               <span class="wz-module__title">Marketing Data Feed</span>
               <p class="wz-module__body">Job and enquiry data fed back into your Google and Meta campaigns.</p>
@@ -1976,25 +1998,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#ready-mix" data-module="ready-mix" data-group="specialist">
+            <a class="wz-module" href="/modules#ready-mix" data-module="ready-mix" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span></span>
               <span class="wz-module__title">Ready-Mix Concrete</span>
               <p class="wz-module__body">Concrete orders, volumetric metering and delivery.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#trade-waste" data-module="trade-waste" data-group="specialist">
+            <a class="wz-module" href="/modules#trade-waste" data-module="trade-waste" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span></span>
               <span class="wz-module__title">Trade Waste</span>
               <p class="wz-module__body">Route-based commercial collections.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#hazardous-waste" data-module="hazardous-waste" data-group="specialist">
+            <a class="wz-module" href="/modules#hazardous-waste" data-module="hazardous-waste" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span></span>
               <span class="wz-module__title">Hazardous Waste</span>
               <p class="wz-module__body">Consignment tracking and Environment Agency reporting.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module wz-module--custom" href="/modules#custom-modules" data-module="custom-modules" data-group="specialist">
+            <a class="wz-module wz-module--custom" href="/modules#custom-modules" data-module="custom-modules" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span></span>
               <span class="wz-module__title">Custom Modules</span>
               <p class="wz-module__body">Something your operation needs that nobody has built yet.</p>
@@ -2042,7 +2064,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
           <p>Our modules handle that.</p>
     </div>
-        <aside class="wz-card wz-facts" aria-label="Key facts">
+        <aside class="wz-card wz-facts" aria-label="Key facts"><span class="wz-fx" aria-hidden="true"></span>
           <p class="wz-facts__title">The key facts</p>
           <ul class="wz-facts__list">
             <li><span class="wz-facts__dot" aria-hidden="true"></span>England and Wales: 1 October 2026.</li>
@@ -2995,7 +3017,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><a href="https://www.legislation.gov.uk/uksi/2026/729/contents/made" rel="noopener">The Digital Waste Tracking (England) Regulations 2026 (SI 2026/729)</a></li>
           </ul>
 
-          <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)">
+          <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)"><span class="wz-fx" aria-hidden="true"></span>
             <p style="margin:0 0 var(--space-4)">weighzIO files these records automatically as part of the Skip Hire module.</p>
             <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></p>
           </div>
@@ -3061,7 +3083,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <h2>Stop losing bookings to a missed call</h2>
-        <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-4)">
+        <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-4)"><span class="wz-fx" aria-hidden="true"></span>
           <p style="margin:0 0 var(--space-4)">Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
           <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire">Enquire</a></p>
         </div>
