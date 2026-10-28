@@ -1158,12 +1158,12 @@ img{max-width:100%}
    sized by its own width like before. Font bumped from the original
    11px to 13px so nothing reads as a small screenshot enlarged past its
    own detail. */
-.wz-mockup{position:relative;width:100%;background:var(--white);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--navy-700)}
+.wz-mockup{position:relative;width:100%;background:var(--g-panel);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-card);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--c-text-bright);font-variant-numeric:tabular-nums}
 .wz-mockup{height:100%;display:flex;flex-direction:column}
 @media (max-width:1150px){
   .wz-mockup{height:auto;aspect-ratio:4/3}
 }
-.wz-mockup__bar{flex:none;background:var(--navy-700);color:var(--white);padding:11px 14px;font-size:12px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wz-mockup__bar{flex:none;background:rgba(255,255,255,.06);border-bottom:var(--border-width) solid var(--border-hairline);color:var(--white);padding:11px 14px;font-size:12px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .wz-mockup__bar em{font-style:normal;font-weight:var(--weight-regular);opacity:.68}
 .wz-mockup__body{padding:15px}
 
@@ -1175,8 +1175,8 @@ img{max-width:100%}
 .wz-mockup__board-row{display:flex;align-items:center;gap:8px}
 .wz-mockup__board-veh{width:58px;flex:none;font-size:10px;font-weight:var(--weight-semibold);letter-spacing:.01em}
 .wz-mockup__board-track{position:relative;flex:1;height:22px;background:var(--navy-025);border-radius:4px}
-.wz-mockup__board-job{position:absolute;top:2px;bottom:2px;background:var(--navy-600);border-radius:3px;color:var(--white);font-size:8px;font-weight:var(--weight-semibold);display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden}
-.wz-mockup__board-job--light{background:var(--navy-300);color:var(--navy-700)}
+.wz-mockup__board-job{position:absolute;top:2px;bottom:2px;background:var(--c-blue);border-radius:3px;color:var(--white);font-size:8px;font-weight:var(--weight-semibold);display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden}
+.wz-mockup__board-job--light{background:rgba(124,94,251,.45);color:var(--white)}
 .wz-mockup__board-queue{width:100px;flex:none;border-left:var(--border-width) solid var(--border-hairline);padding-left:11px;display:flex;flex-direction:column}
 .wz-mockup__board-queue-head{flex:none;font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:8px}
 .wz-mockup__board-queue-items{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between}
@@ -1189,30 +1189,30 @@ img{max-width:100%}
 .wz-mockup__metric b{display:block;font-family:var(--font-display);font-size:17px;font-weight:var(--weight-semibold)}
 .wz-mockup__metric em{font-style:normal;display:block;font-size:9px;color:var(--navy-400);margin-top:3px}
 .wz-mockup__chart{flex:1;min-height:0;display:flex;align-items:flex-end;gap:8px;padding:20px 14px 24px}
-.wz-mockup__chart span{flex:1;background:var(--navy-600);border-radius:2px 2px 0 0;position:relative}
+.wz-mockup__chart span{flex:1;background:rgba(47,98,246,.6);border-radius:2px 2px 0 0;position:relative}
 .wz-mockup__chart span em{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-style:normal;font-size:9px;color:var(--navy-400)}
-.wz-mockup__chart span.is-today{background:var(--navy-300)}
+.wz-mockup__chart span.is-today{background:var(--g-chip)}
 
 /* --- 3. Customer Portal: softer, consumer-facing ------------------------ */
 .wz-mockup--portal{border-radius:var(--radius-xl)}
-.wz-mockup--portal .wz-mockup__bar{background:var(--navy-050);color:var(--navy-700)}
+.wz-mockup--portal .wz-mockup__bar{background:rgba(255,255,255,.06);color:var(--white)}
 .wz-mockup--portal .wz-mockup__body{flex:1;min-height:0;display:flex;flex-direction:column}
 .wz-mockup__portal-row{flex:none;display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:var(--border-width) solid var(--border-hairline);font-size:12px}
 .wz-mockup__portal-row:last-of-type{border-bottom:0}
 .wz-mockup__portal-row em{font-style:normal;color:var(--navy-400);width:52px;flex:none}
 .wz-mockup__portal-row strong{flex:1;font-weight:var(--weight-medium);color:var(--text-body)}
 .wz-mockup__portal-row span{flex:none;font-weight:var(--weight-semibold)}
-.wz-mockup__portal-cta{flex:none;align-self:flex-start;margin-top:auto;background:var(--surface-cta);color:var(--text-on-orange);font-size:11px;font-weight:var(--weight-semibold);padding:8px 16px;border-radius:var(--radius-pill)}
+.wz-mockup__portal-cta{flex:none;align-self:flex-start;margin-top:auto;background:var(--c-cyan);color:var(--c-on-cyan);box-shadow:var(--glow-cyan);font-size:11px;font-weight:var(--weight-semibold);padding:8px 16px;border-radius:var(--radius-pill)}
 
 /* --- 4. Fleet & Telematics: live map ------------------------------------ */
 .wz-mockup__map{flex:1;min-height:0;position:relative;background:var(--navy-025);overflow:hidden}
 .wz-mockup__map-road{position:absolute;background:var(--navy-100)}
-.wz-mockup__pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--navy-600);border:2px solid var(--white);box-shadow:0 1px 3px rgba(18,45,75,.35);transform:translate(-50%,-50%)}
-.wz-mockup__pin-info{position:absolute;background:var(--navy-700);color:var(--white);font-size:10px;border-radius:7px;padding:7px 9px;white-space:nowrap;box-shadow:var(--shadow-md)}
+.wz-mockup__pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--c-hero-blue);border:2px solid var(--c-bg);box-shadow:0 0 10px rgba(42,128,255,.7);transform:translate(-50%,-50%)}
+.wz-mockup__pin-info{position:absolute;background:var(--c-panel-1);border:var(--border-width) solid var(--border-strong);color:var(--c-text-bright);font-size:10px;border-radius:7px;padding:7px 9px;white-space:nowrap;box-shadow:var(--shadow-md)}
 .wz-mockup__pin-info strong{display:block;font-size:11px;margin-bottom:1px}
 .wz-mockup__fleet-list{flex:none;padding:11px 14px 14px}
 .wz-mockup__fleet-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:11px}
-.wz-mockup__dot{width:7px;height:7px;border-radius:50%;background:var(--navy-600);flex:none}
+.wz-mockup__dot{width:7px;height:7px;border-radius:50%;background:var(--c-hero-blue);flex:none}
 .wz-mockup__dot--idle{background:var(--navy-300)}
 .wz-mockup__dot--stopped{background:var(--navy-200)}
 .wz-mockup__fleet-row em{font-style:normal;margin-left:auto;color:var(--navy-400)}
@@ -1225,8 +1225,8 @@ img{max-width:100%}
 .wz-mockup__tag{flex:none;display:inline-flex;align-items:center;font-size:10px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:4px 8px;border-radius:var(--radius-pill);white-space:nowrap}
 .wz-mockup__tag--success{background:var(--color-success-tint);color:var(--color-success)}
 .wz-mockup__tag--success::before{content:"✓";margin-right:4px}
-.wz-mockup__tag--pending{background:var(--navy-100);color:var(--navy-600)}
-.wz-mockup__tag--tier{align-self:flex-start;background:var(--navy-050);color:var(--navy-700)}
+.wz-mockup__tag--pending{background:var(--navy-100);color:var(--c-text)}
+.wz-mockup__tag--tier{align-self:flex-start;background:rgba(124,94,251,.25);color:var(--white)}
 
 /* --- 5. Customers & Pricing: account screen ----------------------------- */
 /* justify-content:center on the body, not justify-content:space-between on
@@ -1245,7 +1245,7 @@ img{max-width:100%}
 .wz-mockup__account-credit-label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:10px;color:var(--navy-400)}
 .wz-mockup__account-credit-label b{font-weight:var(--weight-semibold);color:var(--navy-700);font-size:11px;white-space:nowrap}
 .wz-mockup__account-credit-bar{height:8px;border-radius:var(--radius-pill);background:var(--navy-100);overflow:hidden}
-.wz-mockup__account-credit-bar span{display:block;height:100%;background:var(--navy-600);border-radius:var(--radius-pill)}
+.wz-mockup__account-credit-bar span{display:block;height:100%;background:var(--g-chip);border-radius:var(--radius-pill)}
 .wz-mockup__account-sites{border-top:var(--border-width) solid var(--border-hairline);padding-top:10px}
 .wz-mockup__account-sites-head{font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:8px}
 .wz-mockup__account-site-rows{display:flex;flex-direction:column;gap:8px}
@@ -1266,8 +1266,8 @@ img{max-width:100%}
 .wz-mockup__entities-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px 14px 14px}
 .wz-mockup__entity-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 9px;border-radius:7px;font-size:12px;font-weight:var(--weight-medium)}
 .wz-mockup__entity-row em{flex:none;font-style:normal;font-size:10px;color:var(--navy-400)}
-.wz-mockup__entity-row.is-active{background:var(--navy-050);font-weight:var(--weight-semibold);color:var(--navy-700)}
-.wz-mockup__entity-row.is-active em{color:var(--navy-600)}
+.wz-mockup__entity-row.is-active{background:rgba(47,98,246,.22);font-weight:var(--weight-semibold);color:var(--white)}
+.wz-mockup__entity-row.is-active em{color:var(--c-text-bright)}
 
 /* --- 8. Marketing Data Feed: campaign performance ------------------------ */
 .wz-mockup__campaigns-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:14px}
@@ -1287,9 +1287,9 @@ img{max-width:100%}
    rather than a new graphic. */
 .wz-mockup__picker-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:16px}
 .wz-mockup__picker-chip{display:flex;align-items:center;gap:10px;border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-md);padding:9px 12px;font-size:13px;color:var(--text-body)}
-.wz-mockup__picker-chip--on{border-color:var(--orange-400);background:rgba(244,125,45,.06);color:var(--text-heading);font-weight:var(--weight-medium)}
+.wz-mockup__picker-chip--on{border-color:var(--c-hero-blue);background:rgba(47,98,246,.16);color:var(--text-heading);font-weight:var(--weight-medium)}
 .wz-mockup__picker-tick{flex:none;width:16px;height:16px;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;border:1.5px solid var(--navy-300)}
-.wz-mockup__picker-chip--on .wz-mockup__picker-tick{background:var(--orange-400);border-color:var(--orange-400)}
+.wz-mockup__picker-chip--on .wz-mockup__picker-tick{background:var(--g-chip);border-color:transparent}
 .wz-mockup__picker-tick .wz-icon{width:9px;height:9px;background-color:var(--white)}
 
 /* --- Real photography, seven sections: same .wz-module-section__media slot
@@ -1325,7 +1325,7 @@ img{max-width:100%}
    in the stacked media query below, where there's no text column height
    for it to compete with. */
 .wz-module-section__media picture{position:absolute;inset:0;display:block;width:100%;height:100%}
-.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)}
+.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--shadow-lg)}
 @media (max-width:1150px){
   .wz-module-section__media picture{position:static;height:auto}
   .wz-module-section__photo{height:auto;aspect-ratio:4/3}
