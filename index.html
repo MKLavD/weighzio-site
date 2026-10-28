@@ -65,7 +65,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --c-panel-2: #140D2B;
   --c-border-a: #4189D7;        /* card hover border */
   --c-border-b: #7E3AF2;
-  --c-canvas: #05070F;          /* alternating band: a breath lighter than black */
+  --c-canvas: #000000;          /* every section is pure black, as on Laventus: separation comes from spacing, glows and cards */
   --c-input-border: #6F7E9F;    /* form control edge, 4.5:1 on black */
 
   /* Text */
@@ -797,7 +797,7 @@ img{max-width:100%}
 .wz-route{display:block}
 .wz-band{padding:var(--section-gap) 0;background:var(--surface-page)}
 .wz-band--tight{padding:calc(var(--section-gap) * .6) 0}
-/* Canvas bands: a breath lighter than black. */
+/* Canvas bands are pure black like every other section. */
 .wz-band--canvas{background:var(--surface-canvas)}
 /* Dots: one fine point-cloud wave at the base of the hero (see .wz-hero::after) and
    nothing else. There is no dot grid on any band, and none behind text, links or the footer. */
@@ -811,7 +811,9 @@ img{max-width:100%}
 @media (max-width:700px){.wz-footer::before{background-image:url("images/weighzio-dots-hero-1280.webp")}}
 /* Hero wave: a fixed-height strip (never an aspect ratio) at 55%, faded on every side so it melts out of the
    photograph at the top and into the next band at the bottom. It overlaps the lower part of the hero. */
-.wz-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;z-index:0;height:var(--hero-strip);pointer-events:none;background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.55;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 40%,#000 80%,transparent 100%),linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 40%,#000 80%,transparent 100%),linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%);mask-composite:intersect}
+.wz-hero::after{content:"";position:absolute;left:0;right:0;bottom:-40px;z-index:0;height:var(--hero-strip);pointer-events:none;background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.55;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 40%,#000 80%,transparent 100%),linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 40%,#000 80%,transparent 100%),linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%);mask-composite:intersect}
+/* The next band's content stays above the overhanging wave. */
+.wz-hero+.wz-band>.wz-container{position:relative;z-index:1}
 @media (max-width:700px){.wz-hero::after{--hero-strip:200px;opacity:.45;background-image:url("images/weighzio-dots-hero-1280.webp")}}
 .wz-band--ink{background:var(--g-panel);color:var(--c-text-bright)}
 /* The blue and purple glows sit on their own layer so their opacity can breathe. */
@@ -834,7 +836,7 @@ img{max-width:100%}
    slightly via the padding split (more bottom than top) rather than a
    transform, so the leftover space in the 100vh band falls below the CTA. */
 /* Capped to roughly one screen so the photo isn't stretched into a tall box. */
-.wz-hero{position:relative;min-height:min(100vh,860px);min-height:min(100svh,860px);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:calc(var(--header-h) + 28px) var(--gutter) clamp(100px,12.5vw,180px)}
+.wz-hero{position:relative;min-height:min(100vh,860px);min-height:min(100svh,860px);display:flex;align-items:center;justify-content:center;overflow:visible;background:var(--surface-ink);padding:calc(var(--header-h) + 28px) var(--gutter) clamp(100px,12.5vw,180px)}
 @media (max-width:700px){.wz-hero{padding-bottom:64px}}
 .wz-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 /* The photo is a wide shot: the skip lorry sits in the left third, a long
@@ -967,7 +969,7 @@ img{max-width:100%}
    (--navy-025, #F7F9FB) — a solid value, not an opacity tint, so it reads
    as the same surface token as the rest of the site rather than a
    one-off colour invented for this page. */
-.wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
+.wz-module-section:not(:first-child){border-top:1px solid rgba(255,255,255,.06)}
 /* The plain icon-watermark treatment (.wz-module-section__icon-bg) that
    used to mark the sections without a real photo or mockup is gone —
    Customers & Pricing, Finance & Payments, Multi-Company and Marketing Data
