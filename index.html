@@ -331,9 +331,15 @@ img{max-width:100%}
 /* ==========================================================================
    Cards
    ========================================================================== */
-.wz-card{background:var(--surface-card);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm)}
-.wz-card--tint{background:var(--surface-card-tint);border-color:transparent}
-.wz-card--pad-lg{padding:var(--space-8)}
+/* Gradient edge shared by cards and module tiles: a masked pseudo-element
+   (border-image ignores border-radius), hidden at rest. Only its opacity
+   transitions, so sixteen tiles never animate a box-shadow or filter. */
+.wz-card,.wz-module{position:relative}
+.wz-card::before,.wz-module::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:var(--g-card-border);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;transition:opacity var(--duration-base) var(--ease-out);pointer-events:none}
+.wz-card:hover::before,.wz-module:hover::before,.wz-module:focus-visible::before{opacity:1}
+.wz-card{background:var(--g-card);border:0;border-radius:var(--radius-card);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+.wz-card--tint{background:var(--g-panel);border-radius:var(--radius-panel)}
+.wz-card--pad-lg{padding:clamp(24px,4vw,48px)}
 .wz-card--raised{box-shadow:var(--shadow-md)}
 
 /* ==========================================================================
@@ -348,13 +354,13 @@ img{max-width:100%}
 /* Thank-you route: a calm, centred confirmation - deliberately not
    styled as a form-adjacent notice, since it's now its own page. */
 .wz-thankyou{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:52ch;margin:0 auto}
-.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--navy-050);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
-.wz-thankyou__icon .wz-icon{width:28px;height:28px;background-color:var(--navy-700)}
+.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--g-chip);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
+.wz-thankyou__icon .wz-icon{width:28px;height:28px;background-color:var(--white)}
 .wz-thankyou .wz-eyebrow{margin-bottom:var(--space-3)}
 .wz-thankyou h1{margin:0 0 var(--space-4)}
 .wz-thankyou__lead{font-size:var(--text-lead);color:var(--text-heading);margin:0 0 var(--space-4)}
 .wz-thankyou p:not(.wz-thankyou__lead){color:var(--text-body);margin:0}
-.wz-thankyou a{color:var(--navy-700);text-decoration:underline;text-underline-offset:3px}
+.wz-thankyou a{color:var(--text-link);text-decoration:underline;text-underline-offset:3px}
 /* Vertically centres the confirmation within the header-to-footer space,
    not just within the page's own content height.
 
@@ -385,81 +391,46 @@ img{max-width:100%}
 /* ==========================================================================
    Module tile (sixteen-module grid)
    ========================================================================== */
-.wz-module{position:relative;display:flex;flex-direction:column;gap:var(--space-3);background:var(--surface-card);border:var(--border-width) solid var(--border-hairline);border-left-width:3px;border-radius:var(--radius-lg);padding:var(--space-5);text-align:left;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform 120ms ease,border-color 120ms ease,box-shadow var(--duration-base) var(--ease-out);font:inherit;color:inherit;cursor:pointer;width:100%}
-.wz-module:hover{transform:translateY(-2px);border-color:var(--border-strong);box-shadow:var(--shadow-md);color:inherit;text-decoration:none}
+.wz-module{display:flex;flex-direction:column;gap:var(--space-3);background:var(--g-card);border:var(--border-width) solid transparent;border-radius:var(--radius-card);padding:var(--space-5);text-align:left;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform 120ms ease;font:inherit;color:inherit;cursor:pointer;width:100%}
+.wz-module:hover{transform:scale(1.01);color:inherit;text-decoration:none}
+@media (prefers-reduced-motion:reduce){.wz-module:hover{transform:none}}
 /* Quiet "this opens something" affordance, bottom-right corner. Faint at rest
    (visible without hover for touch, since hover never fires there) and a
    touch stronger on hover to pair with the existing lift/scale. Small and
    out of the way of the icon/title/body above it. */
-.wz-module__corner{position:absolute;right:var(--space-4);bottom:var(--space-4);width:14px;height:14px;background:var(--navy-700);opacity:.22;transition:opacity var(--duration-fast) var(--ease-out);transform:rotate(-45deg)}
-.wz-module:hover .wz-module__corner{opacity:.5}
-.wz-module--custom .wz-module__corner{background:var(--orange-press)}
-.wz-module__title{font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-semibold);color:var(--text-heading);line-height:var(--leading-heading)}
+.wz-module__corner{position:absolute;right:var(--space-4);bottom:var(--space-4);width:14px;height:14px;background:var(--c-tagline);opacity:.4;transition:opacity var(--duration-fast) var(--ease-out);transform:rotate(-45deg)}
+.wz-module:hover .wz-module__corner{opacity:.85}
+.wz-module--custom .wz-module__corner{background:var(--orange-400);opacity:.7}
+.wz-module__title{font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-bold);color:var(--text-heading);line-height:var(--leading-heading)}
 .wz-module__body{font-size:var(--text-body-sm);color:var(--text-body);margin:0}
-.wz-module__icon{color:var(--navy-700)}
+.wz-module__icon{color:var(--white)}
 
 /* Icon swatch: a tinted rounded square behind each card's icon, coloured
    per group below. */
-.wz-module__icon-wrap{width:40px;height:40px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex:none}
+.wz-module__icon-wrap{width:40px;height:40px;border-radius:var(--radius-md);background:var(--g-chip);display:flex;align-items:center;justify-content:center;flex:none}
 .wz-module__icon-wrap .wz-module__icon{width:20px;height:20px}
 
-/* Four group accent colours — a deliberate, confirmed exception to the
-   site's "two colours only" brief, scoped to this one grid. Each group's
-   colour appears three places: the group header's dot, the card's 3px
-   left edge (border-left-width set on .wz-module above), and the icon
-   swatch's tint/icon colour. Declared after .wz-module:hover so the
-   left-edge colour (a longhand, border-left-color) wins over the hover
-   rule's border-color shorthand at equal specificity — source order is
-   the tiebreaker there, confirmed by checking the hover state directly
-   rather than assuming equal-specificity order plays out as expected. */
-.wz-module[data-group="operations"]{border-left-color:var(--group-operations)}
-.wz-module[data-group="operations"] .wz-module__icon-wrap{background:var(--group-operations-tint)}
-.wz-module[data-group="operations"] .wz-module__icon{color:var(--group-operations)}
-.wz-module-group__dot--operations{background:var(--group-operations)}
+/* The old four-hue group colouring (blue, green, amber, purple) is gone:
+   on black it made some tiles louder than others, and green and amber sit
+   outside the blue-to-purple palette. Every tile is now identical; the
+   group is carried by its labelled header and a small cyan dot. */
 
-.wz-module[data-group="fleet"]{border-left-color:var(--group-fleet)}
-.wz-module[data-group="fleet"] .wz-module__icon-wrap{background:var(--group-fleet-tint)}
-.wz-module[data-group="fleet"] .wz-module__icon{color:var(--group-fleet)}
-.wz-module-group__dot--fleet{background:var(--group-fleet)}
-
-.wz-module[data-group="money"]{border-left-color:var(--group-money)}
-.wz-module[data-group="money"] .wz-module__icon-wrap{background:var(--group-money-tint)}
-.wz-module[data-group="money"] .wz-module__icon{color:var(--group-money)}
-.wz-module-group__dot--money{background:var(--group-money)}
-
-.wz-module[data-group="specialist"]{border-left-color:var(--group-specialist)}
-.wz-module[data-group="specialist"] .wz-module__icon-wrap{background:var(--group-specialist-tint)}
-.wz-module[data-group="specialist"] .wz-module__icon{color:var(--group-specialist)}
-.wz-module-group__dot--specialist{background:var(--group-specialist)}
-
-/* Sixteenth tile: custom modules. Orange edge, white fill — never a solid orange block.
-   Deck 6, outstanding fix: orange-500 title measured 3.43:1 on white and failed AA.
-   Title stays navy and the orange border does the distinguishing. Dashed
-   rather than solid, per the group restyle - it sits inside the Specialist
-   group visually (purple dot/label in that group's header), but the card
-   itself keeps its own distinct orange treatment rather than adopting
-   the group's purple, which needs the compound selector below: the plain
-   [data-group="specialist"] rule two blocks up is a class+attribute
-   selector (0,2,0) — more specific than .wz-module--custom alone
-   (0,1,0) — so without this, the specialist purple would win the
-   left-edge colour despite coming first in the file. Confirmed by
-   checking the rendered left border directly rather than assuming the
-   source-order note in the original brief was sufficient on its own. */
-.wz-module--custom{background:var(--surface-card);border-color:var(--orange-400);border-style:dashed}
-.wz-module--custom .wz-module__title{color:var(--navy-700)}
-.wz-module--custom:hover{border-color:var(--orange-400)}
-.wz-module--custom .wz-module__icon{color:var(--orange-press)}
-.wz-module[data-group="specialist"].wz-module--custom{border-left-color:var(--orange-400)}
-.wz-module[data-group="specialist"].wz-module--custom .wz-module__icon-wrap{background:var(--surface-card)}
-.wz-module[data-group="specialist"].wz-module--custom .wz-module__icon{color:var(--orange-press)}
+/* Sixteenth tile: custom modules. A dark card like the other fifteen, with
+   an orange dashed border as its one distinguishing mark - never a solid
+   orange block. The title is white (the old orange-on-white title failed AA).
+   The gradient hover edge is switched off so the orange border stays. Every
+   tile carries a transparent 1px border, so this one is exactly the same
+   size as the rest. */
+.wz-module--custom{border-color:var(--orange-400);border-style:dashed}
+.wz-module--custom::before{display:none}
 
 /* Group wrapper: one labelled, colour-coded section per group, each with
    its own nested .wz-grid-modules so the existing 4/2/1-column responsive
    behaviour applies per group rather than to one flat 16-card grid. */
 .wz-module-groups{display:flex;flex-direction:column;gap:var(--space-10)}
 .wz-module-group__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}
-.wz-module-group__dot{width:8px;height:8px;border-radius:var(--radius-pill);flex:none}
-.wz-module-group__label{font-family:var(--font-body);font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading);white-space:nowrap}
+.wz-module-group__dot{width:8px;height:8px;border-radius:var(--radius-pill);flex:none;background:var(--c-cyan);box-shadow:0 0 8px rgba(0,206,255,.8)}
+.wz-module-group__label{font-family:var(--font-heading);font-size:var(--text-body-sm);font-weight:var(--weight-bold);color:var(--text-heading);white-space:nowrap}
 .wz-module-group__line{flex:1;height:1px;background:var(--border-hairline)}
 
 /* Fixed 4 columns so a full group's cards land in even rows (16/4, no
