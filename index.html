@@ -400,8 +400,8 @@ img{max-width:100%}
    (visible without hover for touch, since hover never fires there) and a
    touch stronger on hover to pair with the existing lift/scale. Small and
    out of the way of the icon/title/body above it. */
-.wz-module__corner{position:absolute;right:var(--space-4);bottom:var(--space-4);width:14px;height:14px;background:var(--c-tagline);opacity:.4;transition:opacity var(--duration-fast) var(--ease-out);transform:rotate(-45deg)}
-.wz-module:hover .wz-module__corner{opacity:.85}
+.wz-module__corner{position:absolute;right:var(--space-4);bottom:var(--space-4);width:14px;height:14px;background:var(--c-tagline);opacity:.7;transition:opacity var(--duration-fast) var(--ease-out);transform:rotate(-45deg)}
+.wz-module:hover .wz-module__corner{opacity:1}
 .wz-module--custom .wz-module__corner{background:var(--orange-400);opacity:.7}
 .wz-module__title{font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-bold);color:var(--text-heading);line-height:var(--leading-heading)}
 .wz-module__body{font-size:var(--text-body-sm);color:var(--text-body);margin:0}
@@ -837,7 +837,7 @@ img{max-width:100%}
 /* Black to deep blue/purple over the photograph: the yard stays visible in the
    middle, the top fades under the header and the bottom melts into the black
    page. Dot texture rides on top. */
-.wz-hero__scrim{position:absolute;inset:0;background:var(--dots) 0 0/var(--dots-size),radial-gradient(70% 55% at 50% 42%,rgba(0,0,0,.30),transparent 75%),linear-gradient(180deg,rgba(0,0,0,.66) 0%,rgba(10,16,44,.58) 40%,rgba(20,13,43,.72) 78%,#000 100%)}
+.wz-hero__scrim{position:absolute;inset:0;background:var(--dots) 0 0/var(--dots-size),radial-gradient(75% 60% at 50% 42%,rgba(0,0,0,.42),transparent 78%),linear-gradient(180deg,rgba(0,0,0,.74) 0%,rgba(10,16,44,.72) 40%,rgba(20,13,43,.80) 78%,#000 100%)}
 .wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
 .wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
