@@ -10,6 +10,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
 
 <title>weighzIO | Modular Waste Management Software for Skip Hire &amp; Waste</title>
 <meta name="description" content="Modular waste management software for skip hire, waste and aggregates operators. Sixteen modules, no mandatory core, digital waste tracking built into Skip Hire. Pay only for what you run.">
@@ -29,105 +31,176 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Outfit:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito+Sans:opsz,wght@6..12,400..700&display=swap">
 
 <link rel="preload" as="image" href="images/hero-yard-1920.webp" imagesrcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
 
 <style>
 /* ==========================================================================
    weighzIO design system — tokens
-   Navy #122D4B and orange #F47D2D. Every neutral is a desaturated navy step.
+   Laventus dark system: black page, blue to purple gradients, cyan glow
+   buttons. Orange survives only as the brand accent (logo, burst, the
+   Custom Modules border). The old weighzIO token names are kept below as
+   aliases onto the new set so existing rules keep working.
    ========================================================================== */
 :root{
-  /* Navy scale (all derived from --navy) */
-  --navy-900: #08192B;
-  --navy-700: #122D4B;
-  --navy-600: #1E436A;
-  --navy-500: #325C87;
-  --navy-400: #5A7B9E;
-  --navy-300: #8FA5BC;
-  --navy-200: #C2CFDC;
-  --navy-100: #DFE6EE;
-  --navy-050: #EFF3F7;
-  --navy-025: #F7F9FB;
+  color-scheme: dark;
 
-  /* Orange scale — rationed. Only CTA fills, CTA press state, and the burst. */
+  /* Fonts. Nunito Sans digits are all one width (600 units at 400 and 700),
+     so figures align in columns without a tnum feature; IBM Plex Sans is gone. */
+  --font-heading: Montserrat, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Nunito Sans", Avenir, "Avenir Next", "Open Sans", Arial, sans-serif;
+
+  /* Colours */
+  --c-bg: #000000;
+  --c-blue: #2F62F6;
+  --c-hero-blue: #2A80FF;
+  --c-purple: #7C5EFB;
+  --c-cyan: #00CEFF;            /* primary buttons, dots, glows only */
+  --c-cyan-hover: #5CE3FF;
+  --c-cyan-press: #00B4E0;
+  --c-card-1: #1F2E4A;
+  --c-card-2: #1A1430;
+  --c-panel-1: #101A33;
+  --c-panel-2: #140D2B;
+  --c-border-a: #4189D7;        /* card hover border */
+  --c-border-b: #7E3AF2;
+  --c-canvas: #05070F;          /* alternating band: a breath lighter than black */
+  --c-input-border: #6F7E9F;    /* form control edge, 4.5:1 on black */
+
+  /* Text */
+  --c-heading: #FFFFFF;
+  --c-text: #D6DDEC;
+  --c-text-bright: #E4EAF7;
+  --c-text-small: #BCC5DA;
+  --c-text-muted: #B4BCD0;
+  --c-on-cyan: #070B1A;         /* text on cyan buttons */
+  --c-link: #7FB2FF;
+  --c-link-hover: #B3D2FF;
+  --c-tagline: #9CC8FF;
+
+  /* Brand orange: small accents only (logo, burst, custom-module border) */
   --orange-400: #F47D2D;
-  --orange-300: #F79C5E;
-  --orange-press: #EA782B;  /* CTA press — navy label 4.80:1 */
-  --orange-border: #F9B183; /* CTA border, lighter than the fill */
+  --orange-press: #EA782B;
 
-  /* One deliberate exception to navy/orange: compliance or success status
-     only (a "filed"/"on time" badge) — never decorative, never a stand-in
-     for orange's CTA role. #15803D on white is ~5.9:1. */
-  --color-success: #15803D;
-  --color-success-tint: rgba(21,128,61,.12);
-
-  /* Second deliberate exception: the home page module grid's four group
-     colours, sampled from the supplied mockup. Confirmed intentional for
-     this one section, not a drift away from the "two colours only" brief
-     elsewhere on the site. */
-  --group-operations:#3B6FA0;--group-operations-tint:#BFD9F0;
-  --group-fleet:#1C9A4B;--group-fleet-tint:#C8E9CA;
-  --group-money:#F2A20F;--group-money-tint:#FFE2A8;
-  --group-specialist:#7C63FD;--group-specialist-tint:#DCD9F8;
+  /* Status: the only non-brand hues, used for tiny semantic marks (a "posted"
+     tag, form success and error text), never decoration. */
+  --color-success: #5FD39A;
+  --color-success-tint: rgba(95,211,154,.14);
+  --color-error: #FF9B9B;
+  --color-error-tint: rgba(255,155,155,.10);
 
   --white: #FFFFFF;
 
-  /* Semantic aliases: text */
-  --text-heading: var(--navy-700);
-  --text-body: var(--navy-600);
-  --text-muted: var(--navy-400);
-  --text-eyebrow: var(--navy-500);
-  --text-on-orange: var(--navy-700); /* navy on orange = 5.20:1. Never white. */
-  --text-link: var(--navy-700);
-  --text-link-hover: var(--navy-700);
+  /* Gradients: blue to purple is the only pairing */
+  --g-headline: linear-gradient(100deg, #FFFFFF 0%, #E6EEFF 24%, #6AA6FF 44%, #9C86FF 60%, #6AA6FF 76%, #E6EEFF 90%, #FFFFFF 100%);
+  --g-number: linear-gradient(180deg, #FFFFFF 10%, #2A80FF 70%, #7C5EFB 100%);
+  --g-chip: linear-gradient(145deg, #2F62F6, #7C5EFB);
+  --g-card: linear-gradient(165deg, #1F2E4A 0%, #1A1430 70%);
+  --g-card-border: linear-gradient(135deg, #4189D7, #7E3AF2);
+  --g-panel: linear-gradient(160deg, #101A33 0%, #140D2B 100%);
 
-  /* Semantic aliases: surfaces */
-  --surface-page: var(--white);
-  --surface-canvas: var(--navy-025);
-  --surface-card: var(--white);
-  --surface-card-tint: var(--navy-050);
-  --surface-ink: var(--navy-700);      /* navy punctuation blocks */
-  --surface-cta: var(--orange-400);
-  --surface-cta-hover: var(--orange-300);   /* #F79C5E — navy label 6.57:1 */
-  --surface-cta-press: var(--orange-press); /* #EA782B — navy label 4.80:1 */
+  /* Glows. Depth on black comes from these, not from drop shadows. */
+  --glow-cyan: 0 0 14px rgba(0, 206, 255, .7), 0 0 4px rgba(184, 240, 255, .5);
+  --glow-cyan-mid: 0 0 24px rgba(0, 206, 255, .85), 0 0 8px rgba(184, 240, 255, .6);
+  --glow-cyan-hover: 0 0 48px rgba(0, 206, 255, .95), 0 0 16px rgba(92, 227, 255, .85), 0 0 4px rgba(255, 255, 255, .5);
+  --glow-cyan-press: 0 0 10px rgba(0, 206, 255, .6), inset 0 2px 6px rgba(0, 0, 0, .3);
+  --shadow-sm: inset 0 1px 0 rgba(255,255,255,.06), 0 0 24px rgba(47,98,246,.10);
+  --shadow-md: inset 0 1px 0 rgba(255,255,255,.08), 0 0 36px rgba(47,98,246,.18);
+  --shadow-lg: inset 0 1px 0 rgba(255,255,255,.08), 0 0 64px rgba(47,98,246,.22), 0 0 28px rgba(124,94,251,.14);
+  --shadow-on-ink: var(--shadow-sm);
 
-  /* Semantic aliases: lines */
-  --border-hairline: var(--navy-100);
-  --border-strong: var(--navy-200);
+  /* Dot texture: pure CSS, no asset */
+  --dots: radial-gradient(rgba(156,200,255,.16) 1px, transparent 1.4px);
+  --dots-size: 22px 22px;
+
+  /* Type scale */
+  --fs-h1: clamp(44px, 5.3vw, 76px);
+  --fs-h2: clamp(34px, 4vw, 54px);
+  --fs-h2-xl: clamp(38px, 4.8vw, 66px);
+  --fs-h3: 21px;
+  --fs-lead: 19px;
+  --fs-body: 18px;
+  --fs-small: 15px;
+
+  /* Shape and layout */
+  --radius-btn: 999px;
+  --radius-card: 24px;
+  --radius-panel: 36px;
+  --box: 1440px;
+  --gutter: clamp(20px, 3vw, 32px);
+  --section-gap: clamp(64px, 8vw, 112px); /* Laventus uses 160px; too long for sixteen modules */
+
+  /* ---- Aliases: old weighzIO names mapped onto the set above ---- */
+  --font-display: var(--font-heading);
+
+  /* Neutral scale, repurposed for dark: 025-100 are surfaces and hairlines,
+     200-500 are muted foregrounds, 600-700 are the main foreground. Rules
+     that used navy as a *background* are re-pointed individually. */
+  --navy-900: #000000;
+  --navy-700: var(--c-heading);
+  --navy-600: var(--c-text);
+  --navy-500: var(--c-text-small);
+  --navy-400: var(--c-text-muted);
+  --navy-300: #8F9BB5;
+  --navy-200: rgba(255,255,255,.18);
+  --navy-100: rgba(255,255,255,.10);
+  --navy-050: rgba(255,255,255,.07);
+  --navy-025: rgba(255,255,255,.04);
+
+  --text-heading: var(--c-heading);
+  --text-body: var(--c-text);
+  --text-muted: var(--c-text-muted);
+  --text-eyebrow: var(--c-tagline);
+  --text-on-orange: var(--c-on-cyan);
+  --text-link: var(--c-link);
+  --text-link-hover: var(--c-link-hover);
+
+  --surface-page: var(--c-bg);
+  --surface-canvas: var(--c-canvas);
+  --surface-card: var(--g-card);          /* gradient: use via background: only */
+  --surface-card-tint: var(--g-panel);
+  --surface-ink: var(--g-panel);
+  --surface-cta: var(--c-cyan);
+  --surface-cta-hover: var(--c-cyan-hover);
+  --surface-cta-press: var(--c-cyan-press);
+
+  --border-hairline: rgba(255,255,255,.10);
+  --border-strong: rgba(255,255,255,.20);
   --border-on-ink: rgba(255,255,255,.18);
-  --focus-ring: var(--navy-700);
-  --focus-ring-on-ink: var(--white);
+  --focus-ring: var(--c-cyan);
+  --focus-ring-on-ink: var(--c-cyan);
 
-  /* Type */
-  --font-display: "Outfit", "Museo Sans", system-ui, sans-serif;   /* geometric — headings, wordmark */
-  --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif; /* grotesque — body, UI, data */
-
-  --text-display-1: 4rem;    /* 64 */
-  --text-h1: 2.75rem;        /* 44 */
-  --text-h2: 2rem;           /* 32 */
-  --text-h3: 1.5rem;         /* 24 */
+  --text-display-1: var(--fs-h1);
+  --text-h1: var(--fs-h1);
+  --text-h2: var(--fs-h2);
+  --text-h3: var(--fs-h3);
   --text-h4: 1.25rem;        /* 20 */
-  --text-lead: 1.1875rem;    /* 19 */
-  --text-body-md: 1.0625rem; /* 17 */
-  --text-body-sm: 0.9375rem; /* 15 */
+  --text-lead: var(--fs-lead);
+  --text-body-md: var(--fs-body);
+  --text-body-sm: var(--fs-small);
   --text-micro: 0.8125rem;   /* 13 — eyebrows, table meta */
 
-  --leading-tight: 1.04;
-  --leading-heading: 1.14;
-  --leading-body: 1.55;
+  --leading-tight: 1.02;
+  --leading-heading: 1.12;
+  --leading-body: 1.7;
 
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-xbold: 800;
 
-  --tracking-display: -0.02em;
-  --tracking-heading: -0.01em;
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.015em;
   --tracking-eyebrow: 0.12em;
 
-  /* Numerals: every weight, tonnage and percentage uses tabular figures */
   --numeric-tabular: "tnum" 1, "lnum" 1;
+
+  --shadow-cta: var(--glow-cyan);
+  --shadow-cta-wide: var(--glow-cyan-mid);
+  --shadow-cta-press: var(--glow-cyan-press);
+  --overlay-scrim: rgba(0,0,0,.72);
 
   /* Spacing */
   --space-1: 4px;
@@ -143,41 +216,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --space-20: 80px;
   --space-24: 96px;
 
-  --gutter: var(--space-6);
-  --container-max: 1400px; /* raised from 1200px so the Modules page's wider
-     visual column has room without its own container override — every
-     .wz-container, .wz-header__inner and .wz-hero__inner site-wide inherits
-     this, not just Modules. */
+  --container-max: var(--box);
   --container-narrow: 720px;
   /* Single source for the module popup's horizontal content inset — header
-     hairline, footer hairline and the footer's own padding (which the
-     mobile full-width buttons inherit via width:100%) all reference this,
-     redefined once inside the popup's mobile media query, so they move
-     together rather than needing separate fixes each time it changes. */
+     hairline, footer hairline and the footer's own padding all reference this,
+     redefined once inside the popup's mobile media query. */
   --modal-pad-x: var(--space-8);
 
-  /* Shape */
-  --radius-xs: 2px;   /* tags, table cell accents */
-  --radius-sm: 4px;   /* inputs, small chips */
-  --radius-md: 6px;   /* buttons */
-  --radius-lg: 12px;  /* cards, module tiles */
-  --radius-xl: 20px;  /* feature panels, dialogs */
+  --radius-xs: 4px;
+  --radius-sm: 10px;   /* inputs */
+  --radius-md: 12px;   /* chips, icon buttons */
+  --radius-lg: var(--radius-card);
+  --radius-xl: var(--radius-panel);
   --radius-pill: 999px;
   --border-width: 1px;
   --border-width-strong: 2px;
 
-  /* Elevation — navy-tinted, never neutral black */
-  --shadow-sm: 0 1px 2px rgba(18,45,75,.07), 0 3px 8px rgba(18,45,75,.05);
-  --shadow-md: 0 2px 4px rgba(18,45,75,.06), 0 8px 20px rgba(18,45,75,.07);
-  --shadow-lg: 0 4px 8px rgba(18,45,75,.07), 0 20px 44px rgba(18,45,75,.10);
-  /* CTA glow: blur only, no offset, no spread. Never an offset drop shadow. */
-  --shadow-cta: 0 0 18px 0 rgba(244,125,45,.45);
-  --shadow-cta-wide: 0 0 32px 0 rgba(244,125,45,.30);
-  --shadow-cta-press: inset 0 2px 6px rgba(18,45,75,.28);
-  --shadow-on-ink: 0 2px 6px rgba(5,15,28,.30), 0 12px 32px rgba(5,15,28,.24);
-  --overlay-scrim: rgba(8,25,43,.55);
-
-  /* Motion — short and functional. No bounce, no overshoot. */
+  /* Motion — short and functional. */
   --ease-out: cubic-bezier(.2,.6,.2,1);
   --ease-in-out: cubic-bezier(.4,0,.2,1);
   --duration-fast: 120ms; /* hover, focus */
@@ -786,7 +841,6 @@ img{max-width:100%}
 @media (max-width:700px){
   .wz-band{padding:var(--space-16) 0}
   .wz-band--tight{padding:var(--space-12) 0}
-  :root{--text-h1:2.125rem;--text-h2:1.625rem;--text-h3:1.3125rem}
 }
 
 /* ==========================================================================
