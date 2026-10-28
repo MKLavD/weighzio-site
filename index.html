@@ -1401,7 +1401,19 @@ img{max-width:100%}
    in the stacked media query below, where there's no text column height
    for it to compete with. */
 .wz-module-section__media picture{position:absolute;inset:0;display:block;width:100%;height:100%}
-.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--shadow-lg)}
+.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);box-shadow:0 0 28px rgba(47,98,246,.12)}
+/* Modules page refinements: the title carries the number only (the icon lives
+   on the homepage tiles and is still in the markup for the module dialog),
+   photos get a quieter glow, and Custom Modules is the same dashed-orange
+   dark card as its homepage tile with the puzzle icon enlarged. */
+.wz-module-section__head .wz-icon{display:none}
+#custom-modules{isolation:isolate}
+#custom-modules .wz-container{position:relative;isolation:isolate;padding-block:clamp(40px,5vw,64px);padding-inline:calc(var(--gutter) + clamp(24px,4vw,56px))}
+#custom-modules .wz-container::before{content:"";position:absolute;inset:clamp(16px,2vw,24px) var(--gutter);z-index:-1;background:var(--g-card);border:1px dashed var(--orange-400);border-radius:var(--radius-card)}
+#custom-modules .wz-container::after{content:"";position:absolute;right:calc(var(--gutter) + clamp(24px,4vw,56px));top:calc(50% - 56px);width:112px;height:112px;background:var(--orange-400);-webkit-mask:url("images/icon_puzzle.svg") center/contain no-repeat;mask:url("images/icon_puzzle.svg") center/contain no-repeat;opacity:.9}
+#custom-modules .wz-container>*{max-width:62ch}
+@media (max-width:900px){#custom-modules .wz-container::after{display:none}#custom-modules .wz-container>*{max-width:none}}
+
 @media (max-width:1150px){
   .wz-module-section__media picture{position:static;height:auto}
   .wz-module-section__photo{height:auto;aspect-ratio:4/3}
@@ -2665,6 +2677,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </section>
 
   </div>
+
+  <!-- Closing CTA (same band as the home page) -->
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <div class="wz-section-head wz-section-head--center">
+        <h2>Start with what you need</h2>
+        <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
+        <div style="margin-top:var(--space-6)">
+          <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
+        </div>
+        <p style="font-size:var(--text-body-sm);margin-top:var(--space-4)">No cost, no commitment, and we'll tell you if you're better off where you are.</p>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ======================================================================
