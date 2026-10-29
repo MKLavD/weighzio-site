@@ -1432,12 +1432,12 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-module-section__media picture::after{content:"";position:absolute;inset:0;border-radius:var(--radius-card);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);pointer-events:none}
 /* Modules page refinements: the title carries the number only (the icon lives
    on the homepage tiles and is still in the markup for the module dialog),
-   photos get a quieter glow, and Custom Modules is the same dashed-orange
+   photos get a quieter glow, and Custom Modules is the same orange-accent
    dark card as its homepage tile with the puzzle icon enlarged. */
 .wz-module-section__head .wz-icon{display:none}
 #custom-modules{isolation:isolate}
 #custom-modules .wz-container{position:relative;isolation:isolate;padding-block:clamp(40px,5vw,64px);padding-inline:calc(var(--gutter) + clamp(24px,4vw,56px))}
-#custom-modules .wz-container::before{content:"";position:absolute;inset:clamp(16px,2vw,24px) var(--gutter);z-index:-1;background:var(--g-card);border:1px dashed var(--orange-400);border-radius:var(--radius-card)}
+#custom-modules .wz-container::before{content:"";position:absolute;inset:clamp(16px,2vw,24px) var(--gutter);z-index:-1;background:radial-gradient(240px 240px at calc(100% + 30px) -30px,rgba(244,125,45,.26),rgba(0,0,0,0) 70%),linear-gradient(165deg,#1f2e4a 0%,#1a1430 70%);border:1px solid transparent;border-radius:var(--radius-card);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(244,125,45,.45)}
 #custom-modules .wz-container::after{content:"";position:absolute;right:calc(var(--gutter) + clamp(24px,4vw,56px));top:calc(50% - 56px);width:112px;height:112px;background:var(--orange-400);-webkit-mask:url("images/icon_puzzle.svg") center/contain no-repeat;mask:url("images/icon_puzzle.svg") center/contain no-repeat;opacity:.9}
 #custom-modules .wz-container>*{max-width:62ch}
 @media (max-width:900px){#custom-modules .wz-container::after{display:none}#custom-modules .wz-container>*{max-width:none}}
