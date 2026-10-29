@@ -1741,6 +1741,12 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-guide .wz-g-grid--4>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
     }
     @media (max-width:700px){#route-guide .wz-g-grid>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}}
+    #route-guide .wz-gsteps>li{animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 16%}
+    #route-guide .wz-gsteps>li:nth-child(2){animation-range:entry 3% cover 19%}
+    #route-guide .wz-gsteps>li:nth-child(3){animation-range:entry 6% cover 22%}
+    #route-guide .wz-gsteps>li:nth-child(4){animation-range:entry 9% cover 25%}
+    #route-guide .wz-gsteps>li:nth-child(5){animation-range:entry 12% cover 28%}
+    @media (max-width:1180px){#route-guide .wz-gsteps>li:nth-child(n){animation-range:entry 0% cover 16%}}
 
     /* Slide-in: list items and FAQ rows. */
     :where(
@@ -1986,13 +1992,34 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-gpanel>.wz-fx,.wz-gsupport>.wz-fx{opacity:.4}
 .wz-gpanel>p{margin:0;color:var(--c-text-bright)}
 .wz-ghaz{gap:var(--space-4)}
-#route-guide #dwt-two-days+p{padding:clamp(28px,4vw,56px);gap:clamp(24px,4vw,56px);font-size:clamp(21px,2vw,27px);line-height:1.35;font-weight:var(--weight-semibold)}
-#route-guide #dwt-two-days+p::before{font-size:clamp(96px,13vw,170px)}
 #route-guide .wz-gsupport{margin-top:var(--space-6)}
 .wz-groute{gap:var(--space-4)}
 @media (max-width:1000px){.wz-g-split{grid-template-columns:minmax(0,1fr);gap:var(--space-6)}}
 @media (max-width:700px){#route-guide #dwt-two-days+p{flex-direction:column;align-items:flex-start}}
 
+/* 10: the cost panel and the working day panel are a pair (same size and treatment) */
+#route-guide :is(#dwt-two-days,#dwt-cost)+p{padding:clamp(28px,4vw,56px);gap:clamp(24px,4vw,56px);font-size:clamp(21px,2vw,27px);line-height:1.35;font-weight:var(--weight-semibold)}
+#route-guide :is(#dwt-two-days,#dwt-cost)+p::before{font-size:clamp(80px,11vw,140px)}
+/* 11: numbered stepper (the homepage "Four steps" pattern on the existing <ol>) */
+#route-guide .wz-gsteps{list-style:none;counter-reset:st;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--space-6);position:relative;margin:0;padding:0}
+#route-guide .wz-gsteps::before{content:"";position:absolute;top:16px;left:5%;right:5%;height:1.5px;background:var(--g-card-border);opacity:.55}
+#route-guide .wz-gsteps>li{counter-increment:st;position:relative;padding-top:56px;font-size:var(--text-lead);line-height:1.55;color:var(--c-text-bright)}
+#route-guide .wz-gsteps>li::before{content:counter(st,decimal-leading-zero);position:absolute;top:0;left:0;width:34px;height:34px;border-radius:50%;background:var(--g-chip);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:var(--weight-semibold);font-size:var(--text-micro);font-variant-numeric:tabular-nums}
+#route-guide .wz-gsteps>li:last-child::before{background:var(--c-cyan);color:var(--c-on-cyan);box-shadow:var(--glow-cyan)}
+@media (max-width:1180px){
+  #route-guide .wz-gsteps{grid-template-columns:minmax(0,1fr);gap:0}
+  #route-guide .wz-gsteps::before{display:none}
+  #route-guide .wz-gsteps>li{padding:0 0 var(--space-6) 56px;min-height:34px}
+  #route-guide .wz-gsteps>li:not(:last-child)::after{content:"";position:absolute;left:16px;top:40px;bottom:6px;width:1.5px;background:var(--g-card-border);opacity:.55}
+}
+/* 12: link cards (the whole card is the link; the text keeps its underline) and the closing panel */
+#route-guide .wz-glink{cursor:pointer;flex-direction:row;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-6)}
+.wz-glink>a{color:var(--c-link);font-weight:var(--weight-semibold);text-decoration:underline;text-underline-offset:4px;line-height:1.4}
+.wz-glink>a::after{content:"";position:absolute;inset:0;z-index:2}
+.wz-glink__arrow{width:22px;height:22px;background-color:var(--c-tagline);transform:rotate(-45deg);flex:none}
+.wz-glink:has(a:focus-visible){outline:2px solid var(--c-cyan);outline-offset:3px}
+.wz-glink>a:focus-visible{outline:none}
+.wz-gcta__text{margin:0;font-family:var(--font-heading);font-weight:var(--weight-bold);font-size:clamp(24px,2.6vw,34px);line-height:1.3;color:var(--white)}
 /* Guide header: a quiet version of the hero dot wave behind the right of the title block (fixed height, no tiled gradients). */
 #route-guide>.wz-band:first-child{position:relative;isolation:isolate}
 #route-guide>.wz-band:first-child::before{content:"";position:absolute;right:0;top:0;width:62%;height:clamp(240px,32vh,340px);z-index:-1;pointer-events:none;background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.35;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 60%,transparent 100%),linear-gradient(to right,transparent 0%,#000 45%,#000 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 60%,transparent 100%),linear-gradient(to right,transparent 0%,#000 45%,#000 100%);mask-composite:intersect}
@@ -3282,7 +3309,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </section>
           <section class="wz-gsec">
             <h2 id="dwt-before">What to do before your deadline</h2>
-          <ol>
+          <ol class="wz-gsteps">
             <li>Map an EWC code to every material you accept.</li>
             <li>Put permit and licence numbers for each site in one list, with expiry dates.</li>
             <li>Hold carrier registration for every vehicle, including subcontractors.</li>
@@ -3292,16 +3319,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </section>
           <section class="wz-gsec">
             <h2 id="dwt-sources">Official sources</h2>
-          <ul>
-            <li><a href="https://www.gov.uk/government/publications/digital-waste-tracking" rel="noopener">GOV.UK: digital waste tracking policy paper</a></li>
-            <li><a href="https://www.legislation.gov.uk/uksi/2026/729/contents/made" rel="noopener">The Digital Waste Tracking (England) Regulations 2026 (SI 2026/729)</a></li>
-          </ul>
-          </section>
-          <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)"><span class="wz-fx" aria-hidden="true"></span>
-            <p style="margin:0 0 var(--space-4)">weighzIO files these records automatically as part of the Skip Hire module.</p>
-            <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></p>
-          </div>
-        </div>
+          <ul class="wz-g-grid wz-g-grid--2">
+              <li class="wz-module wz-module--static wz-glink"><span class="wz-fx" aria-hidden="true"></span><a href="https://www.gov.uk/government/publications/digital-waste-tracking" rel="noopener">GOV.UK: digital waste tracking policy paper</a><span class="wz-icon wz-glink__arrow" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span></li>
+              <li class="wz-module wz-module--static wz-glink"><span class="wz-fx" aria-hidden="true"></span><a href="https://www.legislation.gov.uk/uksi/2026/729/contents/made" rel="noopener">The Digital Waste Tracking (England) Regulations 2026 (SI 2026/729)</a><span class="wz-icon wz-glink__arrow" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span></li>
+            </ul>
+          </section>        </div>
+      </div>
+    </div>
+  </section>
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
+      <div class="wz-section-head wz-section-head--center">
+        <p class="wz-gcta__text">weighzIO files these records automatically as part of the Skip Hire module.</p>
+        <div style="margin-top:var(--space-6)"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></div>
       </div>
     </div>
   </section>
