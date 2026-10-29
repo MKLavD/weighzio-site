@@ -866,11 +866,11 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
    is the fallback; the text stays real, selectable text. Drift only runs for
    users who have not asked for reduced motion. */
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .wz-hero__mark+p,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{background:var(--g-headline);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .wz-hero__mark+p,.wz-hero--page h1,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{background:var(--g-headline);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 }
 @keyframes wz-drift{from{background-position:0% 50%}to{background-position:100% 50%}}
 @media (prefers-reduced-motion:no-preference){
-  .wz-hero__mark+p,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{animation:wz-drift 16s ease-in-out infinite alternate}
+  .wz-hero__mark+p,.wz-hero--page h1,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{animation:wz-drift 16s ease-in-out infinite alternate}
 }
 /* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
    the block visibly tapers rather than running the same width as the H1
@@ -1531,21 +1531,10 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 /* ==========================================================================
    One-sided layouts: AI Voice Agent aside, privacy, enquire
    ========================================================================== */
-/* AI voice agent: the headline block, the prose and the call mockup share one two-column grid. The head and the
-   mockup start on the same row (mockup top level with the eyebrow); the prose continues under the head, and the
-   sticky mockup spans every row so it travels beside all of it. .wz-voice only wraps them, so it dissolves. */
-.wz-voice{display:contents}
-#route-ai-voice-agent .wz-container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);grid-template-rows:auto 1fr;column-gap:var(--space-16);align-items:start}
-#route-ai-voice-agent .wz-section-head{grid-column:1;grid-row:1}
-#route-ai-voice-agent .wz-guide__prose{grid-column:1;grid-row:2}
-#route-ai-voice-agent .wz-voice__aside{grid-column:2;grid-row:1/-1;align-self:start;position:sticky;top:96px}
-.wz-hero__actions--page{margin-top:var(--space-3)}
-/* Stacked (same 1000px breakpoint as before): eyebrow, H1, lead, CTA, mockup, then the prose. */
-@media (max-width:1000px){
-  #route-ai-voice-agent .wz-container{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
-  #route-ai-voice-agent .wz-voice__aside{grid-column:1;grid-row:2;position:static;max-width:460px;width:100%;margin:0 auto var(--space-8)}
-  #route-ai-voice-agent .wz-guide__prose{grid-row:3}
-}
+/* AI voice agent hero: the call mockup sits in the shared hero art slot, centred against the copy. */
+.wz-hero--page{min-height:clamp(580px,calc((100vh - 120px) * .78),780px);min-height:clamp(580px,calc((100svh - 120px) * .78),780px)}
+.wz-hero.wz-hero--page .wz-hero-art--call{flex:0 1 480px;height:auto;min-height:0;display:flex;align-items:center;justify-content:center}
+.wz-hero-art--call .wz-mockup{position:relative;align-self:center;width:100%;max-width:480px;z-index:2}
 .wz-mockup__call-body{padding:18px;display:flex;flex-direction:column;gap:12px}
 .wz-mockup__call-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--c-text)}
 .wz-mockup__msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.4}
@@ -1555,6 +1544,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-mockup__booked{display:flex;flex-direction:column;gap:3px;padding:12px 14px;border-radius:var(--radius-md);background:linear-gradient(145deg,#2751D9,#6A48E6);color:var(--white);font-size:12px}
 .wz-mockup__booked b{font-family:var(--font-heading);font-size:14px}
 .wz-mockup__sms{padding:10px 12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);border-radius:var(--radius-md);font-size:12px;color:var(--c-text)}
+.wz-hero--page h1{font-family:var(--font-display);font-weight:var(--weight-xbold);margin:0;font-size:clamp(40px,4.6vw,66px);line-height:1.04;letter-spacing:-0.035em;color:var(--white)}
+@media (max-width:1100px){.wz-hero-art--call{flex-basis:100%;justify-content:flex-start}}
+@media (max-width:700px){.wz-hero--page h1{font-size:clamp(40px,11vw,52px)}.wz-hero-art--call{padding-top:0}.wz-hero-art--call .wz-mockup{max-width:460px;margin:0 auto}}
 #route-privacy .wz-guide__prose{margin-inline:auto}
 #route-enquire .wz-split2>div:first-child{position:sticky;top:96px}
 @media (max-width:900px){#route-enquire .wz-split2>div:first-child{position:static}}
@@ -1639,7 +1631,8 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
      stays static: animating it, even with opacity and translate only, stops Chrome reporting LCP on phones), then the four cards, with the float starting after each entrance. */
   @keyframes wz-hero-pop{0%{opacity:0;translate:0 56px;scale:.78;filter:blur(10px)}}
   @media (max-width:700px){@keyframes wz-hero-pop{0%{opacity:0;translate:0 28px;scale:.86;filter:blur(6px)}}}
-  .wz-hero__mark{animation:wz-load-in 700ms var(--ease-reveal) both}
+  .wz-hero__mark,.wz-hero--page .wz-eyebrow{animation:wz-load-in 700ms var(--ease-reveal) both}
+  .wz-hero-art--call .wz-mockup{animation:wz-hero-pop 700ms var(--ease-reveal) 300ms both}
   .wz-hero__lead{animation:wz-load-in 700ms var(--ease-reveal) 160ms both}
   .wz-hero__actions{animation:wz-load-in 700ms var(--ease-reveal) 240ms both}
   .wz-hero-card--board{animation:wz-hero-pop 700ms var(--ease-reveal) 300ms both,wz-float 8s ease-in-out 1000ms infinite alternate}
@@ -1651,7 +1644,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(2){animation-delay:80ms}
   :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(3){animation-delay:160ms}
   :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(n+4){animation-delay:240ms}
-  #route-ai-voice-agent .wz-section-head>h1{animation:none}
   #route-enquire .wz-split2>div:first-child{animation:wz-load-in 700ms var(--ease-reveal) both}
   #route-enquire .wz-split2>.wz-card{animation:wz-panel-in 700ms var(--ease-reveal) 120ms both}
   .wz-thankyou__icon{animation:wz-load-in 700ms var(--ease-reveal) both}
@@ -1698,8 +1690,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-modules #custom-modules .wz-container,
       #route-guide #dwt-dates+ul,
       #route-guide #dwt-two-days+p,
-      #route-guide #dwt-cost+p,
-      #route-ai-voice-agent .wz-voice__aside
+      #route-guide #dwt-cost+p
     ){animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 30%}
 
     /* /modules: each module section resolves in the lower fifth of the screen, with a tight 2% stagger.
@@ -1773,7 +1764,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #main .wz-band--tight .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 30% entry 100%}
     #route-ai-voice-agent .wz-card.wz-card--tint{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 70%}
     #route-ai-voice-agent .wz-card .wz-btn--primary:not(:hover):not(:active){animation-range:normal,entry 20% entry 100%}
-    #route-ai-voice-agent .wz-voice__aside{animation-range:entry 0% entry 60%}
   }
 }
 
@@ -3179,16 +3169,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      ROUTE: /ai-voice-agent
      ====================================================================== -->
 <div class="wz-route wz-route--inner" data-route="/ai-voice-agent" id="route-ai-voice-agent" hidden>
-  <section class="wz-band">
-    <div class="wz-container">
-      <div class="wz-section-head" style="margin-bottom:var(--space-12)">
+  <section class="wz-hero wz-hero--page">
+    <div class="wz-container wz-hero__grid">
+      <div class="wz-hero__copy">
         <span class="wz-eyebrow">AI Voice Agent</span>
         <h1>Answer every call. Book every skip.</h1>
-        <p>An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
-        <div class="wz-hero__actions wz-hero__actions--page"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
+        <p class="wz-hero__lead">An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
+        <div class="wz-hero__actions"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
+      <div class="wz-hero-art wz-hero-art--call" aria-hidden="true">
+        <div class="wz-mockup wz-mockup--call">
+          <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
+          <div class="wz-mockup__call-body">
+            <div class="wz-mockup__call-meta"><span class="wz-mockup__tag wz-mockup__tag--tier">After hours</span><span>Hinckley Builders Merchants</span></div>
+            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Good evening. How can I help?</div>
+            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>I need an 8 yard skip tomorrow morning, Nuneaton Yard.</div>
+            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Tomorrow morning is free. I'll book it at your account rate. Shall I confirm?</div>
+            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>Yes please.</div>
+            <div class="wz-mockup__booked"><b>Booked</b><span>8yd skip &middot; Nuneaton Yard &middot; Sat 18 Oct, morning</span><span>Checked against the live schedule</span></div>
+            <div class="wz-mockup__sms"><em>Text sent</em>Your 8yd skip is booked for Sat 18 Oct, morning. Nuneaton Yard.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <div class="wz-voice">
+  <section class="wz-band">
+    <div class="wz-container">
       <div class="wz-guide__prose">
 
         <h2>The phone doesn't stop when the office does</h2>
@@ -3237,21 +3244,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire">Enquire</a></p>
         </div>
 
-      </div>
-      <div class="wz-voice__aside" aria-hidden="true">
-        <div class="wz-mockup wz-mockup--call">
-          <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
-          <div class="wz-mockup__call-body">
-            <div class="wz-mockup__call-meta"><span class="wz-mockup__tag wz-mockup__tag--tier">After hours</span><span>Hinckley Builders Merchants</span></div>
-            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Good evening. How can I help?</div>
-            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>I need an 8 yard skip tomorrow morning, Nuneaton Yard.</div>
-            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Tomorrow morning is free. I'll book it at your account rate. Shall I confirm?</div>
-            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>Yes please.</div>
-            <div class="wz-mockup__booked"><b>Booked</b><span>8yd skip &middot; Nuneaton Yard &middot; Sat 18 Oct, morning</span><span>Checked against the live schedule</span></div>
-            <div class="wz-mockup__sms"><em>Text sent</em>Your 8yd skip is booked for Sat 18 Oct, morning. Nuneaton Yard.</div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
   </section>
