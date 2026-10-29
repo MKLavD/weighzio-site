@@ -404,14 +404,13 @@ img{max-width:100%}
    outside the blue-to-purple palette. Every tile is now identical; the
    group is carried by its labelled header and a small cyan dot. */
 
-/* Sixteenth tile: custom modules. A dark card like the other fifteen, with
-   an orange dashed border as its one distinguishing mark - never a solid
-   orange block. The title is white (the old orange-on-white title failed AA).
-   The gradient hover edge is switched off so the orange border stays. Every
-   tile carries a transparent 1px border, so this one is exactly the same
-   size as the rest. */
-.wz-module--custom{border-color:var(--orange-400);border-style:dashed}
-.wz-module--custom::before{display:none}
+/* Sixteenth tile: custom modules. The standard card recipe with the blue accent swapped for the brand orange
+   ("bespoke ember"): same size, radius, text and arrow as the others, no dashed border. The title stays white.
+   The orange colours for the fill, glow, top line and icon tile sit after the shared card finish further down,
+   so they win the cascade. */
+.wz-module--custom{border:1px solid transparent}
+/* Bespoke ember: the standard card recipe with the blue accent swapped for the brand orange. */
+.wz-module--custom::before{background:linear-gradient(135deg,#f47d2d,#7e3af2)}
 
 /* Group wrapper: one labelled, colour-coded section per group, each with
    its own nested .wz-grid-modules so the existing 4/2/1-column responsive
@@ -1780,6 +1779,12 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 /* top-edge gradient line */
 .wz-module::after,.wz-facts::after,.wz-card--tint:not(:has(form))::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent 0%,#00CEFF 25%,#7C5EFB 50%,#00CEFF 75%,transparent 100%) 0 0/200% 100%}
 .wz-module:hover{outline:1px solid rgba(0,206,255,.45);outline-offset:-1px}
+/* Custom Modules card: orange accent in place of the blue one (overrides the shared card finish above). */
+.wz-module--custom{background:radial-gradient(240px 240px at calc(100% + 30px) -30px,rgba(244,125,45,.26),rgba(0,0,0,0) 70%),linear-gradient(165deg,#1f2e4a 0%,#1a1430 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(244,125,45,.45)}
+.wz-module--custom::after{background-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#f47d2d 25%,#7c5efb 50%,#f47d2d 75%,rgba(0,0,0,0) 100%)}
+.wz-module--custom .wz-module__icon-wrap{background:linear-gradient(145deg,#f47d2d,#d6521b);box-shadow:0 8px 20px -8px rgba(244,125,45,.7)}
+.wz-module--custom:hover{outline-color:rgba(244,125,45,.5)}
+.wz-module--custom:focus-visible{outline:2px solid #F79C5E;outline-offset:-2px}
 @media (prefers-reduced-motion:no-preference){
   @keyframes wz-shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
   .wz-module::after,.wz-facts::after,.wz-card--tint:not(:has(form))::after{animation:wz-shift 5s ease-in-out infinite alternate}
