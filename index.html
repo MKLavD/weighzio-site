@@ -1979,20 +1979,13 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-gq{display:block}
 .wz-gnote{margin:var(--space-6) 0 0;padding:var(--space-6);border-radius:var(--radius-card);background:var(--g-panel);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 0 rgba(255,255,255,.14);color:var(--c-text-bright);font-size:var(--text-lead);line-height:1.7}
 /* 03: horizontal timeline of four date cards; every date gets the same treatment */
-.wz-gtimeline{position:relative;padding-top:34px!important}
-.wz-gtimeline{--tg:var(--space-6);--tpad:25px;column-gap:var(--tg)}
-.wz-gtimeline::before{content:"";position:absolute;top:11px;left:calc(var(--tpad) + 7px);right:calc((100% - 3 * var(--tg)) / 4 - var(--tpad) - 7px);height:2px;background:var(--g-card-border);opacity:.55}
-.wz-gdate{overflow:visible!important}
-.wz-gdate::after{left:24px!important;right:24px!important}
 .wz-gdate__l{position:relative;display:block;min-height:calc(2 * 1.35em);font-weight:var(--weight-semibold);font-size:var(--text-lead);line-height:1.35;color:var(--c-tagline)}
-.wz-gdate__l::before{content:"";position:absolute;left:0;top:-52px;width:14px;height:14px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 12px rgba(50,92,135,.8)}
+.wz-gdate:first-child .wz-gdate__d{background:none;color:var(--orange-500);-webkit-text-fill-color:var(--orange-500)}
 .wz-gdate__c{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wz-gdate__d{display:block;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(24px,2.4vw,32px);line-height:1.12;letter-spacing:-.01em;color:var(--white);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 @media (max-width:1000px){
   #route-guide .wz-g-grid--4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wz-gdate__l{min-height:0}
-  .wz-gtimeline{padding-top:0!important}
-  .wz-gtimeline::before,.wz-gdate__l::before{display:none}
 }
 @media (max-width:700px){
   #route-guide .wz-g-grid--2,#route-guide .wz-g-grid--4{grid-template-columns:minmax(0,1fr)}
@@ -2086,11 +2079,11 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   #route-guide .wz-module,#route-guide .wz-gnote{border:1px solid #999!important;border-radius:0!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}
   #route-guide .wz-g-grid{display:block!important}
   #route-guide .wz-g-grid>.wz-module{margin:0 0 6pt!important}
-  .wz-gtimeline::before,.wz-gdate__l::before{display:none!important}
   .wz-gband>.wz-container>h2{break-after:avoid;page-break-after:avoid}
   .wz-gband--split>.wz-container,#route-guide .wz-gpanel{display:block!important}
   .wz-gband{padding:10pt 0!important;border:0!important}
   #route-guide .wz-gband{break-inside:avoid;page-break-inside:avoid}
+  #route-guide .wz-band--ink{display:none!important}
   h1,h2,h3,h4{break-after:avoid;page-break-after:avoid;font-weight:700}
   table,tr,img,.wz-card,.wz-faq details{break-inside:avoid;page-break-inside:avoid}
   a{text-decoration:underline!important}
@@ -3318,6 +3311,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       
     </div>
   </section>
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
+      <div class="wz-section-head wz-section-head--center">
+        <p class="wz-gcta__text">weighzIO files these records automatically as part of the Skip Hire module.</p>
+        <div style="margin-top:var(--space-6)"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></div>
+      </div>
+    </div>
+  </section>
   <section class="wz-band wz-gband wz-gband--split">
     <div class="wz-container">
             <h2 id="dwt-notes" class="wz-grad">Digital waste transfer notes: what changes</h2>
@@ -3390,15 +3392,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li class="wz-module wz-module--static wz-glink"><span class="wz-fx" aria-hidden="true"></span><a href="https://www.legislation.gov.uk/uksi/2026/729/contents/made" rel="noopener">The Digital Waste Tracking (England) Regulations 2026 (SI 2026/729)</a><span class="wz-icon wz-glink__arrow" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span></li>
       </ul>
       
-    </div>
-  </section>
-  <section class="wz-band wz-band--ink wz-band--tight">
-    <div class="wz-container">
-      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
-      <div class="wz-section-head wz-section-head--center">
-        <p class="wz-gcta__text">weighzIO files these records automatically as part of the Skip Hire module.</p>
-        <div style="margin-top:var(--space-6)"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></div>
-      </div>
     </div>
   </section>
 </div>
