@@ -847,8 +847,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-hero__grid{position:relative;z-index:3;display:flex;align-items:center;gap:40px;flex-wrap:wrap;width:100%}
 .wz-hero__copy{flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:24px;align-items:flex-start;text-align:left}
 .wz-hero__copy{position:relative}
-/* Soft dark vignette behind the copy, above the dot wave, so text stays legible over the dots. */
-.wz-hero__copy::before{content:"";position:absolute;inset:-56px -72px -56px -96px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 62% 68% at 45% 50%,rgba(0,0,0,.9),rgba(0,0,0,.6) 60%,transparent 100%)}
 .wz-hero__copy .wz-hero__mark,.wz-hero__copy .wz-hero__lead,.wz-hero__copy .wz-hero__actions{margin:0}
 /* Glows behind the art: plain gradients, no blur filter. */
 /* Glows: real blurred elements attached to the card cluster (.wz-hero-art), so they stay behind the cards at every
@@ -857,8 +855,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-hero-art::before{width:min(760px,120vw);height:min(760px,120vw);left:50%;top:46%;translate:-50% -50%;background:radial-gradient(closest-side,rgba(50,92,135,.55),rgba(0,0,0,0))}
 .wz-hero-art::after{width:min(620px,100vw);height:min(620px,100vw);right:-120px;top:2%;background:radial-gradient(closest-side,rgba(90,123,158,.50),rgba(0,0,0,0))}
 @media (max-width:700px){.wz-hero-art::before{width:460px;height:460px}.wz-hero-art::after{width:380px;height:380px;right:-80px}}
-/* The dot wave, behind everything, across the lower hero; fades out at the bottom and sides. */
-.wz-hero::after{content:"";position:absolute;left:0;right:0;bottom:-40px;z-index:1;pointer-events:none;height:clamp(380px,52vh,640px);background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.65;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);mask-composite:intersect}
+/* The dot wave, behind everything, across the lower hero; fades out at the bottom and sides, and thins to 15-35% behind the copy
+   (third mask layer: --dm-* are set from the copy block by the script at the end of the page, so it follows the copy at every width). */
+.wz-hero::after{content:"";position:absolute;left:0;right:0;bottom:-40px;z-index:1;pointer-events:none;height:clamp(380px,52vh,640px);background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.65;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%),radial-gradient(ellipse var(--dm-rx,620px) var(--dm-ry,340px) at var(--dm-x,28%) var(--dm-y,30%),rgba(0,0,0,.12) 0%,rgba(0,0,0,.26) calc(var(--dm-p,.62) * 100%),rgba(0,0,0,.5) 85%,#000 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%),radial-gradient(ellipse var(--dm-rx,620px) var(--dm-ry,340px) at var(--dm-x,28%) var(--dm-y,30%),rgba(0,0,0,.12) 0%,rgba(0,0,0,.26) calc(var(--dm-p,.62) * 100%),rgba(0,0,0,.5) 85%,#000 100%);mask-composite:intersect}
 @media (max-width:700px){.wz-hero::after{background-image:url("images/weighzio-dots-hero-1280.webp");height:360px}}
 .wz-hero__mark{display:flex;align-items:center;gap:14px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
@@ -4620,6 +4619,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
     openIt(d);
   });
+})();
+</script>
+<script>
+/* Hero dots: anchor the thinning mask to the copy block. Sets --dm-x/-y/-rx/-ry/-p on each hero from the copy's bounds,
+   relative to the dot layer (.wz-hero::after: left 0, right 0, bottom -40px). Visual only. */
+(function () {
+  var heroes = document.querySelectorAll(".wz-hero");
+  if (!heroes.length) return;
+  function update(hero) {
+    var copy = hero.querySelector(".wz-hero__copy");
+    if (!copy) return;
+    var h = hero.getBoundingClientRect(), c = copy.getBoundingClientRect();
+    if (!c.width || !h.width) return;
+    var H = parseFloat(getComputedStyle(hero, "::after").height) || 0;
+    var top = h.bottom + 40 - H;
+    var rx = c.width / 2 * 1.4 + 90, ry = c.height / 2 * 1.4 + 90;
+    hero.style.setProperty("--dm-x", (c.left + c.width / 2 - h.left).toFixed(1) + "px");
+    hero.style.setProperty("--dm-y", (c.top + c.height / 2 - top).toFixed(1) + "px");
+    hero.style.setProperty("--dm-rx", rx.toFixed(1) + "px");
+    hero.style.setProperty("--dm-ry", ry.toFixed(1) + "px");
+    hero.style.setProperty("--dm-p", Math.min(.8, c.width / 2 / rx).toFixed(3));
+  }
+  function all() { Array.prototype.forEach.call(heroes, update); }
+  if ("ResizeObserver" in window) {
+    var ro = new ResizeObserver(all);
+    Array.prototype.forEach.call(heroes, function (hero) { ro.observe(hero); var c = hero.querySelector(".wz-hero__copy"); if (c) ro.observe(c); });
+  }
+  window.addEventListener("resize", all);
+  window.addEventListener("load", all);
+  all();
 })();
 </script>
 </body>
