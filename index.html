@@ -1967,7 +1967,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-gnote{margin:var(--space-6) 0 0;padding:var(--space-6);border-radius:var(--radius-card);background:var(--g-panel);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 0 rgba(255,255,255,.14);color:var(--c-text-bright);font-size:var(--text-lead);line-height:1.7}
 /* 03: horizontal timeline of four date cards; every date gets the same treatment */
 .wz-gtimeline{position:relative;padding-top:34px!important}
-.wz-gtimeline{--tg:var(--space-6);--tpad:var(--space-6);column-gap:var(--tg)}
+.wz-gtimeline{--tg:var(--space-6);--tpad:25px;column-gap:var(--tg)}
 .wz-gtimeline::before{content:"";position:absolute;top:11px;left:calc(var(--tpad) + 7px);right:calc((100% - 3 * var(--tg)) / 4 - var(--tpad) - 7px);height:2px;background:var(--g-card-border);opacity:.55}
 .wz-gdate{overflow:visible!important}
 .wz-gdate::after{left:24px!important;right:24px!important}
@@ -2073,6 +2073,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   .wz-gband>.wz-container>h2{break-after:avoid;page-break-after:avoid}
   .wz-gband--split>.wz-container,#route-guide .wz-gpanel{display:block!important}
   .wz-gband{padding:10pt 0!important;border:0!important}
+  #route-guide .wz-gband{break-inside:avoid;page-break-inside:avoid}
   h1,h2,h3,h4{break-after:avoid;page-break-after:avoid;font-weight:700}
   table,tr,img,.wz-card,.wz-faq details{break-inside:avoid;page-break-inside:avoid}
   a{text-decoration:underline!important}
