@@ -1532,7 +1532,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
    One-sided layouts: AI Voice Agent aside, privacy, enquire
    ========================================================================== */
 /* AI voice agent hero: the call mockup sits in the shared hero art slot, centred against the copy. */
-.wz-hero--page{min-height:clamp(580px,calc((100vh - 120px) * .78),780px);min-height:clamp(580px,calc((100svh - 120px) * .78),780px)}
 .wz-hero.wz-hero--page .wz-hero-art--call{flex:0 1 480px;height:auto;min-height:0;display:flex;align-items:center;justify-content:center}
 .wz-hero-art--call .wz-mockup{position:relative;align-self:center;width:100%;max-width:480px;z-index:2}
 .wz-mockup__call-body{padding:18px;display:flex;flex-direction:column;gap:12px}
@@ -1704,7 +1703,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 
     /* /ai-voice-agent bands: text and cards are sharp as soon as they are fully on screen (they sit near the fold at
        load). Own block so the shared defaults, which the homepage uses, are untouched. */
-    #route-ai-voice-agent :is(.wz-ai-text h2,.wz-ai-text__body>p,.wz-band:not(.wz-band--tight) .wz-section-head>h2){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 18%}
+    #route-ai-voice-agent :is(.wz-ai-text h2,.wz-ai-text__body>p,.wz-band:not(.wz-band--tight) .wz-section-head>h2){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
     #route-ai-voice-agent .wz-ai-cards>.wz-module{animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 16%}
     #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(3n+2){animation-range:entry 3% cover 19%}
     #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(3n){animation-range:entry 6% cover 22%}
@@ -1713,9 +1712,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
     }
     @media (max-width:700px){#route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}}
-    /* Content already on the first screen at load plays no entrance (set by the small script near the FAQ one). */
-    /* Repeated class on purpose: it must outrank the :is() list above, which takes its heaviest selector's specificity. */
-    html body #route-ai-voice-agent .wz-no-entrance.wz-no-entrance.wz-no-entrance.wz-no-entrance.wz-no-entrance{animation:none}
 
     /* Slide-in: list items and FAQ rows. */
     :where(
@@ -4420,28 +4416,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
     openIt(d);
   });
-})();
-</script>
-<script>
-/* /ai-voice-agent: text and cards that already sit on the first screen when the route is shown skip their entrance
-   animation, so nothing is half-blurred at rest. Measured from the page top (not the scroll position), once per time
-   the route is shown. Failure just leaves the normal scroll-linked entrance. */
-(function () {
-  var panel = document.getElementById("route-ai-voice-agent");
-  if (!panel || !window.requestAnimationFrame) return;
-  var SEL = ".wz-ai-text h2, .wz-ai-text__body > p, .wz-ai-cards > .wz-module, .wz-band:not(.wz-band--tight) .wz-section-head > h2";
-  function mark() {
-    try {
-      var els = panel.querySelectorAll(SEL), limit = window.innerHeight * 0.98;
-      Array.prototype.forEach.call(els, function (e) {
-        e.classList.remove("wz-no-entrance");
-        if (e.getBoundingClientRect().top + window.scrollY < limit) e.classList.add("wz-no-entrance");
-      });
-    } catch (err) { /* leave the normal entrance */ }
-  }
-  function onShow() { if (!panel.hidden) window.requestAnimationFrame(mark); }
-  if (window.MutationObserver) new MutationObserver(onShow).observe(panel, { attributes: true, attributeFilter: ["hidden"] });
-  onShow();
 })();
 </script>
 <script>
