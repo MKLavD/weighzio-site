@@ -10,6 +10,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
 
 <title>weighzIO | Modular Waste Management Software for Skip Hire &amp; Waste</title>
 <meta name="description" content="Modular waste management software for skip hire, waste and aggregates operators. Sixteen modules, no mandatory core, digital waste tracking built into Skip Hire. Pay only for what you run.">
@@ -29,105 +31,163 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Outfit:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito+Sans:opsz,wght@6..12,400..700&display=swap">
 
-<link rel="preload" as="image" href="images/hero-yard-1920.webp" imagesrcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
 
 <style>
 /* ==========================================================================
    weighzIO design system — tokens
-   Navy #122D4B and orange #F47D2D. Every neutral is a desaturated navy step.
+   Laventus dark system: black page, blue to purple gradients, cyan glow
+   buttons. Orange survives only as the brand accent (logo, burst, the
+   Custom Modules border). The old weighzIO token names are kept below as
+   aliases onto the new set so existing rules keep working.
    ========================================================================== */
 :root{
-  /* Navy scale (all derived from --navy) */
-  --navy-900: #08192B;
-  --navy-700: #122D4B;
-  --navy-600: #1E436A;
-  --navy-500: #325C87;
-  --navy-400: #5A7B9E;
-  --navy-300: #8FA5BC;
-  --navy-200: #C2CFDC;
-  --navy-100: #DFE6EE;
-  --navy-050: #EFF3F7;
-  --navy-025: #F7F9FB;
+  color-scheme: dark;
 
-  /* Orange scale — rationed. Only CTA fills, CTA press state, and the burst. */
+  /* Fonts. Nunito Sans digits are all one width (600 units at 400 and 700),
+     so figures align in columns without a tnum feature; IBM Plex Sans is gone. */
+  --font-heading: Montserrat, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Nunito Sans", Avenir, "Avenir Next", "Open Sans", Arial, sans-serif;
+
+  /* Colours */
+  --c-bg: #000000;
+  --c-blue: #2F62F6;
+  --c-hero-blue: #2A80FF;
+  --c-purple: #7C5EFB;
+  --c-cyan: #00CEFF;            /* primary buttons, dots, glows only */
+  --c-cyan-hover: #5CE3FF;
+  --c-cyan-press: #00B4E0;
+  --c-card-1: #1F2E4A;
+  --c-card-2: #1A1430;
+  --c-panel-1: #101A33;
+  --c-panel-2: #140D2B;
+  --c-border-a: #4189D7;        /* card hover border */
+  --c-border-b: #7E3AF2;
+  --c-canvas: #000000;          /* every section is pure black, as on Laventus: separation comes from spacing, glows and cards */
+  --c-input-border: #6F7E9F;    /* form control edge, 4.5:1 on black */
+
+  /* Text */
+  --c-heading: #FFFFFF;
+  --c-text: #D6DDEC;
+  --c-text-bright: #E4EAF7;
+  --c-text-small: #BCC5DA;
+  --c-text-muted: #B4BCD0;
+  --c-on-cyan: #070B1A;         /* text on cyan buttons */
+  --c-link: #7FB2FF;
+  --c-link-hover: #B3D2FF;
+  --c-tagline: #9CC8FF;
+
+  /* Brand orange: small accents only (logo, burst, custom-module border) */
   --orange-400: #F47D2D;
-  --orange-300: #F79C5E;
-  --orange-press: #EA782B;  /* CTA press — navy label 4.80:1 */
-  --orange-border: #F9B183; /* CTA border, lighter than the fill */
+  --orange-press: #EA782B;
 
-  /* One deliberate exception to navy/orange: compliance or success status
-     only (a "filed"/"on time" badge) — never decorative, never a stand-in
-     for orange's CTA role. #15803D on white is ~5.9:1. */
-  --color-success: #15803D;
-  --color-success-tint: rgba(21,128,61,.12);
-
-  /* Second deliberate exception: the home page module grid's four group
-     colours, sampled from the supplied mockup. Confirmed intentional for
-     this one section, not a drift away from the "two colours only" brief
-     elsewhere on the site. */
-  --group-operations:#3B6FA0;--group-operations-tint:#BFD9F0;
-  --group-fleet:#1C9A4B;--group-fleet-tint:#C8E9CA;
-  --group-money:#F2A20F;--group-money-tint:#FFE2A8;
-  --group-specialist:#7C63FD;--group-specialist-tint:#DCD9F8;
+  /* Status: the only non-brand hues, used for tiny semantic marks (a "posted"
+     tag, form success and error text), never decoration. */
+  --color-success: #5FD39A;
+  --color-success-tint: rgba(95,211,154,.14);
+  --color-error: #FF9B9B;
 
   --white: #FFFFFF;
 
-  /* Semantic aliases: text */
-  --text-heading: var(--navy-700);
-  --text-body: var(--navy-600);
-  --text-muted: var(--navy-400);
-  --text-eyebrow: var(--navy-500);
-  --text-on-orange: var(--navy-700); /* navy on orange = 5.20:1. Never white. */
-  --text-link: var(--navy-700);
-  --text-link-hover: var(--navy-700);
+  /* Gradients: blue to purple is the only pairing */
+  --g-headline: linear-gradient(100deg, #FFFFFF 0%, #E6EEFF 24%, #6AA6FF 44%, #9C86FF 60%, #6AA6FF 76%, #E6EEFF 90%, #FFFFFF 100%);
+  --g-number: linear-gradient(180deg, #FFFFFF 10%, #2A80FF 70%, #7C5EFB 100%);
+  --g-chip: linear-gradient(145deg, #2F62F6, #7C5EFB);
+  --g-card: linear-gradient(165deg, #1F2E4A 0%, #1A1430 70%);
+  --g-card-border: linear-gradient(135deg, #4189D7, #7E3AF2);
+  --g-panel: linear-gradient(160deg, #101A33 0%, #140D2B 100%);
 
-  /* Semantic aliases: surfaces */
-  --surface-page: var(--white);
-  --surface-canvas: var(--navy-025);
-  --surface-card: var(--white);
-  --surface-card-tint: var(--navy-050);
-  --surface-ink: var(--navy-700);      /* navy punctuation blocks */
-  --surface-cta: var(--orange-400);
-  --surface-cta-hover: var(--orange-300);   /* #F79C5E — navy label 6.57:1 */
-  --surface-cta-press: var(--orange-press); /* #EA782B — navy label 4.80:1 */
+  /* Glows. Depth on black comes from these, not from drop shadows. */
+  --glow-cyan: 0 0 14px rgba(0, 206, 255, .7), 0 0 4px rgba(184, 240, 255, .5);
+  --glow-cyan-mid: 0 0 24px rgba(0, 206, 255, .85), 0 0 8px rgba(184, 240, 255, .6);
+  --glow-cyan-hover: 0 0 48px rgba(0, 206, 255, .95), 0 0 16px rgba(92, 227, 255, .85), 0 0 4px rgba(255, 255, 255, .5);
+  --glow-cyan-press: 0 0 10px rgba(0, 206, 255, .6), inset 0 2px 6px rgba(0, 0, 0, .3);
+  --shadow-sm: inset 0 1px 0 rgba(255,255,255,.06), 0 0 24px rgba(47,98,246,.10);
+  --shadow-md: inset 0 1px 0 rgba(255,255,255,.08), 0 0 36px rgba(47,98,246,.18);
+  /* One glow for every image card on /modules (mockups and photographs). */
+  --wz-media-glow: 0 0 64px rgba(47,98,246,.22), 0 0 28px rgba(124,94,251,.14);
+  --shadow-lg: inset 0 1px 0 rgba(255,255,255,.08), var(--wz-media-glow);
 
-  /* Semantic aliases: lines */
-  --border-hairline: var(--navy-100);
-  --border-strong: var(--navy-200);
+
+  /* Type scale */
+  --fs-h1: clamp(44px, 5.3vw, 76px);
+  --fs-h2: clamp(34px, 4vw, 54px);
+  --fs-h2-xl: clamp(38px, 4.8vw, 66px);
+  --fs-h3: 21px;
+  --fs-lead: 19px;
+  --fs-body: 18px;
+  --fs-small: 15px;
+
+  /* Shape and layout */
+  --radius-btn: 999px;
+  --radius-card: 24px;
+  --radius-panel: 36px;
+  --box: 1440px;
+  --gutter: clamp(20px, 3vw, 32px);
+  --section-gap: clamp(64px, 8vw, 112px); /* Laventus uses 160px; too long for sixteen modules */
+
+  /* ---- Aliases: old weighzIO names mapped onto the set above ---- */
+  --font-display: var(--font-heading);
+
+  /* Neutral scale, repurposed for dark: 025-100 are surfaces and hairlines,
+     200-500 are muted foregrounds, 600-700 are the main foreground. Rules
+     that used navy as a *background* are re-pointed individually. */
+  --navy-700: var(--c-heading);
+  --navy-500: var(--c-text-small);
+  --navy-400: var(--c-text-muted);
+  --navy-300: #8F9BB5;
+  --navy-200: rgba(255,255,255,.18);
+  --navy-100: rgba(255,255,255,.10);
+  --navy-050: rgba(255,255,255,.07);
+  --navy-025: rgba(255,255,255,.04);
+
+  --text-heading: var(--c-heading);
+  --text-body: var(--c-text);
+  --text-muted: var(--c-text-muted);
+  --text-eyebrow: var(--c-tagline);
+  --text-link: var(--c-link);
+  --text-link-hover: var(--c-link-hover);
+
+  --surface-page: var(--c-bg);
+  --surface-canvas: var(--c-canvas);
+  --surface-ink: var(--g-panel);
+  --surface-cta: var(--c-cyan);
+  --surface-cta-hover: var(--c-cyan-hover);
+  --surface-cta-press: var(--c-cyan-press);
+
+  --border-hairline: rgba(255,255,255,.10);
+  --border-strong: rgba(255,255,255,.20);
   --border-on-ink: rgba(255,255,255,.18);
-  --focus-ring: var(--navy-700);
-  --focus-ring-on-ink: var(--white);
+  --focus-ring: var(--c-cyan);
+  --focus-ring-on-ink: var(--c-cyan);
 
-  /* Type */
-  --font-display: "Outfit", "Museo Sans", system-ui, sans-serif;   /* geometric — headings, wordmark */
-  --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif; /* grotesque — body, UI, data */
-
-  --text-display-1: 4rem;    /* 64 */
-  --text-h1: 2.75rem;        /* 44 */
-  --text-h2: 2rem;           /* 32 */
-  --text-h3: 1.5rem;         /* 24 */
+  --text-h1: var(--fs-h1);
+  --text-h2: var(--fs-h2);
+  --text-h3: var(--fs-h3);
   --text-h4: 1.25rem;        /* 20 */
-  --text-lead: 1.1875rem;    /* 19 */
-  --text-body-md: 1.0625rem; /* 17 */
-  --text-body-sm: 0.9375rem; /* 15 */
+  --text-lead: var(--fs-lead);
+  --text-body-md: var(--fs-body);
+  --text-body-sm: var(--fs-small);
   --text-micro: 0.8125rem;   /* 13 — eyebrows, table meta */
 
-  --leading-tight: 1.04;
-  --leading-heading: 1.14;
-  --leading-body: 1.55;
+  --leading-tight: 1.02;
+  --leading-heading: 1.12;
+  --leading-body: 1.7;
 
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-xbold: 800;
 
-  --tracking-display: -0.02em;
-  --tracking-heading: -0.01em;
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.015em;
   --tracking-eyebrow: 0.12em;
 
-  /* Numerals: every weight, tonnage and percentage uses tabular figures */
   --numeric-tabular: "tnum" 1, "lnum" 1;
+
+  --overlay-scrim: rgba(0,0,0,.72);
 
   /* Spacing */
   --space-1: 4px;
@@ -140,44 +200,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
-  --space-20: 80px;
-  --space-24: 96px;
 
-  --gutter: var(--space-6);
-  --container-max: 1400px; /* raised from 1200px so the Modules page's wider
-     visual column has room without its own container override — every
-     .wz-container, .wz-header__inner and .wz-hero__inner site-wide inherits
-     this, not just Modules. */
+  --container-max: var(--box);
   --container-narrow: 720px;
   /* Single source for the module popup's horizontal content inset — header
-     hairline, footer hairline and the footer's own padding (which the
-     mobile full-width buttons inherit via width:100%) all reference this,
-     redefined once inside the popup's mobile media query, so they move
-     together rather than needing separate fixes each time it changes. */
+     hairline, footer hairline and the footer's own padding all reference this,
+     redefined once inside the popup's mobile media query. */
   --modal-pad-x: var(--space-8);
 
-  /* Shape */
-  --radius-xs: 2px;   /* tags, table cell accents */
-  --radius-sm: 4px;   /* inputs, small chips */
-  --radius-md: 6px;   /* buttons */
-  --radius-lg: 12px;  /* cards, module tiles */
-  --radius-xl: 20px;  /* feature panels, dialogs */
+  --radius-xs: 4px;
+  --radius-sm: 10px;   /* inputs */
+  --radius-md: 12px;   /* chips, icon buttons */
+  --radius-lg: var(--radius-card);
+  --radius-xl: var(--radius-panel);
   --radius-pill: 999px;
   --border-width: 1px;
   --border-width-strong: 2px;
 
-  /* Elevation — navy-tinted, never neutral black */
-  --shadow-sm: 0 1px 2px rgba(18,45,75,.07), 0 3px 8px rgba(18,45,75,.05);
-  --shadow-md: 0 2px 4px rgba(18,45,75,.06), 0 8px 20px rgba(18,45,75,.07);
-  --shadow-lg: 0 4px 8px rgba(18,45,75,.07), 0 20px 44px rgba(18,45,75,.10);
-  /* CTA glow: blur only, no offset, no spread. Never an offset drop shadow. */
-  --shadow-cta: 0 0 18px 0 rgba(244,125,45,.45);
-  --shadow-cta-wide: 0 0 32px 0 rgba(244,125,45,.30);
-  --shadow-cta-press: inset 0 2px 6px rgba(18,45,75,.28);
-  --shadow-on-ink: 0 2px 6px rgba(5,15,28,.30), 0 12px 32px rgba(5,15,28,.24);
-  --overlay-scrim: rgba(8,25,43,.55);
-
-  /* Motion — short and functional. No bounce, no overshoot. */
+  /* Motion — short and functional. */
   --ease-out: cubic-bezier(.2,.6,.2,1);
   --ease-in-out: cubic-bezier(.4,0,.2,1);
   --duration-fast: 120ms; /* hover, focus */
@@ -206,9 +246,11 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
    exactly as plain block flow produced before, so this is inert for
    them. */
 #main{flex:1 0 auto;display:flex;flex-direction:column}
-h1:not(.wz-eyebrow),h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
-h1:not(.wz-eyebrow){font-size:var(--text-h1);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
-h2{font-size:var(--text-h2)}
+h1:not(.wz-eyebrow),h2,h3,h4{font-family:var(--font-display);color:var(--text-heading);margin:0;font-weight:var(--weight-bold);letter-spacing:var(--tracking-heading);line-height:var(--leading-heading)}
+h1:not(.wz-eyebrow){font-size:var(--text-h1);font-weight:var(--weight-xbold);letter-spacing:var(--tracking-display);line-height:var(--leading-tight)}
+h2{font-size:var(--text-h2);line-height:1.08}
+/* Inner-route page titles are long sentences; the full display size is for the hero. */
+.wz-route--inner h1:not(.wz-eyebrow){font-size:clamp(36px,4.2vw,58px)}
 h3{font-size:var(--text-h3)}
 h4{font-size:var(--text-h4)}
 p{margin:0 0 var(--space-4);text-wrap:pretty}
@@ -220,7 +262,7 @@ table{border-collapse:collapse;font-variant-numeric:tabular-nums}
 th{font-family:var(--font-body);font-weight:var(--weight-semibold);color:var(--text-heading);text-align:left}
 td,th{font-feature-settings:var(--numeric-tabular)}
 img{max-width:100%}
-::selection{background:var(--navy-700);color:var(--white)}
+::selection{background:var(--c-blue);color:var(--white)}
 [hidden]{display:none!important}
 
 .wz-eyebrow{font-family:var(--font-body);font-size:var(--text-micro);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--text-eyebrow)}
@@ -241,32 +283,32 @@ img{max-width:100%}
 /* ==========================================================================
    Buttons
    ========================================================================== */
-.wz-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-body-sm);line-height:1;letter-spacing:0;border-radius:var(--radius-md);border:var(--border-width) solid transparent;padding:13px var(--space-5);cursor:pointer;text-decoration:none;transition:var(--transition-hover),transform var(--duration-fast) var(--ease-out);white-space:nowrap}
+.wz-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-heading);font-weight:var(--weight-bold);font-size:var(--text-body-sm);line-height:1;letter-spacing:0;border-radius:var(--radius-btn);border:var(--border-width) solid transparent;padding:14px var(--space-6);cursor:pointer;text-decoration:none;transition:var(--transition-hover),transform var(--duration-fast) var(--ease-out);white-space:nowrap}
 .wz-btn:hover{text-decoration:none}
-.wz-btn--sm{padding:9px var(--space-4);font-size:var(--text-micro)}
-.wz-btn--lg{padding:16px var(--space-6);font-size:var(--text-body-md)}
+.wz-btn--sm{padding:10px var(--space-4);font-size:var(--text-micro)}
+.wz-btn--lg{padding:17px var(--space-8);font-size:var(--text-body-md)}
 .wz-btn--block{width:100%}
-.wz-btn--primary{background:var(--surface-cta);color:var(--text-on-orange);border-color:var(--orange-border);box-shadow:var(--shadow-cta);animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite;transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out)}
-.wz-btn--primary:hover{background:var(--surface-cta-hover);color:var(--text-on-orange);border-color:#FBC9A6;transform:scale(1.025)}
-.wz-btn--primary:active{background:var(--surface-cta-press);transform:scale(.985);animation:none;box-shadow:var(--shadow-cta-press);transition-duration:70ms}
-@keyframes wz-cta-pulse{0%,100%{box-shadow:var(--shadow-cta)}50%{box-shadow:var(--shadow-cta-wide)}}
-@media (prefers-reduced-motion:reduce){.wz-btn--primary{animation:none}.wz-btn--primary:active{transform:scale(.985);box-shadow:var(--shadow-cta-press)}}
-.wz-btn--secondary{background:var(--white);color:var(--navy-700);border-color:var(--navy-700)}
-.wz-btn--secondary:hover{background:var(--navy-050);color:var(--navy-700)}
-.wz-btn--secondary:active{background:var(--navy-100);transform:translateY(1px)}
+.wz-btn--primary{background:var(--surface-cta);color:var(--c-on-cyan);border-color:transparent;box-shadow:var(--glow-cyan);animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite;transition:background-color var(--duration-fast) var(--ease-out),border-color var(--duration-fast) var(--ease-out),transform 200ms cubic-bezier(.2,.8,.3,1),box-shadow 200ms var(--ease-out)}
+.wz-btn--primary:hover{background:var(--surface-cta-hover);color:var(--c-on-cyan);box-shadow:var(--glow-cyan-hover);animation:none;transform:scale(1.025)}
+.wz-btn--primary:active{background:var(--surface-cta-press);transform:scale(.985);animation:none;box-shadow:var(--glow-cyan-press);transition-duration:70ms}
+@keyframes wz-cta-pulse{0%,100%{box-shadow:var(--glow-cyan)}50%{box-shadow:var(--glow-cyan-mid)}}
+@media (prefers-reduced-motion:reduce){.wz-btn--primary{animation:none}.wz-btn--primary:active{transform:scale(.985);box-shadow:var(--glow-cyan-press)}.wz-btn--primary:hover,.wz-btn--secondary:hover{transform:none}}
+.wz-btn--secondary{background:rgba(255,255,255,.08);color:var(--white);border-color:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:var(--transition-hover),transform 200ms cubic-bezier(.2,.8,.3,1)}
+.wz-btn--secondary:hover{background:rgba(255,255,255,.14);color:var(--white);border-color:rgba(255,255,255,.45);transform:scale(1.025)}
+.wz-btn--secondary:active{background:rgba(255,255,255,.18);transform:scale(.985);transition-duration:70ms}
 /* Optional-further-reading CTA on a navy band - transparent/white outline,
    never the solid-orange primary treatment, since it isn't a conversion
    action. */
-.wz-btn--outline-white{background:transparent;color:var(--white);border-color:var(--white)}
-.wz-btn--outline-white:hover{background:var(--white);color:var(--navy-700)}
+.wz-btn--outline-white{background:rgba(255,255,255,.08);color:var(--white);border-color:rgba(255,255,255,.28);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.wz-btn--outline-white:hover{background:rgba(255,255,255,.16);color:var(--white);border-color:rgba(255,255,255,.45)}
 .wz-btn__arrow{width:14px;height:14px;background-color:currentColor;transition:transform var(--duration-fast) var(--ease-out)}
 .wz-btn--outline-white:hover .wz-btn__arrow{transform:translateX(3px)}
-.wz-btn--inverse{background:transparent;color:var(--white);border-color:var(--border-on-ink)}
+.wz-btn--inverse{background:rgba(255,255,255,.06);color:var(--white);border-color:var(--border-on-ink)}
 .wz-btn--inverse:hover{background:rgba(255,255,255,.10);color:var(--white)}
 .wz-btn--inverse:focus-visible{outline-color:var(--focus-ring-on-ink)}
 .wz-btn[disabled],.wz-btn[aria-disabled="true"]{opacity:.42;cursor:not-allowed;transform:none;box-shadow:none;animation:none}
 
-.wz-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-md);border:var(--border-width) solid var(--border-hairline);background:var(--white);color:var(--navy-700);cursor:pointer;transition:var(--transition-hover)}
+.wz-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-pill);border:var(--border-width) solid var(--border-strong);background:rgba(255,255,255,.08);color:var(--white);cursor:pointer;transition:var(--transition-hover)}
 .wz-iconbtn:hover{background:var(--navy-050);border-color:var(--border-strong)}
 .wz-iconbtn:active{background:var(--navy-100)}
 .wz-iconbtn--bare{border-color:transparent;background:transparent}
@@ -276,9 +318,16 @@ img{max-width:100%}
 /* ==========================================================================
    Cards
    ========================================================================== */
-.wz-card{background:var(--surface-card);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm)}
-.wz-card--tint{background:var(--surface-card-tint);border-color:transparent}
-.wz-card--pad-lg{padding:var(--space-8)}
+/* Gradient edge shared by cards and module tiles: a masked pseudo-element
+   (border-image ignores border-radius), hidden at rest. Only its opacity
+   transitions, so sixteen tiles never animate a box-shadow or filter. */
+.wz-card,.wz-module{position:relative}
+.wz-card::before,.wz-module::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:var(--g-card-border);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;transition:opacity var(--duration-base) var(--ease-out);pointer-events:none}
+.wz-card:hover::before,.wz-module:hover::before,.wz-module:focus-visible::before{opacity:1}
+.wz-card:has(form)::before{display:none}
+.wz-card{background:var(--g-card);border:0;border-radius:var(--radius-card);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+.wz-card--tint{background:var(--g-panel);border-radius:var(--radius-panel)}
+.wz-card--pad-lg{padding:clamp(24px,4vw,48px)}
 .wz-card--raised{box-shadow:var(--shadow-md)}
 
 /* ==========================================================================
@@ -288,18 +337,18 @@ img{max-width:100%}
 .wz-section-head p{margin:0;font-size:var(--text-lead);color:var(--text-body)}
 .wz-section-head--center{margin:0 auto;text-align:center;align-items:center}
 .wz-band--ink .wz-section-head h2,.wz-band--ink .wz-section-head h3{color:var(--white)}
-.wz-band--ink .wz-section-head p{color:rgba(255,255,255,.82)}
+.wz-band--ink .wz-section-head p{color:var(--c-text-bright)}
 
 /* Thank-you route: a calm, centred confirmation - deliberately not
    styled as a form-adjacent notice, since it's now its own page. */
 .wz-thankyou{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:52ch;margin:0 auto}
-.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--navy-050);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
-.wz-thankyou__icon .wz-icon{width:28px;height:28px;background-color:var(--navy-700)}
+.wz-thankyou__icon{width:64px;height:64px;border-radius:var(--radius-pill);background:var(--g-chip);box-shadow:0 0 0 8px rgba(47,98,246,.18),0 0 0 18px rgba(124,94,251,.09),0 0 44px rgba(47,98,246,.55);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-6)}
+.wz-thankyou__icon .wz-icon{width:28px;height:28px;background-color:var(--white)}
 .wz-thankyou .wz-eyebrow{margin-bottom:var(--space-3)}
 .wz-thankyou h1{margin:0 0 var(--space-4)}
 .wz-thankyou__lead{font-size:var(--text-lead);color:var(--text-heading);margin:0 0 var(--space-4)}
 .wz-thankyou p:not(.wz-thankyou__lead){color:var(--text-body);margin:0}
-.wz-thankyou a{color:var(--navy-700);text-decoration:underline;text-underline-offset:3px}
+.wz-thankyou a{color:var(--text-link);text-decoration:underline;text-underline-offset:3px}
 /* Vertically centres the confirmation within the header-to-footer space,
    not just within the page's own content height.
 
@@ -325,122 +374,87 @@ img{max-width:100%}
    Scoped to this one route ID only; .wz-route itself is untouched, so
    every other route's layout is unaffected. */
 #route-thank-you{flex:1 0 auto;display:flex;flex-direction:column;justify-content:center}
-.wz-band--ink .wz-eyebrow{color:rgba(255,255,255,.66)}
+#route-thank-you .wz-band{padding:calc(var(--header-h) + 32px) 0 clamp(40px,5vw,64px)}
+.wz-band--ink .wz-eyebrow{color:var(--c-tagline)}
 
 /* ==========================================================================
    Module tile (sixteen-module grid)
    ========================================================================== */
-.wz-module{position:relative;display:flex;flex-direction:column;gap:var(--space-3);background:var(--surface-card);border:var(--border-width) solid var(--border-hairline);border-left-width:3px;border-radius:var(--radius-lg);padding:var(--space-5);text-align:left;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform 120ms ease,border-color 120ms ease,box-shadow var(--duration-base) var(--ease-out);font:inherit;color:inherit;cursor:pointer;width:100%}
-.wz-module:hover{transform:translateY(-2px);border-color:var(--border-strong);box-shadow:var(--shadow-md);color:inherit;text-decoration:none}
+.wz-module{display:flex;flex-direction:column;gap:var(--space-3);background:var(--g-card);border:var(--border-width) solid transparent;border-radius:var(--radius-card);padding:var(--space-5);text-align:left;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform 120ms ease;font:inherit;color:inherit;cursor:pointer;width:100%}
+.wz-module:hover{transform:scale(1.01);color:inherit;text-decoration:none}
+@media (prefers-reduced-motion:reduce){.wz-module:hover{transform:none}}
 /* Quiet "this opens something" affordance, bottom-right corner. Faint at rest
    (visible without hover for touch, since hover never fires there) and a
    touch stronger on hover to pair with the existing lift/scale. Small and
    out of the way of the icon/title/body above it. */
-.wz-module__corner{position:absolute;right:var(--space-4);bottom:var(--space-4);width:14px;height:14px;background:var(--navy-700);opacity:.22;transition:opacity var(--duration-fast) var(--ease-out);transform:rotate(-45deg)}
-.wz-module:hover .wz-module__corner{opacity:.5}
-.wz-module--custom .wz-module__corner{background:var(--orange-press)}
-.wz-module__title{font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-semibold);color:var(--text-heading);line-height:var(--leading-heading)}
+.wz-module__corner{position:absolute;right:var(--space-4);bottom:var(--space-4);width:14px;height:14px;background:var(--c-tagline);opacity:.7;transition:opacity var(--duration-fast) var(--ease-out);transform:rotate(-45deg)}
+.wz-module:hover .wz-module__corner{opacity:1}
+.wz-module--custom .wz-module__corner{background:var(--orange-400);opacity:.7}
+.wz-module__title{font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-bold);color:var(--text-heading);line-height:var(--leading-heading)}
 .wz-module__body{font-size:var(--text-body-sm);color:var(--text-body);margin:0}
-.wz-module__icon{color:var(--navy-700)}
+.wz-module__icon{color:var(--white)}
 
 /* Icon swatch: a tinted rounded square behind each card's icon, coloured
    per group below. */
-.wz-module__icon-wrap{width:40px;height:40px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex:none}
+.wz-module__icon-wrap{width:40px;height:40px;border-radius:var(--radius-md);background:var(--g-chip);display:flex;align-items:center;justify-content:center;flex:none}
 .wz-module__icon-wrap .wz-module__icon{width:20px;height:20px}
 
-/* Four group accent colours — a deliberate, confirmed exception to the
-   site's "two colours only" brief, scoped to this one grid. Each group's
-   colour appears three places: the group header's dot, the card's 3px
-   left edge (border-left-width set on .wz-module above), and the icon
-   swatch's tint/icon colour. Declared after .wz-module:hover so the
-   left-edge colour (a longhand, border-left-color) wins over the hover
-   rule's border-color shorthand at equal specificity — source order is
-   the tiebreaker there, confirmed by checking the hover state directly
-   rather than assuming equal-specificity order plays out as expected. */
-.wz-module[data-group="operations"]{border-left-color:var(--group-operations)}
-.wz-module[data-group="operations"] .wz-module__icon-wrap{background:var(--group-operations-tint)}
-.wz-module[data-group="operations"] .wz-module__icon{color:var(--group-operations)}
-.wz-module-group__dot--operations{background:var(--group-operations)}
+/* The old four-hue group colouring (blue, green, amber, purple) is gone:
+   on black it made some tiles louder than others, and green and amber sit
+   outside the blue-to-purple palette. Every tile is now identical; the
+   group is carried by its labelled header and a small cyan dot. */
 
-.wz-module[data-group="fleet"]{border-left-color:var(--group-fleet)}
-.wz-module[data-group="fleet"] .wz-module__icon-wrap{background:var(--group-fleet-tint)}
-.wz-module[data-group="fleet"] .wz-module__icon{color:var(--group-fleet)}
-.wz-module-group__dot--fleet{background:var(--group-fleet)}
-
-.wz-module[data-group="money"]{border-left-color:var(--group-money)}
-.wz-module[data-group="money"] .wz-module__icon-wrap{background:var(--group-money-tint)}
-.wz-module[data-group="money"] .wz-module__icon{color:var(--group-money)}
-.wz-module-group__dot--money{background:var(--group-money)}
-
-.wz-module[data-group="specialist"]{border-left-color:var(--group-specialist)}
-.wz-module[data-group="specialist"] .wz-module__icon-wrap{background:var(--group-specialist-tint)}
-.wz-module[data-group="specialist"] .wz-module__icon{color:var(--group-specialist)}
-.wz-module-group__dot--specialist{background:var(--group-specialist)}
-
-/* Sixteenth tile: custom modules. Orange edge, white fill — never a solid orange block.
-   Deck 6, outstanding fix: orange-500 title measured 3.43:1 on white and failed AA.
-   Title stays navy and the orange border does the distinguishing. Dashed
-   rather than solid, per the group restyle - it sits inside the Specialist
-   group visually (purple dot/label in that group's header), but the card
-   itself keeps its own distinct orange treatment rather than adopting
-   the group's purple, which needs the compound selector below: the plain
-   [data-group="specialist"] rule two blocks up is a class+attribute
-   selector (0,2,0) — more specific than .wz-module--custom alone
-   (0,1,0) — so without this, the specialist purple would win the
-   left-edge colour despite coming first in the file. Confirmed by
-   checking the rendered left border directly rather than assuming the
-   source-order note in the original brief was sufficient on its own. */
-.wz-module--custom{background:var(--surface-card);border-color:var(--orange-400);border-style:dashed}
-.wz-module--custom .wz-module__title{color:var(--navy-700)}
-.wz-module--custom:hover{border-color:var(--orange-400)}
-.wz-module--custom .wz-module__icon{color:var(--orange-press)}
-.wz-module[data-group="specialist"].wz-module--custom{border-left-color:var(--orange-400)}
-.wz-module[data-group="specialist"].wz-module--custom .wz-module__icon-wrap{background:var(--surface-card)}
-.wz-module[data-group="specialist"].wz-module--custom .wz-module__icon{color:var(--orange-press)}
+/* Sixteenth tile: custom modules. The standard card recipe with the blue accent swapped for the brand orange
+   ("bespoke ember"): same size, radius, text and arrow as the others, no dashed border. The title stays white.
+   The orange colours for the fill, glow, top line and icon tile sit after the shared card finish further down,
+   so they win the cascade. */
+.wz-module--custom{border:1px solid transparent}
+/* Bespoke ember: the standard card recipe with the blue accent swapped for the brand orange. */
+.wz-module--custom::before{background:linear-gradient(135deg,#f47d2d,#7e3af2)}
 
 /* Group wrapper: one labelled, colour-coded section per group, each with
    its own nested .wz-grid-modules so the existing 4/2/1-column responsive
    behaviour applies per group rather than to one flat 16-card grid. */
 .wz-module-groups{display:flex;flex-direction:column;gap:var(--space-10)}
 .wz-module-group__head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-4)}
-.wz-module-group__dot{width:8px;height:8px;border-radius:var(--radius-pill);flex:none}
-.wz-module-group__label{font-family:var(--font-body);font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading);white-space:nowrap}
+.wz-module-group__dot{width:8px;height:8px;border-radius:var(--radius-pill);flex:none;background:var(--c-cyan);box-shadow:0 0 8px rgba(0,206,255,.8)}
+.wz-module-group__label{font-family:var(--font-heading);font-size:var(--text-body-sm);font-weight:var(--weight-bold);color:var(--text-heading);white-space:nowrap}
 .wz-module-group__line{flex:1;height:1px;background:var(--border-hairline)}
 
-/* Fixed 4 columns so a full group's cards land in even rows (16/4, no
-   orphaned final row on the largest group) instead of auto-fit's
-   width-dependent column count. Steps down to 2 columns at tablet and 1
-   at mobile, matching the site's existing 900px/700px breakpoints used
-   elsewhere. A group with fewer than 4 cards (Fleet & field) simply
-   doesn't fill the last columns of its own row rather than stretching -
-   grid-template-columns:repeat(4,1fr) sizes the tracks regardless of
-   how many cards occupy them. */
-.wz-grid-modules{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
-@media (max-width:900px){.wz-grid-modules{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:700px){.wz-grid-modules{grid-template-columns:1fr}}
+/* Four tiles per row, two on tablet, one on phones. An incomplete row (Fleet &
+   field has two tiles, Money & reporting ends on two) stays left-aligned so
+   every tile sits on one of the same four column positions as the rows around
+   it. Tile width is identical everywhere, so all sixteen keep equal weight.
+   Breakpoints match the site's existing 900px and 700px ones. */
+.wz-grid-modules{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:var(--space-6)}
+.wz-grid-modules>.wz-module{width:auto;min-width:0;flex:0 0 calc((100% - 3 * var(--space-6)) / 4)}
+@media (max-width:900px){.wz-grid-modules>.wz-module{flex-basis:calc((100% - var(--space-6)) / 2)}}
+@media (max-width:700px){.wz-grid-modules>.wz-module{flex-basis:100%}}
 
 /* ==========================================================================
    Forms
    ========================================================================== */
 .wz-field{display:flex;flex-direction:column;gap:6px}
-.wz-label{font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading)}
+.wz-label{font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading);font-family:var(--font-heading)}
 .wz-label span{font-weight:var(--weight-regular);color:var(--text-muted)}
 .wz-hint{font-size:var(--text-micro);color:var(--text-muted)}
-.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:var(--white);border:var(--border-width) solid var(--border-strong);border-radius:var(--radius-sm);padding:11px var(--space-3);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
-.wz-input::placeholder,.wz-textarea::placeholder{color:var(--navy-300)}
-.wz-input:hover,.wz-textarea:hover,.wz-select:hover{border-color:var(--navy-400)}
-.wz-input:focus,.wz-textarea:focus,.wz-select:focus{border-color:var(--navy-700);outline:none;box-shadow:inset 0 0 0 1px var(--navy-700)}
-.wz-input[aria-invalid="true"],.wz-textarea[aria-invalid="true"],.wz-select[aria-invalid="true"]{border-color:var(--navy-700);box-shadow:inset 0 0 0 1px var(--navy-700)}
+.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:rgba(255,255,255,.05);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-sm);padding:12px var(--space-4);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
+.wz-input::placeholder,.wz-textarea::placeholder{color:#98A4BE;opacity:1}
+.wz-input:hover,.wz-textarea:hover,.wz-select:hover{border-color:var(--c-text-small)}
+.wz-input:focus,.wz-textarea:focus,.wz-select:focus{border-color:var(--c-cyan);outline:none;box-shadow:0 0 0 3px rgba(0,206,255,.25)}
+.wz-input:focus-visible,.wz-textarea:focus-visible,.wz-select:focus-visible{outline:2px solid var(--c-cyan);outline-offset:2px}
+.wz-input[aria-invalid="true"],.wz-textarea[aria-invalid="true"],.wz-select[aria-invalid="true"]{border-color:var(--color-error);box-shadow:inset 0 0 0 1px var(--color-error)}
 .wz-textarea{min-height:120px;resize:vertical;line-height:var(--leading-body)}
 .wz-select{appearance:none;padding-right:var(--space-8);background-image:linear-gradient(45deg,transparent 50%,var(--navy-500) 50%),linear-gradient(135deg,var(--navy-500) 50%,transparent 50%);background-position:calc(100% - 20px) 19px,calc(100% - 14px) 19px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
-.wz-choice{display:flex;gap:var(--space-3);align-items:flex-start;cursor:pointer;font-size:var(--text-body-md);color:var(--text-body)}
-.wz-choice input{appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:var(--border-width-strong) solid var(--navy-300);background:var(--white);cursor:pointer;transition:var(--transition-hover)}
+.wz-choice{display:flex;gap:var(--space-3);align-items:center;min-height:44px;cursor:pointer;font-size:var(--text-body-md);color:var(--text-body)}
+.wz-choice input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;margin:0;border:var(--border-width-strong) solid var(--navy-300);background:rgba(255,255,255,.05);cursor:pointer;transition:var(--transition-hover)}
 .wz-choice input[type="checkbox"]{border-radius:var(--radius-xs)}
 .wz-choice input[type="radio"]{border-radius:var(--radius-pill)}
-.wz-choice:hover input{border-color:var(--navy-500)}
-.wz-choice input:checked{background:var(--navy-700);border-color:var(--navy-700)}
-.wz-choice input[type="checkbox"]:checked{background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:14px;background-position:center;background-repeat:no-repeat}
-.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 4px var(--white)}
+.wz-choice:hover input{border-color:var(--c-hero-blue)}
+.wz-choice input:focus-visible{outline:2px solid var(--c-cyan);outline-offset:2px}
+.wz-choice input:checked{background:var(--g-chip);border-color:var(--c-hero-blue)}
+.wz-choice input[type="checkbox"]:checked{background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:16px;background-position:center;background-repeat:no-repeat}
+.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 5px var(--c-bg)}
 
 /* Module picker: the enquiry form's module multi-select rebuilt as
    selectable chips, since this is the single field the copy deck calls
@@ -451,19 +465,22 @@ img{max-width:100%}
 .wz-modpicker-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3);margin-bottom:var(--space-3)}
 .wz-modpicker-count{font-size:var(--text-micro);color:var(--text-muted);white-space:nowrap}
 .wz-modpicker-count[data-count="0"]{visibility:hidden}
-.wz-modgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-2)}
-.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;background:var(--surface-card);transition:var(--transition-hover)}
-.wz-modchip:hover{border-color:var(--navy-400)}
+.wz-modgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+@media (max-width:480px){.wz-modgrid{grid-template-columns:1fr}}
+.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);min-height:48px;cursor:pointer;background:rgba(255,255,255,.04);transition:var(--transition-hover)}
+.wz-modchip::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;background:var(--g-card-border);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;pointer-events:none;transition:opacity var(--duration-fast) var(--ease-out)}
+.wz-modchip:has(input:checked)::before,.wz-modchip.is-checked::before{opacity:1}
+.wz-modchip:hover{border-color:var(--c-hero-blue)}
 .wz-modchip input{position:absolute;opacity:0;width:100%;height:100%;margin:0;top:0;left:0;cursor:pointer}
-.wz-modchip__icon{color:var(--navy-500);flex:none;width:18px;height:18px}
-.wz-modchip__label{font-size:var(--text-body-sm);color:var(--text-body);line-height:1.25}
-.wz-modchip__tick{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--orange-400);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:opacity var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)}
+.wz-modchip__icon{color:var(--c-tagline);flex:none;width:20px;height:20px}
+.wz-modchip__label{font-size:var(--text-body-md);color:var(--text-body);line-height:1.3}
+.wz-modchip__tick{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--g-chip);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:opacity var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)}
 .wz-modchip__tick .wz-icon{width:11px;height:11px;background-color:var(--white)}
-.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--orange-400);background:rgba(244,125,45,.06)}
+.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--c-hero-blue);background:rgba(47,98,246,.16)}
 .wz-modchip:has(input:checked) .wz-modchip__label,.wz-modchip.is-checked .wz-modchip__label{color:var(--text-heading);font-weight:var(--weight-medium)}
-.wz-modchip:has(input:checked) .wz-modchip__icon,.wz-modchip.is-checked .wz-modchip__icon{color:var(--orange-press)}
+.wz-modchip:has(input:checked) .wz-modchip__icon,.wz-modchip.is-checked .wz-modchip__icon{color:var(--white)}
 .wz-modchip:has(input:checked) .wz-modchip__tick,.wz-modchip.is-checked .wz-modchip__tick{opacity:1;transform:scale(1)}
-.wz-modchip input:focus-visible{outline:2px solid var(--navy-700);outline-offset:2px;border-radius:var(--radius-md)}
+.wz-modchip input:focus-visible{outline:2px solid var(--c-cyan);outline-offset:2px;border-radius:var(--radius-md)}
 
 /* ==========================================================================
    Dialog (module detail popups) — one shared template for all sixteen,
@@ -476,7 +493,7 @@ img{max-width:100%}
    bottom), the scroll region between them absorbs any overflow.
    ========================================================================== */
 .wz-scrim{position:fixed;inset:0;background:var(--overlay-scrim);display:flex;align-items:center;justify-content:center;padding:var(--space-6);z-index:50;overflow-y:auto}
-.wz-dialog{position:relative;background:var(--white);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:660px;width:100%;max-height:90vh;margin:auto;display:flex;flex-direction:column;overflow:hidden}
+.wz-dialog{position:relative;background:var(--g-panel);border:var(--border-width) solid var(--border-strong);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);max-width:660px;width:100%;max-height:90vh;margin:auto;display:flex;flex-direction:column;overflow:hidden}
 .wz-modal__close{position:absolute;top:var(--space-5);right:var(--space-5);z-index:2}
 /* Header block: eyebrow above, icon + title in a row, summary below, all one
    visually grouped unit. flex:none, same mechanism the footer already used
@@ -490,7 +507,7 @@ img{max-width:100%}
 .wz-modal__header::after{content:"";position:absolute;left:var(--modal-pad-x);right:var(--modal-pad-x);bottom:0;border-bottom:var(--border-width) solid var(--border-hairline)}
 .wz-modal__eyebrow{display:block;margin-bottom:var(--space-3)}
 .wz-modal__title-row{display:flex;align-items:center;gap:var(--space-3)}
-.wz-modal__icon{width:32px;height:32px;color:var(--orange-press);flex:none}
+.wz-modal__icon{width:32px;height:32px;color:var(--c-tagline);flex:none}
 .wz-modal__title{font-size:1.8rem;margin:0}
 .wz-modal__summary{margin:var(--space-3) 0 0;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--text-body)}
 /* The only part that scrolls. Top padding is smaller than the sides/bottom —
@@ -523,7 +540,7 @@ img{max-width:100%}
    shares the same space-8 (32px) horizontal padding as the hairline above
    and .wz-modal__scroll below, so both buttons' outer edges land on that
    same content column rather than clustering off-centre. */
-.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--modal-pad-x);border-top:var(--border-width) solid var(--border-hairline);background:var(--white);flex-wrap:wrap}
+.wz-modal__foot{flex:none;display:flex;align-items:stretch;justify-content:space-between;gap:var(--space-3);padding:var(--space-5) var(--modal-pad-x);border-top:var(--border-width) solid var(--border-hairline);background:transparent;flex-wrap:wrap}
 /* Both buttons the same width as the longer label ("Enquire about this
    module", 225.2px natural width at this padding/font-size, rounded up).
    The shorter-label button (min-width, not width) grows to match; the
@@ -678,16 +695,19 @@ img{max-width:100%}
 /* ==========================================================================
    Header
    ========================================================================== */
-.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--navy-700);border-bottom:1px solid var(--border-on-ink);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 220ms var(--ease-out)}
+.wz-header{position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(32,33,36,.72);-webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%);border-bottom:1px solid rgba(255,255,255,.08);transform:translateY(0);transition:background-color var(--duration-base) var(--ease-out),border-color var(--duration-base) var(--ease-out),box-shadow var(--duration-base) var(--ease-out),transform 220ms var(--ease-out)}
 /* Transparent only while sitting over the navy hero photo, before any scroll. */
-.wz-header[data-transparent="true"]{background:transparent;border-bottom-color:transparent}
+.wz-header[data-transparent="true"]{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:transparent}
 /* Separation from content only once solid — not while floating transparent
    over the hero photo. Neutral black rather than navy-tinted: a navy-tinted
    shadow reads as a smudge against the header's own navy background, so it
    needs real black to register against navy, not just against light content
    below. Hairline border-bottom carries the edge on navy specifically, where
    even a strong shadow underneath a navy-on-navy boundary is hard to see. */
-.wz-header[data-transparent="false"]{box-shadow:0 4px 16px rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.15)}
+.wz-header[data-transparent="false"]{box-shadow:none;border-bottom:1px solid rgba(255,255,255,.08)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.wz-header[data-transparent="false"],.wz-header.hdr-compact{background:rgba(10,11,14,.94)}}
+/* At the top of any route the header is transparent; the glass appears only once scrolled (.hdr-compact). */
+header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:transparent}
 /* Hides on scroll down, reveals on scroll up — independent of the
    transparent/solid state above, which is driven by scroll position alone.
    Hide is a slower, deliberate slide; reveal is quicker so it feels
@@ -756,7 +776,7 @@ img{max-width:100%}
 .wz-header__phones a:hover{color:var(--white);text-decoration:underline}
 .wz-header.hdr-compact .wz-header__phones a{font-size:16px}
 .wz-menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid var(--border-on-ink);border-radius:var(--radius-md);color:var(--white);cursor:pointer}
-.wz-nav-mobile{background:var(--navy-700);border-top:1px solid var(--border-on-ink);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
+.wz-nav-mobile{background:rgba(8,8,10,.92);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.10);border-bottom:1px solid rgba(255,255,255,.08);padding:var(--space-3) var(--gutter) var(--space-6);display:flex;flex-direction:column;gap:var(--space-1)}
 .wz-nav-mobile a:not(.wz-btn){padding:var(--space-3) 0;font-size:var(--text-lead);font-weight:var(--weight-medium);color:var(--white)}
 .wz-nav-mobile .wz-btn{margin-top:var(--space-3)}
 .wz-nav-mobile__phones{display:flex;flex-direction:column;gap:2px;padding:var(--space-2) 0}
@@ -772,22 +792,40 @@ img{max-width:100%}
    Bands and routes
    ========================================================================== */
 .wz-route{display:block}
-.wz-band{padding:var(--space-24) 0;background:var(--surface-page)}
-.wz-band--tight{padding:var(--space-16) 0}
+.wz-band{padding:var(--section-gap) 0;background:var(--surface-page)}
+.wz-band--tight{padding:calc(var(--section-gap) * .6) 0}
+/* Canvas bands are pure black like every other section. */
 .wz-band--canvas{background:var(--surface-canvas)}
-.wz-band--ink{background:var(--surface-ink);color:rgba(255,255,255,.82)}
+/* Dots: the point-cloud wave spans the lower hero (.wz-hero::after) and shows dimmed in the footer.
+   There is no dot grid on any band. */
+.wz-band--ink{position:relative;isolation:isolate}
+/* Footer: the same texture dimmed to 42% and faded on every side (::before), a dark vignette over the link
+   columns plus blue and purple corner glows (::after), and the content above both. */
+.wz-footer{position:relative;isolation:isolate;overflow:hidden}
+.wz-footer>*{position:relative;z-index:1}
+.wz-footer::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.42;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 36%,#000 86%,transparent 100%),linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 36%,#000 86%,transparent 100%),linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%);mask-composite:intersect}
+.wz-footer::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(52% 95% at 60% 52%,rgba(0,0,0,.62),rgba(0,0,0,0) 78%),radial-gradient(34% 80% at 12% 48%,rgba(0,0,0,.55),rgba(0,0,0,0) 78%),radial-gradient(50% 75% at 90% 15%,rgba(124,94,251,.30),rgba(0,0,0,0) 70%),radial-gradient(45% 65% at 6% 95%,rgba(42,128,255,.22),rgba(0,0,0,0) 70%)}
+@media (max-width:700px){.wz-footer::before{background-image:url("images/weighzio-dots-hero-1280.webp")}}
+/* The first section after the hero starts closer so its heading peeks into the first screen. */
+.wz-hero+.wz-band{padding-top:clamp(48px,6vh,72px)}
+/* Its content stays above the hero's overhanging dot wave. */
+.wz-hero+.wz-band>.wz-container{position:relative;z-index:1}
+.wz-band--ink{background:var(--c-bg);color:var(--c-text-bright)}
+/* Contained panel (Laventus style): the section stays black and the content sits in a rounded gradient
+   panel inside the 1440px box, with a faint inset highlight and a soft blue and purple glow. */
+.wz-band--ink>.wz-container{position:relative;width:calc(100% - 2 * var(--gutter));max-width:calc(var(--container-max) - 2 * var(--gutter));padding:clamp(32px,5vw,72px);background:var(--g-panel);border-radius:var(--radius-panel);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 40px 120px -40px rgba(47,98,246,.5)}
+@media (max-width:700px){.wz-band--ink>.wz-container{padding:28px 22px;border-radius:24px}}
+.wz-band--ink.wz-band--tight{padding-bottom:calc(var(--section-gap) * .6 + 64px)}
+/* The blue and purple glows sit on their own layer inside the panel so their opacity can breathe. */
+.wz-band--ink>.wz-container::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(70% 90% at 85% 0%,rgba(124,94,251,.20),transparent 65%),radial-gradient(60% 80% at 5% 100%,rgba(47,98,246,.16),transparent 65%)}
+.wz-band--ink>.wz-container>:not(.wz-fx){position:relative;z-index:1}
 .wz-band--ink h2,.wz-band--ink h3,.wz-band--ink strong{color:var(--white)}
-.wz-band--ink a:not(.wz-btn){color:var(--white)}
+.wz-band--ink a:not(.wz-btn){color:var(--c-link)}
 .wz-band--ink a:not(.wz-btn):focus-visible{outline-color:var(--focus-ring-on-ink)}
 /* First band on a route with no hero clears the fixed header. */
 .wz-route--inner > .wz-band:first-child{padding-top:calc(var(--header-h) + var(--space-16))}
 .wz-stack{display:flex;flex-direction:column;gap:var(--space-12)}
 
-@media (max-width:700px){
-  .wz-band{padding:var(--space-16) 0}
-  .wz-band--tight{padding:var(--space-12) 0}
-  :root{--text-h1:2.125rem;--text-h2:1.625rem;--text-h3:1.3125rem}
-}
 
 /* ==========================================================================
    Hero
@@ -798,30 +836,50 @@ img{max-width:100%}
    point of the shape rather than a continuation of the stack. Shifted up
    slightly via the padding split (more bottom than top) rather than a
    transform, so the leftover space in the 100vh band falls below the CTA. */
-.wz-hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--surface-ink);padding:88px var(--gutter) 140px}
-.wz-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
-/* The photo is a wide shot: the skip lorry sits in the left third, a long
-   stretch of empty wet tarmac fills the middle. Centred cropping on a
-   narrow viewport lands on that empty middle and crops the truck out of
-   frame entirely. Shifted left toward the subject - a starting point
-   based on the photo's actual composition, nudge if the truck is still
-   clipped or if this goes far enough left to lose the containers behind
-   it. */
-@media (max-width:700px){.wz-hero__img{object-position:20% center}}
-.wz-hero__scrim{position:absolute;inset:0;background:#122D4B;opacity:.6}
-.wz-hero__inner{position:relative;z-index:1;width:100%;max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
-.wz-hero__mark{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+/* ==========================================================================
+   Hero (Laventus pattern): left copy, a cluster of floating product cards on the
+   right, blue and purple glow behind them, and the dot wave across the lower hero,
+   all on pure black. No photograph.
+   ========================================================================== */
+.wz-hero{position:relative;overflow-x:clip;background:#000;min-height:clamp(720px,calc(100vh - 120px),980px);min-height:clamp(720px,calc(100svh - 120px),980px);display:flex;align-items:center;padding:calc(var(--header-h) + 24px) 0 40px}
+.wz-hero__grid{position:relative;z-index:3;display:flex;align-items:center;gap:40px;flex-wrap:wrap;width:100%}
+.wz-hero__copy{flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:24px;align-items:flex-start;text-align:left}
+.wz-hero__copy{position:relative}
+/* Soft dark vignette behind the copy, above the dot wave, so text stays legible over the dots. */
+.wz-hero__copy::before{content:"";position:absolute;inset:-56px -72px -56px -96px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 62% 68% at 45% 50%,rgba(0,0,0,.9),rgba(0,0,0,.6) 60%,transparent 100%)}
+.wz-hero__copy .wz-hero__mark,.wz-hero__copy .wz-hero__lead,.wz-hero__copy .wz-hero__actions{margin:0}
+/* Glows behind the art: plain gradients, no blur filter. */
+/* Glows: real blurred elements attached to the card cluster (.wz-hero-art), so they stay behind the cards at every
+   width. The old tiled-gradient glows on .wz-hero::before rendered a visible seam and are gone; nothing glows behind the headline. */
+.wz-hero-art::before,.wz-hero-art::after{content:"";position:absolute;z-index:0;pointer-events:none;border-radius:50%;filter:blur(30px)}
+.wz-hero-art::before{width:min(760px,120vw);height:min(760px,120vw);left:50%;top:46%;translate:-50% -50%;background:radial-gradient(closest-side,rgba(47,98,246,.55),rgba(0,0,0,0))}
+.wz-hero-art::after{width:min(620px,100vw);height:min(620px,100vw);right:-120px;top:2%;background:radial-gradient(closest-side,rgba(124,94,251,.50),rgba(0,0,0,0))}
+@media (max-width:700px){.wz-hero-art::before{width:460px;height:460px}.wz-hero-art::after{width:380px;height:380px;right:-80px}}
+/* The dot wave, behind everything, across the lower hero; fades out at the bottom and sides. */
+.wz-hero::after{content:"";position:absolute;left:0;right:0;bottom:-40px;z-index:1;pointer-events:none;height:clamp(380px,52vh,640px);background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.65;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);mask-composite:intersect}
+@media (max-width:700px){.wz-hero::after{background-image:url("images/weighzio-dots-hero-1280.webp");height:360px}}
+.wz-hero__mark{display:flex;align-items:center;gap:14px}
 @media (max-width:700px){.wz-hero__mark .wz-burst{display:none}}
 .wz-hero__mark .wz-eyebrow{color:var(--white)}
-.wz-hero__mark+p{font-family:var(--font-display);font-weight:var(--weight-semibold);line-height:var(--leading-tight);margin:0 auto;max-width:27ch;font-size:clamp(2.375rem,5.4vw,var(--text-display-1));letter-spacing:var(--tracking-display);color:var(--white)}
+.wz-hero__mark+p{font-family:var(--font-display);font-weight:var(--weight-xbold);margin:0;font-size:clamp(40px,4.6vw,66px);line-height:1.04;letter-spacing:-0.035em;color:var(--white)}
+/* Headline gradient: the hero headline and a few key H2s. Solid white colour
+   is the fallback; the text stays real, selectable text. Drift only runs for
+   users who have not asked for reduced motion. */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .wz-hero__mark+p,.wz-hero--page h1,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{background:var(--g-headline);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+}
+@keyframes wz-drift{from{background-position:0% 50%}to{background-position:100% 50%}}
+@media (prefers-reduced-motion:no-preference){
+  .wz-hero__mark+p,.wz-hero--page h1,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{animation:wz-drift 16s ease-in-out infinite alternate}
+}
 /* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
    the block visibly tapers rather than running the same width as the H1
    above it. ch/rem rather than a percentage, so the ratio holds as the
    viewport changes rather than tracking the H1's own fluid width 1:1. Full
    width below 700px, where there's no taper to preserve. */
-.wz-hero__lead{margin:34px auto 0;max-width:42ch;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--white)}
-.wz-hero__actions{margin-top:56px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:var(--space-4);flex-wrap:wrap}
-.wz-hero__actions .wz-btn{min-width:200px}
+.wz-hero__lead{max-width:520px;font-size:var(--text-lead);line-height:var(--leading-body);color:var(--c-text-bright)}
+.wz-hero__actions{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:var(--space-4);flex-wrap:wrap}
+.wz-hero__actions .wz-btn{min-width:180px}
 @media (max-width:480px){
   .wz-hero__actions{flex-direction:column;width:100%}
   .wz-hero__actions .wz-btn{width:100%;justify-content:center}
@@ -848,11 +906,11 @@ img{max-width:100%}
    ========================================================================== */
 /* Desktop: 4-column grid, badges sitting on a thin horizontal line. */
 .wz-steps-track{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6)}
-.wz-steps-line{position:absolute;top:16px;left:5%;right:5%;height:1.5px;background:var(--border-hairline);z-index:0}
+.wz-steps-line{position:absolute;top:16px;left:5%;right:5%;height:1.5px;background:var(--g-card-border);opacity:.55;z-index:0}
 .wz-step{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--space-2)}
 .wz-step__marker{display:flex;align-items:center}
-.wz-step__badge{width:32px;height:32px;border:1.5px solid var(--navy-700);color:var(--navy-700);background:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-micro);border-radius:var(--radius-md);flex-shrink:0;font-variant-numeric:tabular-nums}
-.wz-step__badge--final{background:var(--orange-400);border:none;color:var(--navy-700)}
+.wz-step__badge{width:34px;height:34px;border:0;color:var(--white);background:var(--g-chip);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:var(--weight-semibold);font-size:var(--text-micro);border-radius:var(--radius-pill);flex-shrink:0;font-variant-numeric:tabular-nums}
+.wz-step__badge--final{background:var(--c-cyan);color:var(--c-on-cyan);box-shadow:var(--glow-cyan)}
 .wz-step__connector{display:none}
 .wz-step h3{font-size:var(--text-h4);margin:var(--space-3) 0 var(--space-1)}
 .wz-step p{margin:0;font-size:var(--text-body-sm);color:var(--text-body)}
@@ -870,7 +928,7 @@ img{max-width:100%}
   .wz-step__connector{display:block;flex:1;width:1.5px;background:var(--border-hairline);margin-top:var(--space-1);transform:scaleY(0);transform-origin:top;transition:transform 350ms ease,background-color 350ms ease}
   .wz-step__content{opacity:.35;transition:opacity 400ms ease}
   .wz-step.is-revealed .wz-step__content{opacity:1}
-  .wz-step.is-revealed .wz-step__connector{transform:scaleY(1);background:var(--navy-700)}
+  .wz-step.is-revealed .wz-step__connector{transform:scaleY(1);background:var(--c-hero-blue)}
   .wz-step:last-child .wz-step__content{padding-bottom:0}
 }
 
@@ -879,10 +937,11 @@ img{max-width:100%}
    ========================================================================== */
 .wz-faq{display:flex;flex-direction:column;gap:0;border-top:var(--border-width) solid var(--border-hairline)}
 .wz-faq details{border-bottom:var(--border-width) solid var(--border-hairline)}
-.wz-faq summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;cursor:pointer;font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-semibold);color:var(--text-heading);list-style:none}
+.wz-faq summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;cursor:pointer;font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-bold);color:var(--text-heading);list-style:none}
 .wz-faq summary::-webkit-details-marker{display:none}
-.wz-faq summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background-color:currentColor;-webkit-mask:url("images/icon_arrow-right.svg") no-repeat center/contain;mask:url("images/icon_arrow-right.svg") no-repeat center/contain;transform:rotate(90deg);transition:transform var(--duration-base) var(--ease-out)}
+.wz-faq summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background-color:currentColor;-webkit-mask:url("images/icon_arrow-right.svg") no-repeat center/contain;mask:url("images/icon_arrow-right.svg") no-repeat center/contain;transform:rotate(90deg);transition:transform 400ms cubic-bezier(.37,0,.63,1)}
 .wz-faq details[open] summary::after{transform:rotate(-90deg)}
+.wz-faq details.is-closing summary::after{transform:rotate(90deg)}   /* the arrow turns back in step with the slide */
 .wz-faq p{margin:0 0 var(--space-5);max-width:68ch}
 
 /* ==========================================================================
@@ -901,7 +960,7 @@ img{max-width:100%}
    home page's own .wz-band/.wz-band--canvas convention, alternating colour
    alone is the separator, not colour plus a hairline.
    ========================================================================== */
-.wz-module-section{position:relative;padding:var(--space-10) 0}
+.wz-module-section{position:relative;padding:clamp(40px,5vw,72px) 0}
 /* The very first module section sits directly under the intro head band,
    which already provides clear separation via its own bottom padding
    (.wz-band--tight, fd502c8) - this section's own top padding would just
@@ -915,7 +974,7 @@ img{max-width:100%}
    (--navy-025, #F7F9FB) — a solid value, not an opacity tint, so it reads
    as the same surface token as the rest of the site rather than a
    one-off colour invented for this page. */
-.wz-module-section:nth-of-type(even){background:var(--surface-canvas)}
+.wz-module-section:not(:first-child){border-top:1px solid rgba(255,255,255,.06)}
 /* The plain icon-watermark treatment (.wz-module-section__icon-bg) that
    used to mark the sections without a real photo or mockup is gone —
    Customers & Pricing, Finance & Payments, Multi-Company and Marketing Data
@@ -932,7 +991,7 @@ img{max-width:100%}
    correctly against both the white and the tinted alternating background. */
 #module-sections{counter-reset:module-num}
 .wz-module-section{counter-increment:module-num}
-.wz-module-section__head::before{content:counter(module-num,decimal-leading-zero);flex:none;font-family:var(--font-display);font-weight:var(--weight-semibold);font-size:clamp(2.5rem,5vw,3.75rem);line-height:1;color:rgba(18,45,75,.08)}
+.wz-module-section__head::before{content:counter(module-num,decimal-leading-zero);flex:none;font-family:var(--font-display);font-weight:var(--weight-semibold);font-size:clamp(2.5rem,5vw,3.75rem);font-weight:var(--weight-xbold);line-height:1;color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 /* Eyebrow, icon + title, summary, matching the module popup's own header
    pattern. These three used to share one wrapping div (with the hairline
    as its border-bottom); that wrapper is gone now that each one needs to
@@ -1123,12 +1182,12 @@ img{max-width:100%}
    sized by its own width like before. Font bumped from the original
    11px to 13px so nothing reads as a small screenshot enlarged past its
    own detail. */
-.wz-mockup{position:relative;width:100%;background:var(--white);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--navy-700)}
+.wz-mockup{position:relative;width:100%;background:var(--g-panel);border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-card);box-shadow:var(--shadow-lg);overflow:hidden;font-family:var(--font-body);font-size:13px;line-height:1.4;color:var(--c-text-bright);font-variant-numeric:tabular-nums}
 .wz-mockup{height:100%;display:flex;flex-direction:column}
 @media (max-width:1150px){
   .wz-mockup{height:auto;aspect-ratio:4/3}
 }
-.wz-mockup__bar{flex:none;background:var(--navy-700);color:var(--white);padding:11px 14px;font-size:12px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wz-mockup__bar{flex:none;background:rgba(255,255,255,.06);border-bottom:var(--border-width) solid var(--border-hairline);color:var(--white);padding:11px 14px;font-size:12px;font-weight:var(--weight-semibold);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .wz-mockup__bar em{font-style:normal;font-weight:var(--weight-regular);opacity:.68}
 .wz-mockup__body{padding:15px}
 
@@ -1140,8 +1199,8 @@ img{max-width:100%}
 .wz-mockup__board-row{display:flex;align-items:center;gap:8px}
 .wz-mockup__board-veh{width:58px;flex:none;font-size:10px;font-weight:var(--weight-semibold);letter-spacing:.01em}
 .wz-mockup__board-track{position:relative;flex:1;height:22px;background:var(--navy-025);border-radius:4px}
-.wz-mockup__board-job{position:absolute;top:2px;bottom:2px;background:var(--navy-600);border-radius:3px;color:var(--white);font-size:8px;font-weight:var(--weight-semibold);display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden}
-.wz-mockup__board-job--light{background:var(--navy-300);color:var(--navy-700)}
+.wz-mockup__board-job{position:absolute;top:2px;bottom:2px;background:var(--c-blue);border-radius:3px;color:var(--white);font-size:8px;font-weight:var(--weight-semibold);display:flex;align-items:center;padding:0 5px;white-space:nowrap;overflow:hidden}
+.wz-mockup__board-job--light{background:rgba(124,94,251,.45);color:var(--white)}
 .wz-mockup__board-queue{width:100px;flex:none;border-left:var(--border-width) solid var(--border-hairline);padding-left:11px;display:flex;flex-direction:column}
 .wz-mockup__board-queue-head{flex:none;font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:8px}
 .wz-mockup__board-queue-items{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between}
@@ -1154,30 +1213,30 @@ img{max-width:100%}
 .wz-mockup__metric b{display:block;font-family:var(--font-display);font-size:17px;font-weight:var(--weight-semibold)}
 .wz-mockup__metric em{font-style:normal;display:block;font-size:9px;color:var(--navy-400);margin-top:3px}
 .wz-mockup__chart{flex:1;min-height:0;display:flex;align-items:flex-end;gap:8px;padding:20px 14px 24px}
-.wz-mockup__chart span{flex:1;background:var(--navy-600);border-radius:2px 2px 0 0;position:relative}
+.wz-mockup__chart span{flex:1;background:rgba(47,98,246,.6);border-radius:2px 2px 0 0;position:relative}
 .wz-mockup__chart span em{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-style:normal;font-size:9px;color:var(--navy-400)}
-.wz-mockup__chart span.is-today{background:var(--navy-300)}
+.wz-mockup__chart span.is-today{background:var(--g-chip)}
 
 /* --- 3. Customer Portal: softer, consumer-facing ------------------------ */
 .wz-mockup--portal{border-radius:var(--radius-xl)}
-.wz-mockup--portal .wz-mockup__bar{background:var(--navy-050);color:var(--navy-700)}
+.wz-mockup--portal .wz-mockup__bar{background:rgba(255,255,255,.06);color:var(--white)}
 .wz-mockup--portal .wz-mockup__body{flex:1;min-height:0;display:flex;flex-direction:column}
 .wz-mockup__portal-row{flex:none;display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:var(--border-width) solid var(--border-hairline);font-size:12px}
 .wz-mockup__portal-row:last-of-type{border-bottom:0}
 .wz-mockup__portal-row em{font-style:normal;color:var(--navy-400);width:52px;flex:none}
 .wz-mockup__portal-row strong{flex:1;font-weight:var(--weight-medium);color:var(--text-body)}
 .wz-mockup__portal-row span{flex:none;font-weight:var(--weight-semibold)}
-.wz-mockup__portal-cta{flex:none;align-self:flex-start;margin-top:auto;background:var(--surface-cta);color:var(--text-on-orange);font-size:11px;font-weight:var(--weight-semibold);padding:8px 16px;border-radius:var(--radius-pill)}
+.wz-mockup__portal-cta{flex:none;align-self:flex-start;margin-top:auto;background:var(--c-cyan);color:var(--c-on-cyan);box-shadow:var(--glow-cyan);font-size:11px;font-weight:var(--weight-semibold);padding:8px 16px;border-radius:var(--radius-pill)}
 
 /* --- 4. Fleet & Telematics: live map ------------------------------------ */
 .wz-mockup__map{flex:1;min-height:0;position:relative;background:var(--navy-025);overflow:hidden}
 .wz-mockup__map-road{position:absolute;background:var(--navy-100)}
-.wz-mockup__pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--navy-600);border:2px solid var(--white);box-shadow:0 1px 3px rgba(18,45,75,.35);transform:translate(-50%,-50%)}
-.wz-mockup__pin-info{position:absolute;background:var(--navy-700);color:var(--white);font-size:10px;border-radius:7px;padding:7px 9px;white-space:nowrap;box-shadow:var(--shadow-md)}
+.wz-mockup__pin{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--c-hero-blue);border:2px solid var(--c-bg);box-shadow:0 0 10px rgba(42,128,255,.7);transform:translate(-50%,-50%)}
+.wz-mockup__pin-info{position:absolute;background:var(--c-panel-1);border:var(--border-width) solid var(--border-strong);color:var(--c-text-bright);font-size:10px;border-radius:7px;padding:7px 9px;white-space:nowrap;box-shadow:var(--shadow-md)}
 .wz-mockup__pin-info strong{display:block;font-size:11px;margin-bottom:1px}
 .wz-mockup__fleet-list{flex:none;padding:11px 14px 14px}
 .wz-mockup__fleet-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:11px}
-.wz-mockup__dot{width:7px;height:7px;border-radius:50%;background:var(--navy-600);flex:none}
+.wz-mockup__dot{width:7px;height:7px;border-radius:50%;background:var(--c-hero-blue);flex:none}
 .wz-mockup__dot--idle{background:var(--navy-300)}
 .wz-mockup__dot--stopped{background:var(--navy-200)}
 .wz-mockup__fleet-row em{font-style:normal;margin-left:auto;color:var(--navy-400)}
@@ -1190,8 +1249,8 @@ img{max-width:100%}
 .wz-mockup__tag{flex:none;display:inline-flex;align-items:center;font-size:10px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;padding:4px 8px;border-radius:var(--radius-pill);white-space:nowrap}
 .wz-mockup__tag--success{background:var(--color-success-tint);color:var(--color-success)}
 .wz-mockup__tag--success::before{content:"✓";margin-right:4px}
-.wz-mockup__tag--pending{background:var(--navy-100);color:var(--navy-600)}
-.wz-mockup__tag--tier{align-self:flex-start;background:var(--navy-050);color:var(--navy-700)}
+.wz-mockup__tag--pending{background:var(--navy-100);color:var(--c-text)}
+.wz-mockup__tag--tier{align-self:flex-start;background:rgba(124,94,251,.25);color:var(--white)}
 
 /* --- 5. Customers & Pricing: account screen ----------------------------- */
 /* justify-content:center on the body, not justify-content:space-between on
@@ -1210,7 +1269,7 @@ img{max-width:100%}
 .wz-mockup__account-credit-label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:10px;color:var(--navy-400)}
 .wz-mockup__account-credit-label b{font-weight:var(--weight-semibold);color:var(--navy-700);font-size:11px;white-space:nowrap}
 .wz-mockup__account-credit-bar{height:8px;border-radius:var(--radius-pill);background:var(--navy-100);overflow:hidden}
-.wz-mockup__account-credit-bar span{display:block;height:100%;background:var(--navy-600);border-radius:var(--radius-pill)}
+.wz-mockup__account-credit-bar span{display:block;height:100%;background:var(--g-chip);border-radius:var(--radius-pill)}
 .wz-mockup__account-sites{border-top:var(--border-width) solid var(--border-hairline);padding-top:10px}
 .wz-mockup__account-sites-head{font-size:9px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.03em;color:var(--navy-400);margin-bottom:8px}
 .wz-mockup__account-site-rows{display:flex;flex-direction:column;gap:8px}
@@ -1231,8 +1290,8 @@ img{max-width:100%}
 .wz-mockup__entities-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px 14px 14px}
 .wz-mockup__entity-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 9px;border-radius:7px;font-size:12px;font-weight:var(--weight-medium)}
 .wz-mockup__entity-row em{flex:none;font-style:normal;font-size:10px;color:var(--navy-400)}
-.wz-mockup__entity-row.is-active{background:var(--navy-050);font-weight:var(--weight-semibold);color:var(--navy-700)}
-.wz-mockup__entity-row.is-active em{color:var(--navy-600)}
+.wz-mockup__entity-row.is-active{background:rgba(47,98,246,.22);font-weight:var(--weight-semibold);color:var(--white)}
+.wz-mockup__entity-row.is-active em{color:var(--c-text-bright)}
 
 /* --- 8. Marketing Data Feed: campaign performance ------------------------ */
 .wz-mockup__campaigns-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:14px}
@@ -1252,10 +1311,88 @@ img{max-width:100%}
    rather than a new graphic. */
 .wz-mockup__picker-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:16px}
 .wz-mockup__picker-chip{display:flex;align-items:center;gap:10px;border:var(--border-width) solid var(--border-hairline);border-radius:var(--radius-md);padding:9px 12px;font-size:13px;color:var(--text-body)}
-.wz-mockup__picker-chip--on{border-color:var(--orange-400);background:rgba(244,125,45,.06);color:var(--text-heading);font-weight:var(--weight-medium)}
+.wz-mockup__picker-chip--on{border-color:var(--c-hero-blue);background:rgba(47,98,246,.16);color:var(--text-heading);font-weight:var(--weight-medium)}
 .wz-mockup__picker-tick{flex:none;width:16px;height:16px;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;border:1.5px solid var(--navy-300)}
-.wz-mockup__picker-chip--on .wz-mockup__picker-tick{background:var(--orange-400);border-color:var(--orange-400)}
+.wz-mockup__picker-chip--on .wz-mockup__picker-tick{background:var(--g-chip);border-color:transparent}
 .wz-mockup__picker-tick .wz-icon{width:9px;height:9px;background-color:var(--white)}
+
+/* --- Mockup layout: natural height, top-aligned, fixed rhythm. -------------
+   The mockups used to stretch to the text column's height (height:100%,
+   flex:1, space-between), which pinned content top and bottom with big gaps.
+   They now keep their own height and stay in view beside long text. Nothing
+   inside is smaller than 11px. This block deliberately comes after the
+   per-mockup rules above and overrides their sizing. */
+.wz-mockup{height:auto;align-self:flex-start}
+.wz-module-section__media .wz-mockup{position:sticky;top:96px}
+@media (max-width:1150px){.wz-mockup,.wz-module-section__media .wz-mockup{height:auto;aspect-ratio:auto;position:relative;top:auto}}
+.wz-mockup__bar{font-size:13px;padding:12px 18px}
+.wz-mockup__bar em{font-size:12px}
+.wz-mockup__tag{font-size:11px}
+/* 1. Dispatch */
+.wz-mockup__board{flex:none;gap:14px;padding:18px}
+.wz-mockup__board-times{font-size:11px;padding:0 2px 10px 84px;white-space:nowrap}
+.wz-mockup__board-rows{flex:none;gap:18px;justify-content:flex-start}
+.wz-mockup__board-veh{width:76px;font-size:12px;white-space:nowrap}
+.wz-mockup__board-track{height:32px}
+.wz-mockup__board-job{top:3px;bottom:3px;font-size:11px;padding:0 8px;min-width:max-content}
+.wz-mockup__board-queue{width:132px}
+.wz-mockup__board-queue-head{font-size:11px;margin-bottom:10px}
+.wz-mockup__board-queue-items{flex:none;gap:10px;justify-content:flex-start}
+.wz-mockup__board-queue-item{font-size:11px;padding:8px 9px}
+@media (max-width:1150px){
+  .wz-mockup__board{flex-direction:column}
+  .wz-mockup__board-queue{width:auto;border-left:0;padding-left:0;border-top:var(--border-width) solid var(--border-hairline);padding-top:12px}
+  .wz-mockup__board-queue-items{flex-direction:row;flex-wrap:wrap}
+}
+/* 2. Dashboard */
+.wz-mockup__metrics{gap:12px;padding:18px 18px 0}
+.wz-mockup__metric{padding:12px}
+.wz-mockup__metric span{font-size:11px}
+.wz-mockup__metric b{font-size:20px}
+.wz-mockup__metric em{font-size:11px}
+.wz-mockup__chart{flex:none;height:210px;gap:12px;padding:24px 18px 36px}
+.wz-mockup__chart span em{font-size:11px;bottom:-22px}
+/* 3. Portal */
+.wz-mockup--portal .wz-mockup__body{flex:none;padding:24px 18px}
+.wz-mockup__portal-row{font-size:13px;padding:18px 0}
+.wz-mockup__portal-row em{width:56px}
+.wz-mockup__portal-cta{margin-top:22px;font-size:12px;padding:10px 18px}
+/* 4. Fleet */
+.wz-mockup__map{flex:none;height:230px}
+.wz-mockup__pin-info{font-size:11px}
+.wz-mockup__pin-info strong{font-size:12px}
+.wz-mockup__fleet-list{padding:14px 18px 18px}
+.wz-mockup__fleet-row{font-size:12px;padding:5px 0}
+/* 5. Account */
+.wz-mockup__account-body{flex:none;justify-content:flex-start;gap:20px;padding:24px 18px}
+.wz-mockup__account-address{font-size:12px}
+.wz-mockup__account-credit-label{font-size:11px}
+.wz-mockup__account-credit-label b{font-size:12px}
+.wz-mockup__account-sites-head{font-size:11px}
+.wz-mockup__account-site-rows{gap:14px}
+.wz-mockup__account-site-row{font-size:13px}
+.wz-mockup__account-site-row em{font-size:11px}
+/* 6. Finance */
+.wz-mockup__finance-body{flex:none;justify-content:flex-start;gap:22px;padding:24px 18px}
+.wz-mockup__finance-rows{gap:22px}
+.wz-mockup__finance-row{font-size:12px}
+@media (max-width:1150px){.wz-mockup__finance-row em{white-space:normal}}
+.wz-mockup__finance-num{width:78px}
+.wz-mockup__finance-vat{font-size:12px}
+.wz-mockup__finance-vat b{font-size:14px}
+/* 7. Multi-company */
+.wz-mockup__entities-body{flex:none;justify-content:flex-start;gap:8px;padding:18px}
+.wz-mockup__entity-row{font-size:13px;padding:14px 12px}
+.wz-mockup__entity-row em{font-size:11px}
+/* 8. Marketing data feed */
+.wz-mockup__campaigns-body{flex:none;justify-content:flex-start;gap:16px;padding:24px 18px}
+.wz-mockup__campaign-head{font-size:11px}
+.wz-mockup__campaign-head span{width:76px}
+.wz-mockup__campaign-rows{gap:24px}
+.wz-mockup__campaign-row{font-size:13px}
+.wz-mockup__campaign-row b{width:76px}
+/* 9. Pricing picker (home) */
+.wz-mockup__picker-body{flex:none;justify-content:flex-start}
 
 /* --- Real photography, seven sections: same .wz-module-section__media slot
    the eight UI mockups use, --radius-lg to match the site's existing
@@ -1290,7 +1427,21 @@ img{max-width:100%}
    in the stacked media query below, where there's no text column height
    for it to compete with. */
 .wz-module-section__media picture{position:absolute;inset:0;display:block;width:100%;height:100%}
-.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)}
+.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--wz-media-glow);outline:1px solid rgba(255,255,255,.1);outline-offset:-1px}
+/* The top highlight cannot be an inset shadow on an img (it paints underneath), so it sits on the picture. */
+.wz-module-section__media picture::after{content:"";position:absolute;inset:0;border-radius:var(--radius-card);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);pointer-events:none}
+/* Modules page refinements: the title carries the number only (the icon lives
+   on the homepage tiles and is still in the markup for the module dialog),
+   photos get a quieter glow, and Custom Modules is the same orange-accent
+   dark card as its homepage tile with the puzzle icon enlarged. */
+.wz-module-section__head .wz-icon{display:none}
+#custom-modules{isolation:isolate}
+#custom-modules .wz-container{position:relative;isolation:isolate;padding-block:clamp(40px,5vw,64px);padding-inline:calc(var(--gutter) + clamp(24px,4vw,56px))}
+#custom-modules .wz-container::before{content:"";position:absolute;inset:clamp(16px,2vw,24px) var(--gutter);z-index:-1;background:radial-gradient(240px 240px at calc(100% + 30px) -30px,rgba(244,125,45,.26),rgba(0,0,0,0) 70%),linear-gradient(165deg,#1f2e4a 0%,#1a1430 70%);border:1px solid transparent;border-radius:var(--radius-card);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(244,125,45,.45)}
+#custom-modules .wz-container::after{content:"";position:absolute;right:calc(var(--gutter) + clamp(24px,4vw,56px));top:calc(50% - 56px);width:112px;height:112px;background:var(--orange-400);-webkit-mask:url("images/icon_puzzle.svg") center/contain no-repeat;mask:url("images/icon_puzzle.svg") center/contain no-repeat;opacity:.9}
+#custom-modules .wz-container>*{max-width:62ch}
+@media (max-width:900px){#custom-modules .wz-container::after{display:none}#custom-modules .wz-container>*{max-width:none}}
+
 @media (max-width:1150px){
   .wz-module-section__media picture{position:static;height:auto}
   .wz-module-section__photo{height:auto;aspect-ratio:4/3}
@@ -1354,16 +1505,68 @@ img{max-width:100%}
    ========================================================================== */
 .wz-guide{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--space-16);align-items:start}
 .wz-guide__toc{position:sticky;top:calc(var(--header-h) + var(--space-6));display:flex;flex-direction:column;gap:var(--space-1)}
-.wz-guide__toc a{font-size:var(--text-body-sm);color:var(--text-body);text-decoration:none;padding:var(--space-2) var(--space-3);border-left:var(--border-width-strong) solid var(--border-hairline);line-height:1.35}
-.wz-guide__toc a:hover{color:var(--navy-700);background:var(--navy-025);border-left-color:var(--border-strong)}
-.wz-guide__prose{max-width:68ch}
-.wz-guide__prose h2{margin:var(--space-12) 0 var(--space-4)}
+.wz-guide__toc a{font-size:var(--text-body-sm);color:var(--text-body);text-decoration:none;padding:var(--space-2) var(--space-3);border-left:var(--border-width-strong) solid var(--border-hairline);border-radius:0 var(--radius-sm) var(--radius-sm) 0;line-height:1.35}
+.wz-guide__toc a:hover{color:var(--white);background:rgba(47,98,246,.14);border-left-color:var(--c-hero-blue)}
+.wz-guide__prose{max-width:70ch;font-size:var(--fs-lead);line-height:1.7}
+.wz-guide__prose h2{margin:var(--space-12) 0 var(--space-4);font-size:clamp(28px,3vw,38px)}
 .wz-guide__prose h2:first-child{margin-top:0}
 .wz-guide__prose ul,.wz-guide__prose ol{margin:0 0 var(--space-4);padding-left:var(--space-5);display:flex;flex-direction:column;gap:var(--space-2)}
 @media (max-width:900px){
   .wz-guide{grid-template-columns:1fr;gap:var(--space-8)}
   .wz-guide__toc{position:static;border-left:0}
 }
+
+/* Visuals inside the home page's text-only bands, and the waste tracking facts panel. */
+.wz-band-visual{margin-top:var(--space-8);max-width:540px;width:100%}
+.wz-split2:has(.wz-band-visual){align-items:center}
+.wz-facts{padding:clamp(24px,3vw,40px)}
+.wz-facts__title{margin:0 0 var(--space-5);font-family:var(--font-heading);font-weight:var(--weight-bold);font-size:var(--text-h4);color:var(--white)}
+.wz-facts__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-4)}
+.wz-facts__list li{position:relative;padding-left:var(--space-8);color:var(--c-text-bright);font-size:var(--text-body-md);line-height:1.5}
+.wz-facts__list li::before{content:"";position:absolute;left:5px;top:.7em;bottom:calc(-1 * var(--space-4) - .7em);width:2px;background:var(--g-card-border);opacity:.5}
+.wz-facts__list li:last-child::before{display:none}
+.wz-facts__dot{position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 10px rgba(47,98,246,.7)}
+.wz-dwt{align-items:center}
+
+/* ==========================================================================
+   One-sided layouts: AI Voice Agent aside, privacy, enquire
+   ========================================================================== */
+/* AI voice agent hero: the call mockup sits in the shared hero art slot, centred against the copy. */
+.wz-hero.wz-hero--page .wz-hero-art--call{flex:0 1 480px;height:auto;min-height:0;display:flex;align-items:center;justify-content:center}
+.wz-hero-art--call .wz-mockup{position:relative;align-self:center;width:100%;max-width:480px;z-index:2}
+.wz-mockup__call-body{padding:18px;display:flex;flex-direction:column;gap:12px}
+.wz-mockup__call-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--c-text)}
+.wz-mockup__msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.4}
+.wz-mockup__msg em,.wz-mockup__sms em{display:block;font-style:normal;font-size:11px;font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.04em;opacity:.8;margin-bottom:3px}
+.wz-mockup__msg--agent{align-self:flex-start;background:rgba(47,98,246,.28);color:var(--white);border-bottom-left-radius:4px}
+.wz-mockup__msg--caller{align-self:flex-end;background:rgba(255,255,255,.08);color:var(--c-text-bright);border-bottom-right-radius:4px}
+.wz-mockup__booked{display:flex;flex-direction:column;gap:3px;padding:12px 14px;border-radius:var(--radius-md);background:linear-gradient(145deg,#2751D9,#6A48E6);color:var(--white);font-size:12px}
+.wz-mockup__booked b{font-family:var(--font-heading);font-size:14px}
+.wz-mockup__sms{padding:10px 12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);border-radius:var(--radius-md);font-size:12px;color:var(--c-text)}
+.wz-hero--page h1{font-family:var(--font-display);font-weight:var(--weight-xbold);margin:0;font-size:clamp(40px,4.6vw,66px);line-height:1.04;letter-spacing:-0.035em;color:var(--white)}
+@media (max-width:1100px){.wz-hero-art--call{flex-basis:100%;justify-content:flex-start}}
+@media (max-width:700px){.wz-hero--page h1{font-size:clamp(40px,11vw,52px)}.wz-hero-art--call{padding-top:0}.wz-hero-art--call .wz-mockup{max-width:460px;margin:0 auto}}
+#route-privacy .wz-guide__prose{margin-inline:auto}
+#route-enquire .wz-split2>div:first-child{position:sticky;top:96px}
+@media (max-width:900px){#route-enquire .wz-split2>div:first-child{position:static}}
+.wz-enquire-contact{margin-top:var(--space-8);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3)}
+.wz-enquire-contact__title{margin:0;font-family:var(--font-heading);font-weight:var(--weight-bold);color:var(--white);font-size:var(--text-body-md)}
+.wz-enquire-contact .wz-contact__row p{font-size:var(--text-body-md);color:var(--c-text)}
+.wz-enquire-contact__note{margin:var(--space-1) 0 0;font-size:var(--text-body-sm);color:var(--c-text-small)}
+
+/* Guide emphasis, styled in place so the original lists and sentences stay
+   untouched in the DOM: the dates list becomes a timeline card, the two
+   working day and cost sentences become callouts with a gradient figure. */
+#route-guide h1{font-weight:var(--weight-bold)}
+.wz-guide__toc a[aria-current="true"]{color:var(--white);font-weight:var(--weight-semibold);background:rgba(47,98,246,.22);border-left-color:var(--c-cyan)}
+#dwt-dates+ul{list-style:none;margin:0 0 var(--space-6);padding:var(--space-6);background:var(--g-card);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:var(--space-5)}
+#dwt-dates+ul li{position:relative;padding-left:var(--space-8);color:var(--c-text-bright)}
+#dwt-dates+ul li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 10px rgba(47,98,246,.7)}
+#dwt-dates+ul li:not(:last-child)::after{content:"";position:absolute;left:5px;top:1.4em;bottom:calc(-1 * var(--space-5) - .1em);width:2px;background:var(--g-card-border);opacity:.5}
+#dwt-two-days+p,#dwt-cost+p{display:flex;align-items:center;gap:var(--space-6);padding:var(--space-6);background:var(--g-panel);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);font-size:var(--text-lead);color:var(--white)}
+#dwt-two-days+p::before,#dwt-cost+p::before{flex:none;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(56px,7vw,84px);line-height:1;letter-spacing:var(--tracking-display);color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#dwt-two-days+p::before{content:"2";content:"2" / ""}
+#dwt-cost+p::before{content:"£26";content:"£26" / ""}
 
 /* ==========================================================================
    Enquiry form
@@ -1375,30 +1578,351 @@ img{max-width:100%}
 .wz-checkgrid--inline{grid-template-columns:repeat(3,max-content);justify-content:start;column-gap:var(--space-8)}
 @media (max-width:480px){.wz-checkgrid--inline{grid-template-columns:1fr;justify-content:stretch}}
 .wz-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.wz-formmsg{padding:var(--space-4);border-radius:var(--radius-md);font-size:var(--text-body-sm);margin:0 0 var(--space-4);border:var(--border-width) solid var(--border-strong);background:var(--navy-025);color:var(--text-heading)}
+.wz-formmsg{padding:var(--space-4);border-radius:var(--radius-md);font-size:var(--text-body-sm);margin:0 0 var(--space-4);border:var(--border-width) solid var(--c-input-border);background:var(--c-panel-1);color:var(--text-heading)}
 .wz-contact{display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-8)}
 .wz-contact__row{display:flex;gap:var(--space-3);align-items:flex-start}
-.wz-contact__row .wz-icon{margin-top:3px;color:var(--navy-700)}
+.wz-contact__row .wz-icon{margin-top:3px;color:var(--c-tagline)}
 .wz-contact__row p{margin:0;font-size:var(--text-body-sm);color:var(--text-muted)}
 
 /* ==========================================================================
    Footer
    ========================================================================== */
-.wz-footer{flex:none;background:var(--navy-900);color:rgba(255,255,255,.72);padding:var(--space-16) 0 var(--space-8)}
-.wz-footer a{color:var(--white);text-decoration:none}
+.wz-footer{flex:none;background:var(--c-bg);border-top:1px solid var(--border-hairline);color:var(--c-text-small);padding:var(--space-16) 0 var(--space-8)}
+.wz-footer a{color:var(--c-link);text-decoration:none}
 .wz-footer a:hover{text-decoration:underline}
 .wz-footer a:focus-visible{outline-color:var(--focus-ring-on-ink)}
 .wz-footer__top{display:flex;justify-content:space-between;gap:var(--space-12);flex-wrap:wrap;margin-bottom:var(--space-12)}
 .wz-footer__nav{display:flex;gap:var(--space-8);flex-wrap:wrap}
-.wz-footer__nav h2{font-size:var(--text-micro);font-family:var(--font-body);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 var(--space-3)}
+.wz-footer__nav h2{font-size:var(--text-micro);font-family:var(--font-heading);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--c-heading);margin:0 0 var(--space-3)}
 .wz-footer__nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-body-sm)}
 .wz-footer__base{border-top:1px solid var(--border-on-ink);padding-top:var(--space-6);font-size:var(--text-micro);display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap}
 .wz-footer__blurb{max-width:44ch;font-size:var(--text-body-sm);margin:var(--space-4) 0 0}
 .wz-footer__social{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-4) 0 0}
 .wz-footer__social-label{font-size:var(--text-body-sm)}
-.wz-footer a.wz-footer__social-link{display:inline-flex;align-items:center;justify-content:center;padding:var(--space-3);margin:calc(var(--space-3) * -1);color:rgba(255,255,255,.7)}
-.wz-footer a.wz-footer__social-link:hover{color:var(--orange-400);text-decoration:none}
+.wz-footer a.wz-footer__social-link{display:inline-flex;align-items:center;justify-content:center;padding:var(--space-3);margin:calc(var(--space-3) * -1);color:var(--c-text-small)}
+.wz-footer a.wz-footer__social-link:hover{color:var(--c-heading);text-decoration:none}
 .wz-footer a.wz-footer__social-link svg{width:20px;height:20px}
+
+/* ==========================================================================
+   Entrance motion, scroll-linked as on laventusdigital.co.uk.
+   Pure CSS, no JavaScript: each element's animation is tied to its own
+   position in the viewport (animation-timeline: view()), so it scrubs forward
+   as the element rises into view and backwards when you scroll back up. The
+   keyframes only define the start state; the end state is the element's normal
+   styling. translate/scale/rotate are used (not transform) so hover and press
+   transforms on cards and buttons are untouched. Everything sits inside
+   no-preference motion, and the scroll-linked part inside @supports, so other
+   browsers and reduced-motion readers just see the content.
+   Ranges: "entry A% cover B%" for ordinary blocks; "entry A% entry B%" for
+   anything in the last screen of a page, which can never scroll as far as a
+   cover range needs. Siblings step by about 6% through --s.
+   ========================================================================== */
+:root{--ease-reveal:cubic-bezier(.22,1,.36,1)}
+#main{overflow-x:clip}   /* slide-ins travel sideways; clip (not hidden) keeps sticky working */
+@media (prefers-reduced-motion:no-preference){
+  @keyframes wz-load-in{0%{opacity:0;translate:0 36px;filter:blur(10px)}}
+  @keyframes wz-panel-in{0%{opacity:0;translate:0 90px;scale:.9}}
+  @keyframes wz-breathe{from{opacity:.85}to{opacity:1}}
+  @media (max-width:700px){@keyframes wz-load-in{0%{opacity:0;translate:0 18px;filter:blur(6px)}}}
+
+  /* ---- Time-based load-in: the hero and each page's header (already on screen at load) ---- */
+  /* Hero load-in (time-based): eyebrow, lead and buttons in sequence (the headline is the LCP element and
+     stays static: animating it, even with opacity and translate only, stops Chrome reporting LCP on phones), then the four cards, with the float starting after each entrance. */
+  @keyframes wz-hero-pop{0%{opacity:0;translate:0 56px;scale:.78;filter:blur(10px)}}
+  @media (max-width:700px){@keyframes wz-hero-pop{0%{opacity:0;translate:0 28px;scale:.86;filter:blur(6px)}}}
+  .wz-hero__mark,.wz-hero--page .wz-eyebrow{animation:wz-load-in 700ms var(--ease-reveal) both}
+  .wz-hero-art--call .wz-mockup{animation:wz-hero-pop 700ms var(--ease-reveal) 300ms both}
+  .wz-hero__lead{animation:wz-load-in 700ms var(--ease-reveal) 160ms both}
+  .wz-hero__actions{animation:wz-load-in 700ms var(--ease-reveal) 240ms both}
+  .wz-hero-card--board{animation:wz-hero-pop 700ms var(--ease-reveal) 300ms both,wz-float 8s ease-in-out 1000ms infinite alternate}
+  .wz-hero-card--kpi{animation:wz-hero-pop 700ms var(--ease-reveal) 420ms both,wz-float 9s ease-in-out 1120ms infinite alternate}
+  .wz-hero-card--ticket{animation:wz-hero-pop 700ms var(--ease-reveal) 540ms both,wz-float 7s ease-in-out 1240ms infinite alternate}
+  .wz-hero-card--sage{animation:wz-hero-pop 700ms var(--ease-reveal) 660ms both,wz-float 9s ease-in-out 1360ms infinite alternate}
+  @media (max-width:700px){.wz-hero-card--board,.wz-hero-card--kpi{animation:wz-hero-pop 700ms var(--ease-reveal) 300ms both}.wz-hero-card--kpi{animation-delay:420ms}}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>*{animation:wz-load-in 700ms var(--ease-reveal) both}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>:nth-child(2){animation-delay:80ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>:nth-child(3){animation-delay:160ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>:nth-child(n+4){animation-delay:240ms}
+  #route-enquire .wz-split2>div:first-child{animation:wz-load-in 700ms var(--ease-reveal) both}
+  #route-enquire .wz-split2>.wz-card{animation:wz-panel-in 700ms var(--ease-reveal) 120ms both}
+  .wz-thankyou__icon{animation:wz-load-in 700ms var(--ease-reveal) both}
+  .wz-thankyou>.wz-eyebrow{animation:wz-load-in 700ms var(--ease-reveal) 80ms both}
+  .wz-thankyou h1{animation:wz-load-in 700ms var(--ease-reveal) 160ms both}
+  .wz-thankyou>p{animation:wz-load-in 700ms var(--ease-reveal) 240ms both}
+
+  /* ---- Ambient: the glow behind the ink bands breathes slowly (off on phones) ---- */
+  @media (min-width:701px){.wz-band--ink>.wz-container::before{animation:wz-breathe 10s ease-in-out infinite alternate}}
+
+  @supports (animation-timeline: view()) {
+    @keyframes wz-blur-rise{0%{opacity:0;translate:0 64px;filter:blur(12px)}}
+    @keyframes wz-pop{0%{opacity:0;translate:0 56px;scale:.78;filter:blur(10px)}}
+    @keyframes wz-slide-in{0%{opacity:0;translate:90px 0}}
+    @media (max-width:700px){
+      @keyframes wz-blur-rise{0%{opacity:0;translate:0 32px;filter:blur(6px)}}
+      @keyframes wz-pop{0%{opacity:0;translate:0 28px;scale:.86;filter:blur(6px)}}
+      @keyframes wz-panel-in{0%{opacity:0;translate:0 45px;scale:.94}}
+      @keyframes wz-slide-in{0%{opacity:0;translate:45px 0}}
+    }
+
+    /* Blur-rise: eyebrows, headings and text blocks. */
+    :where(
+      #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:not(.wz-band-visual):not(:has(>.wz-btn)),
+      #route-home .wz-module-group__head,
+      #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:not(:has(>.wz-btn)),
+      #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:not(:has(>.wz-btn))
+    ){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,6%) cover calc(var(--s,6%) + var(--len,18%))}
+
+    /* Pop: cards, steps and secondary buttons. */
+    :where(
+      #route-home .wz-grid-modules>.wz-module,
+      #route-home .wz-step,
+      #route-home .wz-band:not(.wz-band--tight) .wz-btn:not(.wz-btn--primary)
+    ){animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,24%) cover calc(var(--s,24%) + var(--len,18%))}
+
+    /* Panels, mockups and photographs: no blur. */
+    :where(
+      #route-home .wz-split2>.wz-mockup,
+      #route-home .wz-facts,
+      #route-home .wz-band-visual,
+      #route-modules #custom-modules .wz-container,
+      #route-guide #dwt-dates+ul,
+      #route-guide #dwt-two-days+p,
+      #route-guide #dwt-cost+p
+    ){animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 30%}
+
+    /* /modules: each module section resolves in the lower fifth of the screen, with a tight 2% stagger.
+       Single source for these ranges; they are not in the shared groups above. */
+    #route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 8% cover 18%}
+    #route-modules .wz-module-section__eyebrow{animation-range:cover 0% cover 10%}
+    #route-modules .wz-module-section__head{animation-range:cover 2% cover 12%}
+    #route-modules .wz-module-section__summary{animation-range:cover 4% cover 14%}
+    #route-modules .wz-module-section__text>ul{animation-range:cover 6% cover 16%}
+    #route-modules .wz-module-section__alongside{animation-range:cover 8% cover 18%}
+    #route-modules .wz-module-section__enquire{animation-range:cover 10% cover 20%}
+    #route-modules .wz-module-section__media{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 18%}
+
+    /* /ai-voice-agent bands: text and cards are sharp as soon as they are fully on screen (they sit near the fold at
+       load). Own block so the shared defaults, which the homepage uses, are untouched. */
+    #route-ai-voice-agent :is(.wz-ai-text h2,.wz-ai-text__body>p,.wz-band:not(.wz-band--tight) .wz-section-head>h2){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module{animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 16%}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(2),
+    #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(4){animation-range:entry 3% cover 19%}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(5){animation-range:entry 6% cover 22%}
+    @media (max-width:1000px){
+      #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}
+      #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
+    }
+    @media (max-width:700px){#route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}}
+
+    /* Slide-in: list items and FAQ rows. */
+    :where(
+      #route-home .wz-ticks li,
+      #route-home .wz-faq details,
+      #route-ai-voice-agent .wz-faq details
+    ){animation:wz-slide-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,4%) cover calc(var(--s,4%) + 18%)}
+
+    /* ---- Steps through --s (about 6% per sibling) ---- */
+    #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:nth-child(2){--s:12%}
+    #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:nth-child(3){--s:18%}
+    #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:nth-child(n+4){--s:24%}
+    #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(1){--s:14%}
+    #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(2){--s:22%}
+    #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(n+3){--s:30%}
+    #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:nth-child(2){--s:14%}
+    #route-home .wz-grid-modules>.wz-module{--len:20%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n+1){--s:10%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n+2){--s:16%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n+3){--s:22%}
+    #route-home .wz-grid-modules>.wz-module:nth-child(4n){--s:28%}
+    @media (max-width:900px){
+      #route-home .wz-grid-modules>.wz-module:nth-child(2n+1){--s:10%}
+      #route-home .wz-grid-modules>.wz-module:nth-child(2n){--s:16%}
+    }
+    @media (max-width:700px){#route-home .wz-grid-modules>.wz-module{--s:10%}}
+    #route-home .wz-step:nth-child(2){--s:10%}
+    #route-home .wz-step:nth-child(3){--s:16%}
+    #route-home .wz-step:nth-child(4){--s:22%}
+    #route-home .wz-step:nth-child(5){--s:28%}
+    @media (max-width:768px){#route-home .wz-step{--s:10%}}
+    #route-home .wz-ticks li:nth-child(1){--s:4%}
+    #route-home .wz-ticks li:nth-child(2){--s:10%}
+    #route-home .wz-ticks li:nth-child(3){--s:16%}
+    #route-home .wz-ticks li:nth-child(4){--s:22%}
+    #route-home .wz-ticks li:nth-child(5){--s:28%}
+
+    /* ---- Elements that already run an animation keep it: lists of animations ---- */
+    /* Gradient-drift headings (drift + blur-rise). */
+    #route-home #modules .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 6% cover 24%,normal}
+    #route-home .wz-band--ink:not(.wz-band--tight) .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 12% cover 30%,normal}
+    /* Primary buttons (glow pulse + pop). Hover and press keep their own rules, as before. */
+    #route-home .wz-band:not(.wz-band--tight) .wz-btn--primary:not(:hover):not(:active),
+
+    /* ---- Last screen of a page: ranges that finish once the element is on screen ---- */
+    #main .wz-band--tight .wz-section-head--center{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 60%}
+    #main .wz-band--tight .wz-section-head--center>*{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,10%) entry calc(var(--s,10%) + 60%)}
+    #main .wz-band--tight .wz-section-head--center>:nth-child(2){--s:20%}
+    #main .wz-band--tight .wz-section-head--center>:nth-child(3){--s:30%}
+    #main .wz-band--tight .wz-section-head--center>:nth-child(4){--s:30%}
+    #main .wz-band--tight .wz-section-head--center>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 10% entry 70%,normal}
+    #main .wz-band--tight .wz-section-head--center>div{animation:none}
+    #main .wz-band--tight .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 30% entry 100%}
+  }
+}
+
+/* ==========================================================================
+   Laventus card finish: top-edge highlight and gradient line, corner glow, and the
+   particle texture inside the card (top right) that pans as the card scrolls.
+   ========================================================================== */
+:root{--wz-particles:url("images/weighzio-dots-hero-1280.webp")}
+.wz-module,.wz-facts,.wz-card--tint:not(:has(form)){isolation:isolate;overflow:clip}
+.wz-module{border-radius:24px;background:radial-gradient(240px 240px at calc(100% + 30px) -30px,rgba(42,128,255,.25),transparent 70%),var(--g-card);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(42,128,255,.45)}
+.wz-facts,.wz-card--tint:not(:has(form)){box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(42,128,255,.45)}
+/* children above the dots (flex items take z-index without being positioned, so the tile's absolute arrow is untouched) */
+.wz-module>:not(.wz-fx){z-index:1}
+.wz-facts>:not(.wz-fx),.wz-card--tint:not(:has(form))>:not(.wz-fx){position:relative;z-index:1}
+.wz-fx{position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--wz-particles) 100% 0%/cover no-repeat;mix-blend-mode:screen;opacity:.8;filter:brightness(1.2);-webkit-mask-image:radial-gradient(90% 66% at 100% 0%,#000 0%,rgba(0,0,0,.7) 34%,transparent 66%);mask-image:radial-gradient(90% 66% at 100% 0%,#000 0%,rgba(0,0,0,.7) 34%,transparent 66%)}
+/* top-edge gradient line */
+.wz-module::after,.wz-facts::after,.wz-card--tint:not(:has(form))::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent 0%,#00CEFF 25%,#7C5EFB 50%,#00CEFF 75%,transparent 100%) 0 0/200% 100%}
+.wz-module:hover{outline:1px solid rgba(0,206,255,.45);outline-offset:-1px}
+/* Custom Modules card: orange accent in place of the blue one (overrides the shared card finish above). */
+.wz-module--custom{background:radial-gradient(240px 240px at calc(100% + 30px) -30px,rgba(244,125,45,.26),rgba(0,0,0,0) 70%),linear-gradient(165deg,#1f2e4a 0%,#1a1430 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(244,125,45,.45)}
+.wz-module--custom::after{background-image:linear-gradient(90deg,rgba(0,0,0,0) 0%,#f47d2d 25%,#7c5efb 50%,#f47d2d 75%,rgba(0,0,0,0) 100%)}
+.wz-module--custom .wz-module__icon-wrap{background:linear-gradient(145deg,#f47d2d,#d6521b);box-shadow:0 8px 20px -8px rgba(244,125,45,.7)}
+.wz-module--custom:hover{outline-color:rgba(244,125,45,.5)}
+.wz-module--custom:focus-visible{outline:2px solid #F79C5E;outline-offset:-2px}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes wz-shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+  .wz-module::after,.wz-facts::after,.wz-card--tint:not(:has(form))::after{animation:wz-shift 5s ease-in-out infinite alternate}
+  @supports (animation-timeline: view()){
+    @keyframes wz-pan-card{0%{background-position:100% 0%}100%{background-position:30% 0%}}
+    .wz-module>.wz-fx,.wz-facts>.wz-fx,.wz-card--tint>.wz-fx{animation:wz-pan-card linear both;animation-duration:auto;animation-timeline:view();animation-range:cover}
+    /* phones: the dots stay static */
+    @media (max-width:700px){.wz-module>.wz-fx,.wz-facts>.wz-fx,.wz-card--tint>.wz-fx{animation:none}}
+  }
+}
+
+/* Closing CTA panel: particle texture on both outer sides (centred copy stays clean), a drifting purple glow,
+   and a slowly pulsing panel shadow. Only this one large element animates a shadow. */
+.wz-band--ink.wz-band--tight>.wz-container{isolation:isolate;overflow:clip}
+.wz-fx--cta{background:url("images/weighzio-dots-hero.webp") 85% 50%/cover no-repeat;opacity:.7;filter:none;-webkit-mask-image:radial-gradient(ellipse 40% 86% at 50% 50%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,.05) 46%,rgba(0,0,0,.16) 52%,rgba(0,0,0,.36) 64%,rgba(0,0,0,.66) 80%,#000 100%);mask-image:radial-gradient(ellipse 40% 86% at 50% 50%,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,.05) 46%,rgba(0,0,0,.16) 52%,rgba(0,0,0,.36) 64%,rgba(0,0,0,.66) 80%,#000 100%)}
+@media (max-width:700px){.wz-fx--cta{opacity:.3;-webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.4) 22%,transparent 45%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.4) 22%,transparent 45%,transparent 100%)}}
+.wz-band--ink.wz-band--tight>.wz-container::after{content:"";position:absolute;z-index:0;width:560px;height:560px;right:-160px;top:-220px;border-radius:50%;pointer-events:none;filter:blur(24px);background:radial-gradient(closest-side,rgba(124,94,251,.5),transparent)}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes wz-drift-glow{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-40px,24px,0) scale(1.08)}}
+  @keyframes wz-panel-glow{0%,100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 40px 120px -40px rgba(47,98,246,.5)}50%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 40px 130px -36px rgba(124,94,251,.6)}}
+  .wz-band--ink.wz-band--tight>.wz-container::after{animation:wz-drift-glow 12s ease-in-out infinite alternate}
+  .wz-band--ink.wz-band--tight>.wz-container{animation:wz-panel-glow 7s ease-in-out infinite}
+  @supports (animation-timeline: view()){
+    @keyframes wz-pan-panel{0%{background-position:85% 50%}100%{background-position:35% 50%}}
+    .wz-fx--cta{animation:wz-pan-panel linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 100%}
+  }
+}
+
+/* ---- Hero product cluster: four floating glass cards (decorative, aria-hidden). Sample data in the style of the site mockups. ---- */
+.wz-hero-art{position:relative;flex:1 1 520px;min-width:0;height:580px;z-index:3}
+.wz-hero-card{position:absolute;box-sizing:border-box;z-index:2;background:var(--g-card);color:var(--c-text-bright);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 30px 70px -30px rgba(0,0,0,.95),0 0 70px -18px rgba(42,128,255,.55)}
+.wz-hero-card--board{right:0;top:56px;width:450px;max-width:100%;padding:20px;border-radius:24px}
+.wz-hero-card--kpi{left:4px;top:0;width:236px;padding:16px 18px;border-radius:20px;z-index:3;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -28px rgba(0,0,0,.95),0 0 56px -18px rgba(124,94,251,.6)}
+.wz-hero-card--ticket{left:0;bottom:34px;width:282px;padding:18px;border-radius:22px;z-index:4}
+.wz-hero-card--sage{right:12px;bottom:0;width:290px;padding:14px 16px;border-radius:20px;z-index:4;display:flex;align-items:center;gap:12px}
+.wz-hero-card--board::before,.wz-hero-card--ticket::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent 0%,#00CEFF 25%,#7C5EFB 50%,#00CEFF 75%,transparent 100%)}
+.wz-hc-title{font-family:var(--font-heading);font-weight:600;font-size:15px;color:#fff;line-height:1.25}
+.wz-hc-meta,.wz-hc-axis,.wz-hc-label{font-size:11px;color:#BCC5DA;line-height:1.35}
+.wz-hc-label{text-transform:uppercase;letter-spacing:.12em}
+.wz-hc-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+.wz-hc-axis{display:flex;justify-content:space-between;padding-left:76px;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.wz-hc-rows{display:flex;flex-direction:column;gap:10px}
+.wz-hc-row{display:flex;align-items:center;gap:12px}
+.wz-hc-reg{width:64px;flex:none;font-size:11px;color:#E4EAF7;white-space:nowrap}
+.wz-hc-track{position:relative;flex:1;height:26px;border-radius:8px;background:rgba(255,255,255,.06)}
+.wz-hc-bar{position:absolute;left:var(--l);width:var(--w);top:3px;bottom:3px;border-radius:6px;background:#2F62F6;color:#fff;font-size:11px;line-height:20px;padding:0 0 0 8px;white-space:nowrap;overflow:hidden}
+.wz-hc-bar.is-purple{background:#7C5EFB}
+.wz-hc-unsched{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+.wz-hc-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.wz-hc-chips span{padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06);font-size:12px;color:#E4EAF7;line-height:1.3}
+.wz-hero-card--ticket .wz-hc-chips{margin-top:12px}
+.wz-hero-card--ticket .wz-hc-chips span{display:block;width:100%}
+.wz-hc-number{font-family:var(--font-heading);font-weight:700;font-size:34px;line-height:1.15;margin:4px 0 2px;background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#fff}
+.wz-hc-trend{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--c-link)}
+.wz-hc-ticket-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.wz-hc-chip{width:38px;height:38px;border-radius:11px;background:var(--g-chip);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.wz-hc-live{display:flex;align-items:center;gap:6px;font-size:11px;color:#BCC5DA;margin-top:2px}
+.wz-hc-live i{width:7px;height:7px;border-radius:50%;background:#00CEFF;box-shadow:0 0 8px rgba(0,206,255,.9)}
+.wz-hc-list{margin:0;display:flex;flex-direction:column;gap:8px}
+.wz-hc-list>div{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.wz-hc-list dt{color:#BCC5DA}
+.wz-hc-list dd{margin:0;color:#fff;font-variant-numeric:tabular-nums}
+.wz-hc-list .is-net{margin-top:4px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
+.wz-hc-list .is-net dd{font-family:var(--font-heading);font-weight:700;font-size:22px}
+.wz-hc-tick{width:34px;height:34px;flex:none;border-radius:50%;background:#00CEFF;color:#070B1A;display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(0,206,255,.7)}
+/* ---- Hero responsive ---- */
+@media (max-width:1100px){
+  .wz-hero__copy{flex-basis:100%}
+  .wz-hero-art{flex-basis:100%;height:560px}
+}
+@media (max-width:700px){
+  .wz-hero{min-height:0;padding:calc(var(--header-h) + 40px) 0 56px}
+  .wz-hero__mark+p{font-size:clamp(40px,11vw,52px)}
+  .wz-hero__actions .wz-btn{min-height:48px}
+  /* Phones: only the dispatch board, with the revenue card overlapping its corner. */
+  .wz-hero-art{flex-basis:100%;height:auto;padding-top:84px}
+  .wz-hero-card--board{position:relative;right:auto;top:auto;width:100%;padding:16px}
+  .wz-hero-card--kpi{left:-4px;top:0;width:200px;padding:12px 14px}
+  .wz-hero-card--ticket,.wz-hero-card--sage{display:none}
+  .wz-hc-axis{padding-left:62px}
+  .wz-hc-reg{width:50px}
+  .wz-hc-bar{padding-left:6px;min-width:max-content}
+}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes wz-float{0%{translate:0 0}100%{translate:0 -10px}}
+}
+
+/* ==========================================================================
+   AI voice agent bands: text band (H2 left, copy right), a card grid built from the module card recipe,
+   the FAQ, and the contained closing panel. Full-width pure black bands divided by hairlines.
+   ========================================================================== */
+#route-ai-voice-agent .wz-band+.wz-band:not(.wz-band--ink){border-top:1px solid rgba(255,255,255,.06)}
+.wz-ai-text{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--space-16);row-gap:var(--space-8);align-items:start}
+.wz-ai-text h2{font-size:var(--fs-h2);font-weight:var(--weight-xbold);line-height:1.06;letter-spacing:-0.03em}
+.wz-ai-text__body{max-width:62ch}
+.wz-ai-text__body p{font-size:var(--text-lead);line-height:1.7}
+.wz-ai-text__body p:last-child{margin-bottom:0}
+.wz-ai-text__body .wz-ai-statement{font-family:var(--font-heading);font-size:clamp(24px,2.2vw,30px);font-weight:var(--weight-bold);line-height:1.3;letter-spacing:-0.01em;color:var(--white);margin-top:var(--space-8)}
+.wz-ai-cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--space-6);justify-items:stretch;align-items:stretch}
+/* Two wider cards on the first row (the core of the product), three on the second, so five cards fill the width. */
+.wz-ai-cards>:nth-child(-n+2){grid-column:span 3}
+.wz-ai-cards>:nth-child(n+3){grid-column:span 2}
+.wz-module--static{cursor:default;padding:var(--space-6)}
+.wz-module--static .wz-module__body{font-size:var(--text-body-md);line-height:1.6}
+@media (max-width:1000px){.wz-ai-text{grid-template-columns:minmax(0,1fr)}.wz-ai-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.wz-ai-cards>:nth-child(n){grid-column:auto}.wz-ai-cards>:nth-child(5){grid-column:1/-1}}
+@media (max-width:700px){.wz-ai-cards{grid-template-columns:minmax(0,1fr)}}
+
+/* ==========================================================================
+   Print — the guide is printed. White paper, black ink, no effects.
+   ========================================================================== */
+@media print{
+  :root{color-scheme:light}
+  *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
+  html,body{background:#fff!important}
+  body{font-size:11pt;line-height:1.5;display:block}
+  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::after,.wz-fx,.wz-module::after,.wz-facts::after,.wz-card::after,.wz-band--ink>.wz-container::before,.wz-band--ink>.wz-container::after,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
+  .wz-band,.wz-band--tight{padding:14pt 0!important}
+  .wz-route--inner > .wz-band:first-child{padding-top:0!important}
+  .wz-guide{display:block}
+  .wz-guide__prose{max-width:none;font-size:11pt}
+  .wz-card,.wz-card--tint{border:1px solid #999!important;border-radius:0!important}
+  h1,h2,h3,h4{break-after:avoid;page-break-after:avoid;font-weight:700}
+  table,tr,img,.wz-card,.wz-faq details{break-inside:avoid;page-break-inside:avoid}
+  a{text-decoration:underline!important}
+  .wz-guide__prose a[href]::after,.wz-route--inner p a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}
+  .wz-footer{border-top:1px solid #999;padding:10pt 0}
+  .wz-footer img{filter:invert(1)!important}
+  /* Guide callouts print as plain bordered boxes. */
+  #dwt-dates+ul,#dwt-two-days+p,#dwt-cost+p{border:1px solid #999!important;border-radius:0!important;padding:8pt 10pt!important;break-inside:avoid}
+  #dwt-two-days+p::before,#dwt-cost+p::before{font-size:28pt!important}
+  #dwt-dates+ul li::before,#dwt-dates+ul li::after{display:none!important}
+  #dwt-dates+ul li{padding-left:0}
+}
 </style>
 <script>var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
 <script src="//s.ksrndkehqnwntyxlhgto.com/175655.js"></script>
@@ -1457,19 +1981,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- 2.1 Hero -->
   <section class="wz-hero">
-    <img class="wz-hero__img" src="images/hero-yard-1920.jpg" srcset="images/hero-yard-768.webp 768w, images/hero-yard-1280.webp 1280w, images/hero-yard-1920.webp 1920w" sizes="100vw" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
-    <div class="wz-hero__scrim" aria-hidden="true"></div>
-
-    <div class="wz-hero__inner">
-      <div class="wz-hero__mark">
-        <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="24" height="24" style="width:24px;height:auto">
-        <h1 class="wz-eyebrow">Modular waste management software</h1>
+    <div class="wz-container wz-hero__grid">
+      <div class="wz-hero__copy">
+        <div class="wz-hero__mark">
+          <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="24" height="24" style="width:24px;height:auto">
+          <h1 class="wz-eyebrow">Modular waste management software</h1>
+        </div>
+        <p>Take the modules you need.<br>Not the ones you don't.</p>
+        <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates, sold module by module. No mandatory core, and the price per module drops the more you run.</p>
+        <div class="wz-hero__actions">
+          <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
+          <a class="wz-btn wz-btn--outline-white wz-btn--lg" href="#modules">See the modules</a>
+        </div>
       </div>
-      <p>Take the modules you need.<br>Not the ones you don't.</p>
-      <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates, sold module by module. No mandatory core, and the price per module drops the more you run.</p>
-      <div class="wz-hero__actions">
-        <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a>
-        <a class="wz-btn wz-btn--outline-white wz-btn--lg" href="#modules">See the modules</a>
+      <div class="wz-hero-art" aria-hidden="true">
+        <div class="wz-hero-card wz-hero-card--board wz-float-a">
+          <div class="wz-hc-head"><div class="wz-hc-title">Dispatch</div><div class="wz-hc-meta">Wed 15 Oct</div></div>
+          <div class="wz-hc-axis"><span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span></div>
+          <div class="wz-hc-rows">
+            <div class="wz-hc-row"><div class="wz-hc-reg">DL21 KVM</div><div class="wz-hc-track"><div class="wz-hc-bar" style="--l:20%;--w:26%">Tamworth</div><div class="wz-hc-bar" style="--l:58%;--w:26%">Coleshill</div></div></div>
+            <div class="wz-hc-row"><div class="wz-hc-reg">YG19 FXP</div><div class="wz-hc-track"><div class="wz-hc-bar is-purple" style="--l:28%;--w:26%">Nuneaton</div><div class="wz-hc-bar is-purple" style="--l:66%;--w:20%">Rugby</div></div></div>
+            <div class="wz-hc-row"><div class="wz-hc-reg">BX70 LWH</div><div class="wz-hc-track"><div class="wz-hc-bar" style="--l:38%;--w:28%">Redditch</div></div></div>
+            <div class="wz-hc-row"><div class="wz-hc-reg">KP68 GNZ</div><div class="wz-hc-track"><div class="wz-hc-bar is-purple" style="--l:4%;--w:24%">Walsall</div><div class="wz-hc-bar" style="--l:56%;--w:26%">Cannock</div></div></div>
+          </div>
+          <div class="wz-hc-unsched">
+            <div class="wz-hc-label">Unscheduled</div>
+            <div class="wz-hc-chips"><span>Hinckley, 8yd skip</span><span>Atherstone, RoRo exchange</span><span>Lichfield, tipper</span></div>
+          </div>
+        </div>
+        <div class="wz-hero-card wz-hero-card--kpi wz-float-b">
+          <div class="wz-hc-label">Vehicle revenue</div>
+          <div class="wz-hc-number">&pound;18,240</div>
+          <div class="wz-hc-trend"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg> +6.4% wk/wk</div>
+        </div>
+        <div class="wz-hero-card wz-hero-card--ticket wz-float-c">
+          <div class="wz-hc-ticket-head">
+            <div class="wz-hc-chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
+            <div><div class="wz-hc-title">Weighbridge ticket</div><div class="wz-hc-live"><i></i>Live from the indicator</div></div>
+          </div>
+          <dl class="wz-hc-list">
+            <div><dt>Vehicle</dt><dd>DL21 KVM</dd></div>
+            <div><dt>Gross</dt><dd>26.84 t</dd></div>
+            <div><dt>Tare</dt><dd>9.12 t</dd></div>
+            <div class="is-net"><dt>Net</dt><dd>17.72 t</dd></div>
+          </dl>
+          <div class="wz-hc-chips"><span>Soils and stones, EWC 17 05 04</span></div>
+        </div>
+        <div class="wz-hero-card wz-hero-card--sage wz-float-b">
+          <div class="wz-hc-tick"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><div class="wz-hc-title">Posted to Sage</div><div class="wz-hc-meta">NV-10482, Hinckley Builders Merchants</div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1493,25 +2054,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#weighbridge" data-module="weighbridge" data-group="operations">
+            <a class="wz-module" href="/modules#weighbridge" data-module="weighbridge" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_scale.svg');mask-image:url('images/icon_scale.svg')"></span></span>
               <span class="wz-module__title">Weighbridge</span>
               <p class="wz-module__body">Live weight capture straight off your indicator, onto the ticket.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#skip-hire" data-module="skip-hire" data-group="operations">
+            <a class="wz-module" href="/modules#skip-hire" data-module="skip-hire" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_container.svg');mask-image:url('images/icon_container.svg')"></span></span>
               <span class="wz-module__title">Skip Hire &amp; RoRo</span>
               <p class="wz-module__body">Skips, exchanges, hire terms, container tracking and digital waste tracking.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#materials" data-module="materials" data-group="operations">
+            <a class="wz-module" href="/modules#materials" data-module="materials" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_layers.svg');mask-image:url('images/icon_layers.svg')"></span></span>
               <span class="wz-module__title">Materials &amp; Aggregates</span>
               <p class="wz-module__body">Material orders, haulage, disposal routes and automatic load splitting.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#scheduling" data-module="scheduling" data-group="operations">
+            <a class="wz-module" href="/modules#scheduling" data-module="scheduling" data-group="operations"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span></span>
               <span class="wz-module__title">Scheduling &amp; Dispatch</span>
               <p class="wz-module__body">Drag-and-drop planning boards that hold thousands of live tickets.</p>
@@ -1527,13 +2088,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#driver-app" data-module="driver-app" data-group="fleet">
+            <a class="wz-module" href="/modules#driver-app" data-module="driver-app" data-group="fleet"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span></span>
               <span class="wz-module__title">Driver App</span>
               <p class="wz-module__body">Job cards, weights, load breakdowns and signatures from the cab.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#fleet" data-module="fleet" data-group="fleet">
+            <a class="wz-module" href="/modules#fleet" data-module="fleet" data-group="fleet"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_truck.svg');mask-image:url('images/icon_truck.svg')"></span></span>
               <span class="wz-module__title">Fleet &amp; Telematics</span>
               <p class="wz-module__body">Live vehicle tracking and weight limits enforced before dispatch.</p>
@@ -1549,37 +2110,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#customers" data-module="customers" data-group="money">
+            <a class="wz-module" href="/modules#customers" data-module="customers" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_credit-card.svg');mask-image:url('images/icon_credit-card.svg')"></span></span>
               <span class="wz-module__title">Customers &amp; Pricing</span>
               <p class="wz-module__body">Accounts, sites, bespoke rates and credit control.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#finance" data-module="finance" data-group="money">
+            <a class="wz-module" href="/modules#finance" data-module="finance" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span></span>
               <span class="wz-module__title">Finance &amp; Payments</span>
               <p class="wz-module__body">Invoicing, VAT, recurring billing and background posting to Sage.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#reporting" data-module="reporting" data-group="money">
+            <a class="wz-module" href="/modules#reporting" data-module="reporting" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_chart-column.svg');mask-image:url('images/icon_chart-column.svg')"></span></span>
               <span class="wz-module__title">Reporting &amp; Dashboards</span>
               <p class="wz-module__body">Operational, financial and compliance reporting.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#customer-portal" data-module="customer-portal" data-group="money">
+            <a class="wz-module" href="/modules#customer-portal" data-module="customer-portal" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_users.svg');mask-image:url('images/icon_users.svg')"></span></span>
               <span class="wz-module__title">Customer Portal</span>
               <p class="wz-module__body">Self-serve ordering, ticket history and site reports for your customers.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#multi-company" data-module="multi-company" data-group="money">
+            <a class="wz-module" href="/modules#multi-company" data-module="multi-company" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_network.svg');mask-image:url('images/icon_network.svg')"></span></span>
               <span class="wz-module__title">Multi-Company</span>
               <p class="wz-module__body">Separate entities with their own VAT, ledgers and branding under one login.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#marketing-data-feed" data-module="marketing-data-feed" data-group="money">
+            <a class="wz-module" href="/modules#marketing-data-feed" data-module="marketing-data-feed" data-group="money"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_trending-up.svg');mask-image:url('images/icon_trending-up.svg')"></span></span>
               <span class="wz-module__title">Marketing Data Feed</span>
               <p class="wz-module__body">Job and enquiry data fed back into your Google and Meta campaigns.</p>
@@ -1595,25 +2156,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="wz-module-group__line" aria-hidden="true"></span>
           </div>
           <div class="wz-grid-modules">
-            <a class="wz-module" href="/modules#ready-mix" data-module="ready-mix" data-group="specialist">
+            <a class="wz-module" href="/modules#ready-mix" data-module="ready-mix" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_factory.svg');mask-image:url('images/icon_factory.svg')"></span></span>
               <span class="wz-module__title">Ready-Mix Concrete</span>
               <p class="wz-module__body">Concrete orders, volumetric metering and delivery.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#trade-waste" data-module="trade-waste" data-group="specialist">
+            <a class="wz-module" href="/modules#trade-waste" data-module="trade-waste" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span></span>
               <span class="wz-module__title">Trade Waste</span>
               <p class="wz-module__body">Route-based commercial collections.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module" href="/modules#hazardous-waste" data-module="hazardous-waste" data-group="specialist">
+            <a class="wz-module" href="/modules#hazardous-waste" data-module="hazardous-waste" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span></span>
               <span class="wz-module__title">Hazardous Waste</span>
               <p class="wz-module__body">Consignment tracking and Environment Agency reporting.</p>
               <span class="wz-icon wz-module__corner" aria-hidden="true" style="-webkit-mask-image:url('images/icon_arrow-right.svg');mask-image:url('images/icon_arrow-right.svg')"></span>
             </a>
-            <a class="wz-module wz-module--custom" href="/modules#custom-modules" data-module="custom-modules" data-group="specialist">
+            <a class="wz-module wz-module--custom" href="/modules#custom-modules" data-module="custom-modules" data-group="specialist"><span class="wz-fx" aria-hidden="true"></span>
               <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_puzzle.svg');mask-image:url('images/icon_puzzle.svg')"></span></span>
               <span class="wz-module__title">Custom Modules</span>
               <p class="wz-module__body">Something your operation needs that nobody has built yet.</p>
@@ -1654,11 +2215,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- 2.4 Digital waste tracking -->
   <section class="wz-band wz-band--ink">
     <div class="wz-container wz-stack">
+      <div class="wz-split2 wz-dwt">
       <div class="wz-section-head">
-        <span class="wz-eyebrow">Compliance</span>
-        <h2>Digital waste tracking, built into Skip Hire</h2>
-        <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
-        <p>Our modules handle that.</p>
+          <span class="wz-eyebrow">Compliance</span>
+          <h2>Digital waste tracking, built into Skip Hire</h2>
+          <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
+          <p>Our modules handle that.</p>
+    </div>
+        <aside class="wz-card wz-facts" aria-label="Key facts"><span class="wz-fx" aria-hidden="true"></span>
+          <p class="wz-facts__title">The key facts</p>
+          <ul class="wz-facts__list">
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>England and Wales: 1 October 2026.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>Scotland and Northern Ireland: January 2027.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>Carriers, brokers and dealers: October 2027.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>Each load has to be recorded within two working days of arriving.</li>
+            <li><span class="wz-facts__dot" aria-hidden="true"></span>The service charges £26 a year per legal entity that creates or edits records.</li>
+          </ul>
+        </aside>
       </div>
 
       <ul class="wz-ticks">
@@ -1719,6 +2292,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wz-section-head">
           <span class="wz-eyebrow">Marketing data feed</span>
           <h2>Know which adverts actually brought the work in</h2>
+          <div class="wz-band-visual" aria-hidden="true"><div class="wz-mockup wz-mockup--campaigns">
+                  <div class="wz-mockup__bar">Campaign performance <em>Last 30 days</em></div>
+                  <div class="wz-mockup__campaigns-body">
+                    <div class="wz-mockup__campaign-head"><span>Campaign</span><span>Spend</span><span>Job value</span></div>
+                    <div class="wz-mockup__campaign-rows">
+                      <div class="wz-mockup__campaign-row"><span>Skip Hire &mdash; Leicester</span><b>&pound;640</b><b>&pound;4,920</b></div>
+                      <div class="wz-mockup__campaign-row"><span>Aggregates &mdash; Search</span><b>&pound;410</b><b>&pound;3,180</b></div>
+                      <div class="wz-mockup__campaign-row"><span>RoRo &mdash; Coventry</span><b>&pound;295</b><b>&pound;1,860</b></div>
+                      <div class="wz-mockup__campaign-row"><span>Trade Waste &mdash; Meta</span><b>&pound;180</b><b>&pound;340</b></div>
+                    </div>
+                  </div>
+                </div></div>
         </div>
         <div>
           <p>Most waste operators spend money on Google and Meta and have no idea which of it worked. The reporting stops at the enquiry and the enquiry is where the useful part starts.</p>
@@ -1736,6 +2321,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="wz-section-head">
           <span class="wz-eyebrow">AI Voice Agent</span>
           <h2>Answer every call. Book every skip.</h2>
+          <div class="wz-band-visual" aria-hidden="true"><div class="wz-mockup wz-mockup--call">
+            <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
+            <div class="wz-mockup__call-body">
+              <div class="wz-mockup__call-meta"><span class="wz-mockup__tag wz-mockup__tag--tier">After hours</span><span>Hinckley Builders Merchants</span></div>
+              <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Good evening. How can I help?</div>
+              <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>I need an 8 yard skip tomorrow morning, Nuneaton Yard.</div>
+              <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Tomorrow morning is free. I'll book it at your account rate. Shall I confirm?</div>
+              <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>Yes please.</div>
+              <div class="wz-mockup__booked"><b>Booked</b><span>8yd skip &middot; Nuneaton Yard &middot; Sat 18 Oct, morning</span><span>Checked against the live schedule</span></div>
+              <div class="wz-mockup__sms"><em>Text sent</em>Your 8yd skip is booked for Sat 18 Oct, morning. Nuneaton Yard.</div>
+            </div>
+          </div></div>
         </div>
         <div>
           <p>A missed call during a busy afternoon, or one that comes in after the office has shut, is a booking that either waits until tomorrow or goes to a competitor.</p>
@@ -1821,6 +2418,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- 2.10 Final CTA -->
   <section class="wz-band wz-band--ink wz-band--tight">
     <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
       <div class="wz-section-head wz-section-head--center">
         <h2>Start with what you need</h2>
         <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
@@ -2461,6 +3059,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </section>
 
   </div>
+
+  <!-- Closing CTA (same band as the home page) -->
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
+      <div class="wz-section-head wz-section-head--center">
+        <h2>Start with what you need</h2>
+        <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
+        <div style="margin-top:var(--space-6)">
+          <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
+        </div>
+        <p style="font-size:var(--text-body-sm);margin-top:var(--space-4)">No cost, no commitment, and we'll tell you if you're better off where you are.</p>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ======================================================================
@@ -2564,7 +3177,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><a href="https://www.legislation.gov.uk/uksi/2026/729/contents/made" rel="noopener">The Digital Waste Tracking (England) Regulations 2026 (SI 2026/729)</a></li>
           </ul>
 
-          <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)">
+          <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)"><span class="wz-fx" aria-hidden="true"></span>
             <p style="margin:0 0 var(--space-4)">weighzIO files these records automatically as part of the Skip Hire module.</p>
             <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></p>
           </div>
@@ -2578,62 +3191,107 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      ROUTE: /ai-voice-agent
      ====================================================================== -->
 <div class="wz-route wz-route--inner" data-route="/ai-voice-agent" id="route-ai-voice-agent" hidden>
-  <section class="wz-band">
-    <div class="wz-container">
-      <div class="wz-section-head" style="margin-bottom:var(--space-12)">
-        <span class="wz-eyebrow">weighzIO</span>
+  <section class="wz-hero wz-hero--page">
+    <div class="wz-container wz-hero__grid">
+      <div class="wz-hero__copy">
+        <span class="wz-eyebrow">AI Voice Agent</span>
         <h1>Answer every call. Book every skip.</h1>
-        <p>An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
+        <p class="wz-hero__lead">An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
+        <div class="wz-hero__actions"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
+      <div class="wz-hero-art wz-hero-art--call" aria-hidden="true">
+        <div class="wz-mockup wz-mockup--call">
+          <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
+          <div class="wz-mockup__call-body">
+            <div class="wz-mockup__call-meta"><span class="wz-mockup__tag wz-mockup__tag--tier">After hours</span><span>Hinckley Builders Merchants</span></div>
+            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Good evening. How can I help?</div>
+            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>I need an 8 yard skip tomorrow morning, Nuneaton Yard.</div>
+            <div class="wz-mockup__msg wz-mockup__msg--agent"><em>Agent</em>Tomorrow morning is free. I'll book it at your account rate. Shall I confirm?</div>
+            <div class="wz-mockup__msg wz-mockup__msg--caller"><em>Caller</em>Yes please.</div>
+            <div class="wz-mockup__booked"><b>Booked</b><span>8yd skip &middot; Nuneaton Yard &middot; Sat 18 Oct, morning</span><span>Checked against the live schedule</span></div>
+            <div class="wz-mockup__sms"><em>Text sent</em>Your 8yd skip is booked for Sat 18 Oct, morning. Nuneaton Yard.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <div class="wz-guide__prose">
-
-        <h2>The phone doesn't stop when the office does</h2>
+  <section class="wz-band">
+    <div class="wz-container wz-ai-text">
+      <h2>The phone doesn't stop when the office does</h2>
+      <div class="wz-ai-text__body">
         <p>Skip hire runs on the phone, and the phone doesn't keep office hours. A driver can't answer while he's out on a job. The yard's short-staffed on a Friday afternoon. Someone rings at half seven in the evening wanting a same-day collection, gets no answer, and books with whoever answers next.</p>
-        <p>Every missed call is a booking that either waits until tomorrow or goes to a competitor.</p>
+        <p class="wz-ai-statement">Every missed call is a booking that either waits until tomorrow or goes to a competitor.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="wz-band">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
         <h2>It answers, and it actually books the job</h2>
-        <ul class="wz-ticks">
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Answers immediately, day or night.</strong><p>No hold music, no voicemail, no "we'll call you back."</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Books against your real availability.</strong><p>Not a generic script - it works from the same jobs and schedule your team already sees, so it isn't promising a Tuesday slot that's already full.</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Arranges collections and swaps</strong><p>Confirms the date and gets the address right without anyone having to repeat themselves twice.</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Quotes a price for standard jobs on the spot.</strong><p>Using your actual rates rather than a rough estimate someone has to correct later.</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Confirms everything by text.</strong><p>So the customer has it in writing and the office has a record without anyone typing it up.</p></div>
-          </li>
-        </ul>
+      </div>
+      <div class="wz-ai-cards">
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span></span>
+          <span class="wz-module__title">Answers immediately, day or night.</span>
+          <p class="wz-module__body">No hold music, no voicemail, no "we'll call you back."</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span></span>
+          <span class="wz-module__title">Books against your real availability.</span>
+          <p class="wz-module__body">Not a generic script - it works from the same jobs and schedule your team already sees, so it isn't promising a Tuesday slot that's already full.</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span></span>
+          <span class="wz-module__title">Arranges collections and swaps</span>
+          <p class="wz-module__body">Confirms the date and gets the address right without anyone having to repeat themselves twice.</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span></span>
+          <span class="wz-module__title">Quotes a price for standard jobs on the spot.</span>
+          <p class="wz-module__body">Using your actual rates rather than a rough estimate someone has to correct later.</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span></span>
+          <span class="wz-module__title">Confirms everything by text.</span>
+          <p class="wz-module__body">So the customer has it in writing and the office has a record without anyone typing it up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <h2>The admin that piles up around every call</h2>
+  <section class="wz-band">
+    <div class="wz-container wz-ai-text">
+      <h2>The admin that piles up around every call</h2>
+      <div class="wz-ai-text__body">
         <p>Answering the phone is the headline, but the same system picks up the work that usually falls through the cracks around it: capturing and qualifying enquiries so nothing sits unread, keeping customer records tidy without someone doing it by hand at the end of the day, and chasing quotes that never got a reply instead of them quietly going cold.</p>
         <p>None of this touches advertising or ad spend - it's about what happens to a call or enquiry once it's already come in, not how it got there.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="wz-band wz-band--canvas">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
         <h2>FAQ</h2>
-        <div class="wz-faq">
+      </div>
+      <div class="wz-faq">
           <details><summary>Will it replace our office team?</summary><p>No. It picks up what a small team can't always get to - the call at half seven, the one that comes in while everyone's on another line - so your team spends less time chasing and more time on the jobs that need a real person.</p></details>
           <details><summary>Does it work with our existing phone number?</summary><p>Yes, it sits on the number you already advertise. Customers don't dial anything different.</p></details>
           <details><summary>Will it sound like a robot?</summary><p>No. It's trained on your yard's actual processes, prices and tone, not a generic script read out loud.</p></details>
           <details><summary>What if a call genuinely needs a person?</summary><p>It hands off - a complicated query, an angry customer, anything outside the ordinary goes straight to your team rather than the agent guessing.</p></details>
         </div>
+    </div>
+  </section>
 
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
+      <div class="wz-section-head wz-section-head--center">
         <h2>Stop losing bookings to a missed call</h2>
-        <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-4)">
-          <p style="margin:0 0 var(--space-4)">Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
-          <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire">Enquire</a></p>
-        </div>
-
+        <p>Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
+        <div style="margin-top:var(--space-6)"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
     </div>
   </section>
@@ -2668,6 +3326,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div><strong>Email or phone, Monday to Friday.</strong><p>Office hours, and a reply within two working days either way.</p></div>
             </li>
           </ul>
+          <div class="wz-card wz-enquire-contact">
+            <p class="wz-enquire-contact__title">Call us</p>
+            <div class="wz-contact__row"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span><p><a href="tel:+442895685338">Belfast: 028 9568 5338</a></p></div>
+            <div class="wz-contact__row"><span class="wz-icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span><p><a href="tel:+441418460840">Glasgow: 0141 846 0840</a></p></div>
+            <p class="wz-enquire-contact__note">Office hours, Monday to Friday. A reply within two working days either way.</p>
+          </div>
         </div>
 
         <div class="wz-card wz-card--pad-lg wz-card--raised">
@@ -3711,5 +4375,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<script>
+/* FAQ accordion: smooth single-open slide (400ms, ease-in-out) layered on the native <details>/<summary>.
+   Markup, text and structured data are untouched. Without JS, without Element.animate, or with reduced motion,
+   the native instant behaviour is used. Delegated, so it survives the router switching panels. */
+(function () {
+  var DURATION = 400, EASING = "cubic-bezier(.37, 0, .63, 1)";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var anims = new WeakMap();
+
+  function finish(d, keepOpen) {
+    d.style.height = ""; d.style.overflow = "";
+    d.classList.remove("is-closing");
+    if (!keepOpen) d.open = false;
+    anims.delete(d);
+  }
+  function run(d, from, to, keepOpen) {
+    var running = anims.get(d); if (running) running.cancel();
+    d.style.overflow = "hidden";
+    var a = d.animate({ height: [from + "px", to + "px"] }, { duration: DURATION, easing: EASING });
+    anims.set(d, a);
+    a.onfinish = function () { finish(d, keepOpen); };
+    a.oncancel = function () { d.style.height = ""; d.style.overflow = ""; };
+  }
+  function openIt(d) {
+    var from = d.offsetHeight; d.classList.remove("is-closing"); d.open = true;
+    var to = d.offsetHeight; run(d, from, to, true);
+  }
+  function closeIt(d) {
+    var cs = getComputedStyle(d), s = d.querySelector("summary");
+    var from = d.offsetHeight;
+    var to = s.offsetHeight + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+    d.classList.add("is-closing"); run(d, from, to, false);
+  }
+
+  document.addEventListener("click", function (e) {
+    var s = e.target.closest && e.target.closest(".wz-faq summary");
+    if (!s || reduce.matches || !s.parentElement.animate) return;
+    e.preventDefault();
+    var d = s.parentElement;
+    if (d.open && !d.classList.contains("is-closing")) { closeIt(d); return; }
+    Array.prototype.forEach.call(d.parentElement.querySelectorAll("details[open]"), function (o) {
+      if (o !== d && !o.classList.contains("is-closing")) closeIt(o);
+    });
+    openIt(d);
+  });
+})();
+</script>
+<script>
+/* Guide contents list: mark the section being read (aria-current) so the
+   sticky list shows where you are. Display only; touches nothing else. */
+(function () {
+  var links = document.querySelectorAll('.wz-guide__toc a[href^="#dwt-"]');
+  if (!links.length || !("IntersectionObserver" in window)) return;
+  var byId = {};
+  Array.prototype.forEach.call(links, function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      Array.prototype.forEach.call(links, function (a) { a.removeAttribute("aria-current"); });
+      if (byId[e.target.id]) byId[e.target.id].setAttribute("aria-current", "true");
+    });
+  }, { rootMargin: "0px 0px -72% 0px" });
+  Object.keys(byId).forEach(function (id) { var h = document.getElementById(id); if (h) io.observe(h); });
+})();
+</script>
 </body>
 </html>
