@@ -105,7 +105,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --glow-cyan-press: 0 0 10px rgba(0, 206, 255, .6), inset 0 2px 6px rgba(0, 0, 0, .3);
   --shadow-sm: inset 0 1px 0 rgba(255,255,255,.06), 0 0 24px rgba(47,98,246,.10);
   --shadow-md: inset 0 1px 0 rgba(255,255,255,.08), 0 0 36px rgba(47,98,246,.18);
-  --shadow-lg: inset 0 1px 0 rgba(255,255,255,.08), 0 0 64px rgba(47,98,246,.22), 0 0 28px rgba(124,94,251,.14);
+  /* One glow for every image card on /modules (mockups and photographs). */
+  --wz-media-glow: 0 0 64px rgba(47,98,246,.22), 0 0 28px rgba(124,94,251,.14);
+  --shadow-lg: inset 0 1px 0 rgba(255,255,255,.08), var(--wz-media-glow);
 
 
   /* Type scale */
@@ -1426,7 +1428,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
    in the stacked media query below, where there's no text column height
    for it to compete with. */
 .wz-module-section__media picture{position:absolute;inset:0;display:block;width:100%;height:100%}
-.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);box-shadow:0 0 28px rgba(47,98,246,.12)}
+.wz-module-section__photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);box-shadow:var(--wz-media-glow);outline:1px solid rgba(255,255,255,.1);outline-offset:-1px}
+/* The top highlight cannot be an inset shadow on an img (it paints underneath), so it sits on the picture. */
+.wz-module-section__media picture::after{content:"";position:absolute;inset:0;border-radius:var(--radius-card);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);pointer-events:none}
 /* Modules page refinements: the title carries the number only (the icon lives
    on the homepage tiles and is still in the markup for the module dialog),
    photos get a quieter glow, and Custom Modules is the same dashed-orange
