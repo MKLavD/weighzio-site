@@ -1640,10 +1640,10 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   .wz-hero-card--ticket{animation:wz-hero-pop 700ms var(--ease-reveal) 540ms both,wz-float 7s ease-in-out 1240ms infinite alternate}
   .wz-hero-card--sage{animation:wz-hero-pop 700ms var(--ease-reveal) 660ms both,wz-float 9s ease-in-out 1360ms infinite alternate}
   @media (max-width:700px){.wz-hero-card--board,.wz-hero-card--kpi{animation:wz-hero-pop 700ms var(--ease-reveal) 300ms both}.wz-hero-card--kpi{animation-delay:420ms}}
-  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>*{animation:wz-load-in 700ms var(--ease-reveal) both}
-  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(2){animation-delay:80ms}
-  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(3){animation-delay:160ms}
-  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(n+4){animation-delay:240ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>*{animation:wz-load-in 700ms var(--ease-reveal) both}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>:nth-child(2){animation-delay:80ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>:nth-child(3){animation-delay:160ms}
+  :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-privacy .wz-section-head)>:nth-child(n+4){animation-delay:240ms}
   #route-enquire .wz-split2>div:first-child{animation:wz-load-in 700ms var(--ease-reveal) both}
   #route-enquire .wz-split2>.wz-card{animation:wz-panel-in 700ms var(--ease-reveal) 120ms both}
   .wz-thankyou__icon{animation:wz-load-in 700ms var(--ease-reveal) both}
@@ -1671,13 +1671,15 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-home .wz-module-group__head,
       #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:not(:has(>.wz-btn)),
       #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:not(:has(>.wz-btn)),
-      #route-ai-voice-agent .wz-guide__prose>h2,
-      #route-ai-voice-agent .wz-guide__prose>p:not(:has(>.wz-btn))
+      #route-ai-voice-agent .wz-ai-text h2,
+      #route-ai-voice-agent .wz-ai-text__body>p,
+      #route-ai-voice-agent .wz-band:not(.wz-band--tight) .wz-section-head>h2
     ){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,6%) cover calc(var(--s,6%) + var(--len,18%))}
 
     /* Pop: cards, steps and secondary buttons. */
     :where(
       #route-home .wz-grid-modules>.wz-module,
+      #route-ai-voice-agent .wz-ai-cards>.wz-module,
       #route-home .wz-step,
       #route-home .wz-band:not(.wz-band--tight) .wz-btn:not(.wz-btn--primary)
     ){animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,24%) cover calc(var(--s,24%) + var(--len,18%))}
@@ -1708,7 +1710,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     :where(
       #route-home .wz-ticks li,
       #route-home .wz-faq details,
-      #route-ai-voice-agent .wz-ticks li,
       #route-ai-voice-agent .wz-faq details
     ){animation:wz-slide-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,4%) cover calc(var(--s,4%) + 18%)}
 
@@ -1730,6 +1731,12 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-home .wz-grid-modules>.wz-module:nth-child(2n){--s:16%}
     }
     @media (max-width:700px){#route-home .wz-grid-modules>.wz-module{--s:10%}}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module{--len:20%}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(3n+1){--s:10%}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(3n+2){--s:16%}
+    #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(3n){--s:22%}
+    @media (max-width:1000px){#route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(2n+1){--s:10%}#route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(2n){--s:16%}}
+    @media (max-width:700px){#route-ai-voice-agent .wz-ai-cards>.wz-module{--s:10%}}
     #route-home .wz-step:nth-child(2){--s:10%}
     #route-home .wz-step:nth-child(3){--s:16%}
     #route-home .wz-step:nth-child(4){--s:22%}
@@ -1740,10 +1747,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #route-home .wz-ticks li:nth-child(3){--s:16%}
     #route-home .wz-ticks li:nth-child(4){--s:22%}
     #route-home .wz-ticks li:nth-child(5){--s:28%}
-    #route-ai-voice-agent .wz-ticks li:nth-child(2){--s:10%}
-    #route-ai-voice-agent .wz-ticks li:nth-child(3){--s:16%}
-    #route-ai-voice-agent .wz-ticks li:nth-child(4){--s:22%}
-    #route-ai-voice-agent .wz-ticks li:nth-child(5){--s:28%}
 
     /* ---- Elements that already run an animation keep it: lists of animations ---- */
     /* Gradient-drift headings (drift + blur-rise). */
@@ -1751,7 +1754,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #route-home .wz-band--ink:not(.wz-band--tight) .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 12% cover 30%,normal}
     /* Primary buttons (glow pulse + pop). Hover and press keep their own rules, as before. */
     #route-home .wz-band:not(.wz-band--tight) .wz-btn--primary:not(:hover):not(:active),
-    #route-ai-voice-agent .wz-card .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 24% cover 42%}
 
     /* ---- Last screen of a page: ranges that finish once the element is on screen ---- */
     #main .wz-band--tight .wz-section-head--center{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 60%}
@@ -1762,8 +1764,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #main .wz-band--tight .wz-section-head--center>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 10% entry 70%,normal}
     #main .wz-band--tight .wz-section-head--center>div{animation:none}
     #main .wz-band--tight .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 30% entry 100%}
-    #route-ai-voice-agent .wz-card.wz-card--tint{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% entry 70%}
-    #route-ai-voice-agent .wz-card .wz-btn--primary:not(:hover):not(:active){animation-range:normal,entry 20% entry 100%}
   }
 }
 
@@ -1874,6 +1874,23 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 @media (prefers-reduced-motion:no-preference){
   @keyframes wz-float{0%{translate:0 0}100%{translate:0 -10px}}
 }
+
+/* ==========================================================================
+   AI voice agent bands: text band (H2 left, copy right), a card grid built from the module card recipe,
+   the FAQ, and the contained closing panel. Full-width pure black bands divided by hairlines.
+   ========================================================================== */
+#route-ai-voice-agent .wz-band+.wz-band:not(.wz-band--ink){border-top:1px solid rgba(255,255,255,.06)}
+.wz-ai-text{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:var(--space-16);row-gap:var(--space-8);align-items:start}
+.wz-ai-text h2{font-size:var(--fs-h2);font-weight:var(--weight-xbold);line-height:1.06;letter-spacing:-0.03em}
+.wz-ai-text__body{max-width:62ch}
+.wz-ai-text__body p{font-size:var(--text-lead);line-height:1.7}
+.wz-ai-text__body p:last-child{margin-bottom:0}
+.wz-ai-text__body .wz-ai-statement{font-family:var(--font-heading);font-size:clamp(24px,2.2vw,30px);font-weight:var(--weight-bold);line-height:1.3;letter-spacing:-0.01em;color:var(--white);margin-top:var(--space-8)}
+.wz-ai-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6);justify-items:stretch;align-items:stretch}
+.wz-module--static{cursor:default;padding:var(--space-6)}
+.wz-module--static .wz-module__body{font-size:var(--text-body-md);line-height:1.6}
+@media (max-width:1000px){.wz-ai-text{grid-template-columns:minmax(0,1fr)}.wz-ai-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.wz-ai-cards{grid-template-columns:minmax(0,1fr)}}
 
 /* ==========================================================================
    Print — the guide is printed. White paper, black ink, no effects.
@@ -3195,55 +3212,81 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <section class="wz-band">
-    <div class="wz-container">
-      <div class="wz-guide__prose">
-
-        <h2>The phone doesn't stop when the office does</h2>
+    <div class="wz-container wz-ai-text">
+      <h2>The phone doesn't stop when the office does</h2>
+      <div class="wz-ai-text__body">
         <p>Skip hire runs on the phone, and the phone doesn't keep office hours. A driver can't answer while he's out on a job. The yard's short-staffed on a Friday afternoon. Someone rings at half seven in the evening wanting a same-day collection, gets no answer, and books with whoever answers next.</p>
-        <p>Every missed call is a booking that either waits until tomorrow or goes to a competitor.</p>
+        <p class="wz-ai-statement">Every missed call is a booking that either waits until tomorrow or goes to a competitor.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="wz-band">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
         <h2>It answers, and it actually books the job</h2>
-        <ul class="wz-ticks">
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Answers immediately, day or night.</strong><p>No hold music, no voicemail, no "we'll call you back."</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Books against your real availability.</strong><p>Not a generic script - it works from the same jobs and schedule your team already sees, so it isn't promising a Tuesday slot that's already full.</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Arranges collections and swaps</strong><p>Confirms the date and gets the address right without anyone having to repeat themselves twice.</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Quotes a price for standard jobs on the spot.</strong><p>Using your actual rates rather than a rough estimate someone has to correct later.</p></div>
-          </li>
-          <li>
-            <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="20" height="20" style="width:20px;height:auto;margin-top:4px">
-            <div><strong>Confirms everything by text.</strong><p>So the customer has it in writing and the office has a record without anyone typing it up.</p></div>
-          </li>
-        </ul>
+      </div>
+      <div class="wz-ai-cards">
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_phone.svg');mask-image:url('images/icon_phone.svg')"></span></span>
+          <span class="wz-module__title">Answers immediately, day or night.</span>
+          <p class="wz-module__body">No hold music, no voicemail, no "we'll call you back."</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_calendar-days.svg');mask-image:url('images/icon_calendar-days.svg')"></span></span>
+          <span class="wz-module__title">Books against your real availability.</span>
+          <p class="wz-module__body">Not a generic script - it works from the same jobs and schedule your team already sees, so it isn't promising a Tuesday slot that's already full.</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_repeat.svg');mask-image:url('images/icon_repeat.svg')"></span></span>
+          <span class="wz-module__title">Arranges collections and swaps</span>
+          <p class="wz-module__body">Confirms the date and gets the address right without anyone having to repeat themselves twice.</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_receipt.svg');mask-image:url('images/icon_receipt.svg')"></span></span>
+          <span class="wz-module__title">Quotes a price for standard jobs on the spot.</span>
+          <p class="wz-module__body">Using your actual rates rather than a rough estimate someone has to correct later.</p>
+        </div>
+        <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
+          <span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_smartphone.svg');mask-image:url('images/icon_smartphone.svg')"></span></span>
+          <span class="wz-module__title">Confirms everything by text.</span>
+          <p class="wz-module__body">So the customer has it in writing and the office has a record without anyone typing it up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <h2>The admin that piles up around every call</h2>
+  <section class="wz-band">
+    <div class="wz-container wz-ai-text">
+      <h2>The admin that piles up around every call</h2>
+      <div class="wz-ai-text__body">
         <p>Answering the phone is the headline, but the same system picks up the work that usually falls through the cracks around it: capturing and qualifying enquiries so nothing sits unread, keeping customer records tidy without someone doing it by hand at the end of the day, and chasing quotes that never got a reply instead of them quietly going cold.</p>
         <p>None of this touches advertising or ad spend - it's about what happens to a call or enquiry once it's already come in, not how it got there.</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="wz-band wz-band--canvas">
+    <div class="wz-container wz-stack">
+      <div class="wz-section-head">
         <h2>FAQ</h2>
-        <div class="wz-faq">
+      </div>
+      <div class="wz-faq">
           <details><summary>Will it replace our office team?</summary><p>No. It picks up what a small team can't always get to - the call at half seven, the one that comes in while everyone's on another line - so your team spends less time chasing and more time on the jobs that need a real person.</p></details>
           <details><summary>Does it work with our existing phone number?</summary><p>Yes, it sits on the number you already advertise. Customers don't dial anything different.</p></details>
           <details><summary>Will it sound like a robot?</summary><p>No. It's trained on your yard's actual processes, prices and tone, not a generic script read out loud.</p></details>
           <details><summary>What if a call genuinely needs a person?</summary><p>It hands off - a complicated query, an angry customer, anything outside the ordinary goes straight to your team rather than the agent guessing.</p></details>
         </div>
+    </div>
+  </section>
 
+  <section class="wz-band wz-band--ink wz-band--tight">
+    <div class="wz-container">
+      <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
+      <div class="wz-section-head wz-section-head--center">
         <h2>Stop losing bookings to a missed call</h2>
-        <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-4)"><span class="wz-fx" aria-hidden="true"></span>
-          <p style="margin:0 0 var(--space-4)">Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
-          <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire">Enquire</a></p>
-        </div>
-
+        <p>Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
+        <div style="margin-top:var(--space-6)"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
     </div>
   </section>
