@@ -56,7 +56,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --mist-200:#DFE6EE; --white:#FFFFFF;
   --surface:var(--navy-950); --surface-raised:var(--navy-700);
   --text-strong:#FFFFFF; --text-body:rgba(255,255,255,.82); --text-muted:rgba(255,255,255,.72);
-  --hairline:rgba(255,255,255,.18); --accent:var(--orange-500); --on-accent:var(--navy-900);
+  --footer-bg:#000514; --hairline:rgba(255,255,255,.18); --accent:var(--orange-500); --on-accent:var(--navy-900);
 
   /* Colours (existing names kept, repointed onto the brand kit) */
   --c-bg: #07121F;
@@ -813,7 +813,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-footer{position:relative;isolation:isolate;overflow:hidden}
 .wz-footer>*{position:relative;z-index:1}
 .wz-footer::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.42;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 36%,#000 86%,transparent 100%),linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 36%,#000 86%,transparent 100%),linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%);mask-composite:intersect}
-.wz-footer::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(52% 95% at 60% 52%,rgba(0,0,0,.62),rgba(0,0,0,0) 78%),radial-gradient(34% 80% at 12% 48%,rgba(0,0,0,.55),rgba(0,0,0,0) 78%),radial-gradient(50% 75% at 90% 15%,rgba(90,123,158,.30),rgba(0,0,0,0) 70%),radial-gradient(45% 65% at 6% 95%,rgba(50,92,135,.22),rgba(0,0,0,0) 70%)}
+.wz-footer::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(52% 95% at 60% 52%,rgba(0,5,20,.62),rgba(0,5,20,0) 78%),radial-gradient(34% 80% at 12% 48%,rgba(0,5,20,.55),rgba(0,5,20,0) 78%),radial-gradient(50% 75% at 90% 15%,rgba(90,123,158,.30),rgba(0,5,20,0) 70%),radial-gradient(45% 65% at 6% 95%,rgba(50,92,135,.22),rgba(0,5,20,0) 70%)}
 @media (max-width:700px){.wz-footer::before{background-image:url("images/weighzio-dots-hero-1280.webp")}}
 /* The first section after the hero starts closer so its heading peeks into the first screen. */
 .wz-hero+.wz-band{padding-top:clamp(48px,6vh,72px)}
@@ -1595,7 +1595,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 /* ==========================================================================
    Footer
    ========================================================================== */
-.wz-footer{flex:none;background:#000000;border-top:1px solid rgba(255,255,255,.18);color:var(--c-text-small);padding:var(--space-16) 0 var(--space-8)}
+.wz-footer{flex:none;background:var(--footer-bg);border-top:1px solid rgba(255,255,255,.18);color:var(--c-text-small);padding:var(--space-16) 0 var(--space-8)}
 .wz-footer a{color:rgba(255,255,255,.82);text-decoration:none}
 .wz-footer a:hover{color:var(--white);text-decoration:underline}
 .wz-footer a:focus-visible{outline-color:var(--focus-ring-on-ink)}
