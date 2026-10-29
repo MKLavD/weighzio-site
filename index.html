@@ -846,7 +846,12 @@ img{max-width:100%}
 .wz-hero__copy::before{content:"";position:absolute;inset:-56px -72px -56px -96px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 62% 68% at 45% 50%,rgba(0,0,0,.9),rgba(0,0,0,.6) 60%,transparent 100%)}
 .wz-hero__copy .wz-hero__mark,.wz-hero__copy .wz-hero__lead,.wz-hero__copy .wz-hero__actions{margin:0}
 /* Glows behind the art: plain gradients, no blur filter. */
-.wz-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(closest-side circle at 78% 34%,rgba(47,98,246,.55),transparent 70%),radial-gradient(closest-side circle at 88% 22%,rgba(124,94,251,.50),transparent 70%),radial-gradient(closest-side circle at 26% 55%,rgba(42,128,255,.16),transparent 70%);background-size:760px 760px,620px 620px,460px 460px;background-repeat:no-repeat;background-position:calc(100% + 60px) 0,calc(100% + 100px) -40px,18% 40%}
+/* Glows: real blurred elements attached to the card cluster (.wz-hero-art), so they stay behind the cards at every
+   width. The old tiled-gradient glows on .wz-hero::before rendered a visible seam and are gone; nothing glows behind the headline. */
+.wz-hero-art::before,.wz-hero-art::after{content:"";position:absolute;z-index:0;pointer-events:none;border-radius:50%;filter:blur(30px)}
+.wz-hero-art::before{width:min(760px,120vw);height:min(760px,120vw);left:50%;top:46%;translate:-50% -50%;background:radial-gradient(closest-side,rgba(47,98,246,.55),rgba(0,0,0,0))}
+.wz-hero-art::after{width:min(620px,100vw);height:min(620px,100vw);right:-120px;top:2%;background:radial-gradient(closest-side,rgba(124,94,251,.50),rgba(0,0,0,0))}
+@media (max-width:700px){.wz-hero-art::before{width:460px;height:460px}.wz-hero-art::after{width:380px;height:380px;right:-80px}}
 /* The dot wave, behind everything, across the lower hero; fades out at the bottom and sides. */
 .wz-hero::after{content:"";position:absolute;left:0;right:0;bottom:-40px;z-index:1;pointer-events:none;height:clamp(380px,52vh,640px);background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.65;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 34%,#000 74%,transparent 100%),linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);mask-composite:intersect}
 @media (max-width:700px){.wz-hero::after{background-image:url("images/weighzio-dots-hero-1280.webp");height:360px}}
