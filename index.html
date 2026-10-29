@@ -1672,6 +1672,8 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 
     /* Blur-rise: eyebrows, headings and text blocks. */
     :where(
+      #route-guide .wz-gstatement,
+      #route-guide .wz-glead,
       #route-home .wz-band:not(.wz-band--tight) .wz-section-head>:not(.wz-band-visual):not(:has(>.wz-btn)),
       #route-home .wz-module-group__head,
       #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:not(:has(>.wz-btn)),
@@ -1693,7 +1695,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-modules #custom-modules .wz-container,
       #route-guide       #route-guide #dwt-two-days+p,
       #route-guide #dwt-cost+p,
-      #route-guide .wz-gnote
+      #route-guide .wz-gnote,
+      #route-guide .wz-gpanel,
+      #route-guide .wz-gsupport
     ){animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 30%}
 
     /* /modules: each module section resolves in the lower fifth of the screen, with a tight 2% stagger.
@@ -1727,6 +1731,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 
     /* Guide cards: pop in with a left-to-right stagger inside each row (0%, 3%, 6%, 9%). */
     #route-guide .wz-g-grid>.wz-module{animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 16%}
+    #route-guide .wz-gbody{animation-range:entry 3% cover 19%}
     #route-guide .wz-g-grid--2>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
     #route-guide .wz-g-grid--4>.wz-module:nth-child(4n+2){animation-range:entry 3% cover 19%}
     #route-guide .wz-g-grid--4>.wz-module:nth-child(4n+3){animation-range:entry 6% cover 22%}
@@ -1972,6 +1977,21 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   #route-guide .wz-g-grid{gap:var(--space-4)}
   #route-guide .wz-guide__toc a::before{display:none}
 }
+
+/* 05 statement + body card; 06 duty of care as a plain panel; 07 hazardous cards; 08 working day hero; 09 route cards */
+.wz-g-split{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--space-8);align-items:start}
+.wz-gstatement{margin:0;font-family:var(--font-heading);font-size:clamp(24px,2.5vw,33px);font-weight:var(--weight-bold);line-height:1.3;letter-spacing:-.01em;color:var(--white)}
+#route-guide .wz-gbody,#route-guide .wz-gpanel,#route-guide .wz-gsupport{padding:var(--space-6);font-size:var(--text-lead);line-height:1.65;width:auto}
+.wz-gpanel{gap:var(--space-4)}
+.wz-gpanel>.wz-fx,.wz-gsupport>.wz-fx{opacity:.4}
+.wz-gpanel>p{margin:0;color:var(--c-text-bright)}
+.wz-ghaz{gap:var(--space-4)}
+#route-guide #dwt-two-days+p{padding:clamp(28px,4vw,56px);gap:clamp(24px,4vw,56px);font-size:clamp(21px,2vw,27px);line-height:1.35;font-weight:var(--weight-semibold)}
+#route-guide #dwt-two-days+p::before{font-size:clamp(96px,13vw,170px)}
+#route-guide .wz-gsupport{margin-top:var(--space-6)}
+.wz-groute{gap:var(--space-4)}
+@media (max-width:1000px){.wz-g-split{grid-template-columns:minmax(0,1fr);gap:var(--space-6)}}
+@media (max-width:700px){#route-guide #dwt-two-days+p{flex-direction:column;align-items:flex-start}}
 
 /* Guide header: a quiet version of the hero dot wave behind the right of the title block (fixed height, no tiled gradients). */
 #route-guide>.wz-band:first-child{position:relative;isolation:isolate}
@@ -3229,29 +3249,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </section>
           <section class="wz-gsec">
             <h2 id="dwt-notes">Digital waste transfer notes: what changes</h2>
-          <p>The paper transfer note is replaced by a digital record of the same movement. The duty does not change. The record does.</p>
-          <p>Day to day, the data that used to be written on a ticket in the cab has to be captured once, in fields rather than free text, and filed. Where the weighbridge and the driver's phone feed the same record, there is nothing extra for anyone to fill in and nothing to reconcile at month end.</p>
-          </section>
+            <div class="wz-g-split">
+              <p class="wz-gstatement">The paper transfer note is replaced by a digital record of the same movement. The duty does not change. The record does.</p>
+              <p class="wz-module wz-module--static wz-module--plain wz-gbody"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gt">Day to day, the data that used to be written on a ticket in the cab has to be captured once, in fields rather than free text, and filed. Where the weighbridge and the driver's phone feed the same record, there is nothing extra for anyone to fill in and nothing to reconcile at month end.</span></p>
+            </div></section>
           <section class="wz-gsec">
             <h2 id="dwt-duty">Waste duty of care under the new regime</h2>
-          <p>The underlying duty of care - knowing what the waste is, who produced it, who is moving it and where it is going, and being able to evidence it - continues to apply.</p>
-          <p>The way that evidence is provided is changing: the digital record takes the place the paper transfer note used to hold. The producer still confirms the description, the carrier still confirms the movement, and the receiving site still confirms the weight and the treatment.</p>
-          </section>
+            <div class="wz-module wz-module--static wz-module--plain wz-gpanel"><span class="wz-fx" aria-hidden="true"></span>
+              <p>The underlying duty of care - knowing what the waste is, who produced it, who is moving it and where it is going, and being able to evidence it - continues to apply.</p>
+              <p>The way that evidence is provided is changing: the digital record takes the place the paper transfer note used to hold. The producer still confirms the description, the carrier still confirms the movement, and the receiving site still confirms the weight and the treatment.</p>
+            </div></section>
           <section class="wz-gsec">
             <h2 id="dwt-hazardous">Hazardous waste consignment notes</h2>
-          <p>Hazardous movements are consigned and reported separately from ordinary transfers, and the consignment detail sits alongside the movement record.</p>
-          <p>Consignment reports still export in Environment Agency formats, so the returns you send do not change shape even though the underlying record is now digital.</p>
-          </section>
+            <div class="wz-g-grid wz-g-grid--2">
+              <p class="wz-module wz-module--static wz-module--plain wz-ghaz"><span class="wz-fx" aria-hidden="true"></span><span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span></span><span class="wz-gt">Hazardous movements are consigned and reported separately from ordinary transfers, and the consignment detail sits alongside the movement record.</span></p>
+              <p class="wz-module wz-module--static wz-module--plain wz-ghaz"><span class="wz-fx" aria-hidden="true"></span><span class="wz-module__icon-wrap"><span class="wz-icon wz-module__icon" aria-hidden="true" style="-webkit-mask-image:url('images/icon_shield-check.svg');mask-image:url('images/icon_shield-check.svg')"></span></span><span class="wz-gt">Consignment reports still export in Environment Agency formats, so the returns you send do not change shape even though the underlying record is now digital.</span></p>
+            </div></section>
           <section class="wz-gsec">
             <h2 id="dwt-two-days">The two working day rule</h2>
-          <p>Each load has to be recorded within two working days of arriving.</p>
-          <p>The load is not recorded until the system issues a digital waste record number. Until that number comes back, the movement is outstanding, whatever is sitting in your own system.</p>
-          </section>
+            <p>Each load has to be recorded within two working days of arriving.</p>
+            <p class="wz-module wz-module--static wz-module--plain wz-gsupport"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gt">The load is not recorded until the system issues a digital waste record number. Until that number comes back, the movement is outstanding, whatever is sitting in your own system.</span></p></section>
           <section class="wz-gsec">
             <h2 id="dwt-routes">The two submission routes</h2>
-          <p>There are two ways to file. The first is an API submission through your own software, which files each load as it is weighed and brings the record number back automatically.</p>
-          <p>The second is Defra's spreadsheet upload. It is a genuine route and it works, particularly for a yard doing low volumes or one that is not ready to change systems. It is also temporary, and it is manual, so every load is somebody's job twice.</p>
-          </section>
+            <p class="wz-glead">There are two ways to file.</p>
+            <div class="wz-g-grid wz-g-grid--2">
+              <p class="wz-module wz-module--static wz-module--plain wz-groute"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum" aria-hidden="true"></span><span class="wz-gt">The first is an API submission through your own software, which files each load as it is weighed and brings the record number back automatically.</span></p>
+              <p class="wz-module wz-module--static wz-module--plain wz-groute"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum" aria-hidden="true"></span><span class="wz-gt">The second is Defra's spreadsheet upload. It is a genuine route and it works, particularly for a yard doing low volumes or one that is not ready to change systems. It is also temporary, and it is manual, so every load is somebody's job twice.</span></p>
+            </div></section>
           <section class="wz-gsec">
             <h2 id="dwt-cost">What it costs</h2>
           <p>The service charges £26 a year per legal entity that creates or edits records.</p>
