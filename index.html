@@ -1704,6 +1704,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     /* Phones: the copy is stacked, so every text block uses one wider range and the soft stretch lasts about 18% of the screen. */
     @media (max-width:700px){#route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer){animation-range:cover 2% cover 20%}}
 
+    /* Guide: section headings only blur in (body text stays static so a long reference page stays quick to scan and jump around). */
+    #route-guide .wz-guide__prose>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
+
     /* /ai-voice-agent bands: text and cards are sharp as soon as they are fully on screen (they sit near the fold at
        load). Own block so the shared defaults, which the homepage uses, are untouched. */
     #route-ai-voice-agent :is(.wz-ai-text h2,.wz-ai-text__body>p,.wz-band:not(.wz-band--tight) .wz-section-head>h2){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
