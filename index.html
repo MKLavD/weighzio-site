@@ -936,8 +936,9 @@ img{max-width:100%}
 .wz-faq details{border-bottom:var(--border-width) solid var(--border-hairline)}
 .wz-faq summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;cursor:pointer;font-family:var(--font-display);font-size:var(--text-h4);font-weight:var(--weight-bold);color:var(--text-heading);list-style:none}
 .wz-faq summary::-webkit-details-marker{display:none}
-.wz-faq summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background-color:currentColor;-webkit-mask:url("images/icon_arrow-right.svg") no-repeat center/contain;mask:url("images/icon_arrow-right.svg") no-repeat center/contain;transform:rotate(90deg);transition:transform var(--duration-base) var(--ease-out)}
+.wz-faq summary::after{content:"";flex:none;width:20px;height:20px;margin-top:2px;background-color:currentColor;-webkit-mask:url("images/icon_arrow-right.svg") no-repeat center/contain;mask:url("images/icon_arrow-right.svg") no-repeat center/contain;transform:rotate(90deg);transition:transform 400ms cubic-bezier(.37,0,.63,1)}
 .wz-faq details[open] summary::after{transform:rotate(-90deg)}
+.wz-faq details.is-closing summary::after{transform:rotate(90deg)}   /* the arrow turns back in step with the slide */
 .wz-faq p{margin:0 0 var(--space-5);max-width:68ch}
 
 /* ==========================================================================
@@ -4306,6 +4307,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<script>
+/* FAQ accordion: smooth single-open slide (400ms, ease-in-out) layered on the native <details>/<summary>.
+   Markup, text and structured data are untouched. Without JS, without Element.animate, or with reduced motion,
+   the native instant behaviour is used. Delegated, so it survives the router switching panels. */
+(function () {
+  var DURATION = 400, EASING = "cubic-bezier(.37, 0, .63, 1)";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var anims = new WeakMap();
+
+  function finish(d, keepOpen) {
+    d.style.height = ""; d.style.overflow = "";
+    d.classList.remove("is-closing");
+    if (!keepOpen) d.open = false;
+    anims.delete(d);
+  }
+  function run(d, from, to, keepOpen) {
+    var running = anims.get(d); if (running) running.cancel();
+    d.style.overflow = "hidden";
+    var a = d.animate({ height: [from + "px", to + "px"] }, { duration: DURATION, easing: EASING });
+    anims.set(d, a);
+    a.onfinish = function () { finish(d, keepOpen); };
+    a.oncancel = function () { d.style.height = ""; d.style.overflow = ""; };
+  }
+  function openIt(d) {
+    var from = d.offsetHeight; d.classList.remove("is-closing"); d.open = true;
+    var to = d.offsetHeight; run(d, from, to, true);
+  }
+  function closeIt(d) {
+    var cs = getComputedStyle(d), s = d.querySelector("summary");
+    var from = d.offsetHeight;
+    var to = s.offsetHeight + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+    d.classList.add("is-closing"); run(d, from, to, false);
+  }
+
+  document.addEventListener("click", function (e) {
+    var s = e.target.closest && e.target.closest(".wz-faq summary");
+    if (!s || reduce.matches || !s.parentElement.animate) return;
+    e.preventDefault();
+    var d = s.parentElement;
+    if (d.open && !d.classList.contains("is-closing")) { closeIt(d); return; }
+    Array.prototype.forEach.call(d.parentElement.querySelectorAll("details[open]"), function (o) {
+      if (o !== d && !o.classList.contains("is-closing")) closeIt(o);
+    });
+    openIt(d);
+  });
+})();
+</script>
 <script>
 /* Guide contents list: mark the section being read (aria-current) so the
    sticky list shows where you are. Display only; touches nothing else. */
