@@ -1531,9 +1531,21 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 /* ==========================================================================
    One-sided layouts: AI Voice Agent aside, privacy, enquire
    ========================================================================== */
-.wz-voice{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:var(--space-16);align-items:start}
-.wz-voice__aside{position:sticky;top:96px}
-@media (max-width:1000px){.wz-voice{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}.wz-voice__aside{order:-1;position:static;max-width:460px}}
+/* AI voice agent: the headline block, the prose and the call mockup share one two-column grid. The head and the
+   mockup start on the same row (mockup top level with the eyebrow); the prose continues under the head, and the
+   sticky mockup spans every row so it travels beside all of it. .wz-voice only wraps them, so it dissolves. */
+.wz-voice{display:contents}
+#route-ai-voice-agent .wz-container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);grid-template-rows:auto 1fr;column-gap:var(--space-16);align-items:start}
+#route-ai-voice-agent .wz-section-head{grid-column:1;grid-row:1}
+#route-ai-voice-agent .wz-guide__prose{grid-column:1;grid-row:2}
+#route-ai-voice-agent .wz-voice__aside{grid-column:2;grid-row:1/-1;align-self:start;position:sticky;top:96px}
+.wz-hero__actions--page{margin-top:var(--space-3)}
+/* Stacked (same 1000px breakpoint as before): eyebrow, H1, lead, CTA, mockup, then the prose. */
+@media (max-width:1000px){
+  #route-ai-voice-agent .wz-container{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  #route-ai-voice-agent .wz-voice__aside{grid-column:1;grid-row:2;position:static;max-width:460px;width:100%;margin:0 auto var(--space-8)}
+  #route-ai-voice-agent .wz-guide__prose{grid-row:3}
+}
 .wz-mockup__call-body{padding:18px;display:flex;flex-direction:column;gap:12px}
 .wz-mockup__call-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--c-text)}
 .wz-mockup__msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.4}
@@ -1639,6 +1651,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(2){animation-delay:80ms}
   :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(3){animation-delay:160ms}
   :is(#route-modules>.wz-band:first-child .wz-section-head,#route-guide .wz-section-head,#route-ai-voice-agent .wz-section-head,#route-privacy .wz-section-head)>:nth-child(n+4){animation-delay:240ms}
+  #route-ai-voice-agent .wz-section-head>h1{animation:none}
   #route-enquire .wz-split2>div:first-child{animation:wz-load-in 700ms var(--ease-reveal) both}
   #route-enquire .wz-split2>.wz-card{animation:wz-panel-in 700ms var(--ease-reveal) 120ms both}
   .wz-thankyou__icon{animation:wz-load-in 700ms var(--ease-reveal) both}
@@ -3172,6 +3185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="wz-eyebrow">AI Voice Agent</span>
         <h1>Answer every call. Book every skip.</h1>
         <p>An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
+        <div class="wz-hero__actions wz-hero__actions--page"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
 
       <div class="wz-voice">
