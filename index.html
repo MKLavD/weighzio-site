@@ -228,6 +228,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --header-h: 72px;
   /* Light theme (white ground). Dark surfaces re-define these in the .on-dark block below. */
   --paper-50: #F7F9FB;
+  --field-bg: #FFFFFF;
   --ink: #212121;
   --text-strong: #122D4B;
   --card-bg: #F7F9FB;
@@ -255,7 +256,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
    Every semantic token is redefined here (custom properties that reference others are resolved where they are declared,
    so the aliases have to be repeated). Add .on-dark to any other element that should stay dark.
    ========================================================================== */
-.on-dark,.wz-footer,.wz-band--ink,.wz-hero-art,.wz-mockup{
+.on-dark,.wz-footer,.wz-band--ink,.wz-hero-art,.wz-mockup,
+.wz-module,.wz-card,.wz-facts,.wz-dialog,.wz-gnote,#dwt-two-days+p,#dwt-cost+p,#custom-modules .wz-container{
   --c-bg: #07121F;
   --c-canvas: #07121F;
   --c-blue: #325C87;
@@ -317,6 +319,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --ghost-hover-bg: transparent;
   --focus-inner: 0 0 0 0 transparent;
   --link-underline-color: currentColor;
+  --field-bg: #122D4B;
   --wz-particles: url("images/weighzio-dots-hero-1280.webp");
   --fx-blend: screen;
   --fx-opacity: .8;
@@ -326,6 +329,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --glow-accent-hover: 0 0 48px rgba(244, 125, 45, .95), 0 0 16px rgba(247, 156, 94, .85), 0 0 4px rgba(255, 255, 255, .5);
   --glow-accent-press: 0 0 10px rgba(244, 125, 45, .6), inset 0 2px 6px rgba(0, 0, 0, .3);
   color:var(--text-body);
+}
+/* Dark cards sitting on the light ground (the cards keep the production dark styling; only the ground around them is light). */
+.wz-module,.wz-card,.wz-facts,.wz-dialog,.wz-gnote,#dwt-two-days+p,#dwt-cost+p,#custom-modules .wz-container{
+  --card-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 1px 2px rgba(18,45,75,.07), 0 3px 8px rgba(18,45,75,.05);
+  --card-shadow-hover: inset 0 0 0 1px rgba(255,255,255,.32), 0 4px 8px rgba(18,45,75,.07), 0 20px 44px rgba(18,45,75,.10);
+  --hover-outline: transparent;
+  --focus-inner: 0 0 0 1px #122D4B;
+}
+/* Cards inside the navy bands keep the production dark treatment. */
+.wz-band--ink .wz-module,.wz-band--ink .wz-card,.wz-band--ink .wz-facts{
+  --card-shadow: inset 0 0 0 1px rgba(255,255,255,.22),inset 0 1px 0 0 rgba(255,255,255,.14),0 24px 60px -30px rgba(0,0,0,.95),0 0 56px -18px rgba(50,92,135,.55);
+  --card-shadow-hover: var(--card-shadow);
+  --hover-outline: rgba(255,255,255,.36);
+  --focus-inner: 0 0 0 0 transparent;
 }
 
 /* ==========================================================================
@@ -547,7 +564,7 @@ img{max-width:100%}
 .wz-label{font-size:var(--text-body-sm);font-weight:var(--weight-semibold);color:var(--text-heading);font-family:var(--font-heading)}
 .wz-label span{font-weight:var(--weight-regular);color:var(--text-muted)}
 .wz-hint{font-size:var(--text-micro);color:var(--text-muted)}
-.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:#FFFFFF;border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-sm);padding:12px var(--space-4);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
+.wz-input,.wz-textarea,.wz-select{font-family:var(--font-body);font-size:var(--text-body-md);color:var(--text-heading);background:var(--field-bg);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-sm);padding:12px var(--space-4);width:100%;transition:var(--transition-hover);font-feature-settings:var(--numeric-tabular)}
 .wz-input::placeholder,.wz-textarea::placeholder{color:var(--c-text-muted);opacity:1}
 .wz-input:hover,.wz-textarea:hover,.wz-select:hover{border-color:var(--c-text-small)}
 .wz-input:focus,.wz-textarea:focus,.wz-select:focus{border-color:var(--c-accent);outline:none}
@@ -556,14 +573,14 @@ img{max-width:100%}
 .wz-textarea{min-height:120px;resize:vertical;line-height:var(--leading-body)}
 .wz-select{appearance:none;padding-right:var(--space-8);background-image:linear-gradient(45deg,transparent 50%,var(--n-500) 50%),linear-gradient(135deg,var(--n-500) 50%,transparent 50%);background-position:calc(100% - 20px) 19px,calc(100% - 14px) 19px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
 .wz-choice{display:flex;gap:var(--space-3);align-items:center;min-height:44px;cursor:pointer;font-size:var(--text-body-md);color:var(--text-body)}
-.wz-choice input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;margin:0;border:var(--border-width-strong) solid var(--n-300);background:#FFFFFF;cursor:pointer;transition:var(--transition-hover)}
+.wz-choice input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;margin:0;border:var(--border-width-strong) solid var(--n-300);background:var(--field-bg);cursor:pointer;transition:var(--transition-hover)}
 .wz-choice input[type="checkbox"]{border-radius:var(--radius-xs)}
 .wz-choice input[type="radio"]{border-radius:var(--radius-pill)}
 .wz-choice:hover input{border-color:var(--text-strong)}
 .wz-choice input:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
 .wz-choice input:checked{background:var(--orange-500);border-color:var(--orange-500)}
 .wz-choice input[type="checkbox"]:checked{background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23122D4B' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");background-size:16px;background-position:center;background-repeat:no-repeat}
-.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 5px #FFFFFF}
+.wz-choice input[type="radio"]:checked{box-shadow:inset 0 0 0 5px var(--field-bg)}
 
 /* Module picker: the enquiry form's module multi-select rebuilt as
    selectable chips, since this is the single field the copy deck calls
@@ -576,7 +593,7 @@ img{max-width:100%}
 .wz-modpicker-count[data-count="0"]{visibility:hidden}
 .wz-modgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
 @media (max-width:480px){.wz-modgrid{grid-template-columns:1fr}}
-.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);min-height:48px;cursor:pointer;background:#FFFFFF;transition:var(--transition-hover)}
+.wz-modchip{position:relative;display:flex;align-items:center;gap:var(--space-2);border:var(--border-width) solid var(--c-input-border);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);min-height:48px;cursor:pointer;background:var(--field-bg);transition:var(--transition-hover)}
 .wz-modchip::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;background:var(--orange-500);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;pointer-events:none;transition:opacity var(--duration-fast) var(--ease-out)}
 .wz-modchip:has(input:checked)::before,.wz-modchip.is-checked::before{opacity:1}
 .wz-modchip:hover{border-color:var(--text-strong)}
@@ -585,7 +602,7 @@ img{max-width:100%}
 .wz-modchip__label{font-size:var(--text-body-md);color:var(--text-body);line-height:1.3}
 .wz-modchip__tick{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:var(--radius-pill);background:var(--orange-500);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);transition:opacity var(--duration-fast) var(--ease-out),transform var(--duration-fast) var(--ease-out)}
 .wz-modchip__tick .wz-icon{width:11px;height:11px;background-color:var(--navy-900)}
-.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--orange-500);background:#FFFFFF}
+.wz-modchip:has(input:checked),.wz-modchip.is-checked{border-color:var(--orange-500);background:var(--field-bg)}
 .wz-modchip:has(input:checked) .wz-modchip__label,.wz-modchip.is-checked .wz-modchip__label{color:var(--text-heading);font-weight:var(--weight-medium)}
 .wz-modchip:has(input:checked) .wz-modchip__icon,.wz-modchip.is-checked .wz-modchip__icon{color:var(--text-strong)}
 .wz-modchip:has(input:checked) .wz-modchip__tick,.wz-modchip.is-checked .wz-modchip__tick{opacity:1;transform:scale(1)}
@@ -2090,6 +2107,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 .wz-gnote{margin:var(--space-6) 0 0;padding:var(--space-6);border-radius:var(--radius-card);background:var(--panel-bg);box-shadow:var(--card-shadow);color:var(--c-text-bright);font-size:var(--text-lead);line-height:1.7}
 /* 03: horizontal timeline of four date cards; every date gets the same treatment */
 .wz-gdate__l{position:relative;display:block;min-height:calc(2 * 1.35em);font-weight:var(--weight-semibold);font-size:var(--text-lead);line-height:1.35;color:var(--c-tagline)}
+.wz-gdate:first-child .wz-gdate__d{background:none;color:var(--orange-500);-webkit-text-fill-color:var(--orange-500)}
 .wz-gdate__c{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wz-gdate__d{display:block;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(24px,2.4vw,32px);line-height:1.12;letter-spacing:-.01em;color:var(--text-strong);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 @media (max-width:1000px){
