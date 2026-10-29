@@ -1663,7 +1663,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-home .wz-module-group__head,
       #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:not(:has(>.wz-btn)),
       #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:not(:has(>.wz-btn)),
-      #route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer),
       #route-ai-voice-agent .wz-guide__prose>h2,
       #route-ai-voice-agent .wz-guide__prose>p:not(:has(>.wz-btn))
     ){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry var(--s,6%) cover calc(var(--s,6%) + var(--len,18%))}
@@ -1680,13 +1679,23 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-home .wz-split2>.wz-mockup,
       #route-home .wz-facts,
       #route-home .wz-band-visual,
-      #route-modules .wz-module-section__media,
       #route-modules #custom-modules .wz-container,
       #route-guide #dwt-dates+ul,
       #route-guide #dwt-two-days+p,
       #route-guide #dwt-cost+p,
       #route-ai-voice-agent .wz-voice__aside
     ){animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 30%}
+
+    /* /modules: each module section resolves in the lower fifth of the screen, with a tight 2% stagger.
+       Single source for these ranges; they are not in the shared groups above. */
+    #route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer){animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 8% cover 18%}
+    #route-modules .wz-module-section__eyebrow{animation-range:cover 0% cover 10%}
+    #route-modules .wz-module-section__head{animation-range:cover 2% cover 12%}
+    #route-modules .wz-module-section__summary{animation-range:cover 4% cover 14%}
+    #route-modules .wz-module-section__text>ul{animation-range:cover 6% cover 16%}
+    #route-modules .wz-module-section__alongside{animation-range:cover 8% cover 18%}
+    #route-modules .wz-module-section__enquire{animation-range:cover 10% cover 20%}
+    #route-modules .wz-module-section__media{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 18%}
 
     /* Slide-in: list items and FAQ rows. */
     :where(
@@ -1704,12 +1713,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(2){--s:22%}
     #route-home .wz-split2>div:not(.wz-section-head):not(.wz-mockup):not(.wz-band-visual)>:nth-child(n+3){--s:30%}
     #route-home .wz-band--ink:not(.wz-band--tight) .wz-stack>div>p:nth-child(2){--s:14%}
-    #route-modules .wz-module-section__text>:nth-child(2){--s:12%}
-    #route-modules .wz-module-section__text>:nth-child(3){--s:18%}
-    #route-modules .wz-module-section__text>:nth-child(4){--s:24%}
-    #route-modules .wz-module-section__text>:nth-child(5){--s:30%}
-    #route-modules .wz-module-section__text>:nth-child(6){--s:36%}
-    #route-modules .wz-module-section__text>:nth-child(n+7){--s:42%}
     #route-home .wz-grid-modules>.wz-module{--len:20%}
     #route-home .wz-grid-modules>.wz-module:nth-child(4n+1){--s:10%}
     #route-home .wz-grid-modules>.wz-module:nth-child(4n+2){--s:16%}
