@@ -1462,6 +1462,12 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   #custom-modules .wz-container::after{top:calc(clamp(16px,2vw,24px) + 24px);transform:none;width:96px;height:96px}
   #custom-modules .wz-container>*{max-width:none}
 }
+@media (max-width:767px){
+  /* Phones: a smaller icon at the top left, lined up with the card text. It uses the standard puzzle (2 units), so at 56px
+     the line is about 4.7px, close to the weight the lighter copy has at desktop size. Spacing to the eyebrow is 16px. */
+  #custom-modules .wz-container{padding-top:calc(clamp(40px,5vw,64px) + 72px)}
+  #custom-modules .wz-container::after{left:calc(var(--gutter) + clamp(24px,4vw,56px));right:auto;width:56px;height:56px;-webkit-mask-image:url("images/icon_puzzle.svg");mask-image:url("images/icon_puzzle.svg")}
+}
 
 @media (max-width:1150px){
   .wz-module-section__media picture{position:static;height:auto}
