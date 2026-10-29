@@ -705,6 +705,8 @@ img{max-width:100%}
    even a strong shadow underneath a navy-on-navy boundary is hard to see. */
 .wz-header[data-transparent="false"]{box-shadow:none;border-bottom:1px solid rgba(255,255,255,.08)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.wz-header[data-transparent="false"],.wz-header.hdr-compact{background:rgba(10,11,14,.94)}}
+/* At the top of any route the header is transparent; the glass appears only once scrolled (.hdr-compact). */
+header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom-color:transparent}
 /* Hides on scroll down, reveals on scroll up — independent of the
    transparent/solid state above, which is driven by scroll position alone.
    Hide is a slower, deliberate slide; reveal is quicker so it feels
