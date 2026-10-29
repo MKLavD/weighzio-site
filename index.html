@@ -865,12 +865,18 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 /* Headline gradient: the hero headline and a few key H2s. Solid white colour
    is the fallback; the text stays real, selectable text. Drift only runs for
    users who have not asked for reduced motion. */
+/* One reusable gradient heading style: .wz-grad. Applied to every page H1 (not privacy) and to the heading that opens a
+   full-width band; numbered headings put it on their number instead (see the module and guide numbers), and it is
+   never used on card titles, FAQ questions, H3s or body text. Solid white is the fallback; the text stays real text.
+   Only the hero headlines (.wz-grad--drift) move; H2s are static so many text layers do not keep repainting. */
 @supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .wz-hero__mark+p,.wz-hero--page h1,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{background:var(--g-headline);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .wz-grad{background:var(--g-headline);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--white)}
 }
 @keyframes wz-drift{from{background-position:0% 50%}to{background-position:100% 50%}}
 @media (prefers-reduced-motion:no-preference){
-  .wz-hero__mark+p,.wz-hero--page h1,#modules .wz-section-head h2,.wz-band--ink .wz-section-head h2{animation:wz-drift 16s ease-in-out infinite alternate}
+  .wz-grad--drift{animation:wz-drift 16s ease-in-out infinite alternate}
+}
+@media (forced-colors:active){.wz-grad{background:none;-webkit-text-fill-color:currentColor;color:CanvasText}}
 }
 /* Narrower than the H1 (roughly 60-70% of its rendered width at desktop) so
    the block visibly tapers rather than running the same width as the H1
@@ -1761,8 +1767,8 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 
     /* ---- Elements that already run an animation keep it: lists of animations ---- */
     /* Gradient-drift headings (drift + blur-rise). */
-    #route-home #modules .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 6% cover 24%,normal}
-    #route-home .wz-band--ink:not(.wz-band--tight) .wz-section-head>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 12% cover 30%,normal}
+    #route-home #modules .wz-section-head>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 6% cover 24%}
+    #route-home .wz-band--ink:not(.wz-band--tight) .wz-section-head>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 12% cover 30%}
     /* Primary buttons (glow pulse + pop). Hover and press keep their own rules, as before. */
     #route-home .wz-band:not(.wz-band--tight) .wz-btn--primary:not(:hover):not(:active),
 
@@ -1772,7 +1778,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #main .wz-band--tight .wz-section-head--center>:nth-child(2){--s:20%}
     #main .wz-band--tight .wz-section-head--center>:nth-child(3){--s:30%}
     #main .wz-band--tight .wz-section-head--center>:nth-child(4){--s:30%}
-    #main .wz-band--tight .wz-section-head--center>h2{animation:wz-blur-rise linear both,wz-drift 16s ease-in-out infinite alternate;animation-duration:auto,16s;animation-timeline:view(),auto;animation-range:entry 10% entry 70%,normal}
+    #main .wz-band--tight .wz-section-head--center>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 10% entry 70%}
     #main .wz-band--tight .wz-section-head--center>div{animation:none}
     #main .wz-band--tight .wz-btn--primary:not(:hover):not(:active){animation:wz-cta-pulse 2.8s var(--ease-in-out) infinite,wz-pop linear both;animation-duration:2.8s,auto;animation-timeline:auto,view();animation-range:normal,entry 30% entry 100%}
   }
@@ -1996,7 +2002,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <img class="wz-burst" src="images/burst.png" alt="" aria-hidden="true" width="24" height="24" style="width:24px;height:auto">
           <h1 class="wz-eyebrow">Modular waste management software</h1>
         </div>
-        <p>Take the modules you need.<br>Not the ones you don't.</p>
+        <p class="wz-grad wz-grad--drift">Take the modules you need.<br>Not the ones you don't.</p>
         <p class="wz-hero__lead">weighzIO&reg; is operations software for skip hire, waste and aggregates, sold module by module. No mandatory core, and the price per module drops the more you run.</p>
         <div class="wz-hero__actions">
           <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
@@ -2048,7 +2054,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section class="wz-band wz-band--canvas" id="modules">
     <div class="wz-container wz-stack">
       <div class="wz-section-head">
-        <h2>Sixteen modules. Pick yours.</h2>
+        <h2 class="wz-grad">Sixteen modules. Pick yours.</h2>
         <p>Every module works on its own. Nothing is bundled, nothing is compulsory, and nothing has to be bought to unlock something else.</p>
       </div>
 
@@ -2202,7 +2208,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="wz-split2">
         <div class="wz-section-head">
           <span class="wz-eyebrow">Pricing</span>
-          <h2>You pay for what you run</h2>
+          <h2 class="wz-grad">You pay for what you run</h2>
           <p>Each module is priced on its own. Take one and that's all you pay for; take several and the rate per module drops. There's no minimum bundle, no core licence, and no published price list - every operation is different, so tell us which modules you're interested in and we'll put a real figure in front of you.</p>
           <p style="margin:var(--space-6) 0 0"><a class="wz-btn wz-btn--primary" href="/enquire">Get a quote for my modules</a></p>
         </div>
@@ -2227,7 +2233,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="wz-split2 wz-dwt">
       <div class="wz-section-head">
           <span class="wz-eyebrow">Compliance</span>
-          <h2>Digital waste tracking, built into Skip Hire</h2>
+          <h2 class="wz-grad">Digital waste tracking, built into Skip Hire</h2>
           <p>The Digital Waste Tracking Regulations came into force on 1 October 2026 for sites that hold a permit or licence to receive waste, with carriers, brokers and dealers following in October 2027. Every load needs a structured record filed within two working days of arriving.</p>
           <p>Our modules handle that.</p>
     </div>
@@ -2279,7 +2285,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="wz-split2">
         <div class="wz-section-head">
           <span class="wz-eyebrow">Custom modules</span>
-          <h2>If you need something that doesn't exist yet, we'll build it</h2>
+          <h2 class="wz-grad">If you need something that doesn't exist yet, we'll build it</h2>
         </div>
         <div>
           <p>The sixteen modules cover how most waste and skip businesses run. They won't cover all of yours, because no two operations are the same.</p>
@@ -2300,7 +2306,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="wz-split2">
         <div class="wz-section-head">
           <span class="wz-eyebrow">Marketing data feed</span>
-          <h2>Know which adverts actually brought the work in</h2>
+          <h2 class="wz-grad">Know which adverts actually brought the work in</h2>
           <div class="wz-band-visual" aria-hidden="true"><div class="wz-mockup wz-mockup--campaigns">
                   <div class="wz-mockup__bar">Campaign performance <em>Last 30 days</em></div>
                   <div class="wz-mockup__campaigns-body">
@@ -2329,7 +2335,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="wz-split2">
         <div class="wz-section-head">
           <span class="wz-eyebrow">AI Voice Agent</span>
-          <h2>Answer every call. Book every skip.</h2>
+          <h2 class="wz-grad">Answer every call. Book every skip.</h2>
           <div class="wz-band-visual" aria-hidden="true"><div class="wz-mockup wz-mockup--call">
             <div class="wz-mockup__bar">Incoming call <em>Fri 19:32</em></div>
             <div class="wz-mockup__call-body">
@@ -2357,7 +2363,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container wz-stack">
       <div class="wz-section-head">
         <span class="wz-eyebrow">Getting started</span>
-        <h2>Four steps</h2>
+        <h2 class="wz-grad">Four steps</h2>
       </div>
       <div class="wz-steps-track">
         <div class="wz-steps-line" aria-hidden="true"></div>
@@ -2409,7 +2415,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container wz-stack">
       <div class="wz-section-head">
         <span class="wz-eyebrow">Questions</span>
-        <h2>Common questions</h2>
+        <h2 class="wz-grad">Common questions</h2>
       </div>
       <div class="wz-faq">
         <details><summary>Can I really take just one module?</summary><p>Yes. There is no core licence and no minimum bundle. If the weighbridge is all you need, that's all you pay for.</p></details>
@@ -2429,7 +2435,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container">
       <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
       <div class="wz-section-head wz-section-head--center">
-        <h2>Start with what you need</h2>
+        <h2 class="wz-grad">Start with what you need</h2>
         <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
         <div style="margin-top:var(--space-6)">
           <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
@@ -2448,7 +2454,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container">
       <div class="wz-section-head">
         <span class="wz-eyebrow">Modules</span>
-        <h1>Every module, in detail</h1>
+        <h1 class="wz-grad">Every module, in detail</h1>
         <p>Each one is priced and sold on its own. Take the ones that fit.</p>
       </div>
     </div>
@@ -3074,7 +3080,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container">
       <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
       <div class="wz-section-head wz-section-head--center">
-        <h2>Start with what you need</h2>
+        <h2 class="wz-grad">Start with what you need</h2>
         <p>Tell us which modules matter and we'll come back with a quote and an honest view of whether weighzIO is the right fit.</p>
         <div style="margin-top:var(--space-6)">
           <a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Find out more</a>
@@ -3093,7 +3099,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container">
       <div class="wz-section-head" style="margin-bottom:var(--space-12)">
         <span class="wz-eyebrow">Guide</span>
-        <h1>Digital Waste Tracking Explained: What UK Waste Operators Must Do</h1>
+        <h1 class="wz-grad">Digital Waste Tracking Explained: What UK Waste Operators Must Do</h1>
         <p>Updated September 2026.</p>
       </div>
 
@@ -3204,7 +3210,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container wz-hero__grid">
       <div class="wz-hero__copy">
         <span class="wz-eyebrow">AI Voice Agent</span>
-        <h1>Answer every call. Book every skip.</h1>
+        <h1 class="wz-grad wz-grad--drift">Answer every call. Book every skip.</h1>
         <p class="wz-hero__lead">An AI voice agent for skip hire and waste operators. It answers the phone, books a skip, arranges a collection, and confirms a swap date - any time, without a queue.</p>
         <div class="wz-hero__actions"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
@@ -3227,7 +3233,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="wz-band">
     <div class="wz-container wz-ai-text">
-      <h2>The phone doesn't stop when the office does</h2>
+      <h2 class="wz-grad">The phone doesn't stop when the office does</h2>
       <div class="wz-ai-text__body">
         <p>Skip hire runs on the phone, and the phone doesn't keep office hours. A driver can't answer while he's out on a job. The yard's short-staffed on a Friday afternoon. Someone rings at half seven in the evening wanting a same-day collection, gets no answer, and books with whoever answers next.</p>
         <p class="wz-ai-statement">Every missed call is a booking that either waits until tomorrow or goes to a competitor.</p>
@@ -3238,7 +3244,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section class="wz-band">
     <div class="wz-container wz-stack">
       <div class="wz-section-head">
-        <h2>It answers, and it actually books the job</h2>
+        <h2 class="wz-grad">It answers, and it actually books the job</h2>
       </div>
       <div class="wz-ai-cards">
         <div class="wz-module wz-module--static"><span class="wz-fx" aria-hidden="true"></span>
@@ -3272,7 +3278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="wz-band">
     <div class="wz-container wz-ai-text">
-      <h2>The admin that piles up around every call</h2>
+      <h2 class="wz-grad">The admin that piles up around every call</h2>
       <div class="wz-ai-text__body">
         <p>Answering the phone is the headline, but the same system picks up the work that usually falls through the cracks around it: capturing and qualifying enquiries so nothing sits unread, keeping customer records tidy without someone doing it by hand at the end of the day, and chasing quotes that never got a reply instead of them quietly going cold.</p>
         <p>None of this touches advertising or ad spend - it's about what happens to a call or enquiry once it's already come in, not how it got there.</p>
@@ -3283,7 +3289,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section class="wz-band wz-band--canvas">
     <div class="wz-container wz-stack">
       <div class="wz-section-head">
-        <h2>FAQ</h2>
+        <h2 class="wz-grad">FAQ</h2>
       </div>
       <div class="wz-faq">
           <details><summary>Will it replace our office team?</summary><p>No. It picks up what a small team can't always get to - the call at half seven, the one that comes in while everyone's on another line - so your team spends less time chasing and more time on the jobs that need a real person.</p></details>
@@ -3298,7 +3304,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="wz-container">
       <span class="wz-fx wz-fx--cta" aria-hidden="true"></span>
       <div class="wz-section-head wz-section-head--center">
-        <h2>Stop losing bookings to a missed call</h2>
+        <h2 class="wz-grad">Stop losing bookings to a missed call</h2>
         <p>Tell us about your setup and we'll talk you through what this looks like for your yard.</p>
         <div style="margin-top:var(--space-6)"><a class="wz-btn wz-btn--primary wz-btn--lg" href="/enquire">Enquire</a></div>
       </div>
@@ -3317,7 +3323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div>
           <div class="wz-section-head">
             <span class="wz-eyebrow">Enquiry</span>
-            <h1>Tell us which modules you need</h1>
+            <h1 class="wz-grad">Tell us which modules you need</h1>
             <p>Seven questions. We'll come back within two working days with a quote and a straight answer on fit.</p>
           </div>
 
@@ -3449,7 +3455,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="wz-icon" style="-webkit-mask-image:url('images/icon_check.svg');mask-image:url('images/icon_check.svg')"></span>
         </span>
         <span class="wz-eyebrow">Enquiry sent</span>
-        <h1>Thank you for your enquiry.</h1>
+        <h1 class="wz-grad">Thank you for your enquiry.</h1>
         <p class="wz-thankyou__lead">We've received it and will be in touch within two working days.</p>
         <p>In the meantime, the <a href="/digital-waste-tracking">digital waste tracking guide</a> is worth a read, or head back to the <a href="/modules">modules</a> if there's anything else you want to look at.</p>
       </div>
