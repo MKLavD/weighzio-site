@@ -1658,8 +1658,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     @keyframes wz-pop{0%{opacity:0;translate:0 56px;scale:.78;filter:blur(10px)}}
     @keyframes wz-slide-in{0%{opacity:0;translate:90px 0}}
     @media (max-width:700px){
-      @keyframes wz-blur-rise{0%{opacity:0;translate:0 32px;filter:blur(6px)}}
-      @keyframes wz-pop{0%{opacity:0;translate:0 28px;scale:.86;filter:blur(6px)}}
+      /* Phones: opacity finishes first (40%) while the blur keeps resolving, so text is readable but visibly soft as it sharpens. */
+      @keyframes wz-blur-rise{0%{opacity:0;translate:0 32px;filter:blur(10px)}40%{opacity:1;filter:blur(5px)}}
+      @keyframes wz-pop{0%{opacity:0;translate:0 28px;scale:.86;filter:blur(10px)}40%{opacity:1;filter:blur(5px)}}
       @keyframes wz-panel-in{0%{opacity:0;translate:0 45px;scale:.94}}
       @keyframes wz-slide-in{0%{opacity:0;translate:45px 0}}
     }
@@ -1700,6 +1701,11 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     #route-modules .wz-module-section__alongside{animation-range:cover 8% cover 18%}
     #route-modules .wz-module-section__enquire{animation-range:cover 10% cover 20%}
     #route-modules .wz-module-section__media{animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 18%}
+    /* Phones: the copy is stacked, so every text block uses one wider range and the soft stretch lasts about 18% of the screen. */
+    @media (max-width:700px){#route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer){animation-range:cover 2% cover 20%}}
+
+    /* Guide: section headings only blur in (body text stays static so a long reference page stays quick to scan and jump around). */
+    #route-guide .wz-guide__prose>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
 
     /* /ai-voice-agent bands: text and cards are sharp as soon as they are fully on screen (they sit near the fold at
        load). Own block so the shared defaults, which the homepage uses, are untouched. */
