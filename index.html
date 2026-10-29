@@ -1565,10 +1565,6 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
    working day and cost sentences become callouts with a gradient figure. */
 #route-guide h1{font-weight:var(--weight-bold)}
 .wz-guide__toc a[aria-current="true"]{color:var(--white);font-weight:var(--weight-semibold);background:rgba(47,98,246,.22);border-left-color:var(--c-cyan)}
-#dwt-dates+ul{list-style:none;margin:0 0 var(--space-6);padding:var(--space-6);background:var(--g-card);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:var(--space-5)}
-#dwt-dates+ul li{position:relative;padding-left:var(--space-8);color:var(--c-text-bright)}
-#dwt-dates+ul li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 10px rgba(47,98,246,.7)}
-#dwt-dates+ul li:not(:last-child)::after{content:"";position:absolute;left:5px;top:1.4em;bottom:calc(-1 * var(--space-5) - .1em);width:2px;background:var(--g-card-border);opacity:.5}
 #dwt-two-days+p,#dwt-cost+p{display:flex;align-items:center;gap:var(--space-6);padding:var(--space-6);background:var(--g-panel);border-radius:var(--radius-card);box-shadow:var(--shadow-sm);font-size:var(--text-lead);color:var(--white)}
 #dwt-two-days+p::before,#dwt-cost+p::before{flex:none;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(56px,7vw,84px);line-height:1;letter-spacing:var(--tracking-display);color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 #dwt-two-days+p::before{content:"2";content:"2" / ""}
@@ -1695,9 +1691,9 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-home .wz-facts,
       #route-home .wz-band-visual,
       #route-modules #custom-modules .wz-container,
-      #route-guide #dwt-dates+ul,
-      #route-guide #dwt-two-days+p,
-      #route-guide #dwt-cost+p
+      #route-guide       #route-guide #dwt-two-days+p,
+      #route-guide #dwt-cost+p,
+      #route-guide .wz-gnote
     ){animation:wz-panel-in linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 30%}
 
     /* /modules: each module section resolves in the lower fifth of the screen, with a tight 2% stagger.
@@ -1714,7 +1710,7 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
     @media (max-width:700px){#route-modules .wz-module-section__text>:not(.wz-module-section__eyebrow-spacer){animation-range:cover 2% cover 20%}}
 
     /* Guide: section headings only blur in (body text stays static so a long reference page stays quick to scan and jump around). */
-    #route-guide .wz-guide__prose>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
+    #route-guide .wz-gsec>h2{animation:wz-blur-rise linear both;animation-duration:auto;animation-timeline:view();animation-range:cover 0% cover 20%}
 
     /* /ai-voice-agent bands: text and cards are sharp as soon as they are fully on screen (they sit near the fold at
        load). Own block so the shared defaults, which the homepage uses, are untouched. */
@@ -1728,6 +1724,18 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
       #route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
     }
     @media (max-width:700px){#route-ai-voice-agent .wz-ai-cards>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}}
+
+    /* Guide cards: pop in with a left-to-right stagger inside each row (0%, 3%, 6%, 9%). */
+    #route-guide .wz-g-grid>.wz-module{animation:wz-pop linear both;animation-duration:auto;animation-timeline:view();animation-range:entry 0% cover 16%}
+    #route-guide .wz-g-grid--2>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
+    #route-guide .wz-g-grid--4>.wz-module:nth-child(4n+2){animation-range:entry 3% cover 19%}
+    #route-guide .wz-g-grid--4>.wz-module:nth-child(4n+3){animation-range:entry 6% cover 22%}
+    #route-guide .wz-g-grid--4>.wz-module:nth-child(4n){animation-range:entry 9% cover 25%}
+    @media (max-width:1000px){
+      #route-guide .wz-g-grid--4>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}
+      #route-guide .wz-g-grid--4>.wz-module:nth-child(2n){animation-range:entry 3% cover 19%}
+    }
+    @media (max-width:700px){#route-guide .wz-g-grid>.wz-module:nth-child(n){animation-range:entry 0% cover 16%}}
 
     /* Slide-in: list items and FAQ rows. */
     :where(
@@ -1913,6 +1921,63 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
 @media (max-width:700px){.wz-ai-cards{grid-template-columns:minmax(0,1fr)}}
 
 /* ==========================================================================
+   Digital waste tracking guide: numbered sections, card grids, timeline.
+   Cards reuse the module card recipe (.wz-module) with static/plain modifiers: no link, so no hover ring or lift.
+   Numbers and marks come from CSS counters and pseudo-elements, never from page text.
+   ========================================================================== */
+@media (min-width:901px){#route-guide .wz-guide{grid-template-columns:240px minmax(0,1fr);gap:var(--space-12)}}
+#route-guide .wz-section-head{max-width:1040px}
+#route-guide .wz-guide__prose{max-width:none;counter-reset:gs}
+#route-guide .wz-guide__toc{counter-reset:tc}
+#route-guide .wz-guide__toc a{counter-increment:tc}
+#route-guide .wz-guide__toc a::before{content:counter(tc,decimal-leading-zero);display:inline-block;min-width:2.1em;font-size:.8em;font-weight:var(--weight-semibold);color:var(--c-text-muted);font-variant-numeric:tabular-nums}
+.wz-gsec{counter-increment:gs;margin-top:clamp(56px,7vw,96px)}
+.wz-gsec:first-child{margin-top:0}
+.wz-gsec>h2{display:flex;align-items:center;gap:var(--space-4);margin:0 0 var(--space-8);font-size:clamp(26px,2.8vw,36px);line-height:1.15;color:var(--white)}
+.wz-gsec>h2::before{content:counter(gs,decimal-leading-zero);flex:none;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(2.5rem,5vw,3.75rem);line-height:1;color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums}
+.wz-gsec>p:not([class]){max-width:68ch}
+.wz-module--plain{cursor:default}
+.wz-module--plain::before{display:none}
+.wz-module--plain:hover{transform:none;outline:none}
+.wz-glead{max-width:68ch;margin:0 0 var(--space-6);font-size:clamp(20px,1.7vw,23px);line-height:1.55;color:var(--white)}
+#route-guide .wz-g-grid{display:grid;gap:var(--space-6);align-items:stretch;list-style:none;margin:0;padding:0;counter-reset:gn}
+#route-guide .wz-g-grid>.wz-module{counter-increment:gn;width:auto;min-width:0;padding:var(--space-6);font-size:var(--text-lead);line-height:1.6}
+#route-guide .wz-g-grid--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+#route-guide .wz-g-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.wz-gt{color:var(--c-text-bright)}
+.wz-gnum{display:block;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(44px,4.4vw,60px);line-height:1;color:var(--c-hero-blue);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums;align-self:flex-start}
+.wz-gnum::before{content:counter(gn)}
+.wz-gnum--lz::before{content:counter(gn,decimal-leading-zero)}
+.wz-gcompact .wz-gnum{font-size:clamp(28px,2.6vw,36px)}
+/* 02: question cards and the legal note (same colour and size as body text) */
+.wz-gq__q{display:block;font-family:var(--font-heading);font-weight:var(--weight-bold);font-size:clamp(21px,1.9vw,25px);line-height:1.3;color:var(--white);margin:0 0 var(--space-3)}
+.wz-gq{display:block}
+.wz-gnote{margin:var(--space-6) 0 0;padding:var(--space-6);border-radius:var(--radius-card);background:var(--g-panel);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),inset 0 1px 0 0 rgba(255,255,255,.14);color:var(--c-text-bright);font-size:var(--text-lead);line-height:1.7}
+/* 03: horizontal timeline of four date cards; every date gets the same treatment */
+.wz-gtimeline{position:relative;padding-top:34px!important}
+.wz-gtimeline::before{content:"";position:absolute;top:11px;left:7%;right:7%;height:2px;background:var(--g-card-border);opacity:.55}
+.wz-gdate{overflow:visible!important}
+.wz-gdate::after{left:24px!important;right:24px!important}
+.wz-gdate__l{position:relative;display:block;font-weight:var(--weight-semibold);font-size:var(--text-lead);line-height:1.35;color:var(--c-tagline)}
+.wz-gdate__l::before{content:"";position:absolute;left:0;top:-52px;width:14px;height:14px;border-radius:50%;background:var(--g-chip);box-shadow:0 0 12px rgba(47,98,246,.8)}
+.wz-gdate__c{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wz-gdate__d{display:block;font-family:var(--font-heading);font-weight:var(--weight-xbold);font-size:clamp(24px,2.4vw,32px);line-height:1.12;letter-spacing:-.01em;color:var(--white);background:var(--g-number);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+@media (max-width:1000px){
+  #route-guide .wz-g-grid--4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wz-gtimeline{padding-top:0!important}
+  .wz-gtimeline::before,.wz-gdate__l::before{display:none}
+}
+@media (max-width:700px){
+  #route-guide .wz-g-grid--2,#route-guide .wz-g-grid--4{grid-template-columns:minmax(0,1fr)}
+  #route-guide .wz-g-grid{gap:var(--space-4)}
+  #route-guide .wz-guide__toc a::before{display:none}
+}
+
+/* Guide header: a quiet version of the hero dot wave behind the right of the title block (fixed height, no tiled gradients). */
+#route-guide>.wz-band:first-child{position:relative;isolation:isolate}
+#route-guide>.wz-band:first-child::before{content:"";position:absolute;right:0;top:0;width:62%;height:clamp(240px,32vh,340px);z-index:-1;pointer-events:none;background:url("images/weighzio-dots-hero.webp") 50% 100%/cover no-repeat;mix-blend-mode:screen;opacity:.35;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 60%,transparent 100%),linear-gradient(to right,transparent 0%,#000 45%,#000 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 60%,transparent 100%),linear-gradient(to right,transparent 0%,#000 45%,#000 100%);mask-composite:intersect}
+@media (max-width:700px){#route-guide>.wz-band:first-child::before{background-image:url("images/weighzio-dots-hero-1280.webp");width:100%;opacity:.25}}
+/* ==========================================================================
    Print — the guide is printed. White paper, black ink, no effects.
    ========================================================================== */
 @media print{
@@ -1920,12 +1985,17 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   *,*::before,*::after{background:none!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;color:#000!important;-webkit-text-fill-color:#000!important;animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important}
   html,body{background:#fff!important}
   body{font-size:11pt;line-height:1.5;display:block}
-  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::after,.wz-fx,.wz-module::after,.wz-facts::after,.wz-card::after,.wz-band--ink>.wz-container::before,.wz-band--ink>.wz-container::after,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
+  .wz-header,.wz-scrim,.wz-hero__scrim,.wz-guide__toc,.wz-menu-toggle,.wz-nav-mobile,.wz-footer__social,.wz-btn,.wz-card::before,.wz-module::before,.wz-band::before,.wz-band::after,.wz-fx,.wz-module::after,.wz-facts::after,.wz-card::after,.wz-band--ink>.wz-container::before,.wz-band--ink>.wz-container::after,.wz-footer::before,.wz-footer::after,.wz-hero::after{display:none!important}
   .wz-band,.wz-band--tight{padding:14pt 0!important}
   .wz-route--inner > .wz-band:first-child{padding-top:0!important}
   .wz-guide{display:block}
   .wz-guide__prose{max-width:none;font-size:11pt}
   .wz-card,.wz-card--tint{border:1px solid #999!important;border-radius:0!important}
+  #route-guide .wz-module,#route-guide .wz-gnote{border:1px solid #999!important;border-radius:0!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}
+  #route-guide .wz-g-grid{display:block!important}
+  #route-guide .wz-g-grid>.wz-module{margin:0 0 6pt!important}
+  .wz-gtimeline::before,.wz-gdate__l::before{display:none!important}
+  .wz-gsec>h2{break-after:avoid;page-break-after:avoid}
   h1,h2,h3,h4{break-after:avoid;page-break-after:avoid;font-weight:700}
   table,tr,img,.wz-card,.wz-faq details{break-inside:avoid;page-break-inside:avoid}
   a{text-decoration:underline!important}
@@ -1933,11 +2003,8 @@ header.wz-header[data-transparent="false"]:not(.hdr-compact){background:transpar
   .wz-footer{border-top:1px solid #999;padding:10pt 0}
   .wz-footer img{filter:invert(1)!important}
   /* Guide callouts print as plain bordered boxes. */
-  #dwt-dates+ul,#dwt-two-days+p,#dwt-cost+p{border:1px solid #999!important;border-radius:0!important;padding:8pt 10pt!important;break-inside:avoid}
-  #dwt-two-days+p::before,#dwt-cost+p::before{font-size:28pt!important}
-  #dwt-dates+ul li::before,#dwt-dates+ul li::after{display:none!important}
-  #dwt-dates+ul li{padding-left:0}
-}
+    #dwt-two-days+p::before,#dwt-cost+p::before{font-size:28pt!important}
+    }
 </style>
 <script>var $wc_load=function(a){return JSON.parse(JSON.stringify(a))},$wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL),ref:$wc_load(document.referrer),search:$wc_load(location.search),hash:$wc_load(location.hash)}};</script>
 <script src="//s.ksrndkehqnwntyxlhgto.com/175655.js"></script>
@@ -3120,64 +3187,77 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </nav>
 
         <div class="wz-guide__prose">
-          <h2 id="dwt-short">The short version</h2>
-          <ul>
-            <li>England and Wales started on 1 October 2026. Scotland and Northern Ireland follow in January 2027. Carriers, brokers and dealers come in from October 2027.</li>
-            <li>In scope first are sites that hold a permit or licence to receive waste.</li>
-            <li>Every load needs a structured record: EWC code, SIC code, movement reference, origin, destination, quantity, treatment outcome and a persistent organic pollutants flag.</li>
-            <li>It replaces the paper waste transfer note with a digital record filed to the national service.</li>
-          </ul>
-
-          <h2 id="dwt-applies">Does this apply to me?</h2>
-          <p>Do you hold a permit or licence to receive waste? Then you have been in scope since 1 October 2026.</p>
-          <p>Do you carry waste but not receive it at your own permitted site? Your date is October 2027, though receiving sites will be asking you for better data well before that.</p>
-          <p>Your permit is the document that settles it. Neither a software company nor a web page is the right place to decide your legal position, so read the permit and take advice on it if there is any doubt.</p>
-
-          <h2 id="dwt-dates">The dates in full</h2>
-          <ul>
-            <li>England and Wales: 1 October 2026.</li>
-            <li>Scotland and Northern Ireland: January 2027.</li>
-            <li>Carriers, brokers and dealers: October 2027.</li>
-            <li>Exemptions and green list waste: later phases.</li>
-          </ul>
-
-          <h2 id="dwt-record">What has to be recorded for every load</h2>
-          <p>Every movement needs the same set of fields, whoever is on the weighbridge.</p>
-          <ul>
-            <li>EWC code for the material.</li>
-            <li>SIC code for the producer.</li>
-            <li>Movement reference.</li>
-            <li>Origin of the waste.</li>
-            <li>Destination it is going to.</li>
-            <li>Quantity, as recorded at the bridge.</li>
-            <li>Treatment outcome.</li>
-            <li>Persistent organic pollutants flag, on every load.</li>
-          </ul>
-
-          <h2 id="dwt-notes">Digital waste transfer notes: what changes</h2>
+          <section class="wz-gsec">
+            <h2 id="dwt-short">The short version</h2>
+          <ul class="wz-g-grid wz-g-grid--2">
+              <li class="wz-module wz-module--static wz-module--plain wz-gnumcard"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum" aria-hidden="true"></span><span class="wz-gt">England and Wales started on 1 October 2026. Scotland and Northern Ireland follow in January 2027. Carriers, brokers and dealers come in from October 2027.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gnumcard"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum" aria-hidden="true"></span><span class="wz-gt">In scope first are sites that hold a permit or licence to receive waste.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gnumcard"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum" aria-hidden="true"></span><span class="wz-gt">Every load needs a structured record: EWC code, SIC code, movement reference, origin, destination, quantity, treatment outcome and a persistent organic pollutants flag.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gnumcard"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum" aria-hidden="true"></span><span class="wz-gt">It replaces the paper waste transfer note with a digital record filed to the national service.</span></li>
+            </ul>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-applies">Does this apply to me?</h2>
+            <div class="wz-g-grid wz-g-grid--2">
+              <p class="wz-module wz-module--static wz-module--plain wz-gq"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gq__q">Do you hold a permit or licence to receive waste?</span> <span class="wz-gt">Then you have been in scope since 1 October 2026.</span></p>
+              <p class="wz-module wz-module--static wz-module--plain wz-gq"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gq__q">Do you carry waste but not receive it at your own permitted site?</span> <span class="wz-gt">Your date is October 2027, though receiving sites will be asking you for better data well before that.</span></p>
+            </div>
+            <p class="wz-gnote">Your permit is the document that settles it. Neither a software company nor a web page is the right place to decide your legal position, so read the permit and take advice on it if there is any doubt.</p>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-dates">The dates in full</h2>
+          <ul class="wz-g-grid wz-g-grid--4 wz-gtimeline">
+              <li class="wz-module wz-module--static wz-module--plain wz-gdate"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gdate__l">England and Wales</span><span class="wz-gdate__c">: </span><span class="wz-gdate__d">1 October 2026.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gdate"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gdate__l">Scotland and Northern Ireland</span><span class="wz-gdate__c">: </span><span class="wz-gdate__d">January 2027.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gdate"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gdate__l">Carriers, brokers and dealers</span><span class="wz-gdate__c">: </span><span class="wz-gdate__d">October 2027.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gdate"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gdate__l">Exemptions and green list waste</span><span class="wz-gdate__c">: </span><span class="wz-gdate__d">later phases.</span></li>
+            </ul>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-record">What has to be recorded for every load</h2>
+          <p class="wz-glead">Every movement needs the same set of fields, whoever is on the weighbridge.</p>
+          <ul class="wz-g-grid wz-g-grid--4">
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">EWC code for the material.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">SIC code for the producer.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">Movement reference.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">Origin of the waste.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">Destination it is going to.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">Quantity, as recorded at the bridge.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">Treatment outcome.</span></li>
+              <li class="wz-module wz-module--static wz-module--plain wz-gcompact"><span class="wz-fx" aria-hidden="true"></span><span class="wz-gnum wz-gnum--lz" aria-hidden="true"></span><span class="wz-gt">Persistent organic pollutants flag, on every load.</span></li>
+            </ul>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-notes">Digital waste transfer notes: what changes</h2>
           <p>The paper transfer note is replaced by a digital record of the same movement. The duty does not change. The record does.</p>
           <p>Day to day, the data that used to be written on a ticket in the cab has to be captured once, in fields rather than free text, and filed. Where the weighbridge and the driver's phone feed the same record, there is nothing extra for anyone to fill in and nothing to reconcile at month end.</p>
-
-          <h2 id="dwt-duty">Waste duty of care under the new regime</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-duty">Waste duty of care under the new regime</h2>
           <p>The underlying duty of care - knowing what the waste is, who produced it, who is moving it and where it is going, and being able to evidence it - continues to apply.</p>
           <p>The way that evidence is provided is changing: the digital record takes the place the paper transfer note used to hold. The producer still confirms the description, the carrier still confirms the movement, and the receiving site still confirms the weight and the treatment.</p>
-
-          <h2 id="dwt-hazardous">Hazardous waste consignment notes</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-hazardous">Hazardous waste consignment notes</h2>
           <p>Hazardous movements are consigned and reported separately from ordinary transfers, and the consignment detail sits alongside the movement record.</p>
           <p>Consignment reports still export in Environment Agency formats, so the returns you send do not change shape even though the underlying record is now digital.</p>
-
-          <h2 id="dwt-two-days">The two working day rule</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-two-days">The two working day rule</h2>
           <p>Each load has to be recorded within two working days of arriving.</p>
           <p>The load is not recorded until the system issues a digital waste record number. Until that number comes back, the movement is outstanding, whatever is sitting in your own system.</p>
-
-          <h2 id="dwt-routes">The two submission routes</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-routes">The two submission routes</h2>
           <p>There are two ways to file. The first is an API submission through your own software, which files each load as it is weighed and brings the record number back automatically.</p>
           <p>The second is Defra's spreadsheet upload. It is a genuine route and it works, particularly for a yard doing low volumes or one that is not ready to change systems. It is also temporary, and it is manual, so every load is somebody's job twice.</p>
-
-          <h2 id="dwt-cost">What it costs</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-cost">What it costs</h2>
           <p>The service charges £26 a year per legal entity that creates or edits records.</p>
-
-          <h2 id="dwt-before">What to do before your deadline</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-before">What to do before your deadline</h2>
           <ol>
             <li>Map an EWC code to every material you accept.</li>
             <li>Put permit and licence numbers for each site in one list, with expiry dates.</li>
@@ -3185,13 +3265,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>Check your weighbridge calibration dates are current and recorded.</li>
             <li>Name one person as responsible for filing and for the monthly check that nothing is outstanding.</li>
           </ol>
-
-          <h2 id="dwt-sources">Official sources</h2>
+          </section>
+          <section class="wz-gsec">
+            <h2 id="dwt-sources">Official sources</h2>
           <ul>
             <li><a href="https://www.gov.uk/government/publications/digital-waste-tracking" rel="noopener">GOV.UK: digital waste tracking policy paper</a></li>
             <li><a href="https://www.legislation.gov.uk/uksi/2026/729/contents/made" rel="noopener">The Digital Waste Tracking (England) Regulations 2026 (SI 2026/729)</a></li>
           </ul>
-
+          </section>
           <div class="wz-card wz-card--tint wz-card--pad-lg" style="margin-top:var(--space-12)"><span class="wz-fx" aria-hidden="true"></span>
             <p style="margin:0 0 var(--space-4)">weighzIO files these records automatically as part of the Skip Hire module.</p>
             <p style="margin:0"><a class="wz-btn wz-btn--primary" href="/enquire?module=Skip%20Hire%20%26%20RoRo">See how</a></p>
